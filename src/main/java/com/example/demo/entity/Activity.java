@@ -1,6 +1,5 @@
 package com.example.demo.entity;
 
-import com.example.demo.constant.Authority;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
