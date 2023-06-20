@@ -12,35 +12,32 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter @ToString
-@Table(name = "member")
+@Table(name = "t_member")
 public class Member {
     @Id
     @Column(name = "member_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "e_mail", nullable = false, unique = true)
+    @Column(name = "e_mail", unique = true)
     private String mail;
 
-    @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false, name = "user_name")
+    @Column(name = "user_name")
     private String userName;
 
-    @Column(nullable = false, unique = true)
     private String nickname;
 
-    @Column(nullable = false, columnDefinition = "0")
+    @ColumnDefault("0")
     private int badges;
 
-    @Column(name = "total_price", nullable = false, columnDefinition = "0")
+    @Column(name = "total_price")
     private BigDecimal totalPrice;
 
-    @Column(name = "join_time", nullable = false)
+    @Column(name = "join_time")
     private LocalDateTime joinTime;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private Authority authority;
 }

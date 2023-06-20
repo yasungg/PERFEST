@@ -10,18 +10,18 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter @ToString
-@Table(name = "reservation_payment")
+@Table(name = "t_reservation_payment")
 public class ReservationPayment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "reservation_payment_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;
 

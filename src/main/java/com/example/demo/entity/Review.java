@@ -9,18 +9,18 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter @ToString
-@Table(name = "review")
+@Table(name = "t_review")
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "review_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "festival_id")
     private Festival festival;
 

@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
-@RequestMapping("/auth/admin")
+@RequestMapping("/admin")
 public class ThymeleafController {
-
 }

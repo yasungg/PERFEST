@@ -4,39 +4,42 @@ import com.example.demo.constant.Authority;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
-@Entity
+@Entity(name = "t_activity")
 @Getter @Setter @ToString
-@Table(name = "activity")
+@Table(name = "t_activity")
 public class Activity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "activity_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "festival_id")
     private Festival festival;
 
-    @Column(name = "activity_name", nullable = false, unique = true)
+    @Column(name = "activity_name", unique = true)
     private String activityName;
 
-    @Column(name = "activity_desc", nullable = false, unique = true)
+    @Column(name = "activity_desc", unique = true)
     private String activityDesc;
 
-    @Column(name = "activity_price", nullable = false, columnDefinition = "0")
+    @Column(name = "activity_price")
+    @ColumnDefault("0")
     private BigDecimal activityPrice;
 
-    @Column(name = "a_start_date")
-    private Date aStartDate;
+    @Column(name = "activity_start_date")
+    private Date activityStartDate;
 
-    @Column(name = "a_end_date")
-    private Date aEndDate;
+    @Column(name = "activity_end_date")
+    private Date activityEndDate;
 
-    @Column(name = "activity_quantity", columnDefinition = "0")
+    @Column(name = "activity_quantity")
+    @ColumnDefault("0")
     private int activityQuantity;
 }

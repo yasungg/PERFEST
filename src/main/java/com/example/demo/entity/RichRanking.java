@@ -8,14 +8,14 @@ import javax.persistence.*;
 
 @Entity
 @Getter @Setter @ToString
-@Table(name = "rich_ranking")
+@Table(name = "t_rich_ranking")
 public class RichRanking {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "rich_ranking_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
