@@ -45,4 +45,8 @@ public class MemberService {
             memberRepository.save(member);
         }
     }
+    // 회원 비밀번호 수정
+//    public boolean updateMemberPwd(String email, String password) {
+//
+//    }
 }
