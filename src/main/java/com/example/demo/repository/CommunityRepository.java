@@ -17,6 +17,6 @@ public interface CommunityRepository extends JpaRepository<Community, Long> {
     List<Community> findByCommunityCategory(CommunityCategory communityCategory);
     // 게시판 수정을 위한 게시판 아이디 갖고 오기
     Optional<Community> findById(Long id);
-    List<Community> findByOrderBywrittenTimeDesc();
+    List<Community> findByOrderByWrittenTimeDesc();
 
 }

@@ -55,7 +55,7 @@ public class CommunityService {
     }
     // 커뮤니티 게시글 최신순 조회(GET)
     public List<CommunityDTO> getCommunityNewestList() {
-        List<Community> communityList = communityRepository.findByOrderBywrittenTimeDesc();
+        List<Community> communityList = communityRepository.findByOrderByWrittenTimeDesc();
         List<CommunityDTO> communityDTOS = new ArrayList<>();
         for(Community community : communityList) {
             CommunityDTO communityDTO = new CommunityDTO();
