@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import com.example.demo.constant.Authority;
+import com.example.demo.constant.IsDelete;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -32,12 +33,15 @@ public class Member {
     @ColumnDefault("0")
     private int badges;
 
-    @Column(name = "total_price")
+    @ColumnDefault("0")
     private BigDecimal totalPrice;
 
     @Column(name = "join_time")
     private LocalDateTime joinTime;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING) // 탈퇴 여부 X, O
+    private IsDelete isDelete;
+
+    @Enumerated(EnumType.STRING) // 일반회원 계정, 관리자 계정
     private Authority authority;
 }
