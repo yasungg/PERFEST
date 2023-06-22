@@ -1,14 +1,11 @@
 package com.example.demo.entity;
 
-import com.example.demo.constant.Authority;
-import com.example.demo.constant.IsDelete;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.ColumnDefault;
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter @ToString
@@ -38,9 +35,8 @@ public class Member {
     @ColumnDefault("0")
     private BigDecimal totalPrice;
 
-    @Enumerated(EnumType.STRING) // 탈퇴 여부 X, O
-    private IsDelete isDelete;
-
+    @ColumnDefault("'N'") // 회원 탈퇴여부 default N
+    private String isDelete;
 
 
 //    @Column(name = "join_time")
