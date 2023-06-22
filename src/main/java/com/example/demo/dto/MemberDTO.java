@@ -13,5 +13,5 @@ public class MemberDTO {
     private String img;
     private int badges;
     private BigDecimal totalPrice;
-    private String isDelete; // N
+    private String isDelete; // N: 사용유저, Y: 탈퇴유저
 }

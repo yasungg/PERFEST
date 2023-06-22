@@ -24,4 +24,10 @@ public class MemberController {
         return new ResponseEntity<>(memberList, HttpStatus.OK);
     }
 
+    // 회원 삭제
+    @PostMapping("/delete")
+    public ResponseEntity<String> deleteMember(@RequestParam Long memberId) {
+        memberService.deleteMember(memberId);
+        return new ResponseEntity<>("회원탈퇴여부 Y 변경", HttpStatus.OK);
+    }
 }

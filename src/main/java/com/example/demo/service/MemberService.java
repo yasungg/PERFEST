@@ -37,5 +37,12 @@ public class MemberService {
         }
         return memberDTOS;
     }
-
+    // 회원 삭제
+    public void deleteMember(Long memberId) {
+        Member member = memberRepository.findById(memberId).orElse(null);
+        if (member != null) {
+            member.setIsDelete("Y");
+            memberRepository.save(member);
+        }
+    }
 }
