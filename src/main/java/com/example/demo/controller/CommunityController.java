@@ -32,6 +32,12 @@ public class CommunityController {
         List<CommunityDTO> list = communityService.getCommunitySelectList(CommunityCategory.valueOf(communityCategory));
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
+    // 커뮤니티 게시글 최신순 조회(GET)
+    @GetMapping(value = "/getnewestboard")
+    public ResponseEntity<List<CommunityDTO>> communityNewestList() {
+        List<CommunityDTO> list = communityService.getCommunityNewestList();
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
     // 커뮤니티 게시글 작성(POST)
     @PostMapping(value="/writeboard")
     public ResponseEntity<Boolean> boardInsert(@RequestBody Map<String, Object> communityData) {

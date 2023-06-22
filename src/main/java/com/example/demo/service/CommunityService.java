@@ -53,6 +53,23 @@ public class CommunityService {
         }
         return communityDTOS;
     }
+    // 커뮤니티 게시글 최신순 조회(GET)
+    public List<CommunityDTO> getCommunityNewestList() {
+        List<Community> communityList = communityRepository.findByOrderBywrittenTimeDesc();
+        List<CommunityDTO> communityDTOS = new ArrayList<>();
+        for(Community community : communityList) {
+            CommunityDTO communityDTO = new CommunityDTO();
+            communityDTO.setCommunityCategory(String.valueOf(community.getCommunityCategory()));
+            communityDTO.setCommunityTitle(community.getCommunityTitle());
+            communityDTO.setCommunityDesc(community.getCommunityDesc());
+            communityDTO.setCommunityImgLink(community.getCommunityImgLink());
+            communityDTO.setLikeCount(community.getLikeCount());
+            communityDTO.setWrittenTime(community.getWrittenTime());
+            communityDTOS.add(communityDTO);
+        }
+        return communityDTOS;
+
+    }
 
     // 커뮤니티 게시글 작성(POST)
     public boolean insertCommunity(String communityTitle, CommunityCategory communityCategory, String communityDesc) {
