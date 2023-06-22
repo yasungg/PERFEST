@@ -1,11 +1,11 @@
 package com.example.demo.entity;
 
 import com.example.demo.constant.Authority;
+import com.example.demo.constant.IsDelete;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.ColumnDefault;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -29,15 +29,24 @@ public class Member {
 
     private String nickname;
 
+    @Column(name = "img") // 프로필사진
+    private String img;
+
     @ColumnDefault("0")
     private int badges;
 
-    @Column(name = "total_price")
+    @ColumnDefault("0")
     private BigDecimal totalPrice;
 
-    @Column(name = "join_time")
-    private LocalDateTime joinTime;
+    @Enumerated(EnumType.STRING) // 탈퇴 여부 X, O
+    private IsDelete isDelete;
 
-    @Enumerated(EnumType.STRING)
-    private Authority authority;
+
+
+//    @Column(name = "join_time")
+//    private LocalDateTime joinTime;
+
+
+//    @Enumerated(EnumType.STRING) // 일반회원 계정, 관리자 계정
+//    private Authority authority;
 }
