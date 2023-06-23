@@ -32,6 +32,7 @@ public class CommentController {
         boolean result = commentService.updateComment((long) commentId,commentBody);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+    // 댓글 개수 가져오기(GET)
     @GetMapping(value = "/commentcount")
     public ResponseEntity<Long> commentCount() {
         long result = commentService.getCommentCount();

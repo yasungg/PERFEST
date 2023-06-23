@@ -9,6 +9,8 @@ import java.util.Optional;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
+    // 댓글 수정하기위해 댓글 번호(POST)
     Optional<Comment> findById(Long id);
+    // 댓글 갯수 가져오기(GET)
     long count();
 }
