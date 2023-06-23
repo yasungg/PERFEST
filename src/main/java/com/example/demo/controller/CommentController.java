@@ -15,13 +15,21 @@ import java.util.Map;
 @RequestMapping("/comment")
 @RequiredArgsConstructor
 public class CommentController {
-    private CommentService commentService;
+    private final CommentService commentService;
 
     // 댓글 작성(POST)
     @PostMapping(value = "/writecomment")
     public ResponseEntity<Boolean> commentInsert(@RequestBody Map<String, Object> commentData) {
         String commentBody = (String)commentData.get("commentBody");
         boolean result = commentService.insertComment(commentBody);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+    // 댓글 수정(POST)
+    @PostMapping(value = "/updatecomment")
+    public ResponseEntity<Boolean> commentUpdate(@RequestBody Map<String, Object> updateCommentData) {
+        int commentId = (Integer)updateCommentData.get("commentId");
+        String commentBody = (String)updateCommentData.get("commentBody");
+        boolean result = commentService.updateComment((long) commentId,commentBody);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

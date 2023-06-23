@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 
 public class CommentService {
     private final CommentRepository commentRepository;
+
     // 댓글 작성(POST)
     public boolean insertComment(String commentBody) {
         Comment comment = new Comment();
@@ -23,5 +25,18 @@ public class CommentService {
         comment.setCommentWrittenTime(LocalDateTime.now());
         commentRepository.save(comment);
         return true;
+    }
+
+    // 댓글 수정(POST)
+    public boolean updateComment(Long id, String commentBody) {
+        Optional<Comment> optionalComment = commentRepository.findById(id);
+        if (optionalComment.isPresent()) {
+            Comment comment = new Comment();
+            comment.setCommentBody(commentBody);
+            comment.setCommentWrittenTime(LocalDateTime.now());
+            commentRepository.save(comment);
+            return true;
+        }
+        return false;
     }
 }
