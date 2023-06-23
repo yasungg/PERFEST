@@ -39,4 +39,8 @@ public class CommentService {
         }
         return false;
     }
+    // 댓글 개수 가져오기(GET)
+    public long getCommentCount() {
+        return commentRepository.count();
+    }
 }

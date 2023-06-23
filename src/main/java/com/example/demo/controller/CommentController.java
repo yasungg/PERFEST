@@ -32,4 +32,9 @@ public class CommentController {
         boolean result = commentService.updateComment((long) commentId,commentBody);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+    @GetMapping(value = "/commentcount")
+    public ResponseEntity<Long> commentCount() {
+        long result = commentService.getCommentCount();
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }
