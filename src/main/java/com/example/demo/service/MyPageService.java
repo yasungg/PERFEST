@@ -30,9 +30,8 @@ public class MyPageService {
 
         for (Member member : memberList) {
             MemberDTO memberDTO = new MemberDTO();
-
             memberDTO.setEmail(member.getUsername()); // 이메일;
-            memberDTO.setUserName(member.getMemberName()); // 이름
+            memberDTO.setMemberName(member.getMemberName()); // 이름
             memberDTO.setNickName(member.getNickname());
             memberDTO.setImg(member.getImg());
             memberDTO.setBadges(member.getBadges());
