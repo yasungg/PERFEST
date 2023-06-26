@@ -38,6 +38,12 @@ public class CommunityController {
         List<CommunityDTO> list = communityService.getCommunityNewestList();
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
+    // 커뮤니티 게시글 본문 조회(GET)
+    @GetMapping(value = "/getboardarticle")
+    public ResponseEntity<List<CommunityDTO>> communityBoardArticle() {
+        List<CommunityDTO> list = communityService.getCommunityBoardArticle();
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
     // 커뮤니티 게시글 작성(POST)
     @PostMapping(value="/writeboard")
     public ResponseEntity<Boolean> boardInsert(@RequestBody Map<String, Object> communityData) {
