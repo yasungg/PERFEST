@@ -101,6 +101,18 @@ public class CommunityService {
         }
         return communityDTOs;
     }
+    // 커뮤니티 게시글 좋아요 누르면 좋아요 +1(POST)
+    public boolean insertHeart(Long communityId) {
+        Optional<Community> optionalCommunity = communityRepository.findById(communityId);
+        if (optionalCommunity.isPresent()) {
+            Community community = optionalCommunity.get();
+            int currentLikeCount = community.getLikeCount();
+            community.setLikeCount(currentLikeCount + 1);
+            communityRepository.save(community);
+            return true;
+        }
+        return false;
+    }
 
     // 커뮤니티 게시글 작성(POST)
     public boolean insertCommunity(String communityTitle, CommunityCategory communityCategory, String communityDesc) {

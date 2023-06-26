@@ -44,6 +44,13 @@ public class CommunityController {
         List<CommunityDTO> list = communityService.getCommunityBoardArticle();
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
+    // 커뮤니티 게시글 좋아요 누르면 좋아요 +1(POST)
+    @PostMapping(value="/addlike")
+    public ResponseEntity<Boolean> likeInsert(@RequestBody Map<String, Object> communityData) {
+        int communityId = (Integer) communityData.get("communityId");
+        boolean result = communityService.insertHeart((long)communityId);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
     // 커뮤니티 게시글 작성(POST)
     @PostMapping(value="/writeboard")
     public ResponseEntity<Boolean> boardInsert(@RequestBody Map<String, Object> communityData) {
