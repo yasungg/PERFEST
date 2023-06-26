@@ -25,7 +25,7 @@ public class MyPageService {
 
     // 회원 이메일로 회원정보 조회
     public List<MemberDTO> getMemberByEmail(String email) {
-        List<Member> memberList = myPageRepository.findByMail(email); // 파라미터값(?)
+        List<Member> memberList = myPageRepository.findByUsername(email); // 파라미터값(?)
         List<MemberDTO> memberDTOS = new ArrayList<>();
 
         for (Member member : memberList) {

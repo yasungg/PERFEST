@@ -13,7 +13,7 @@ import java.util.List;
 public interface MyPageRepository extends JpaRepository<Member, Long> {
 
     // 이메일로 회원 조회
-    List<Member> findByMail(String email); // string Token
+    List<Member> findByUsername(String email); // string Token
 
     // 회원 탈퇴 (status N -> Y 업데이트)
     @Modifying
