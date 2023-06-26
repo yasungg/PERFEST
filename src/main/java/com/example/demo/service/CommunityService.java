@@ -2,7 +2,9 @@ package com.example.demo.service;
 
 import com.example.demo.constant.CommunityCategory;
 import com.example.demo.dto.CommunityDTO;
+import com.example.demo.dto.MemberDTO;
 import com.example.demo.entity.Community;
+import com.example.demo.entity.Member;
 import com.example.demo.repository.CommunityRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -72,18 +75,31 @@ public class CommunityService {
     // 커뮤니티 게시글 본문 조회(GET)
     public List<CommunityDTO> getCommunityBoardArticle() {
         List<Community> communityList = communityRepository.findAll();
-        List<CommunityDTO> communityDTOS = new ArrayList<>();
-        for(Community community : communityList) {
+        List<CommunityDTO> communityDTOs = new ArrayList<>();
+        for (Community community : communityList) {
             CommunityDTO communityDTO = new CommunityDTO();
-            communityDTO.setCommunityCategory(String.valueOf(community.getCommunityCategory()));
             communityDTO.setCommunityTitle(community.getCommunityTitle());
+            communityDTO.setCommunityCategory(String.valueOf(community.getCommunityCategory()));
             communityDTO.setCommunityDesc(community.getCommunityDesc());
             communityDTO.setCommunityImgLink(community.getCommunityImgLink());
             communityDTO.setLikeCount(community.getLikeCount());
             communityDTO.setWrittenTime(community.getWrittenTime());
-            communityDTOS.add(communityDTO);
+
+            List<MemberDTO> memberDTOs = new ArrayList<>();
+            Member member = community.getMember();
+            if (member != null) {
+                MemberDTO memberDTO = new MemberDTO();
+                memberDTO.setNickName(member.getNickname());
+                memberDTOs.add(memberDTO);
+            }
+
+            if (!memberDTOs.isEmpty()) {
+                communityDTO.setMemberDTOs(Collections.singletonList(memberDTOs.get(0)));
+            }
+
+            communityDTOs.add(communityDTO);
         }
-        return communityDTOS;
+        return communityDTOs;
     }
 
     // 커뮤니티 게시글 작성(POST)
