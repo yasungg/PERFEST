@@ -31,6 +31,7 @@ public class CommunityService {
         for(Community community : communityList) {
             CommunityDTO communityDTO = new CommunityDTO();
             communityDTO.setCommunityCategory(String.valueOf(community.getCommunityCategory()));
+            communityDTO.setCommunityId(community.getId());
             communityDTO.setCommunityTitle(community.getCommunityTitle());
             communityDTO.setCommunityDesc(community.getCommunityDesc());
             communityDTO.setCommunityImgLink(community.getCommunityImgLink());
@@ -47,6 +48,7 @@ public class CommunityService {
         for(Community community : communityList) {
             CommunityDTO communityDTO = new CommunityDTO();
             communityDTO.setCommunityCategory(String.valueOf(community.getCommunityCategory()));
+            communityDTO.setCommunityId(community.getId());
             communityDTO.setCommunityTitle(community.getCommunityTitle());
             communityDTO.setCommunityDesc(community.getCommunityDesc());
             communityDTO.setCommunityImgLink(community.getCommunityImgLink());
@@ -63,6 +65,7 @@ public class CommunityService {
         for(Community community : communityList) {
             CommunityDTO communityDTO = new CommunityDTO();
             communityDTO.setCommunityCategory(String.valueOf(community.getCommunityCategory()));
+            communityDTO.setCommunityId(community.getId());
             communityDTO.setCommunityTitle(community.getCommunityTitle());
             communityDTO.setCommunityDesc(community.getCommunityDesc());
             communityDTO.setCommunityImgLink(community.getCommunityImgLink());
@@ -73,11 +76,13 @@ public class CommunityService {
         return communityDTOS;
     }
     // 커뮤니티 게시글 본문 조회(GET)
-    public List<CommunityDTO> getCommunityBoardArticle() {
-        List<Community> communityList = communityRepository.findAll();
+    public List<CommunityDTO> getCommunityBoardArticle(Long communityId) {
+        Optional<Community> optionalCommunity = communityRepository.findById(communityId);
         List<CommunityDTO> communityDTOs = new ArrayList<>();
-        for (Community community : communityList) {
+
+        optionalCommunity.ifPresent(community -> {
             CommunityDTO communityDTO = new CommunityDTO();
+            communityDTO.setCommunityId(community.getId());
             communityDTO.setCommunityTitle(community.getCommunityTitle());
             communityDTO.setCommunityCategory(String.valueOf(community.getCommunityCategory()));
             communityDTO.setCommunityDesc(community.getCommunityDesc());
@@ -85,22 +90,19 @@ public class CommunityService {
             communityDTO.setLikeCount(community.getLikeCount());
             communityDTO.setWrittenTime(community.getWrittenTime());
 
-            List<MemberDTO> memberDTOs = new ArrayList<>();
             Member member = community.getMember();
             if (member != null) {
                 MemberDTO memberDTO = new MemberDTO();
                 memberDTO.setNickName(member.getNickname());
-                memberDTOs.add(memberDTO);
-            }
-
-            if (!memberDTOs.isEmpty()) {
-                communityDTO.setMemberDTOs(Collections.singletonList(memberDTOs.get(0)));
+                communityDTO.setMemberDTOs(Collections.singletonList(memberDTO));
             }
 
             communityDTOs.add(communityDTO);
-        }
+        });
+
         return communityDTOs;
     }
+
     // 커뮤니티 게시글 좋아요 누르면 좋아요 +1(POST)
     public boolean insertHeart(Long communityId) {
         Optional<Community> optionalCommunity = communityRepository.findById(communityId);

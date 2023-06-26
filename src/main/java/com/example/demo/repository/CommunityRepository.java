@@ -19,5 +19,6 @@ public interface CommunityRepository extends JpaRepository<Community, Long> {
     Optional<Community> findById(Long id);
     // 게시판 내림차순 정렬
     List<Community> findByOrderByWrittenTimeDesc();
+//    List<Community> findById(Long id);
 
 }

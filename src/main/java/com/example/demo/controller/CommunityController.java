@@ -40,15 +40,15 @@ public class CommunityController {
     }
     // 커뮤니티 게시글 본문 조회(GET)
     @GetMapping(value = "/getboardarticle")
-    public ResponseEntity<List<CommunityDTO>> communityBoardArticle() {
-        List<CommunityDTO> list = communityService.getCommunityBoardArticle();
+    public ResponseEntity<List<CommunityDTO>> communityBoardArticle(@RequestParam long communityId) {
+        List<CommunityDTO> list = communityService.getCommunityBoardArticle(communityId);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
     // 커뮤니티 게시글 좋아요 누르면 좋아요 +1(POST)
-    @PostMapping(value="/addlike")
+    @PostMapping(value="/BoardArticle/{communityId}/addlike")
     public ResponseEntity<Boolean> likeInsert(@RequestBody Map<String, Object> communityData) {
-        int communityId = (Integer) communityData.get("communityId");
-        boolean result = communityService.insertHeart((long)communityId);
+        String communityId = (String) communityData.get("communityId");
+        boolean result = communityService.insertHeart(Long.parseLong(communityId));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
     // 커뮤니티 게시글 작성(POST)
