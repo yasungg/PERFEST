@@ -1,9 +1,7 @@
 package com.example.demo.entity;
 
 import com.example.demo.constant.Authority;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -12,6 +10,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter @ToString
+@NoArgsConstructor
 @Table(name = "t_member")
 public class Member {
     @Id
@@ -19,13 +18,13 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "e_mail", unique = true)
-    private String mail;
+    @Column(name = "user_name", unique = true)
+    private String username;
 
     private String password;
 
-    @Column(name = "user_name")
-    private String userName;
+    @Column(name = "member_name")
+    private String memberName;
 
     private String nickname;
 
@@ -33,6 +32,7 @@ public class Member {
     private int badges;
 
     @Column(name = "total_price")
+    @ColumnDefault("0")
     private BigDecimal totalPrice;
 
     @Column(name = "join_time")
@@ -40,4 +40,16 @@ public class Member {
 
     @Enumerated(EnumType.STRING)
     private Authority authority;
+
+    @Builder
+    public Member(String mail, String password, String userName, String nickname, int badges, BigDecimal totalPrice, LocalDateTime joinTime, Authority authority) {
+        this.username = mail;
+        this.password = password;
+        this.memberName = userName;
+        this.nickname = nickname;
+        this.badges = badges;
+        this.totalPrice = totalPrice;
+        this.joinTime = joinTime;
+        this.authority = authority;
+    }
 }
