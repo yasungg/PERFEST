@@ -12,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,21 +33,23 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     public MemberResponseDTO signup(MemberRequestDTO requestDto) {
-        if(memberRepository.findByUsername(requestDto.getMail()).isPresent()) {
+        if (memberRepository.findByUsername(requestDto.getMail()).isPresent()) {
             throw new RuntimeException("이미 가입되어 있는 유저입니다");
         }
         Member member = requestDto.toMember(passwordEncoder);
         return MemberResponseDTO.of(memberRepository.save(member));
     }
+
     public MemberResponseDTO kakaoSignup(MemberRequestDTO requestDto) {
-        if(memberRepository.findByUsername(requestDto.getMail()).isPresent()) {
+        if (memberRepository.findByUsername(requestDto.getMail()).isPresent()) {
             throw new RuntimeException("이미 가입되어 있는 유저입니다");
         }
         Member member = requestDto.toKakaoMember(passwordEncoder);
         return MemberResponseDTO.of(memberRepository.save(member));
     }
+
     public MemberResponseDTO adminSignup(MemberRequestDTO requestDto) {
-        if(memberRepository.findByUsername(requestDto.getMail()).isPresent()) {
+        if (memberRepository.findByUsername(requestDto.getMail()).isPresent()) {
             throw new RuntimeException("이미 가입되어 있는 유저입니다");
         }
         Member member = requestDto.toAdminMember(passwordEncoder);
@@ -61,6 +62,7 @@ public class MemberService {
 
         return tokenProvider.generateTokenDTO(authentication);
     }
+
     public TokenDTO kakaoLogin() {
         String mail = (String) session.getAttribute("mail");
         log.info("memberService.kakaoLogin mail check = {}", mail);

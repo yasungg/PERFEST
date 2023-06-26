@@ -1,7 +1,9 @@
 package com.example.demo.entity;
 
 import com.example.demo.constant.Authority;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -21,12 +23,17 @@ public class Member {
     @Column(name = "user_name", unique = true)
     private String username;
 
+    @Column(nullable = false)
     private String password;
 
     @Column(name = "member_name")
     private String memberName;
 
+    @Column(unique = true, nullable = false, length = 20)
     private String nickname;
+
+    @Column(name = "img", length = 500) // 프로필사진
+    private String img;
 
     @ColumnDefault("0")
     private int badges;
