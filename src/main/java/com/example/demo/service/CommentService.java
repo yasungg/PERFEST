@@ -1,6 +1,9 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.CommentDTO;
+import com.example.demo.dto.CommunityDTO;
 import com.example.demo.entity.Comment;
+import com.example.demo.entity.Community;
 import com.example.demo.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -43,4 +47,8 @@ public class CommentService {
     public long getCommentCount() {
         return commentRepository.count();
     }
+    // 해당 게시글 댓글 조회하기
+//    public List<CommentDTO> getCommentList(Long communityId) {
+//        List<CommentDTO> commentList = CommentRepository.findByCommunityIdWithJoin(communityId);
+//    }
 }
