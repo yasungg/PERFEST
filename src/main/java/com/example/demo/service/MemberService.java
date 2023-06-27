@@ -33,7 +33,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     public MemberResponseDTO signup(MemberRequestDTO requestDto) {
-        if (memberRepository.findByUsername(requestDto.getMail()).isPresent()) {
+        if (memberRepository.findByUsername(requestDto.getUsername()).isPresent()) {
             throw new RuntimeException("이미 가입되어 있는 유저입니다");
         }
         Member member = requestDto.toMember(passwordEncoder);
@@ -41,7 +41,7 @@ public class MemberService {
     }
 
     public MemberResponseDTO kakaoSignup(MemberRequestDTO requestDto) {
-        if (memberRepository.findByUsername(requestDto.getMail()).isPresent()) {
+        if (memberRepository.findByUsername(requestDto.getUsername()).isPresent()) {
             throw new RuntimeException("이미 가입되어 있는 유저입니다");
         }
         Member member = requestDto.toKakaoMember(passwordEncoder);
@@ -49,7 +49,7 @@ public class MemberService {
     }
 
     public MemberResponseDTO adminSignup(MemberRequestDTO requestDto) {
-        if (memberRepository.findByUsername(requestDto.getMail()).isPresent()) {
+        if (memberRepository.findByUsername(requestDto.getUsername()).isPresent()) {
             throw new RuntimeException("이미 가입되어 있는 유저입니다");
         }
         Member member = requestDto.toAdminMember(passwordEncoder);

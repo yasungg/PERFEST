@@ -19,5 +19,9 @@ public class MemberController {
     ResponseEntity<MemberResponseDTO> signup(@RequestBody MemberRequestDTO memberRequestDTO) {
         return ResponseEntity.ok(memberService.signup(memberRequestDTO));
     }
+    @PostMapping("/kakaosignup")
+    ResponseEntity<MemberResponseDTO> kakaosignup(@RequestBody MemberRequestDTO memberRequestDTO) {
+        return ResponseEntity.ok(memberService.kakaoSignup(memberRequestDTO));
+    }
 
 }
