@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -19,19 +20,18 @@ public class MyPageController {
     private final MyPageService myPageService;
 
     // 이메일로 회원 조회
-    @GetMapping("/email")
+    @GetMapping(value = "/email")
     public ResponseEntity<List<MemberDTO>> getMemberInfoByEmail(@RequestParam String email) {
         List<MemberDTO> memberList = myPageService.getMemberByEmail(email);
         return new ResponseEntity<>(memberList, HttpStatus.OK);
     }
 
     // 회원 닉네임 수정
-    @PostMapping("/nickname")
-    public ResponseEntity<String> updateNickname(@RequestParam String email, @RequestParam String nickname) {
-        myPageService.updateNickname(email, nickname);
-        return ResponseEntity.ok("닉네임이 성공적으로 수정되었습니다.");
+    @PostMapping(value = "/nickname")
+    public ResponseEntity<Boolean> updateNickname(@RequestBody Map<String, Object> updateData) {
+        String email = (String)updateData.get("username");
+        String nickname = (String) updateData.get("nickname");
+        boolean result = myPageService.updateNickname(email, nickname);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
-
-    //
-
 }

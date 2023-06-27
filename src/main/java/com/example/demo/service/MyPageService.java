@@ -46,10 +46,10 @@ public class MyPageService {
     }
 
     //회원 닉네임 수정
-    public boolean updateNickname(String currentNickname, String newNickname) {
-        Optional<Member> existingMember = myPageRepository.findByNickname(currentNickname);
-        if (existingMember.isPresent()) {
-            Member member = existingMember.get();
+    public boolean updateNickname(String email, String newNickname) {
+        List<Member> members = myPageRepository.findByUsername(email);
+        if (!members.isEmpty()) {
+            Member member = members.get(0);
             Optional<Member> existingMemberWithNewNickname = myPageRepository.findByNickname(newNickname);
             if (!existingMemberWithNewNickname.isPresent()) {
                 member.setNickname(newNickname);
