@@ -13,5 +13,4 @@ public class CommentDTO {
     private String commentBody;
     private LocalDateTime commentWrittenTime;
     private int commentLikeCount;
-    private List<CommunityDTO> communitys; // 게시글 번호
 }
