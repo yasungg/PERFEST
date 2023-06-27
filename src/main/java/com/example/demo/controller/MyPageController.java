@@ -34,4 +34,11 @@ public class MyPageController {
         boolean result = myPageService.updateNickname(email, nickname);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    // 닉네임 중복값 체크
+    @GetMapping("/nicknameCheck")
+    public ResponseEntity<Boolean> checkNicknameAvailability(@RequestParam String nickname) {
+        boolean isAvailable = myPageService.isNicknameAvailable(nickname);
+        return ResponseEntity.ok(isAvailable);
+    }
 }
