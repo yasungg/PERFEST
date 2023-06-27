@@ -18,13 +18,13 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "user_name", unique = true) // 이메일;
+    @Column(name = "username", unique = true)
     private String username;
 
     @Column(nullable = false)
     private String password;
 
-    @Column(name = "member_name") // 이름
+    @Column(name = "member_name")
     private String memberName;
 
     @Column(unique = true, nullable = false, length = 20)
@@ -54,10 +54,10 @@ public class Member {
     private Authority authority;
 
     @Builder
-    public Member(String mail, String password, String userName, String nickname, int badges, BigDecimal totalPrice, LocalDateTime joinTime, Authority authority) {
-        this.username = mail;
+    public Member(String username, String password, String memberName, String nickname, int badges, BigDecimal totalPrice, LocalDateTime joinTime, Authority authority) {
+        this.username = username;
         this.password = password;
-        this.memberName = userName;
+        this.memberName = memberName;
         this.nickname = nickname;
         this.badges = badges;
         this.totalPrice = totalPrice;
