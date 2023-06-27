@@ -19,5 +19,7 @@ public interface MyPageRepository extends JpaRepository<Member, Long> {
     // 전체 회원 닉네임 조회 (닉네임 수정을 위한)
     Optional<Member> findByNickname(String nickname);
 
+    // 회원 탈퇴
+
 
 }
