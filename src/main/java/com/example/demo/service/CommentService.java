@@ -23,10 +23,15 @@ public class CommentService {
     private final CommentRepository commentRepository;
 
     // 댓글 작성(POST)
-    public boolean insertComment(String commentBody) {
+    public boolean insertComment(String commentBody, Long communityId) {
         Comment comment = new Comment();
         comment.setCommentBody(commentBody);
         comment.setCommentWrittenTime(LocalDateTime.now());
+
+        Community community = new Community();
+        community.setId(communityId);
+        comment.setCommunity(community);
+
         commentRepository.save(comment);
         return true;
     }

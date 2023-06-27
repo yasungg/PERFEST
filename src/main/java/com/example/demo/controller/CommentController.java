@@ -23,8 +23,9 @@ public class CommentController {
     // 댓글 작성(POST)
     @PostMapping(value = "/writecomment")
     public ResponseEntity<Boolean> commentInsert(@RequestBody Map<String, Object> commentData) {
+        String communityId = (String)commentData.get("communityId");
         String commentBody = (String)commentData.get("commentBody");
-        boolean result = commentService.insertComment(commentBody);
+        boolean result = commentService.insertComment(commentBody, Long.parseLong(communityId));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
     // 댓글 수정(POST)
