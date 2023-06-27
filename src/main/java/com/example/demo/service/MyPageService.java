@@ -45,15 +45,19 @@ public class MyPageService {
         return memberDTOS;
     }
 
-     //회원 닉네임 수정
-     public void updateNickname(String email, String nickName) {
-         Optional<Member> member = myPageRepository.findByNickname(nickName);
-         if (member.isPresent()) {
-             throw new IllegalArgumentException("이미 사용 중인 닉네임입니다.");
-         }
-         member.get().setNickname(nickName);
-         myPageRepository.updateNicknameByUsername(email, nickName);
-     }
-
-
+    //회원 닉네임 수정
+    public boolean updateNickname(String currentNickname, String newNickname) {
+        Optional<Member> existingMember = myPageRepository.findByNickname(currentNickname);
+        if (existingMember.isPresent()) {
+            Member member = existingMember.get();
+            Optional<Member> existingMemberWithNewNickname = myPageRepository.findByNickname(newNickname);
+            if (!existingMemberWithNewNickname.isPresent()) {
+                member.setNickname(newNickname);
+                System.out.println(newNickname + "닉 변경");
+                myPageRepository.save(member);
+                return true;
+            }
+        }
+        return false;
+    }
 }
