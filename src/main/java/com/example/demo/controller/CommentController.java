@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.CommentDTO;
+import com.example.demo.entity.Comment;
 import com.example.demo.entity.Community;
 import com.example.demo.service.CommentService;
 import lombok.RequiredArgsConstructor;
@@ -38,14 +39,14 @@ public class CommentController {
     }
     // 댓글 개수 가져오기(GET)
     @GetMapping(value = "/commentcount")
-    public ResponseEntity<Long> commentCount() {
-        long result = commentService.getCommentCount();
+    public ResponseEntity<Long> commentCount(@RequestParam String communityId) {
+        long result = commentService.getCommentCount(Long.parseLong(communityId));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-    // 해당 게시글 댓글 조회하기(GET)
-//    @GetMapping(value = "/getcomment")
-//    public ResponseEntity<List<CommentDTO>> communitySelectList(@RequestParam int communityId) {
-//        List<CommentDTO> list = commentService.getCommentList((long) communityId);
-//        return new ResponseEntity<>(list, HttpStatus.OK);
-//    }
+    //해당 게시글 댓글 조회하기(GET)
+    @GetMapping(value = "/getcomment")
+    public ResponseEntity<List<CommentDTO>> communitySelectList(@RequestParam int communityId) {
+        List<CommentDTO> list = commentService.getCommentList((long) communityId);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
 }

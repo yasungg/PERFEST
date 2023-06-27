@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,11 +50,20 @@ public class CommentService {
         return false;
     }
     // 댓글 개수 가져오기(GET)
-    public long getCommentCount() {
-        return commentRepository.count();
+    public long getCommentCount(Long communityId) {
+        return commentRepository.countByCommunityId(communityId);
     }
     // 해당 게시글 댓글 조회하기
-//    public List<CommentDTO> getCommentList(Long communityId) {
-//        List<CommentDTO> commentList = CommentRepository.findByCommunityIdWithJoin(communityId);
-//    }
+    public List<CommentDTO> getCommentList(Long communityId) {
+        List<Comment> commentList = commentRepository.findByCommunityId(communityId);
+        List<CommentDTO> commentDTOS = new ArrayList<>();
+        for(Comment comment : commentList) {
+            CommentDTO commentDTO = new CommentDTO();
+            commentDTO.setCommentBody(comment.getCommentBody());
+            commentDTO.setCommentWrittenTime(comment.getCommentWrittenTime());
+            commentDTO.setCommentLikeCount(comment.getCommentLikeCount());
+            commentDTOS.add(commentDTO);
+        }
+        return commentDTOS;
+    }
 }
