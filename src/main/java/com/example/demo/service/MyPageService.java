@@ -61,9 +61,4 @@ public class MyPageService {
         return false;
     }
 
-    // 닉네임 중복값체크 (수정시 중복닉네임 거르기위해)
-    public boolean isNicknameAvailable(String nickname) {
-        Optional<Member> existingMember = myPageRepository.findByNickname(nickname);
-        return !existingMember.isPresent();
-    }
 }

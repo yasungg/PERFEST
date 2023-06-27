@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.memberDTOs.MemberRequestDTO;
 import com.example.demo.dto.memberDTOs.MemberResponseDTO;
+import com.example.demo.dto.memberDTOs.TokenDTO;
 import com.example.demo.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,5 +24,9 @@ public class MemberController {
     ResponseEntity<MemberResponseDTO> kakaosignup(@RequestBody MemberRequestDTO memberRequestDTO) {
         return ResponseEntity.ok(memberService.kakaoSignup(memberRequestDTO));
     }
-
+    @PostMapping("/login")
+    public ResponseEntity<TokenDTO> login(@RequestBody MemberRequestDTO requestDto) {
+        log.info("memberController.login = {}", requestDto.getUsername());
+        return ResponseEntity.ok(memberService.login(requestDto));
+    }
 }

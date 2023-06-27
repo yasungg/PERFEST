@@ -7,8 +7,10 @@ import com.example.demo.dto.memberDTOs.TokenDTO;
 import com.example.demo.entity.Member;
 import com.example.demo.jwt.TokenProvider;
 import com.example.demo.repository.MemberRepository;
+import com.example.demo.user.PerfestAuthenticationProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -27,6 +29,7 @@ import java.util.List;
 public class MemberService {
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder managerBuilder;
+    private final PerfestAuthenticationProvider provider;
     private final PasswordEncoder passwordEncoder;
     private final HttpSession session;
 
@@ -58,8 +61,10 @@ public class MemberService {
 
     public TokenDTO login(MemberRequestDTO requestDto) {
         UsernamePasswordAuthenticationToken authenticationToken = requestDto.toAuthentication();
-        Authentication authentication = managerBuilder.getObject().authenticate(authenticationToken);
-
+        log.info("memberService.login method auth token result = {} ", authenticationToken);
+        log.info("test = {}", managerBuilder.getObject());
+        Authentication authentication = provider.authenticate(authenticationToken);
+        log.info("memberService.login method managerBuilder = {}", authentication);
         return tokenProvider.generateTokenDTO(authentication);
     }
 
