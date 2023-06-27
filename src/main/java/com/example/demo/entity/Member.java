@@ -30,6 +30,9 @@ public class Member {
     @Column(unique = true, nullable = false, length = 20)
     private String nickname;
 
+    @Column(name = "address") // 주소
+    private String address;
+
     @Column(name = "img", length = 500) // 프로필사진
     private String img;
 

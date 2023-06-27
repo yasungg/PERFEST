@@ -16,4 +16,5 @@ public class CommunityDTO {
     private int likeCount;
     private LocalDateTime writtenTime;
     private List<MemberDTO> memberDTOs;
+
 }
