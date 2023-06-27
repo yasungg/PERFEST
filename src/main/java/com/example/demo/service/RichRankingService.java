@@ -19,7 +19,7 @@ public class RichRankingService {
     private final RichRankingRepository richRankingRepository;
 
     public List<RichRankingDTO> getRichRankingList() {
-        List<RichRanking> richRankingList = richRankingRepository.findAll();
+        List<RichRanking> richRankingList = richRankingRepository.findAllByOrderByRichRankDesc();
         List<RichRankingDTO> richRankingDTOS = new ArrayList<>();
         for(RichRanking richRanking : richRankingList) {
             RichRankingDTO richRankingDTO = new RichRankingDTO();
