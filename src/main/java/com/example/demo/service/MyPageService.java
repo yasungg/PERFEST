@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -33,6 +34,7 @@ public class MyPageService {
             memberDTO.setEmail(member.getUsername()); // 이메일;
             memberDTO.setMemberName(member.getMemberName()); // 이름
             memberDTO.setNickName(member.getNickname());
+            memberDTO.setAddress(member.getAddress()); // 주소
             memberDTO.setImg(member.getImg());
             memberDTO.setBadges(member.getBadges());
             memberDTO.setTotalPrice(member.getTotalPrice());
@@ -42,5 +44,15 @@ public class MyPageService {
         }
         return memberDTOS;
     }
+
+     //회원 닉네임 수정
+     public void updateNickName(String email, String nickName) {
+         Optional<Member> member = myPageRepository.findByNickname(nickName);
+         if (member.isPresent()) {
+             throw new IllegalArgumentException("이미 사용 중인 닉네임입니다.");
+         }
+         member.get().setNickname(nickName);
+         myPageRepository.save(member.get());
+     }
 
 }

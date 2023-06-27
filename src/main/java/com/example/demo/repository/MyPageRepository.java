@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface MyPageRepository extends JpaRepository<Member, Long> {
@@ -15,11 +16,9 @@ public interface MyPageRepository extends JpaRepository<Member, Long> {
     // 이메일로 회원 조회
     List<Member> findByUsername(String email); // string Token
 
-    // 회원 탈퇴 (status N -> Y 업데이트)
-    @Modifying
-    @Query("UPDATE Member m SET m.isDelete = 'Y' WHERE m.id = :memberId")
-    void deleteMemberById(@Param("memberId") Long memberId);
+    // 닉네임으로 회원 조회 // 닉 중복 방지위해 추가
+    Optional<Member> findByNickname(String nickname);
 
     // 회원 닉네임 수정
-
+    void updateNicknameByUsername(String email, String nickName);
 }
