@@ -1,6 +1,9 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.CommentDTO;
+import com.example.demo.dto.CommunityDTO;
 import com.example.demo.entity.Comment;
+import com.example.demo.entity.Community;
 import com.example.demo.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,10 +24,15 @@ public class CommentService {
     private final CommentRepository commentRepository;
 
     // 댓글 작성(POST)
-    public boolean insertComment(String commentBody) {
+    public boolean insertComment(String commentBody, Long communityId) {
         Comment comment = new Comment();
         comment.setCommentBody(commentBody);
         comment.setCommentWrittenTime(LocalDateTime.now());
+
+        Community community = new Community();
+        community.setId(communityId);
+        comment.setCommunity(community);
+
         commentRepository.save(comment);
         return true;
     }
@@ -40,7 +50,20 @@ public class CommentService {
         return false;
     }
     // 댓글 개수 가져오기(GET)
-    public long getCommentCount() {
-        return commentRepository.count();
+    public long getCommentCount(Long communityId) {
+        return commentRepository.countByCommunityId(communityId);
+    }
+    // 해당 게시글 댓글 조회하기
+    public List<CommentDTO> getCommentList(Long communityId) {
+        List<Comment> commentList = commentRepository.findByCommunityId(communityId);
+        List<CommentDTO> commentDTOS = new ArrayList<>();
+        for(Comment comment : commentList) {
+            CommentDTO commentDTO = new CommentDTO();
+            commentDTO.setCommentBody(comment.getCommentBody());
+            commentDTO.setCommentWrittenTime(comment.getCommentWrittenTime());
+            commentDTO.setCommentLikeCount(comment.getCommentLikeCount());
+            commentDTOS.add(commentDTO);
+        }
+        return commentDTOS;
     }
 }

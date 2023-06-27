@@ -2,7 +2,9 @@ package com.example.demo.service;
 
 import com.example.demo.constant.CommunityCategory;
 import com.example.demo.dto.CommunityDTO;
+import com.example.demo.dto.MemberDTO;
 import com.example.demo.entity.Community;
+import com.example.demo.entity.Member;
 import com.example.demo.repository.CommunityRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +31,7 @@ public class CommunityService {
         for(Community community : communityList) {
             CommunityDTO communityDTO = new CommunityDTO();
             communityDTO.setCommunityCategory(String.valueOf(community.getCommunityCategory()));
+            communityDTO.setCommunityId(community.getId());
             communityDTO.setCommunityTitle(community.getCommunityTitle());
             communityDTO.setCommunityDesc(community.getCommunityDesc());
             communityDTO.setCommunityImgLink(community.getCommunityImgLink());
@@ -44,6 +48,7 @@ public class CommunityService {
         for(Community community : communityList) {
             CommunityDTO communityDTO = new CommunityDTO();
             communityDTO.setCommunityCategory(String.valueOf(community.getCommunityCategory()));
+            communityDTO.setCommunityId(community.getId());
             communityDTO.setCommunityTitle(community.getCommunityTitle());
             communityDTO.setCommunityDesc(community.getCommunityDesc());
             communityDTO.setCommunityImgLink(community.getCommunityImgLink());
@@ -60,6 +65,7 @@ public class CommunityService {
         for(Community community : communityList) {
             CommunityDTO communityDTO = new CommunityDTO();
             communityDTO.setCommunityCategory(String.valueOf(community.getCommunityCategory()));
+            communityDTO.setCommunityId(community.getId());
             communityDTO.setCommunityTitle(community.getCommunityTitle());
             communityDTO.setCommunityDesc(community.getCommunityDesc());
             communityDTO.setCommunityImgLink(community.getCommunityImgLink());
@@ -68,7 +74,46 @@ public class CommunityService {
             communityDTOS.add(communityDTO);
         }
         return communityDTOS;
+    }
+    // 커뮤니티 게시글 본문 조회(GET)
+    public List<CommunityDTO> getCommunityBoardArticle(Long communityId) {
+        Optional<Community> optionalCommunity = communityRepository.findById(communityId);
+        List<CommunityDTO> communityDTOs = new ArrayList<>();
 
+        optionalCommunity.ifPresent(community -> {
+            CommunityDTO communityDTO = new CommunityDTO();
+            communityDTO.setCommunityId(community.getId());
+            communityDTO.setCommunityTitle(community.getCommunityTitle());
+            communityDTO.setCommunityCategory(String.valueOf(community.getCommunityCategory()));
+            communityDTO.setCommunityDesc(community.getCommunityDesc());
+            communityDTO.setCommunityImgLink(community.getCommunityImgLink());
+            communityDTO.setLikeCount(community.getLikeCount());
+            communityDTO.setWrittenTime(community.getWrittenTime());
+
+            Member member = community.getMember();
+            if (member != null) {
+                MemberDTO memberDTO = new MemberDTO();
+                memberDTO.setNickName(member.getNickname());
+                communityDTO.setMemberDTOs(Collections.singletonList(memberDTO));
+            }
+
+            communityDTOs.add(communityDTO);
+        });
+
+        return communityDTOs;
+    }
+
+    // 커뮤니티 게시글 좋아요 누르면 좋아요 +1(POST)
+    public boolean insertHeart(Long communityId) {
+        Optional<Community> optionalCommunity = communityRepository.findById(communityId);
+        if (optionalCommunity.isPresent()) {
+            Community community = optionalCommunity.get();
+            int currentLikeCount = community.getLikeCount();
+            community.setLikeCount(currentLikeCount + 1);
+            communityRepository.save(community);
+            return true;
+        }
+        return false;
     }
 
     // 커뮤니티 게시글 작성(POST)

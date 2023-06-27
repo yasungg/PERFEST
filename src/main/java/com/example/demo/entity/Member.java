@@ -18,17 +18,20 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "user_name", unique = true)
+    @Column(name = "user_name", unique = true) // 이메일;
     private String username;
 
     @Column(nullable = false)
     private String password;
 
-    @Column(name = "member_name")
+    @Column(name = "member_name") // 이름
     private String memberName;
 
     @Column(unique = true, nullable = false, length = 20)
     private String nickname;
+
+    @Column(name = "address") // 주소
+    private String address;
 
     @Column(name = "img", length = 500) // 프로필사진
     private String img;
@@ -39,6 +42,10 @@ public class Member {
     @Column(name = "total_price")
     @ColumnDefault("0")
     private BigDecimal totalPrice;
+
+    @Column(name = "is_delete") // 회원탈퇴여부
+    @ColumnDefault("'N'")
+    private String isDelete;
 
     @Column(name = "join_time")
     private LocalDateTime joinTime;

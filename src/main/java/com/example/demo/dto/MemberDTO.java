@@ -8,8 +8,9 @@ import java.math.BigDecimal;
 @Getter @Setter
 public class MemberDTO {
     private String email;
-    private String userName;
+    private String memberName;
     private String nickName;
+    private String address;
     private String img;
     private int badges;
     private BigDecimal totalPrice;
