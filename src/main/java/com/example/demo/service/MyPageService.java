@@ -46,13 +46,14 @@ public class MyPageService {
     }
 
      //회원 닉네임 수정
-     public void updateNickName(String email, String nickName) {
+     public void updateNickname(String email, String nickName) {
          Optional<Member> member = myPageRepository.findByNickname(nickName);
          if (member.isPresent()) {
              throw new IllegalArgumentException("이미 사용 중인 닉네임입니다.");
          }
          member.get().setNickname(nickName);
-         myPageRepository.save(member.get());
+         myPageRepository.updateNicknameByUsername(email, nickName);
      }
+
 
 }

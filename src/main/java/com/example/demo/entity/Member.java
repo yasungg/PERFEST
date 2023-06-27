@@ -18,7 +18,7 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "user_name", unique = true) // 이메일;
+    @Column(name = "username", unique = true) // 이메일;
     private String username;
 
     @Column(nullable = false)

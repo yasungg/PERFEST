@@ -28,7 +28,7 @@ public class MyPageController {
     // 회원 닉네임 수정
     @PostMapping("/nickname")
     public ResponseEntity<String> updateNickname(@RequestParam String email, @RequestParam String nickname) {
-        myPageService.updateNickName(email, nickname);
+        myPageService.updateNickname(email, nickname);
         return ResponseEntity.ok("닉네임이 성공적으로 수정되었습니다.");
     }
 
