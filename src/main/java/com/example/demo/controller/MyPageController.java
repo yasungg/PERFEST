@@ -36,9 +36,9 @@ public class MyPageController {
     }
 
     // 닉네임 중복값 체크
-    @GetMapping("/nicknameCheck")
-    public ResponseEntity<Boolean> checkNicknameAvailability(@RequestParam String nickname) {
-        boolean isAvailable = myPageService.isNicknameAvailable(nickname);
-        return ResponseEntity.ok(isAvailable);
-    }
+//    @GetMapping("/nicknameCheck")
+//    public ResponseEntity<Boolean> checkNicknameAvailability(@RequestParam String nickname) {
+//        boolean isAvailable = myPageService.isNicknameAvailable(nickname);
+//        return ResponseEntity.ok(isAvailable);
+//    }
 }

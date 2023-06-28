@@ -8,6 +8,7 @@ import com.example.demo.entity.Member;
 import com.example.demo.jwt.TokenProvider;
 import com.example.demo.repository.MemberRepository;
 import com.example.demo.user.PerfestAuthenticationProvider;
+import com.example.demo.user.PerfestKakaoAuthenticationProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -30,6 +31,7 @@ public class MemberService {
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder managerBuilder;
     private final PerfestAuthenticationProvider provider;
+    private final PerfestKakaoAuthenticationProvider kakaoAuthProvider;
     private final PasswordEncoder passwordEncoder;
     private final HttpSession session;
 
@@ -61,10 +63,9 @@ public class MemberService {
 
     public TokenDTO login(MemberRequestDTO requestDto) {
         UsernamePasswordAuthenticationToken authenticationToken = requestDto.toAuthentication();
-        log.info("memberService.login method auth token result = {} ", authenticationToken);
-        log.info("test = {}", managerBuilder.getObject());
+
         Authentication authentication = provider.authenticate(authenticationToken);
-        log.info("memberService.login method managerBuilder = {}", authentication);
+
         return tokenProvider.generateTokenDTO(authentication);
     }
 
@@ -72,16 +73,11 @@ public class MemberService {
         String mail = (String) session.getAttribute("mail");
         log.info("memberService.kakaoLogin mail check = {}", mail);
 
-        GrantedAuthority granted = new SimpleGrantedAuthority(Authority.ROLE_KAKAO.name());
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(granted);
-
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(mail, 1234, authorities);
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(mail, "");
         log.info("memberService.kakaoLogin authentication token check = {}", authenticationToken);
 
-        Authentication authentication = managerBuilder.getObject().authenticate(authenticationToken);
+        Authentication authentication = kakaoAuthProvider.authenticate(authenticationToken);
         log.info("authentication = {}", authentication);
-        log.info("kakaoLogin method가 끝났습니다!!");
 
         return tokenProvider.generateTokenDTO(authentication);
     }
