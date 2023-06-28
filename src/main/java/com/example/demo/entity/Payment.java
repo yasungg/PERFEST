@@ -37,7 +37,7 @@ public class Payment {
     @Column(name = "tax_free_amount", nullable = false)
     private int tax_free_amount;
 
-    @Column(name = "create")
+    @Column(name = "create", nullable = false)
     private LocalDateTime create_date;
 
     @Enumerated(EnumType.STRING)

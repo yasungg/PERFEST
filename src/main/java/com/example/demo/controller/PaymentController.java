@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import com.example.demo.constant.PaymentStatus;
+import com.example.demo.entity.Payment;
 import com.example.demo.repository.PaymentRepository;
 import com.example.demo.service.PaymentService;
 import lombok.RequiredArgsConstructor;
@@ -21,12 +23,13 @@ public class PaymentController {
     @PostMapping(value = "/regist")
     public ResponseEntity<Boolean> registPayment(@RequestBody Map<String, Object> paymentData) {
         Long userId = (Long) paymentData.get("memberId");
+        Long productId = (Long) paymentData.get("productId");
         int price = (int) paymentData.get("price");
         int quantity = (int) paymentData.get("quantity");
         String tid = (String) paymentData.get("tid");
         int tax_free_amount = (int) paymentData.get("tax_free");
 
-        boolean result = paymentService.insertPaymentInfo(userId, price, quantity, tid, tax_free_amount);
+        boolean result = paymentService.insertPaymentInfo(userId, productId, price, quantity, tid, tax_free_amount, PaymentStatus.PAID);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
