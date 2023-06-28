@@ -60,5 +60,9 @@ public class MyPageController {
     }
 
     // 동일 회원 주소 중복값 체크
-
+    @GetMapping("/addressCheck")
+    public ResponseEntity<Boolean> checkAddressDuplicate(@RequestParam("email") String email, @RequestParam("address") String address) {
+        boolean isDuplicate = myPageService.isAddressAlreadyRegisteredForSelf(email, address);
+        return new ResponseEntity<>(isDuplicate, HttpStatus.OK);
+    }
 }

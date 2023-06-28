@@ -96,13 +96,15 @@ public class MyPageService {
         return true;
     }
 
-    // 동일 주소 중복값 체크
-//    public boolean addressDuplicateCheck(String email) {
-//        List<Member> memberList = myPageRepository.findByUsername(email);
-//        if(memberList.isEmpty()) {
-//            throw new IllegalArgumentException();
-//        }
-//        Member member
-//
-//    }
+    // 동일 주소 중복값 체크(동일한 주소인 경우 false 반환)
+    public boolean isAddressAlreadyRegisteredForSelf(String email, String newAddress) {
+        List<Member> memberList = myPageRepository.findByUsername(email);
+        if (!memberList.isEmpty()) {
+            Member member = memberList.get(0);
+            String currentAddress = member.getAddress();
+            return !currentAddress.equals(newAddress);
+        }
+        return true; // 회원이 존재하지 않을 때도 true 로 처리
+    }
+
 }
