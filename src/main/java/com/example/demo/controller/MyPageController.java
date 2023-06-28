@@ -49,4 +49,6 @@ public class MyPageController {
         boolean result = myPageService.deleteMember(email);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+
 }
