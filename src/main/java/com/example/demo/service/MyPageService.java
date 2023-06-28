@@ -61,4 +61,20 @@ public class MyPageService {
         return false;
     }
 
+    // 닉네임 중복 체크
+    public boolean isNicknameAvailable(String nickname) {
+        Optional<Member> checkNickname = myPageRepository.findByNickname(nickname);
+        if(!checkNickname.isPresent()) {
+            System.out.println("중복되지 않은 닉네임");
+            return true;
+        }
+        return false;
+    }
+
+    // 회원 탈퇴
+//    public boolean deleteMember(String email) {
+//        List<Member> memberList = myPageRepository.findByUsername(email);
+//        List<MemberDTO> memberDTOS = new ArrayList<>();
+//
+//    }
 }
