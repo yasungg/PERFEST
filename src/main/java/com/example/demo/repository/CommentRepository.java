@@ -19,4 +19,5 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     // 게시판 번호를 가지고 맞는 댓글 조회
 
     List<Comment> findByCommunityId(Long communityId);
+    //
 }

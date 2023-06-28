@@ -59,11 +59,24 @@ public class CommentService {
         List<CommentDTO> commentDTOS = new ArrayList<>();
         for(Comment comment : commentList) {
             CommentDTO commentDTO = new CommentDTO();
+            commentDTO.setCommentId(comment.getId());
             commentDTO.setCommentBody(comment.getCommentBody());
             commentDTO.setCommentWrittenTime(comment.getCommentWrittenTime());
             commentDTO.setCommentLikeCount(comment.getCommentLikeCount());
             commentDTOS.add(commentDTO);
         }
         return commentDTOS;
+    }
+    // 해당 댓글 좋아요 추가하기
+    public boolean insertHeart(Long commentId) {
+        Optional<Comment> optionalComment = commentRepository.findById(commentId);
+        if (optionalComment.isPresent()) {
+            Comment comment = optionalComment.get();
+            int currentLikeCount = comment.getCommentLikeCount();
+            comment.setCommentLikeCount(currentLikeCount + 1);
+            commentRepository.save(comment);
+            return true;
+        }
+        return false;
     }
 }

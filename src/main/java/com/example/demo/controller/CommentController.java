@@ -49,4 +49,11 @@ public class CommentController {
         List<CommentDTO> list = commentService.getCommentList((long) communityId);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
+    // 댓글 좋아요 추가(POST)
+    @PostMapping(value = "/addcommentlike")
+    public ResponseEntity<Boolean> likeCommentInsert(@RequestBody Map<String, Object> commentData) {
+        int commentId = (Integer) commentData.get("commentId");
+        boolean result = commentService.insertHeart((long) commentId);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }

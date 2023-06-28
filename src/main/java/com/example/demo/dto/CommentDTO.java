@@ -10,6 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 public class CommentDTO {
+    private Long commentId;
     private String commentBody;
     private LocalDateTime commentWrittenTime;
     private int commentLikeCount;
