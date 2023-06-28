@@ -17,11 +17,11 @@ public class Payment {
     @Column(name = "payment_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "projuct_id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @JoinColumn(name = "product_id")
     private Product product;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name = "member_id")
     private Member member;
 
@@ -32,18 +32,18 @@ public class Payment {
     private int quantity;
 
     @Column(name = "tid_key", nullable = false)
-    private String tid;
+    private String tidKey;
 
     @Column(name = "tax_free_amount", nullable = false)
-    private int tax_free_amount;
+    private int taxFreeAmount;
 
-    @Column(name = "create", nullable = false)
-    private LocalDateTime create_date;
+    @Column(name = "create_date")
+    private LocalDateTime createDate;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "is_cancel")
     private PaymentStatus paymentStatus;
 
     @Column(name = "cancel_date")
-    private LocalDateTime cancel_date;
+    private LocalDateTime cancelDate;
 }

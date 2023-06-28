@@ -22,14 +22,16 @@ public class PaymentController {
 
     @PostMapping(value = "/regist")
     public ResponseEntity<Boolean> registPayment(@RequestBody Map<String, Object> paymentData) {
-        Long userId = (Long) paymentData.get("memberId");
-        Long productId = (Long) paymentData.get("productId");
+        System.out.println("registPayment 메소드 실행");
+        Long MemberId = (Long) paymentData.get("member_Id");
+        Long productId = (Long) paymentData.get("product_Id");
         int price = (int) paymentData.get("price");
         int quantity = (int) paymentData.get("quantity");
         String tid = (String) paymentData.get("tid");
         int tax_free_amount = (int) paymentData.get("tax_free");
 
-        boolean result = paymentService.insertPaymentInfo(userId, productId, price, quantity, tid, tax_free_amount, PaymentStatus.PAID);
+        boolean result = paymentService.insertPaymentInfo(MemberId, productId, price, quantity, tid, tax_free_amount, PaymentStatus.PAID);
+        System.out.println("registPayment 메소드 실행 결과 : " + result);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

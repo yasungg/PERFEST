@@ -21,11 +21,11 @@ import java.util.List;
 public class PaymentService {
     private final PaymentRepository paymentRepository;
 
-    public boolean insertPaymentInfo(Long userId, Long productId, int price, int quantity, String tid, int tax_free_amount, PaymentStatus payStatus) {
+    public boolean insertPaymentInfo(Long MemberId, Long productId, int price, int quantity, String tid, int tax_free_amount, PaymentStatus payStatus) {
         Payment payment = new Payment();
 
         Member member = new Member();
-        member.setId(userId);
+        member.setId(MemberId);
         payment.setMember(member);
 
         Product product = new Product();
@@ -34,12 +34,13 @@ public class PaymentService {
 
         payment.setPrice(price);
         payment.setQuantity(quantity);
-        payment.setTid(tid);
-        payment.setTax_free_amount(tax_free_amount);
+        payment.setTidKey(tid);
+        payment.setTaxFreeAmount(tax_free_amount);
         payment.setPaymentStatus(payStatus);
-        payment.setCreate_date(LocalDateTime.now());
+        payment.setCreateDate(LocalDateTime.now());
         payment.setPaymentStatus(payStatus);
 
+        paymentRepository.save(payment);
         return true;
     }
 }
