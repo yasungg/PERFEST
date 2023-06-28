@@ -61,7 +61,7 @@ public class MyPageService {
         return false;
     }
 
-    // 닉네임 중복 체크
+    // 닉네임 중복 체크(다른 회원과 중복체크)
     public boolean isNicknameAvailable(String nickname) {
         Optional<Member> checkNickname = myPageRepository.findByNickname(nickname);
         if(!checkNickname.isPresent()) {
@@ -95,4 +95,14 @@ public class MyPageService {
         myPageRepository.save(member);
         return true;
     }
+
+    // 동일 주소 중복값 체크
+//    public boolean addressDuplicateCheck(String email) {
+//        List<Member> memberList = myPageRepository.findByUsername(email);
+//        if(memberList.isEmpty()) {
+//            throw new IllegalArgumentException();
+//        }
+//        Member member
+//
+//    }
 }

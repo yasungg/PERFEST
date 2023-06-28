@@ -59,6 +59,6 @@ public class MyPageController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-
+    // 동일 회원 주소 중복값 체크
 
 }
