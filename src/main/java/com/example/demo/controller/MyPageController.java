@@ -43,7 +43,7 @@ public class MyPageController {
     }
 
     // 회원 탈퇴
-    @PostMapping(value = "del")
+    @PostMapping(value = "/del")
     public ResponseEntity<Boolean> deleteMember(@RequestBody Map<String, Object> updateData) {
         String email = (String) updateData.get("username");
         boolean result = myPageService.deleteMember(email);
@@ -51,7 +51,7 @@ public class MyPageController {
     }
 
     // 회원 주소 수정
-    @PostMapping(value = "updateAdd")
+    @PostMapping(value = "/updateAdd")
     public ResponseEntity<Boolean> updateAddress(@RequestBody Map<String, Object> updateData) {
         String email = (String) updateData.get("username");
         String address = (String) updateData.get("address");
