@@ -83,4 +83,16 @@ public class MyPageService {
         myPageRepository.save(member);
         return true;
     }
+
+    // 회원 주소 수정
+    public boolean updateAddress(String email, String address) {
+        List<Member> memberList = myPageRepository.findByUsername(email);
+        if(memberList.isEmpty()) {
+            throw new IllegalArgumentException("회원 없음");
+        }
+        Member member = memberList.get(0);
+        member.setAddress(address);
+        myPageRepository.save(member);
+        return true;
+    }
 }

@@ -50,5 +50,15 @@ public class MyPageController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    // 회원 주소 수정
+    @PostMapping(value = "updateAdd")
+    public ResponseEntity<Boolean> updateAddress(@RequestBody Map<String, Object> updateData) {
+        String email = (String) updateData.get("username");
+        String address = (String) updateData.get("address");
+        boolean result = myPageService.updateAddress(email, address);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+
 
 }
