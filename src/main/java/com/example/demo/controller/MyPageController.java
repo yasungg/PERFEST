@@ -43,4 +43,10 @@ public class MyPageController {
     }
 
     // 회원 탈퇴
+    @PostMapping(value = "del")
+    public ResponseEntity<Boolean> deleteMember(@RequestBody Map<String, Object> updateData) {
+        String email = (String) updateData.get("username");
+        boolean result = myPageService.deleteMember(email);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }

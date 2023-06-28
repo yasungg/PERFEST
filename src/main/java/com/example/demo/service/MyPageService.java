@@ -72,9 +72,15 @@ public class MyPageService {
     }
 
     // 회원 탈퇴
-//    public boolean deleteMember(String email) {
-//        List<Member> memberList = myPageRepository.findByUsername(email);
-//        List<MemberDTO> memberDTOS = new ArrayList<>();
-//
-//    }
+    @Transactional
+    public boolean deleteMember(String email) {
+        List<Member> memberList = myPageRepository.findByUsername(email);
+        if(memberList.isEmpty()) {
+            throw new IllegalArgumentException("회원 없음");
+        }
+        Member member = memberList.get(0);
+        member.setIsDelete("Y");
+        myPageRepository.save(member);
+        return true;
+    }
 }
