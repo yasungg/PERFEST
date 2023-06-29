@@ -45,13 +45,24 @@ public class MyPageService {
         return memberDTOS;
     }
 
-    //회원 닉네임 수정
+    // 욕설 또는 비속어 필터링 기능
+    public boolean containsProfanity(String text) {
+        String profanityPattern = "(시발|개새끼|병신|씨발)";
+        return text.matches(".*(" + profanityPattern + ").*");
+    }
+
+
+    // 회원 닉네임 수정
     public boolean updateNickname(String email, String newNickname) {
         List<Member> members = myPageRepository.findByUsername(email);
         if (!members.isEmpty()) {
             Member member = members.get(0);
             Optional<Member> existingMemberWithNewNickname = myPageRepository.findByNickname(newNickname);
             if (!existingMemberWithNewNickname.isPresent()) {
+                if (containsProfanity(newNickname)) {
+                    // 닉네임에 욕설 또는 비속어가 포함되어 있는 경우
+                    return false;
+                }
                 member.setNickname(newNickname);
                 System.out.println(newNickname + "닉네임 변경@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
                 myPageRepository.save(member);
