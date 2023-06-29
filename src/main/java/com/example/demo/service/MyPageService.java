@@ -112,4 +112,6 @@ public class MyPageService {
         return true; // 회원이 존재하지 않을 때도 true 로 처리
     }
 
+    // 회원
+
 }
