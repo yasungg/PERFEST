@@ -61,10 +61,18 @@ public class MyPageService {
         return false;
     }
 
-    // 닉네임 중복 체크(다른 회원과 중복체크)
+    // 닉네임 중복 체크
     public boolean isNicknameAvailable(String nickname) {
-        Optional<Member> checkNickname = myPageRepository.findByNickname(nickname);
-        return !checkNickname.isPresent();
+        // 대소문자를 구분하지 않기 위해 닉네임을 소문자로 변환
+        String lowercaseNickname = nickname.toLowerCase();
+        // 동일한 닉네임을 가진 다른 회원을 조회
+        Optional<Member> existingMember = myPageRepository.findByNickname(lowercaseNickname);
+        // 동일 닉네임이 있는 경우에는 중복된 닉네임이 있다고 판단하여 false 를 반환
+        if (existingMember.isPresent()) {
+            return false;
+        }
+        // 동일 닉네임이 없는 경우에는 중복된 닉네임이 없다고 판단하여 true 를 반환
+        return true;
     }
 
     // 회원 탈퇴
