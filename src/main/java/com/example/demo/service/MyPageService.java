@@ -64,7 +64,7 @@ public class MyPageService {
                     return false;
                 }
                 member.setNickname(newNickname);
-                System.out.println(newNickname + "닉네임 변경@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                log.info(newNickname + " => 로 닉네임 변경완료");
                 myPageRepository.save(member);
                 return true;
             }
