@@ -31,7 +31,7 @@ public class TokenProvider {
 
     // 주의점: 여기서 @Value는 `springframework.beans.factory.annotation.Value`소속이다! lombok의 @Value와 착각하지 말것!
     public TokenProvider(@Value("${springboot.jwt.secret}") String secretKey) {
-        this.key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+        this.key = Keys.hmacShaKeyFor(secretKey.getBytes());
     }
 
     // 토큰 생성
@@ -92,6 +92,7 @@ public class TokenProvider {
             return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
             log.info("잘못된 JWT 서명입니다.");
+            e.printStackTrace();
         } catch (ExpiredJwtException e) {
             log.info("만료된 JWT 토큰입니다.");
         } catch (UnsupportedJwtException e) {

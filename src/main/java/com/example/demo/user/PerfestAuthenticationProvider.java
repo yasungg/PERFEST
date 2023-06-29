@@ -21,7 +21,7 @@ public class PerfestAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String memberId = (String) authentication.getPrincipal();
         String password = (String) authentication.getCredentials();
-
+        log.info("memberId in memberAuthProvider = {}", memberId);
         PerfestUserDetails userDetails = (PerfestUserDetails) perfestUserDetailsService.loadUserByUsername(memberId);
         String dbPassword = userDetails.getPassword();
         log.info("password from database = {}", dbPassword);

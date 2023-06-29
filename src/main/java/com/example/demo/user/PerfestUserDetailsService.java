@@ -21,11 +21,10 @@ public class PerfestUserDetailsService implements UserDetailsService {
     private final MemberRepository memberRepository;
 
     @Override
-    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.info("loadUserByUsername = {}", memberRepository.findByUsername(username));
-        Member member = memberRepository.findByUsername(username).get();
         if(memberRepository.findByUsername(username).isPresent()) {
+            Member member = memberRepository.findByUsername(username).get();
             return new PerfestUserDetails(member);
         }
         throw new UsernameNotFoundException("사용자를 찾을 수 없습니다!");

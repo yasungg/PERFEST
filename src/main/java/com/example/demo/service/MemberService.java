@@ -62,6 +62,7 @@ public class MemberService {
     }
 
     public TokenDTO login(MemberRequestDTO requestDto) {
+        log.info("id = {}", requestDto.getUsername());
         UsernamePasswordAuthenticationToken authenticationToken = requestDto.toAuthentication();
 
         Authentication authentication = provider.authenticate(authenticationToken);
