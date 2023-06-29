@@ -47,7 +47,7 @@ public class MyPageService {
 
     // 욕설 또는 비속어 필터링 기능
     public boolean containsProfanity(String text) {
-        String profanityPattern = "(시발|개새끼|병신|씨발)";
+        String profanityPattern = "(븅신|개새끼|병신|씨발)";
         return text.matches(".*(" + profanityPattern + ").*");
     }
 
