@@ -64,11 +64,7 @@ public class MyPageService {
     // 닉네임 중복 체크(다른 회원과 중복체크)
     public boolean isNicknameAvailable(String nickname) {
         Optional<Member> checkNickname = myPageRepository.findByNickname(nickname);
-        if(!checkNickname.isPresent()) {
-            System.out.println("중복되지 않은 닉네임");
-            return true;
-        }
-        return false;
+        return !checkNickname.isPresent();
     }
 
     // 회원 탈퇴
