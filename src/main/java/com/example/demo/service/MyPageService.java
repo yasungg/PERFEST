@@ -53,7 +53,7 @@ public class MyPageService {
             Optional<Member> existingMemberWithNewNickname = myPageRepository.findByNickname(newNickname);
             if (!existingMemberWithNewNickname.isPresent()) {
                 member.setNickname(newNickname);
-                System.out.println(newNickname + "닉 변경");
+                System.out.println(newNickname + "닉네임 변경@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
                 myPageRepository.save(member);
                 return true;
             }
@@ -69,6 +69,7 @@ public class MyPageService {
         Optional<Member> existingMember = myPageRepository.findByNickname(lowercaseNickname);
         // 동일 닉네임이 있는 경우에는 중복된 닉네임이 있다고 판단하여 false 를 반환
         if (existingMember.isPresent()) {
+            System.out.println("닉네임 중복");
             return false;
         }
         // 동일 닉네임이 없는 경우에는 중복된 닉네임이 없다고 판단하여 true 를 반환
