@@ -3,6 +3,7 @@ package com.example.demo.entity;
 import com.example.demo.constant.Authority;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -18,17 +19,18 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-
     @Column(name = "username", unique = true) // 이메일;
     private String username;
 
-    @Column(nullable = false)
+    @Column
+    @NotNull
     private String password;
 
     @Column(name = "member_name")
     private String memberName;
 
-    @Column(unique = true, nullable = false, length = 20)
+    @Column(unique = true,  length = 20)
+    @NotNull
     private String nickname;
 
     @Column(name = "address") // 주소

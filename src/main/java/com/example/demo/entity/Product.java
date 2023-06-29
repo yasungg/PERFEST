@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.ColumnDefault;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -21,17 +22,21 @@ public class Product {
     @JoinColumn(name = "festival_id")
     private Festival festival;
 
-    @Column(name = "product_name", nullable = false, unique = true)
+    @Column(name = "product_name",  unique = true)
+    @NotNull
     private String productName;
 
-    @Column(name = "product_desc", nullable = false)
+    @Column(name = "product_desc")
+    @NotNull
     private String productDesc;
 
-    @Column(name = "product_price", nullable = false)
+    @Column(name = "product_price")
+    @NotNull
     @ColumnDefault("0")
     private BigDecimal productPrice;
 
-    @Column(name = "product_quantity", nullable = false)
+    @Column(name = "product_quantity")
+    @NotNull
     @ColumnDefault("0")
     private String productQuantity;
 }
