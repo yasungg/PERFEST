@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.CommunityDTO;
 import com.example.demo.dto.MemberDTO;
+import com.example.demo.entity.Community;
 import com.example.demo.service.MyPageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -65,4 +67,13 @@ public class MyPageController {
         boolean isDuplicate = myPageService.isAddressAlreadyRegisteredForSelf(email, address);
         return new ResponseEntity<>(isDuplicate, HttpStatus.OK);
     }
+
+    // 마이페이지 내 게시글 조회
+    @GetMapping("/communities")
+    public ResponseEntity<List<CommunityDTO>> getCommunitiesByMemberId(@RequestParam("memberId") Long memberId) {
+        List<CommunityDTO> communities = myPageService.getCommunitiesByMemberId(memberId);
+        return new ResponseEntity<>(communities, HttpStatus.OK);
+    }
+
+
 }

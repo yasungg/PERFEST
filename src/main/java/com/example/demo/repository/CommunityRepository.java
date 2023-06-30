@@ -20,4 +20,10 @@ public interface CommunityRepository extends JpaRepository<Community, Long> {
     // 게시판 내림차순 정렬
     List<Community> findByOrderByWrittenTimeDesc();
 
+    // 회원이 쓴 게시글 조회
+    List<Community> findByMemberId(Long memberId);
+
+    // 게시글 삭제
+
+
 }
