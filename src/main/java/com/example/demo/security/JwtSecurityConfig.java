@@ -1,5 +1,6 @@
 package com.example.demo.security;
 
+import com.example.demo.jwt.JwtExceptionFilter;
 import com.example.demo.jwt.JwtFilter;
 import com.example.demo.jwt.TokenProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,8 +16,10 @@ public class JwtSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurity
     private final ObjectMapper objectMapper;
     @Override
     public void configure(HttpSecurity http) {
-        JwtFilter customFilter = new JwtFilter(tokenProvider, objectMapper);
-        http.addFilterBefore(customFilter, UsernamePasswordAuthenticationFilter.class);
+        JwtFilter jwtFilter= new JwtFilter(tokenProvider);
+        JwtExceptionFilter jwtExceptionFilter = new JwtExceptionFilter(objectMapper);
+        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtExceptionFilter, JwtFilter.class);
     }
 
 

@@ -1,15 +1,15 @@
 package com.example.demo.security;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
+@RequiredArgsConstructor
 public class ApiError {
-    private HttpStatus httpStatus;
-    private String message;
-
-    public ApiError(HttpStatus httpStatus, String message) {
-        this.httpStatus = httpStatus;
-        this.message = message;
-    }
+    private final HttpStatus httpStatus;
+    private final String message;
+    private final ObjectMapper objectMapper;
 
     public HttpStatus getHttpStatus() {
         return httpStatus;
@@ -17,5 +17,14 @@ public class ApiError {
 
     public String getMessage() {
         return message;
+    }
+
+    public String convertToJSON() {
+        try {
+            return objectMapper.writeValueAsString(new ApiError(httpStatus, message, objectMapper));
+        } catch(JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        throw new RuntimeException("ApiError RuntimeException!!");
     }
 }

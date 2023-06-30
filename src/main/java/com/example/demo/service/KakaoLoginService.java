@@ -153,7 +153,9 @@ public class KakaoLoginService {
                 .retrieve()
                 .toEntity(String.class)
                 .block();
+
         log.info("memberInfoResponse = {}", memberInfoResponse.getBody());
+
         try {
             KakaoMemberInfoDTO profile = objectMapper.readValue(
                     memberInfoResponse.getBody(),
