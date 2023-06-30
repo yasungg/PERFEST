@@ -143,7 +143,8 @@ public class MyPageService {
         List<CommunityDTO> communityDTOS = new ArrayList<>();
         for(Community community : communityList) {
             CommunityDTO communityDTO = new CommunityDTO();
-            communityDTO.setMemberId(community.getId());
+            communityDTO.setCommunityId(community.getId());
+            communityDTO.setMemberId(community.getMember().getId());
             communityDTO.setCommunityCategory(String.valueOf(community.getCommunityCategory()));
             communityDTO.setCommunityDesc(community.getCommunityDesc());
             communityDTO.setCommunityTitle(community.getCommunityTitle());
