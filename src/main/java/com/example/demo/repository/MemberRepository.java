@@ -14,5 +14,5 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     // 큰손 랭킹
     List<Member> findAllByOrderByTotalPriceDesc();
     // 뱃지 수 랭킹
-    List<Member> findAllByOrderByBagesDesc();
+    List<Member> findAllByOrderByBadgesDesc();
 }
