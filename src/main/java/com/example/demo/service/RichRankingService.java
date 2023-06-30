@@ -18,7 +18,7 @@ import java.util.List;
 public class RichRankingService {
     private final MemberRepository memberRepository;
     public List<RichRankingDTO> getRichRankingList() {
-        List<Member> memberList = memberRepository.findAllByOrderByTotalPriceDesc();
+        List<Member> memberList = memberRepository.findAllByOrderByBagesDesc();
         List<RichRankingDTO> richRankingDTOS = new ArrayList<>();
         for(Member member: memberList) {
             RichRankingDTO richRankingDTO = new RichRankingDTO();

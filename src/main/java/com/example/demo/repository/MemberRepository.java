@@ -11,5 +11,8 @@ import java.util.Optional;
 public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByUsername(String email);
     Optional<Member> findById(Long id);
+    // 큰손 랭킹
     List<Member> findAllByOrderByTotalPriceDesc();
+    // 뱃지 수 랭킹
+    List<Member> findAllByOrderByBagesDesc();
 }
