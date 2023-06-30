@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.CommentDTO;
 import com.example.demo.dto.CommunityDTO;
 import com.example.demo.dto.MemberDTO;
 import com.example.demo.entity.Community;
@@ -82,7 +83,10 @@ public class MyPageController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-
-
-
+    // 마이페이지 내 댓글 조회
+    @GetMapping("/comments")
+    public ResponseEntity<List<CommentDTO>> getCommentsByMemberId(@RequestParam("memberId") Long memberId) {
+        List<CommentDTO> comments = myPageService.getCommentByMemberId(memberId);
+        return new ResponseEntity<>(comments, HttpStatus.OK);
+    }
 }

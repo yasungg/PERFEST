@@ -3,8 +3,10 @@ package com.example.demo.service;
 import com.example.demo.dto.CommentDTO;
 import com.example.demo.dto.CommunityDTO;
 import com.example.demo.dto.MemberDTO;
+import com.example.demo.entity.Comment;
 import com.example.demo.entity.Community;
 import com.example.demo.entity.Member;
+import com.example.demo.repository.CommentRepository;
 import com.example.demo.repository.CommunityRepository;
 import com.example.demo.repository.MyPageRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +30,7 @@ import java.util.Optional;
 public class MyPageService {
     private final MyPageRepository myPageRepository;
     private final CommunityRepository communityRepository;
+    private final CommentRepository commentRepository;
 
     // 회원 이메일로 회원정보 조회
     public List<MemberDTO> getMemberByEmail(String email) {
@@ -166,6 +169,27 @@ public class MyPageService {
         }
         return true;
     }
-    //
+
+    // 마이페이지 내 댓글 조회
+    public List<CommentDTO> getCommentByMemberId(Long memberId) {
+        List<Comment> commentList = commentRepository.findByMemberId(memberId);
+        List<CommentDTO> commentDTOS = new ArrayList<>();
+        for (Comment comment : commentList) {
+            if (comment.getMember() != null && comment.getCommunity() != null) {
+                CommentDTO commentDTO = new CommentDTO();
+                commentDTO.setCommentId(comment.getId());
+                commentDTO.setMemberId(comment.getMember().getId());
+                commentDTO.setCommunityId(comment.getCommunity().getId());
+                commentDTO.setCommentBody(comment.getCommentBody());
+                commentDTO.setCommentWrittenTime(comment.getCommentWrittenTime());
+                commentDTO.setCommentLikeCount(comment.getCommentLikeCount());
+
+                commentDTOS.add(commentDTO);
+            }
+        }
+        return commentDTOS;
+    }
+
+
 
 }

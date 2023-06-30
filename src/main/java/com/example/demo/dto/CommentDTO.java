@@ -11,6 +11,8 @@ import java.util.List;
 @Setter
 public class CommentDTO {
     private Long commentId;
+    private Long memberId;
+    private Long communityId; // 안쓰면 지울예정
     private String commentBody;
     private LocalDateTime commentWrittenTime;
     private int commentLikeCount;
