@@ -2,8 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dto.RichRankingDTO;
 import com.example.demo.entity.Member;
-import com.example.demo.entity.RichRanking;
-import com.example.demo.repository.RichRankingRepository;
+import com.example.demo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,24 +16,21 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class RichRankingService {
-    private final RichRankingRepository richRankingRepository;
-
-    // 큰손 랭킹 가져오기(GET)
+    private final MemberRepository memberRepository;
     public List<RichRankingDTO> getRichRankingList() {
-        List<RichRanking> richRankingList = richRankingRepository.findAllByOrderByMemberTotalPriceAsc();
+        List<Member> memberList = memberRepository.findAllByOrderByTotalPriceDesc();
         List<RichRankingDTO> richRankingDTOS = new ArrayList<>();
-        for (RichRanking richRanking : richRankingList) {
+        for(Member member: memberList) {
             RichRankingDTO richRankingDTO = new RichRankingDTO();
-            richRankingDTO.setRichRank(richRanking.getRichRank());
-
-            Member member = richRanking.getMember();
-            if (member != null) {
-                richRankingDTO.setNickName(member.getNickname());
-            }
-
+            richRankingDTO.setMemberId(member.getId());
+            richRankingDTO.setNickname(member.getNickname());
+            richRankingDTO.setTotalPrice(member.getTotalPrice());
             richRankingDTOS.add(richRankingDTO);
         }
         return richRankingDTOS;
     }
 
 }
+
+
+
