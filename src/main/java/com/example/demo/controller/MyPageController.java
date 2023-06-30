@@ -75,4 +75,14 @@ public class MyPageController {
         return new ResponseEntity<>(communities, HttpStatus.OK);
     }
 
+    // 마이페이지에서 특정 회원의 게시글 삭제
+    @DeleteMapping("/deleteMyCommunities")
+    public ResponseEntity<Boolean> deleteCommunitiesByMemberId(@RequestParam("memberId") Long memberId) {
+        boolean result = myPageService.deleteCommunityPostsByMemberId(memberId);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+
+
+
 }

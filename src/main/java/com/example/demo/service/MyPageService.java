@@ -158,7 +158,14 @@ public class MyPageService {
     }
 
     // 마이페이지 내 게시글 삭제
-
-
+    @Transactional
+    public boolean deleteCommunityPostsByMemberId(Long memberId) {
+        List<Community> communityList = communityRepository.findByMemberId(memberId);
+        for (Community community : communityList) {
+            communityRepository.delete(community);
+        }
+        return true;
+    }
+    //
 
 }
