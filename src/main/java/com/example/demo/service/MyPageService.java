@@ -1,7 +1,11 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.CommentDTO;
+import com.example.demo.dto.CommunityDTO;
 import com.example.demo.dto.MemberDTO;
+import com.example.demo.entity.Community;
 import com.example.demo.entity.Member;
+import com.example.demo.repository.CommunityRepository;
 import com.example.demo.repository.MyPageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +27,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MyPageService {
     private final MyPageRepository myPageRepository;
+    private final CommunityRepository communityRepository;
 
     // 회원 이메일로 회원정보 조회
     public List<MemberDTO> getMemberByEmail(String email) {
@@ -31,6 +36,7 @@ public class MyPageService {
 
         for (Member member : memberList) {
             MemberDTO memberDTO = new MemberDTO();
+            memberDTO.setId(member.getId()); // 회원식별자
             memberDTO.setEmail(member.getUsername()); // 이메일;
             memberDTO.setMemberName(member.getMemberName()); // 이름
             memberDTO.setNickName(member.getNickname());
@@ -131,7 +137,23 @@ public class MyPageService {
         return true; // 회원이 존재하지 않을 때도 true 로 처리
     }
 
-    // 마이페이지 내 큰손 랭킹 조회
+    // 마이페이지 내 게시글 조회
+    public List<CommunityDTO> getCommunitiesByMemberId(Long memberId) {
+        List<Community> communityList = communityRepository.findByMemberId(memberId);
+        List<CommunityDTO> communityDTOS = new ArrayList<>();
+        for(Community community : communityList) {
+            CommunityDTO communityDTO = new CommunityDTO();
+            communityDTO.setMemberId(community.getId());
+            communityDTO.setCommunityCategory(String.valueOf(community.getCommunityCategory()));
+            communityDTO.setCommunityDesc(community.getCommunityDesc());
+            communityDTO.setCommunityTitle(community.getCommunityTitle());
+            communityDTO.setCommunityImgLink(community.getCommunityImgLink());
+            communityDTO.setLikeCount(community.getLikeCount());
+            communityDTO.setWrittenTime(community.getWrittenTime());
 
+            communityDTOS.add(communityDTO);
+        }
+        return communityDTOS;
+    }
 
 }
