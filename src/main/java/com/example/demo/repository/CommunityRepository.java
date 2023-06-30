@@ -23,4 +23,7 @@ public interface CommunityRepository extends JpaRepository<Community, Long> {
     // 회원이 쓴 게시글 조회
     List<Community> findByMemberId(Long memberId);
 
+    // 게시글 삭제
+
+
 }
