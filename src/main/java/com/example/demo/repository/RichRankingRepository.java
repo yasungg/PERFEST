@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface RichRankingRepository extends JpaRepository<RichRanking, Long> {
     // 랭킹 전체 조회
-    List<RichRanking> findAllByOrderByRichRankDesc();
+    List<RichRanking> findAllByOrderByMemberTotalPriceAsc();
 }

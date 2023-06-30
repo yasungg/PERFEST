@@ -6,4 +6,5 @@ import lombok.Setter;
 @Getter @Setter
 public class RichRankingDTO {
     private int richRank;
+    private String nickName;
 }
