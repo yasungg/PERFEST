@@ -158,18 +158,7 @@ public class MyPageService {
     }
 
     // 마이페이지 내 게시글 삭제
-    @Transactional
-    public boolean deleteMyPost(Long memberId, Long communityId) {
-        List<Member> memberList = myPageRepository.findByMemberId(memberId); // 삭제할수도?
-        List<Community> communityList = communityRepository.findByMemberId(memberId);
-        if(communityList.isEmpty()) {
-            throw new IllegalArgumentException("내 게시글이 아예없습니다");
-        }
-        Community community = communityList.get(0);
-        // 삭제 로직 어케하지..
-        return true;
-    }
 
-    // 마이페이지 내 게시글 삭제
+
 
 }

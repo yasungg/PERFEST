@@ -20,7 +20,7 @@ public interface MyPageRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByNickname(String nickname);
 
     // 회원 식별자로 회원조회
-    List<Member> findByMemberId(Long id);
+
 
 
 

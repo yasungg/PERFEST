@@ -75,5 +75,4 @@ public class MyPageController {
         return new ResponseEntity<>(communities, HttpStatus.OK);
     }
 
-
 }
