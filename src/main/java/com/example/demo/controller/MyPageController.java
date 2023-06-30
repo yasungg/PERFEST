@@ -89,4 +89,11 @@ public class MyPageController {
         List<CommentDTO> comments = myPageService.getCommentByMemberId(memberId);
         return new ResponseEntity<>(comments, HttpStatus.OK);
     }
+
+    // 마이페이지 내 댓글 삭제
+    @DeleteMapping("/deleteMyComments")
+    public ResponseEntity<Boolean> deleteCommentsByMemberId(@RequestParam("memberId") Long memberId) {
+        boolean result = myPageService.deleteCommentPostsByMemberId(memberId);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }

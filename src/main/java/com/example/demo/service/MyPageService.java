@@ -190,6 +190,16 @@ public class MyPageService {
         return commentDTOS;
     }
 
+    // 마이페이지 내 댓글 삭제
+    @Transactional
+    public boolean deleteCommentPostsByMemberId(Long memberId) {
+        List<Comment> commentList = commentRepository.findByMemberId(memberId);
+        for(Comment comment : commentList) {
+            commentRepository.delete(comment);
+        }
+        return true;
+    }
+
 
 
 }
