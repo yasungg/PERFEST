@@ -12,7 +12,5 @@ import lombok.NoArgsConstructor;
 public class TokenDTO {
     private String grantType;       // 토큰 유형
     private String accessToken;     // 실제 사용되는 토큰
-    private String refreshToken;
     private Long tokenExpiresIn;    // 만료 시간
-    private Long refreshTokenExpiresIn;
 }

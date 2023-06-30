@@ -42,7 +42,7 @@ public class KakaoLoginService {
     private String kakaoRedirectUri;
 
     //카카오 서버에 access token 요청
-    public void requestAccessToken(String authCode) {
+    public void requestKakaoAccessToken(String authCode) {
         MultiValueMap<String, String> parameter = makeAccessTokenParams(authCode);
         try {
             getTokens(parameter);

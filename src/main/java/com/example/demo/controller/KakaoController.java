@@ -24,13 +24,16 @@ public class KakaoController {
     // authorization code를 받아옴
     @GetMapping("/kakao")
     public String redirectKakaoLogin(@RequestParam(value = "code") String authCode, RedirectAttributes redirectAttributes) {
-        kakaoLoginService.requestAccessToken(authCode); // access token을 신청하고 받아와서 세션에 저장
+        kakaoLoginService.requestKakaoAccessToken(authCode); // access token을 신청하고 받아와서 세션에 저장
+
         if (kakaoLoginService.kakaoCheckIsMember()) {
             String jwt = kakaoLoginService.stringifyJWT(memberService.kakaoLogin());
             log.info("JWT = {}", kakaoLoginService.stringifyJWT(memberService.kakaoLogin()));
+
             redirectAttributes.addAttribute("isKakao", true);
             redirectAttributes.addAttribute("needSignup", false);
             redirectAttributes.addAttribute("jwt", jwt);
+
             return "redirect:http://localhost:3000/";
         }
         return "redirect:" + UriComponentsBuilder.fromUriString("http://localhost:3000/login")
