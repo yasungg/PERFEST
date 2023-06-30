@@ -15,7 +15,7 @@ import java.util.Map;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @Slf4j
-@RequestMapping("/payment")
+@RequestMapping("/auth/payment")
 @RequiredArgsConstructor
 public class PaymentController {
     private final PaymentService paymentService;
@@ -23,15 +23,16 @@ public class PaymentController {
     @PostMapping(value = "/regist")
     public ResponseEntity<Boolean> registPayment(@RequestBody Map<String, Object> paymentData) {
         System.out.println("registPayment 메소드 실행");
-        Long MemberId = (Long) paymentData.get("member_Id");
-        Long productId = (Long) paymentData.get("product_Id");
+        int memberId = (int) paymentData.get("memberId");
+        int productId = (int) paymentData.get("productId");
         int price = (int) paymentData.get("price");
         int quantity = (int) paymentData.get("quantity");
-        String tid = (String) paymentData.get("tid");
+        String tid = paymentData.get("tid").toString();
         int tax_free_amount = (int) paymentData.get("tax_free");
 
-        boolean result = paymentService.insertPaymentInfo(MemberId, productId, price, quantity, tid, tax_free_amount, PaymentStatus.PAID);
+        boolean result = paymentService.insertPaymentInfo((long)memberId, (long)productId, price, quantity, tid, tax_free_amount, PaymentStatus.PAID);
         System.out.println("registPayment 메소드 실행 결과 : " + result);
+        System.out.println("memberId:"+ memberId);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
