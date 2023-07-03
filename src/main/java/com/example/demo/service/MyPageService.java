@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +34,8 @@ public class MyPageService {
     private final CommunityRepository communityRepository;
     private final CommentRepository commentRepository;
     private final PaymentRepository paymentRepository;
+    @PersistenceContext
+    private EntityManager entityManager;
 
     // 회원 이메일로 회원정보 조회
     public List<MemberDTO> getMemberByEmail(String email) {
@@ -225,12 +229,22 @@ public class MyPageService {
         return true;
     }
 
-    // 마이페이지 내 큰손랭킹 조회
-//    public List<RichRankingDTO> getRichRankingByMemberId(Long memberId) {
-//
-//    }
+    // totalPrice 기준으로 회원 큰손랭킹 조회
+    public List<Member> getMemberPayRanking() {
+        String query = "SELECT m, " +
+                "(SELECT COUNT(*) FROM Member m2 WHERE m2.totalPrice >= m.totalPrice) AS rank " +
+                "FROM Member m ORDER BY m.totalPrice DESC";
 
+        return entityManager.createQuery(query, Member.class)
+                .getResultList();
+    }
 
+    // badge 개수 기준으로 회원 뱃지랭킹 조회
+    public List<Member> getMemberBadgeRanking() {
+        String query = "";
 
+        return entityManager.createQuery(query, Member.class)
+                .getResultList();
+    }
 
 }
