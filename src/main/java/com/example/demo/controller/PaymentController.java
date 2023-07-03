@@ -28,7 +28,9 @@ public class PaymentController {
         int price = (int) paymentData.get("price");
         int quantity = (int) paymentData.get("quantity");
         String tid = paymentData.get("tid").toString();
+        System.out.println("tid값 : " + tid);
         int tax_free_amount = (int) paymentData.get("tax_free");
+
 
         boolean result = paymentService.insertPaymentInfo((long)memberId, (long)productId, price, quantity, tid, tax_free_amount, PaymentStatus.PAID);
         System.out.println("registPayment 메소드 실행 결과 : " + result);
