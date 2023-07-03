@@ -113,7 +113,6 @@ public class MyPageController {
         member.setId(memberId);
 
         int ranking = myPageService.getRankingByTotalPrice(member);
-
         return ResponseEntity.ok(ranking);
     }
 
