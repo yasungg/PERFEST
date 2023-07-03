@@ -25,7 +25,6 @@ import java.util.List;
 public class ReviewService {
     private final ReviewRepository reviewRepository;
 
-    @PostMapping(value = "/writereview")
     // 리뷰 작성(POST)
     public boolean insertReview(Long festivalId, String reviewTitle, String reviewContent, String reviewImg) {
         Festival festival = new Festival();
@@ -54,4 +53,6 @@ public class ReviewService {
         }
         return reviewDTOS;
     }
+    // 해당 축제의 리뷰 갯수 가져오기(GET)
+    public long getReviewCount(Long festivalId) {return reviewRepository.countByFestivalId(festivalId);}
 }

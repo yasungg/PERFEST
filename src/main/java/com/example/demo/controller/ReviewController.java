@@ -20,7 +20,7 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     // 리뷰 작성(POST)
-    @PostMapping(value = "writereview")
+    @PostMapping(value = "/writereview")
     public ResponseEntity<Boolean> reviewInsert(@RequestBody Map<String, Object> reviewData) {
         String festivalId = (String)reviewData.get("festivalId");
         String reviewTitle = (String)reviewData.get("reviewTitle");
@@ -35,4 +35,11 @@ public class ReviewController {
         List<ReviewDTO> list = reviewService.getReviewList((long) festivalId);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
+    // 해당 축제의 리뷰 갯수 가져오기(GET)
+    @GetMapping(value = "/reviewcount")
+    public ResponseEntity<Long> reviewCount(@RequestParam String festivalId) {
+        long result = reviewService.getReviewCount(Long.parseLong(festivalId));
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
 }

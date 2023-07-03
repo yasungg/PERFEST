@@ -10,4 +10,6 @@ import java.util.List;
 public interface ReviewRepository extends JpaRepository<Review, Long> {
     // 해당 축제에 맞는 리뷰를 가져오기 위해서
     List<Review> findByFestivalId(Long festivalId);
+    // 해당 축제의 리뷰 갯수 가져오기
+    long countByFestivalId(Long festivalId);
 }
