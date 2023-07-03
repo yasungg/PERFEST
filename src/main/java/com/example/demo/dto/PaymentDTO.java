@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 public class PaymentDTO {
     private Long paymentId;
     private Long memberId;
+    private Long productId;
     private Product product;
     private Member member;
     private int price;
@@ -19,6 +20,6 @@ public class PaymentDTO {
     private String tid;
     private int tax_free_amount;
     private LocalDateTime create_date;
-    private PaymentStatus paymentStatus;
+    private String paymentStatus;
     private LocalDateTime cancel_date;
 }

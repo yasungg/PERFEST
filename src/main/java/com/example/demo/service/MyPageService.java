@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.util.*;
 
 @Service
 @Transactional
@@ -32,6 +32,8 @@ public class MyPageService {
     private final CommunityRepository communityRepository;
     private final CommentRepository commentRepository;
     private final PaymentRepository paymentRepository;
+    @PersistenceContext
+    private EntityManager entityManager;
 
     // 회원 이메일로 회원정보 조회
     public List<MemberDTO> getMemberByEmail(String email) {
@@ -201,10 +203,12 @@ public class MyPageService {
                 paymentDTO.setPaymentId(payment.getId());
                 paymentDTO.setMemberId(payment.getMember().getId());
                 paymentDTO.setPrice(payment.getPrice());
-                paymentDTO.setProduct(payment.getProduct());
+                paymentDTO.setProductId(payment.getProduct().getId());
                 paymentDTO.setTid(payment.getTidKey());
                 paymentDTO.setQuantity(payment.getQuantity());
                 paymentDTO.setCreate_date(payment.getCreateDate());
+                paymentDTO.setPaymentStatus(String.valueOf(payment.getPaymentStatus()));
+
 
                 paymentDTOS.add(paymentDTO);
             }
@@ -223,12 +227,19 @@ public class MyPageService {
         return true;
     }
 
-    // 마이페이지 내 큰손랭킹 조회
-//    public List<RichRankingDTO> getRichRankingByMemberId(Long memberId) {
-//
-//    }
+    // 전체 회원 큰손 랭킹 조회(totalPrice 를 기준으로 순위 조회)
+    public int getRankingByTotalPrice(Member member) {
+        List<Member> allMembers = myPageRepository.findAll();
+        // totalPrice 를 기준으로 내림차순으로 정렬
+        Collections.sort(allMembers, (m1, m2) -> m2.getTotalPrice().compareTo(m1.getTotalPrice()));
 
-
-
-
+        int myRank = 0;
+        for (int i = 0; i < allMembers.size(); i++) {
+            if (allMembers.get(i).getId().equals(member.getId())) {
+                myRank = i + 1; // 0-based index 를 1-based 순위로 변환
+                break;
+            }
+        }
+        return myRank;
+    }
 }
