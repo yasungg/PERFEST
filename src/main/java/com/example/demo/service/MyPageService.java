@@ -1,9 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.CommentDTO;
-import com.example.demo.dto.CommunityDTO;
-import com.example.demo.dto.MemberDTO;
-import com.example.demo.dto.PaymentDTO;
+import com.example.demo.dto.*;
 import com.example.demo.entity.Comment;
 import com.example.demo.entity.Community;
 import com.example.demo.entity.Member;
@@ -226,7 +223,10 @@ public class MyPageService {
         return true;
     }
 
-    //
+    // 마이페이지 내 큰손랭킹 조회
+//    public List<RichRankingDTO> getRichRankingByMemberId(Long memberId) {
+//
+//    }
 
 
 
