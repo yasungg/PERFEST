@@ -19,9 +19,16 @@ public interface MyPageRepository extends JpaRepository<Member, Long> {
     // 전체 회원 닉네임 조회 (닉네임 수정을 위한)
     Optional<Member> findByNickname(String nickname);
 
-    // 회원 식별자로 회원조회
+    // 전체 회원 조회
+    List<Member> findAll();
 
+    // 내 큰손 랭킹 조회(totalPrice 를 기준으로 순위 조회)
+    @Query("SELECT m, " +
+            "(SELECT COUNT(*) FROM Member m2 WHERE m2.totalPrice >= m.totalPrice) AS rank " +
+            "FROM Member m WHERE m.username = :email")
+    List<Member> getMemberRankingByTotalPrice(@Param("email") String email);
 
+    // 내 뱃지 랭킹 조회 (badges 를 기준으로 순위 조회)
 
 
 

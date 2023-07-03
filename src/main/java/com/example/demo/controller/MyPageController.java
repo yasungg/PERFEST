@@ -5,6 +5,7 @@ import com.example.demo.dto.CommunityDTO;
 import com.example.demo.dto.MemberDTO;
 import com.example.demo.dto.PaymentDTO;
 import com.example.demo.entity.Community;
+import com.example.demo.entity.Member;
 import com.example.demo.service.MyPageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -103,5 +104,16 @@ public class MyPageController {
     public ResponseEntity<List<PaymentDTO>> getPaymentsByMemberId(@RequestParam("memberId") Long memberId) {
         List<PaymentDTO> payments = myPageService.getPaymentByMemberId(memberId);
         return new ResponseEntity<>(payments, HttpStatus.OK);
+    }
+
+    // 전체 회원 큰손 랭킹 조회 API
+    @GetMapping("/ranking/{memberId}")
+    public ResponseEntity<Integer> getRankingByTotalPrice(@PathVariable Long memberId) {
+        Member member = new Member();
+        member.setId(memberId);
+
+        int ranking = myPageService.getRankingByTotalPrice(member);
+
+        return ResponseEntity.ok(ranking);
     }
 }

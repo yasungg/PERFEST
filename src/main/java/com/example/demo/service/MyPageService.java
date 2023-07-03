@@ -21,9 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional
@@ -229,24 +227,19 @@ public class MyPageService {
         return true;
     }
 
-    // totalPrice 기준으로 회원 큰손랭킹 조회
-    public List<Member> getMemberPayRanking() {
-        String query = "SELECT m, " +
-                "(SELECT COUNT(*) FROM Member m2 WHERE m2.totalPrice >= m.totalPrice) AS rank " +
-                "FROM Member m ORDER BY m.totalPrice DESC";
+    // 전체 회원 큰손 랭킹 조회(totalPrice 를 기준으로 순위 조회)
+    public int getRankingByTotalPrice(Member member) {
+        List<Member> allMembers = myPageRepository.findAll();
+        // totalPrice 를 기준으로 내림차순으로 정렬
+        Collections.sort(allMembers, (m1, m2) -> m2.getTotalPrice().compareTo(m1.getTotalPrice()));
 
-        return entityManager.createQuery(query, Member.class)
-                .getResultList();
+        int myRank = 0;
+        for (int i = 0; i < allMembers.size(); i++) {
+            if (allMembers.get(i).getId().equals(member.getId())) {
+                myRank = i + 1; // 0-based index 를 1-based 순위로 변환
+                break;
+            }
+        }
+        return myRank;
     }
-
-    // badge 개수 기준으로 회원 뱃지랭킹 조회
-    public List<Member> getMemberBadgeRanking() {
-        String query = "SELECT m, " +
-                "(SELECT COUNT(*) FROM MEMBER m2 where m2.badges >= m.badges) AS rank " +
-                "FROM MEMBER m ORDER BY m.badges DESC";
-
-        return entityManager.createQuery(query, Member.class)
-                .getResultList();
-    }
-
 }
