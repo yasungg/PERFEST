@@ -94,8 +94,18 @@ public class MemberService {
         log.info("memberService.kakaoLogin authentication token check = {}", authenticationToken);
 
         Authentication authentication = kakaoAuthProvider.authenticate(authenticationToken);
-        log.info("authentication = {}", authentication);
 
+        Optional<Member> member = memberRepository.findByUsername(mail);
+        Optional<Auth> auth = authRepository.findByMemberId(member.get().getId());
+        Date refreshToken;
+
+        if(auth.isPresent() && member.isPresent()) {
+            refreshToken = auth.get().getRefreshTokenExpiresIn();
+            return tokenProvider.checkIsAlmostExpired(refreshToken) ?
+                    tokenProvider.generateTokenDTO(authentication)
+                    :
+                    tokenProvider.generateAccessToken(authentication);
+        }
         return tokenProvider.generateTokenDTO(authentication);
     }
 }

@@ -167,7 +167,6 @@ public class TokenProvider {
             throw new JwtException("401-1");
         } catch (ExpiredJwtException e) {
             log.info("만료된 access 토큰입니다.");
-            SecurityContextHolder.clearContext(); // 만료된 토큰 인증 컨텍스트 제거
             throw new JwtException("401-2");
         } catch (UnsupportedJwtException e) {
             log.info("지원되지 않는 access 토큰입니다.");
@@ -180,22 +179,28 @@ public class TokenProvider {
     // refresh token 유효성 검사
     public boolean validateRefreshToken(String token) {
         try {
-            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             Date expiredTime = parseClaims(token).getExpiration();
             log.info("access token expires in = {}", expiredTime);
 
             if(checkIsAlmostExpired(expiredTime)) { // 토큰 만료 기간이 5분 미만 남았을 경우 예외 처리
                 log.info("남은 refresh token 유효시간이 5분 미만입니다! refresh token 재발급 로직을 실행합니다.");
                 reAuthenticateRefreshToken(token);
+                return true;
             }
 
+            if((expiredTime.getTime() - System.currentTimeMillis()) < 0) {
+                log.error("refresh token이 만료되었습니다.");
+                return false;
+            }
+
+            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
             log.info("잘못된 JWT 서명입니다.");
             e.printStackTrace();
             return false;
         } catch (ExpiredJwtException e) {
-            log.info("만료된 JWT 토큰입니다.");// 만료된 토큰 인증 컨텍스트 제거
+            log.info("만료된 JWT 토큰입니다.");
             return false;
         } catch (UnsupportedJwtException e) {
             log.info("지원되지 않는 JWT 토큰입니다.");
