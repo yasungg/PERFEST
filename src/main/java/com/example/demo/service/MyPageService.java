@@ -241,7 +241,9 @@ public class MyPageService {
 
     // badge 개수 기준으로 회원 뱃지랭킹 조회
     public List<Member> getMemberBadgeRanking() {
-        String query = "";
+        String query = "SELECT m, " +
+                "(SELECT COUNT(*) FROM MEMBER m2 where m2.badges >= m.badges) AS rank " +
+                "FROM MEMBER m ORDER BY m.badges DESC";
 
         return entityManager.createQuery(query, Member.class)
                 .getResultList();
