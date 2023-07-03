@@ -9,5 +9,6 @@ import java.math.BigDecimal;
 public class BadgeRankingDTO {
     public long memberId;
     private String nickname;
-    private BigDecimal badges;
+    private int badges;
+    private int rank;
 }
