@@ -15,7 +15,7 @@ import java.util.Map;
 @CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 @RestController
 @Slf4j
-@RequestMapping("/community")
+@RequestMapping("/auth/community")
 @RequiredArgsConstructor
 public class CommunityController {
     private final CommunityService communityService;

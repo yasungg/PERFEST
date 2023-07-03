@@ -10,4 +10,5 @@ public class RichRankingDTO {
     public long memberId;
     private String nickname;
     private BigDecimal totalPrice;
+    private int rank;
 }
