@@ -22,7 +22,7 @@ public interface MyPageRepository extends JpaRepository<Member, Long> {
     // 전체 회원 조회
     List<Member> findAll();
 
-    // 내 큰손 랭킹 조회(totalPrice 를 기준으로 순위 조회)
+    // 내 큰손 랭킹 조회(totalPrice(bigDecimal) 를 기준으로 순위 조회)
     @Query("SELECT m, " +
             "(SELECT COUNT(*) FROM Member m2 WHERE m2.totalPrice >= m.totalPrice) AS rank " +
             "FROM Member m WHERE m.username = :email")

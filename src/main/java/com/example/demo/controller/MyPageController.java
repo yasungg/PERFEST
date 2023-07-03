@@ -116,4 +116,15 @@ public class MyPageController {
 
         return ResponseEntity.ok(ranking);
     }
+
+    // 전체 회원 뱃지 랭킹 조회 API
+    @GetMapping("/ranking/badges/{memberId}")
+    public ResponseEntity<Integer> getRankingByBadges(@PathVariable Long memberId) {
+        Member member = new Member();
+        member.setId(memberId);
+
+        int ranking = myPageService.getRankingByBadges(member);
+        return ResponseEntity.ok(ranking);
+    }
+
 }
