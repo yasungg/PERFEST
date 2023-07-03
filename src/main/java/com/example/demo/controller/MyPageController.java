@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.dto.CommentDTO;
 import com.example.demo.dto.CommunityDTO;
 import com.example.demo.dto.MemberDTO;
+import com.example.demo.dto.PaymentDTO;
 import com.example.demo.entity.Community;
 import com.example.demo.service.MyPageService;
 import lombok.RequiredArgsConstructor;
@@ -95,5 +96,12 @@ public class MyPageController {
     public ResponseEntity<Boolean> deleteCommentsByMemberId(@RequestParam("memberId") Long memberId) {
         boolean result = myPageService.deleteCommentPostsByMemberId(memberId);
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    // 마이페이지 내 결제 조회
+    @GetMapping("/payments")
+    public ResponseEntity<List<PaymentDTO>> getPaymentsByMemberId(@RequestParam("memberId") Long memberId) {
+        List<PaymentDTO> payments = myPageService.getPaymentByMemberId(memberId);
+        return new ResponseEntity<>(payments, HttpStatus.OK);
     }
 }
