@@ -20,6 +20,6 @@ public class PaymentDTO {
     private String tid;
     private int tax_free_amount;
     private LocalDateTime create_date;
-    private PaymentStatus paymentStatus;
+    private String paymentStatus;
     private LocalDateTime cancel_date;
 }

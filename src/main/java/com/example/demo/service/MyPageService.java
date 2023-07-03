@@ -205,6 +205,8 @@ public class MyPageService {
                 paymentDTO.setTid(payment.getTidKey());
                 paymentDTO.setQuantity(payment.getQuantity());
                 paymentDTO.setCreate_date(payment.getCreateDate());
+                paymentDTO.setPaymentStatus(String.valueOf(payment.getPaymentStatus()));
+
 
                 paymentDTOS.add(paymentDTO);
             }
