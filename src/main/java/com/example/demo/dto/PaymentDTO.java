@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Getter @Setter
 public class PaymentDTO {
     private Long paymentId;
+    private Long memberId;
     private Product product;
     private Member member;
     private int price;

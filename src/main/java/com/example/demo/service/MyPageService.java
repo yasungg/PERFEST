@@ -3,12 +3,15 @@ package com.example.demo.service;
 import com.example.demo.dto.CommentDTO;
 import com.example.demo.dto.CommunityDTO;
 import com.example.demo.dto.MemberDTO;
+import com.example.demo.dto.PaymentDTO;
 import com.example.demo.entity.Comment;
 import com.example.demo.entity.Community;
 import com.example.demo.entity.Member;
+import com.example.demo.entity.Payment;
 import com.example.demo.repository.CommentRepository;
 import com.example.demo.repository.CommunityRepository;
 import com.example.demo.repository.MyPageRepository;
+import com.example.demo.repository.PaymentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -31,6 +34,7 @@ public class MyPageService {
     private final MyPageRepository myPageRepository;
     private final CommunityRepository communityRepository;
     private final CommentRepository commentRepository;
+    private final PaymentRepository paymentRepository;
 
     // 회원 이메일로 회원정보 조회
     public List<MemberDTO> getMemberByEmail(String email) {
@@ -190,6 +194,28 @@ public class MyPageService {
         return commentDTOS;
     }
 
+    //마이페이지 내 결제 조회
+    public List<PaymentDTO> getPaymentByMemberId(Long memberId) {
+        List<Payment> paymentList = paymentRepository.findByMemberId(memberId);
+        List<PaymentDTO> paymentDTOS = new ArrayList<>();
+        for (Payment payment : paymentList) {
+            if(payment.getMember() != null) {
+                PaymentDTO paymentDTO = new PaymentDTO();
+                paymentDTO.setPaymentId(payment.getId());
+                paymentDTO.setMemberId(payment.getMember().getId());
+                paymentDTO.setPrice(payment.getPrice());
+                paymentDTO.setProduct(payment.getProduct());
+                paymentDTO.setTid(payment.getTidKey());
+                paymentDTO.setQuantity(payment.getQuantity());
+                paymentDTO.setCreate_date(payment.getCreateDate());
+
+                paymentDTOS.add(paymentDTO);
+            }
+        }
+        return paymentDTOS;
+    }
+
+
     // 마이페이지 내 댓글 삭제
     @Transactional
     public boolean deleteCommentPostsByMemberId(Long memberId) {
@@ -199,6 +225,9 @@ public class MyPageService {
         }
         return true;
     }
+
+    //
+
 
 
 
