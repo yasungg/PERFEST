@@ -201,7 +201,7 @@ public class MyPageService {
                 paymentDTO.setPaymentId(payment.getId());
                 paymentDTO.setMemberId(payment.getMember().getId());
                 paymentDTO.setPrice(payment.getPrice());
-                paymentDTO.setProduct(payment.getProduct());
+                paymentDTO.setProductId(payment.getProduct().getId());
                 paymentDTO.setTid(payment.getTidKey());
                 paymentDTO.setQuantity(payment.getQuantity());
                 paymentDTO.setCreate_date(payment.getCreateDate());
