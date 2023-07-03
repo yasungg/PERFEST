@@ -12,4 +12,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     List<Review> findByFestivalId(Long festivalId);
     // 해당 축제의 리뷰 갯수 가져오기
     long countByFestivalId(Long festivalId);
+
+    // 내 리뷰 조회
+    List<Review> findByMemberId(Long memberId);
 }

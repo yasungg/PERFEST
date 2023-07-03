@@ -1,9 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.CommentDTO;
-import com.example.demo.dto.CommunityDTO;
-import com.example.demo.dto.MemberDTO;
-import com.example.demo.dto.PaymentDTO;
+import com.example.demo.dto.*;
 import com.example.demo.entity.Community;
 import com.example.demo.entity.Member;
 import com.example.demo.service.MyPageService;
@@ -125,5 +122,15 @@ public class MyPageController {
         int ranking = myPageService.getRankingByBadges(member);
         return ResponseEntity.ok(ranking);
     }
+
+    // 마이페이지 내 리뷰 조회 API
+    @GetMapping("/reviews")
+    public ResponseEntity<List<ReviewDTO>> getReviewsByMemberId(@RequestParam("memberId") Long memberId) {
+        List<ReviewDTO> reviews = myPageService.getReviewByMemberId(memberId);
+        return new ResponseEntity<>(reviews, HttpStatus.OK);
+    }
+
+    // 마이페이지 내 리뷰 삭제 API
+
 
 }

@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @Getter @Setter
 public class ReviewDTO {
     private Long reviewId;
+    private Long memberId;
     private String reviewTitle;
     private LocalDateTime reviewWrittenTime;
     private String reviewImg;

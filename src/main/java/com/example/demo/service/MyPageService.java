@@ -1,14 +1,8 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.*;
-import com.example.demo.entity.Comment;
-import com.example.demo.entity.Community;
-import com.example.demo.entity.Member;
-import com.example.demo.entity.Payment;
-import com.example.demo.repository.CommentRepository;
-import com.example.demo.repository.CommunityRepository;
-import com.example.demo.repository.MyPageRepository;
-import com.example.demo.repository.PaymentRepository;
+import com.example.demo.entity.*;
+import com.example.demo.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -32,6 +26,7 @@ public class MyPageService {
     private final CommunityRepository communityRepository;
     private final CommentRepository commentRepository;
     private final PaymentRepository paymentRepository;
+    private final ReviewRepository reviewRepository;
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -263,4 +258,23 @@ public class MyPageService {
         log.info("내 뱃지랭킹은 " + myBadgesRank + "등 입니다.");
         return myBadgesRank;
     }
+
+    // 리뷰 조회
+    public List<ReviewDTO> getReviewByMemberId(Long memberId) {
+        List<Review> reviewList = reviewRepository.findByMemberId(memberId);
+        List<ReviewDTO> reviewDTOS = new ArrayList<>();
+        for (Review review : reviewList) {
+            ReviewDTO reviewDTO = new ReviewDTO();
+            reviewDTO.setReviewId(review.getId());
+            reviewDTO.setMemberId(reviewDTO.getMemberId());
+            reviewDTO.setReviewImg(review.getReviewImg());
+            reviewDTO.setReviewTitle(review.getReviewTitle());
+            reviewDTO.setReviewContent(review.getReviewContent());
+            reviewDTO.setReviewWrittenTime(review.getReviewWrittenTime());
+
+            reviewDTOS.add(reviewDTO);
+        }
+        return reviewDTOS;
+    }
+
 }
