@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.constant.PaymentStatus;
 import com.example.demo.entity.Payment;
+import com.example.demo.jwt.TokenProvider;
 import com.example.demo.repository.PaymentRepository;
 import com.example.demo.service.PaymentService;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -19,9 +21,12 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class PaymentController {
     private final PaymentService paymentService;
+    private final TokenProvider tokenProvider;
+    private final HttpServletResponse response;
 
     @PostMapping(value = "/regist")
     public ResponseEntity<Boolean> registPayment(@RequestBody Map<String, Object> paymentData) {
+        tokenProvider.setNewAccessTokenToHeader(response);
         System.out.println("registPayment 메소드 실행");
         int memberId = (int) paymentData.get("memberId");
         int productId = (int) paymentData.get("productId");
