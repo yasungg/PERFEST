@@ -1,8 +1,13 @@
 package com.example.demo.jwt;
 
+import com.example.demo.dto.memberDTOs.MemberRequestDTO;
+import com.example.demo.dto.memberDTOs.RefreshTokenDTO;
 import com.example.demo.dto.memberDTOs.TokenDTO;
+import com.example.demo.entity.Auth;
 import com.example.demo.entity.Member;
+import com.example.demo.repository.AuthRepository;
 import com.example.demo.repository.MemberRepository;
+import com.example.demo.user.PerfestKakaoAuthenticationProvider;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +25,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.security.Key;
 import java.util.*;
@@ -30,12 +37,17 @@ import java.util.stream.Collectors;
 public class TokenProvider {
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "bearer";
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30;
+    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 40;
+    private static final long REFRESH_TOKEN_EXPIRE_TIME = 7L * 24 * 60 * 60 * 1000;
     @Autowired
     private MemberRepository memberRepository;
     @Autowired
     private HttpSession httpSession;
-    private static final long REFRESH_TOKEN_EXPIRE_TIME = 7L * 24 * 60 * 60 * 1000;
+    @Autowired
+    private AuthRepository authRepository;
+    @Autowired
+    private PerfestKakaoAuthenticationProvider kakaoAuthProvider;
+
     private final Key key;
 
     // 주의점: 여기서 @Value는 `springframework.beans.factory.annotation.Value`소속이다! lombok의 @Value와 착각하지 말것!
@@ -43,13 +55,12 @@ public class TokenProvider {
         this.key = Keys.hmacShaKeyFor(secretKey.getBytes());
     }
 
-    // 첫 로그인 또는 refresh token이 만료되었을 경우 -> access token 및 refresh token 생성
+    // 첫 로그인  -> access token 및 refresh token 생성
     public TokenDTO generateTokenDTO(Authentication authentication) {
-        log.info("generateTokenDTO method가 시작됩니다!!");
+        log.info("access token, refresh token이 동시에 생성됩니다!");
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
-        log.info("권한 정보 location: TokenProvider.generateTokenDTO = {}", authorities);
         long now = (new Date()).getTime();
 
         Date tokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
@@ -71,9 +82,9 @@ public class TokenProvider {
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
 
-        log.info(refreshToken);
+        log.info("refresh token = {}", refreshToken);
 
-        saveRefreshToken(refreshToken);
+        saveRefreshToken(refreshToken, refreshTokenExpiresIn);
 
         return TokenDTO.builder()
                 .grantType(BEARER_TYPE)
@@ -82,20 +93,38 @@ public class TokenProvider {
                 .build();
     }
 
-
-    //refresh token이 존재하고 유효성 검사도 통과되었을 경우 --> access token만 생성
-    public TokenDTO generateAccessToken(Authentication authentication) {
-        log.info("generateTokenDTO method가 시작됩니다!!");
+    // refresh token이 만료되었을 경우 refresh token 생성
+    public void generateRefreshToken(Authentication authentication) {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
-        log.info("권한 정보 location: TokenProvider.generateTokenDTO = {}", authorities);
+        long now = (new Date()).getTime();
+
+        Date refreshTokenExpiresIn = new Date(now + REFRESH_TOKEN_EXPIRE_TIME);
+        log.info("refresh token 만료 시간 = {}", refreshTokenExpiresIn);
+
+        String refreshToken = Jwts.builder()
+                .setSubject(authentication.getName())
+                .claim(AUTHORITIES_KEY, authorities)
+                .setExpiration(refreshTokenExpiresIn)
+                .signWith(key, SignatureAlgorithm.HS512)
+                .compact();
+
+        log.info("refresh token = {}", refreshToken);
+
+        saveRefreshToken(refreshToken, refreshTokenExpiresIn);
+    }
+
+    //refresh token이 존재하고 유효성 검사도 통과되었을 경우 --> access token만 생성
+    public TokenDTO generateAccessToken(Authentication authentication) {
+        log.info("access token만 생성됩니다!");
+        String authorities = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(","));
         long now = (new Date()).getTime();
 
         Date tokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
         log.info("access token 만료 시간 = {}", tokenExpiresIn);
-        Date refreshTokenExpiresIn = new Date(now + REFRESH_TOKEN_EXPIRE_TIME);
-        log.info("refresh token 만료 시간 = {}", refreshTokenExpiresIn);
 
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
@@ -127,47 +156,58 @@ public class TokenProvider {
 
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
-
+    //access token 유효성 검사
     public boolean validateToken(String token) {
+        try {
+            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            return true;
+        } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
+            log.info("잘못된 JWT 서명입니다.");
+            e.printStackTrace();
+            throw new JwtException("401-1");
+        } catch (ExpiredJwtException e) {
+            log.info("만료된 access 토큰입니다.");
+            SecurityContextHolder.clearContext(); // 만료된 토큰 인증 컨텍스트 제거
+            throw new JwtException("401-2");
+        } catch (UnsupportedJwtException e) {
+            log.info("지원되지 않는 access 토큰입니다.");
+            throw new JwtException("401-3");
+        } catch (IllegalArgumentException e) {
+            log.info("access 토큰이 잘못되었습니다.");
+            throw new JwtException("401-4");
+        }
+    }
+    // refresh token 유효성 검사
+    public boolean validateRefreshToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             Date expiredTime = parseClaims(token).getExpiration();
             log.info("access token expires in = {}", expiredTime);
 
             if(checkIsAlmostExpired(expiredTime)) { // 토큰 만료 기간이 5분 미만 남았을 경우 예외 처리
-                log.info("남은 토큰 유효시간이 5분 미만입니다!");
-                throw new JwtException("401-1");
+                log.info("남은 refresh token 유효시간이 5분 미만입니다! refresh token 재발급 로직을 실행합니다.");
+                reAuthenticateRefreshToken(token);
             }
 
             return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
             log.info("잘못된 JWT 서명입니다.");
             e.printStackTrace();
-            throw new JwtException("401-2");
+            return false;
         } catch (ExpiredJwtException e) {
-            log.info("만료된 JWT 토큰입니다.");
-            SecurityContextHolder.clearContext(); // 만료된 토큰 인증 컨텍스트 제거
-            throw new JwtException("401-3");
+            log.info("만료된 JWT 토큰입니다.");// 만료된 토큰 인증 컨텍스트 제거
+            return false;
         } catch (UnsupportedJwtException e) {
             log.info("지원되지 않는 JWT 토큰입니다.");
-            throw new JwtException("401-4");
+            return false;
         } catch (IllegalArgumentException e) {
             log.info("JWT 토큰이 잘못되었습니다.");
-            throw new JwtException("401-5");
-        }
-    }
-
-    //jwt의 바디에서 claims 정보를 불러옴.
-    private Claims parseClaims(String accessToken) {
-        try {
-            return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken).getBody();
-        } catch (ExpiredJwtException e) {
-            return e.getClaims();
+            return false;
         }
     }
 
     //토큰의 만료 기간이 5분 미만일 경우 true를 반환
-    private boolean checkIsAlmostExpired(Date expiresIn) {
+    public boolean checkIsAlmostExpired(Date expiresIn) {
         Date expiredTime = expiresIn;
         Date now = new Date(System.currentTimeMillis());
         long lastTime = expiredTime.getTime() - now.getTime();
@@ -177,14 +217,85 @@ public class TokenProvider {
         return isAlmostExpired;
     }
 
+    public void setNewAccessTokenToHeader(HttpServletResponse response) {
+        String jwt = (String) httpSession.getAttribute("jwt");
+        Date expiredTime = parseClaims(jwt).getExpiration();
+        String refreshToken = readRefreshTokenFromDB(jwt);
+
+        log.info("location: setNewAccessTokenToHeader: access token expires in = {}", expiredTime);
+        log.info("location: setNewAccessTokenToHeader: refreshToken = {}", refreshToken);
+
+        if(checkIsAlmostExpired(expiredTime) && validateRefreshToken(refreshToken)) { // 토큰 만료 기간이 5분 미만 남았을 경우 예외 처리
+            log.info("남은 토큰 유효시간이 5분 미만입니다! 토큰 재발급 로직을 실행합니다.");
+            String mail = parseClaims(jwt).getSubject();
+            log.info("TokenProvider.setNewAccessTokenToHeader mail check = {}", mail);
+
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(mail, "");
+            log.info("TokenProvider.setNewAccessTokenToHeader authentication token check = {}", authenticationToken);
+
+            Authentication authentication = kakaoAuthProvider.authenticate(authenticationToken);
+            log.info("authentication = {}", authentication);
+
+            TokenDTO newAccessToken = generateAccessToken(authentication);
+            response.setHeader("accessToken", newAccessToken.getAccessToken());
+            response.setDateHeader("tokenExpiresIn", newAccessToken.getTokenExpiresIn());
+        }
+    }
+    private void reAuthenticateRefreshToken(String token) {
+        String mail = parseClaims(token).getSubject();
+        log.info("TokenProvider.setNewAccessTokenToHeader mail check = {}", mail);
+
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(mail, "");
+        log.info("TokenProvider.setNewAccessTokenToHeader authentication token check = {}", authenticationToken);
+
+        Authentication authentication = kakaoAuthProvider.authenticate(authenticationToken);
+        log.info("authentication = {}", authentication);
+
+        Optional<Member> member = memberRepository.findByUsername(mail);
+        Long memberId = null;
+        if(member.isPresent()) {
+            memberId = member.get().getId();
+        }
+        generateRefreshToken(authentication);
+        Optional<Auth> newRefreshToken = authRepository.findByMemberId(memberId);
+        if(newRefreshToken.isPresent()) {
+            String newToken = newRefreshToken.get().getRefreshToken();
+            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(newToken);
+        }
+    }
+    //jwt의 바디에서 claims 정보를 불러옴.
+    private Claims parseClaims(String token) {
+        try {
+            return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
+        } catch (ExpiredJwtException e) {
+            return e.getClaims();
+        }
+    }
+
     //refresh token을 DB에 저장
-    private void saveRefreshToken(String refreshToken) {
+    private void saveRefreshToken(String refreshToken, Date refreshTokenExpiresIn) {
         String email = (String) httpSession.getAttribute("email");
         Optional<Member> member = memberRepository.findByUsername(email);
+
         if(member.isPresent()) {
+            RefreshTokenDTO refreshTokenDTO = new RefreshTokenDTO();
+            Member memberTMP = new Member();
             Long memberId = member.get().getId();
-
+            memberTMP.setId(memberId);
+            Auth auth = refreshTokenDTO.in(memberTMP, BEARER_TYPE, refreshToken, refreshTokenExpiresIn);
+            authRepository.save(auth);
         }
+    }
+    //DB에서 refresh token을 불러오는 메소드
+    private String readRefreshTokenFromDB(String jwt) {
+        String username = parseClaims(jwt).getSubject();
+        Long memberId = memberRepository.findByUsername(username).get().getId();
+        Optional<Auth> auth = authRepository.findByMemberId(memberId);
 
+        if(auth.isPresent()) {
+            log.info("refresh token from DB = {}", authRepository.findByMemberId(memberId));
+            return auth.get().getRefreshToken();
+        }
+        throw new RuntimeException("DB에서 refresh token을 읽어오는데 실패하였습니다!");
     }
 }

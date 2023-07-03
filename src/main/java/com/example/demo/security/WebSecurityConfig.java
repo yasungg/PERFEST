@@ -19,6 +19,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.servlet.http.HttpSession;
+
 @RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
@@ -28,6 +30,7 @@ public class WebSecurityConfig implements WebMvcConfigurer {
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandle jwtAccessDeniedHandler;
     private final ObjectMapper objectMapper;
+    private final HttpSession session;
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -53,7 +56,7 @@ public class WebSecurityConfig implements WebMvcConfigurer {
                 .anyRequest().authenticated()
 
                 .and()
-                .apply(new JwtSecurityConfig(tokenProvider, objectMapper))
+                .apply(new JwtSecurityConfig(tokenProvider, session, objectMapper))
 
                 .and()
                 .cors();

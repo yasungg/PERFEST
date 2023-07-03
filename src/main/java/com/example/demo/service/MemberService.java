@@ -4,8 +4,10 @@ import com.example.demo.constant.Authority;
 import com.example.demo.dto.memberDTOs.MemberRequestDTO;
 import com.example.demo.dto.memberDTOs.MemberResponseDTO;
 import com.example.demo.dto.memberDTOs.TokenDTO;
+import com.example.demo.entity.Auth;
 import com.example.demo.entity.Member;
 import com.example.demo.jwt.TokenProvider;
+import com.example.demo.repository.AuthRepository;
 import com.example.demo.repository.MemberRepository;
 import com.example.demo.user.PerfestAuthenticationProvider;
 import com.example.demo.user.PerfestKakaoAuthenticationProvider;
@@ -22,20 +24,22 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class MemberService {
     private final TokenProvider tokenProvider;
-    private final AuthenticationManagerBuilder managerBuilder;
     private final PerfestAuthenticationProvider provider;
     private final PerfestKakaoAuthenticationProvider kakaoAuthProvider;
     private final PasswordEncoder passwordEncoder;
     private final HttpSession session;
 
     private final MemberRepository memberRepository;
+    private final AuthRepository authRepository;
 
     public MemberResponseDTO signup(MemberRequestDTO requestDto) {
         if (memberRepository.findByUsername(requestDto.getUsername()).isPresent()) {
@@ -64,10 +68,21 @@ public class MemberService {
     public TokenDTO login(MemberRequestDTO requestDto) {
         log.info("id = {}", requestDto.getUsername());
         session.setAttribute("email", requestDto.getUsername());
-        UsernamePasswordAuthenticationToken authenticationToken = requestDto.toAuthentication();
 
+        UsernamePasswordAuthenticationToken authenticationToken = requestDto.toAuthentication();
         Authentication authentication = provider.authenticate(authenticationToken);
 
+        Optional<Member> member = memberRepository.findByUsername(requestDto.getUsername());
+        Optional<Auth> auth = authRepository.findByMemberId(member.get().getId());
+        Date refreshToken;
+
+        if(auth.isPresent() && member.isPresent()) {
+            refreshToken = auth.get().getRefreshTokenExpiresIn();
+            return tokenProvider.checkIsAlmostExpired(refreshToken) ?
+                     tokenProvider.generateTokenDTO(authentication)
+                            :
+                     tokenProvider.generateAccessToken(authentication);
+        }
         return tokenProvider.generateTokenDTO(authentication);
     }
 

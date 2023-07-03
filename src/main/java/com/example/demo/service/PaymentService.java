@@ -24,13 +24,13 @@ public class PaymentService {
     public boolean insertPaymentInfo(Long MemberId, Long productId, int price, int quantity, String tid, int tax_free_amount, PaymentStatus payStatus) {
         Payment payment = new Payment();
 
-        Member member = new Member();
-        member.setId(MemberId);
-        payment.setMember(member);
-
-        Product product = new Product();
-        product.setId(productId);
-        payment.setProduct(product);
+//        Member member = new Member();
+//        member.setId(MemberId);
+//        payment.setMember(member);
+//
+//        Product product = new Product();
+//        product.setId(productId);
+//        payment.setProduct(product);
 
         payment.setPrice(price);
         payment.setQuantity(quantity);

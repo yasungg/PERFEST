@@ -1,17 +1,14 @@
 package com.example.demo.entity;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
 @Getter @Setter @ToString
 @Table(name = "t_auth")
+@NoArgsConstructor
 public class Auth {
     @Id
     @Column(name = "auth_id")

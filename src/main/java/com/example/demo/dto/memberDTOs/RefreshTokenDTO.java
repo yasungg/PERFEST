@@ -18,7 +18,7 @@ public class RefreshTokenDTO {
     private Date refreshTokenExpiresIn; // refresh token expires in
 
     @Builder
-    public static Auth in(Member member, String grantType, String refreshToken, Date refreshTokenExpiresIn) {
+    public Auth in(Member member, String grantType, String refreshToken, Date refreshTokenExpiresIn) {
         return Auth.builder()
                 .member(member)
                 .grantType(grantType)

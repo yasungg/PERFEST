@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.constant.CommunityCategory;
 import com.example.demo.dto.CommunityDTO;
+import com.example.demo.jwt.TokenProvider;
 import com.example.demo.service.CommunityService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
