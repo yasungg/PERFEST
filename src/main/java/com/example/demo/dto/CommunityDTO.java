@@ -16,6 +16,6 @@ public class CommunityDTO {
     private String communityImgLink;
     private int likeCount;
     private LocalDateTime writtenTime;
-    private List<MemberDTO> memberDTOs;
+    private String nickname;
 
 }

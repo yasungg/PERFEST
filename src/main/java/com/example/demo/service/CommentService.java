@@ -4,6 +4,7 @@ import com.example.demo.dto.CommentDTO;
 import com.example.demo.dto.CommunityDTO;
 import com.example.demo.entity.Comment;
 import com.example.demo.entity.Community;
+import com.example.demo.entity.Member;
 import com.example.demo.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +25,7 @@ public class CommentService {
     private final CommentRepository commentRepository;
 
     // 댓글 작성(POST)
-    public boolean insertComment(String commentBody, Long communityId) {
+    public boolean insertComment(String commentBody, Long communityId, Long memberId) {
         Comment comment = new Comment();
         comment.setCommentBody(commentBody);
         comment.setCommentWrittenTime(LocalDateTime.now());
@@ -32,6 +33,10 @@ public class CommentService {
         Community community = new Community();
         community.setId(communityId);
         comment.setCommunity(community);
+
+        Member member = new Member();
+        member.setId(memberId);
+        comment.setMember(member);
 
         commentRepository.save(comment);
         return true;

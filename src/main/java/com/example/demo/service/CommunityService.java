@@ -6,6 +6,7 @@ import com.example.demo.dto.MemberDTO;
 import com.example.demo.entity.Community;
 import com.example.demo.entity.Member;
 import com.example.demo.repository.CommunityRepository;
+import com.example.demo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CommunityService {
     private final CommunityRepository communityRepository;
+    private final MemberRepository memberRepository;
 
     // 커뮤니티 게시글 전체 조회(GET)
     public List<CommunityDTO> getCommunityList() {
@@ -78,29 +80,25 @@ public class CommunityService {
     // 커뮤니티 게시글 본문 조회(GET)
     public List<CommunityDTO> getCommunityBoardArticle(Long communityId) {
         Optional<Community> optionalCommunity = communityRepository.findById(communityId);
-        List<CommunityDTO> communityDTOs = new ArrayList<>();
-
-        optionalCommunity.ifPresent(community -> {
-            CommunityDTO communityDTO = new CommunityDTO();
+        List<CommunityDTO> communityDTOS = new ArrayList<>();
+        CommunityDTO communityDTO = new CommunityDTO();
+        if (optionalCommunity.isPresent()) {
+            Community community = optionalCommunity.get();
+            communityDTO.setCommunityCategory(String.valueOf(community.getCommunityCategory()));
             communityDTO.setCommunityId(community.getId());
             communityDTO.setCommunityTitle(community.getCommunityTitle());
-            communityDTO.setCommunityCategory(String.valueOf(community.getCommunityCategory()));
             communityDTO.setCommunityDesc(community.getCommunityDesc());
             communityDTO.setCommunityImgLink(community.getCommunityImgLink());
             communityDTO.setLikeCount(community.getLikeCount());
             communityDTO.setWrittenTime(community.getWrittenTime());
-
-            Member member = community.getMember();
-            if (member != null) {
-                MemberDTO memberDTO = new MemberDTO();
-                memberDTO.setNickName(member.getNickname());
-                communityDTO.setMemberDTOs(Collections.singletonList(memberDTO));
+            Optional<Member> optionalMember = memberRepository.findById(community.getId());
+            if (optionalMember.isPresent()) {
+                Member member = optionalMember.get();
+                communityDTO.setNickname(member.getNickname());
             }
-
-            communityDTOs.add(communityDTO);
-        });
-
-        return communityDTOs;
+            communityDTOS.add(communityDTO);
+            }
+        return communityDTOS;
     }
 
     // 커뮤니티 게시글 좋아요 누르면 좋아요 +1(POST)
@@ -117,12 +115,17 @@ public class CommunityService {
     }
 
     // 커뮤니티 게시글 작성(POST)
-    public boolean insertCommunity(String communityTitle, CommunityCategory communityCategory, String communityDesc) {
+    public boolean insertCommunity(String communityTitle, CommunityCategory communityCategory, String communityDesc, Long memberId) {
         Community community = new Community();
         community.setCommunityTitle(communityTitle);
         community.setCommunityCategory(communityCategory);
         community.setCommunityDesc(communityDesc);
         community.setWrittenTime(LocalDateTime.now());
+
+        Member member = new Member();
+        member.setId(memberId);
+        community.setMember(member);
+
         communityRepository.save(community);
         return true;
     }
