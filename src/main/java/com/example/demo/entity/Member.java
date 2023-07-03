@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter @ToString
+@NoArgsConstructor(force = true)
 @Table(name = "t_member")
 public class Member {
     @Id

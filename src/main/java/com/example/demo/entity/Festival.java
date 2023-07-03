@@ -11,7 +11,7 @@ import java.util.Date;
 @Entity
 @Getter @Setter @ToString
 @Table(name = "t_festival")
-@Builder
+
 public class Festival {
     @Id
     @Column(name = "festival_id")
@@ -51,6 +51,7 @@ public class Festival {
     @Column(name = "festival_img")
     private String festivalImgLink;
 
+    @Builder
     public Festival (String festivalName, String festivalLocation, String festivalDoro, Date startDate, Date endDate, String festivalDesc, String mainOrg, String wedo, String kyungdo, String festivalTel, String festivalImgLink) {
         this.festivalName = festivalName;
         this.festivalLocation = festivalLocation;
