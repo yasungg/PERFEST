@@ -96,6 +96,7 @@ public class MyPageService {
             return false;
         }
         // 동일 닉네임이 없는 경우에는 중복된 닉네임이 없다고 판단하여 true 를 반환
+        log.info("동일 닉네임이 없음");
         return true;
     }
 
@@ -103,7 +104,7 @@ public class MyPageService {
     @Transactional
     public boolean deleteMember(String email) {
         List<Member> memberList = myPageRepository.findByUsername(email);
-        if(memberList.isEmpty()) {
+        if (memberList.isEmpty()) {
             throw new IllegalArgumentException("회원 없음");
         }
         Member member = memberList.get(0);
@@ -115,7 +116,7 @@ public class MyPageService {
     // 회원 주소 수정
     public boolean updateAddress(String email, String address) {
         List<Member> memberList = myPageRepository.findByUsername(email);
-        if(memberList.isEmpty()) {
+        if (memberList.isEmpty()) {
             throw new IllegalArgumentException("회원 없음");
         }
         Member member = memberList.get(0);
@@ -147,7 +148,7 @@ public class MyPageService {
     public List<CommunityDTO> getCommunitiesByMemberId(Long memberId) {
         List<Community> communityList = communityRepository.findByMemberId(memberId);
         List<CommunityDTO> communityDTOS = new ArrayList<>();
-        for(Community community : communityList) {
+        for (Community community : communityList) {
             CommunityDTO communityDTO = new CommunityDTO();
             communityDTO.setCommunityId(community.getId());
             communityDTO.setMemberId(community.getMember().getId());
@@ -170,6 +171,7 @@ public class MyPageService {
         for (Community community : communityList) {
             communityRepository.delete(community);
         }
+        log.info("내 게시글 삭제 완료");
         return true;
     }
 
@@ -198,7 +200,7 @@ public class MyPageService {
         List<Payment> paymentList = paymentRepository.findByMemberId(memberId);
         List<PaymentDTO> paymentDTOS = new ArrayList<>();
         for (Payment payment : paymentList) {
-            if(payment.getMember() != null) {
+            if (payment.getMember() != null) {
                 PaymentDTO paymentDTO = new PaymentDTO();
                 paymentDTO.setPaymentId(payment.getId());
                 paymentDTO.setMemberId(payment.getMember().getId());
@@ -221,9 +223,10 @@ public class MyPageService {
     @Transactional
     public boolean deleteCommentPostsByMemberId(Long memberId) {
         List<Comment> commentList = commentRepository.findByMemberId(memberId);
-        for(Comment comment : commentList) {
+        for (Comment comment : commentList) {
             commentRepository.delete(comment);
         }
+        log.info("내 댓글삭제 완료 확인");
         return true;
     }
 
@@ -240,6 +243,7 @@ public class MyPageService {
                 break;
             }
         }
+        log.info("내 큰손랭킹은 " + myRichRank + "등 입니다.");
         return myRichRank;
     }
 
@@ -256,6 +260,7 @@ public class MyPageService {
                 break;
             }
         }
+        log.info("내 뱃지랭킹은 " + myBadgesRank + "등 입니다.");
         return myBadgesRank;
     }
 }
