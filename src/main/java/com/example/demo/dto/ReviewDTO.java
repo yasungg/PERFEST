@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 @Getter @Setter
 public class ReviewDTO {
+    private Long reviewId;
     private String reviewTitle;
     private LocalDateTime reviewWrittenTime;
     private String reviewImg;
