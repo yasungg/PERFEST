@@ -233,14 +233,14 @@ public class MyPageService {
         // totalPrice 를 기준으로 내림차순으로 정렬
         Collections.sort(allMembers, (m1, m2) -> m2.getTotalPrice().compareTo(m1.getTotalPrice()));
 
-        int myRank = 0;
+        int myRichRank = 0;
         for (int i = 0; i < allMembers.size(); i++) {
             if (allMembers.get(i).getId().equals(member.getId())) {
-                myRank = i + 1; // 0-based index 를 1-based 순위로 변환
+                myRichRank = i + 1; // 0-based index 를 1-based 순위로 변환
                 break;
             }
         }
-        return myRank;
+        return myRichRank;
     }
 
     // 내 뱃지 랭킹 조회 (badges 를 기준으로 순위 조회)
@@ -249,14 +249,13 @@ public class MyPageService {
         // badges 를 기준으로 내림차순으로 정렬
         Collections.sort(allMembers, (m1, m2) -> m2.getBadges() - m1.getBadges());
 
-        int myRank = 0;
+        int myBadgesRank = 0;
         for (int i = 0; i < allMembers.size(); i++) {
             if (allMembers.get(i).getId().equals(member.getId())) {
-                myRank = i + 1; // 0-based index 를 1-based 순위로 변환
+                myBadgesRank = i + 1; // 0-based index 를 1-based 순위로 변환
                 break;
             }
         }
-
-        return myRank;
+        return myBadgesRank;
     }
 }
