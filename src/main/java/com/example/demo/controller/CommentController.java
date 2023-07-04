@@ -1,8 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.CommentDTO;
-import com.example.demo.entity.Comment;
-import com.example.demo.entity.Community;
 import com.example.demo.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
