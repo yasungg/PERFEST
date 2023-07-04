@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.constant.PaymentStatus;
+import com.example.demo.dto.PaymentDTO;
 import com.example.demo.entity.Payment;
 import com.example.demo.jwt.TokenProvider;
 import com.example.demo.repository.PaymentRepository;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -26,7 +28,7 @@ public class PaymentController {
 
     @PostMapping(value = "/regist")
     public ResponseEntity<Boolean> registPayment(@RequestBody Map<String, Object> paymentData) {
-        tokenProvider.setNewAccessTokenToHeader(response);
+//        tokenProvider.setNewAccessTokenToHeader(response);
         System.out.println("registPayment 메소드 실행");
         int memberId = (int) paymentData.get("memberId");
         int productId = (int) paymentData.get("productId");
@@ -42,4 +44,15 @@ public class PaymentController {
         System.out.println("memberId:"+ memberId);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    @GetMapping(value = "/checkPaymentData")
+    public ResponseEntity<List<PaymentDTO>> checkPaymentData(@RequestParam int memberId, int productId) {
+//        tokenProvider.setNewAccessTokenToHeader(response);
+        System.out.println("checkPaymentData 메소드 실행");
+        List<PaymentDTO> list = paymentService.checkPaymentInfo((long) memberId, (long) productId);
+        System.out.println("checkPaymentInfo 실행결과 : ");
+        for(PaymentDTO paymentDTO : list) System.out.println(paymentDTO);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
 }
