@@ -12,6 +12,7 @@ import java.util.List;
 public class CommentDTO {
     private Long commentId;
     private Long memberId;
+    private Long parentId;
     private Long communityId; // 안쓰면 지울예정
     private String commentBody;
     private LocalDateTime commentWrittenTime;

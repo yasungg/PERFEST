@@ -30,6 +30,15 @@ public class CommentController {
         boolean result = commentService.insertComment(commentBody, Long.parseLong(communityId), Long.parseLong(memberId));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+    // 대댓글 작성(POST)
+    @PostMapping(value = "/writereplycomment")
+    public ResponseEntity<Boolean> replycommentInsert(@RequestBody Map<String, Object> replycommentData) {
+        String commentBody = (String)replycommentData.get("commentBody");
+        String memberId = (String)replycommentData.get("memberId");
+        String parentId = (String)replycommentData.get("commentId");
+        boolean result = commentService.insertReplyComment(Long.parseLong(parentId),Long.parseLong(memberId), commentBody);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
     // 댓글 수정(POST)
     @PostMapping(value = "/updatecomment")
     public ResponseEntity<Boolean> commentUpdate(@RequestBody Map<String, Object> updateCommentData) {

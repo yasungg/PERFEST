@@ -2,7 +2,6 @@ package com.example.demo.service;
 
 import com.example.demo.constant.CommunityCategory;
 import com.example.demo.dto.CommunityDTO;
-import com.example.demo.dto.MemberDTO;
 import com.example.demo.entity.Community;
 import com.example.demo.entity.Member;
 import com.example.demo.repository.CommunityRepository;

@@ -41,6 +41,24 @@ public class CommentService {
         commentRepository.save(comment);
         return true;
     }
+    // 대댓글 작성(POST)
+    public boolean insertReplyComment(Long parentId,Long memberId, String replyBody) {
+        Comment parentComment = commentRepository.findById(parentId)
+                .orElseThrow(() -> new IllegalArgumentException("Parent comment not found"));
+
+        Comment reply = new Comment();
+        reply.setCommentBody(replyBody);
+        reply.setCommentWrittenTime(LocalDateTime.now());
+        reply.setParent(parentComment);
+
+        Member member = new Member();
+        member.setId(memberId);
+        reply.setMember(member);
+
+        parentComment.getChildren().add(reply);
+        commentRepository.save(reply);
+        return true;
+    }
 
     // 댓글 수정(POST)
     public boolean updateComment(Long id, String commentBody) {
