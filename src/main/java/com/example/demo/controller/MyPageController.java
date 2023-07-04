@@ -131,7 +131,7 @@ public class MyPageController {
     }
 
     // 마이페이지 내 리뷰 삭제 API
-    @DeleteMapping("/deleteMyReivew")
+    @DeleteMapping("/deleteMyReview")
     public ResponseEntity<Boolean> deleteReviewsByMemberId(@RequestParam("memberId") Long memberId) {
         boolean result = myPageService.deleteReviewPostsByMemberId(memberId);
         return new ResponseEntity<>(result, HttpStatus.OK);
