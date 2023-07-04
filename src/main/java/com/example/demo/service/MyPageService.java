@@ -22,13 +22,19 @@ import java.util.*;
 @Slf4j
 @RequiredArgsConstructor
 public class MyPageService {
+
+
     private final MyPageRepository myPageRepository;
     private final CommunityRepository communityRepository;
     private final CommentRepository commentRepository;
     private final PaymentRepository paymentRepository;
     private final ReviewRepository reviewRepository;
+
+
     @PersistenceContext
     private EntityManager entityManager;
+
+
 
     // 회원 이메일로 회원정보 조회
     public List<MemberDTO> getMemberByEmail(String email) {
@@ -105,6 +111,7 @@ public class MyPageService {
         Member member = memberList.get(0);
         member.setIsDelete("Y");
         myPageRepository.save(member);
+        log.info("회원탈퇴 완료");
         return true;
     }
 
@@ -117,6 +124,7 @@ public class MyPageService {
         Member member = memberList.get(0);
         member.setAddress(address);
         myPageRepository.save(member);
+        log.info("주소 수정 완료");
         return true;
     }
 
