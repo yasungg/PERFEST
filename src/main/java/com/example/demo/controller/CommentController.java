@@ -39,6 +39,12 @@ public class CommentController {
         boolean result = commentService.insertReplyComment(Long.parseLong(parentId),Long.parseLong(memberId), commentBody);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+    // 대댓글 조회(GET)
+    @GetMapping(value = "/getreplycomment")
+    public ResponseEntity<List<CommentDTO>> getReplyComment(@RequestParam int parentId) {
+        List<CommentDTO> list = commentService.getReplyCommentList((long) parentId);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
     // 댓글 수정(POST)
     @PostMapping(value = "/updatecomment")
     public ResponseEntity<Boolean> commentUpdate(@RequestBody Map<String, Object> updateCommentData) {

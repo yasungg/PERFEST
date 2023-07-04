@@ -59,6 +59,30 @@ public class CommentService {
         commentRepository.save(reply);
         return true;
     }
+    // 대댓글 조회(GET)
+    public List<CommentDTO> getReplyCommentList(Long parentId) {
+        List<Comment> replyComment = commentRepository.findByParentId(parentId);
+        List<CommentDTO> replyCommentDTOS = new ArrayList<>();
+
+        for (Comment comment : replyComment) {
+            CommentDTO commentDTO = new CommentDTO();
+            commentDTO.setCommentId(comment.getId());
+            commentDTO.setCommentBody(comment.getCommentBody());
+            commentDTO.setCommentWrittenTime(comment.getCommentWrittenTime());
+            commentDTO.setCommentLikeCount(comment.getCommentLikeCount());
+
+            Member member = comment.getMember();
+            if (member != null) {
+                commentDTO.setMemberId(member.getId());
+                commentDTO.setNickname(member.getNickname());
+            }
+
+            replyCommentDTOS.add(commentDTO);
+        }
+
+        return replyCommentDTOS;
+    }
+
 
     // 댓글 수정(POST)
     public boolean updateComment(Long id, String commentBody) {

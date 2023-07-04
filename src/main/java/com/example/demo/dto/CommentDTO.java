@@ -17,4 +17,5 @@ public class CommentDTO {
     private String commentBody;
     private LocalDateTime commentWrittenTime;
     private int commentLikeCount;
+    private String nickname;
 }

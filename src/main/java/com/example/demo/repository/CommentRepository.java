@@ -22,4 +22,6 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     // 회원이 쓴 게시글 조회
     List<Comment> findByMemberId(Long memberId);
+    // 대댓글 조회
+    List<Comment> findByParentId(Long parentId);
 }
