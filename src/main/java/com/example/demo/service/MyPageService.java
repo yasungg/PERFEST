@@ -29,6 +29,8 @@ public class MyPageService {
     private final CommentRepository commentRepository;
     private final PaymentRepository paymentRepository;
     private final ReviewRepository reviewRepository;
+    private final MyReservationRepository myReservationRepository;
+
 
 
     @PersistenceContext
@@ -297,7 +299,22 @@ public class MyPageService {
     }
 
     // 체험활동 예매목록 조회
+    public List<ActivityDTO> getReservedActivitiesForMember(Long memberId) {
+        Member member = new Member();
+        member.setId(memberId);
 
+        List<MyReservation> myReservations = myReservationRepository.findByMemberId(memberId);
+        List<ActivityDTO> activityDTOs = new ArrayList<>();
 
+        for (MyReservation myReservation : myReservations) {
+            Activity activity = myReservation.getReservation().getActivity();
+            ActivityDTO activityDTO = new ActivityDTO();
+            activityDTO.setActivityName(activity.getActivityName());
+            activityDTO.setStartDate(activity.getActivityStartDate());
+            activityDTO.setEndDate(activity.getActivityEndDate());
 
+            activityDTOs.add(activityDTO);
+        }
+        return activityDTOs;
+    }
 }

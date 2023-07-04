@@ -137,4 +137,12 @@ public class MyPageController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    // 체험활동 예매 조회
+    @GetMapping("/activities")
+    public ResponseEntity<List<ActivityDTO>> getActivitiesByMemberId(@RequestParam("memberId") Long memberId) {
+        List<ActivityDTO> activityDTOList = myPageService.getReservedActivitiesForMember(memberId);
+        return new ResponseEntity<>(activityDTOList, HttpStatus.OK);
+    }
+
+
 }
