@@ -78,7 +78,7 @@ public class MemberService {
 
         if(auth.isPresent() && member.isPresent()) {
             refreshToken = auth.get().getRefreshTokenExpiresIn();
-            return tokenProvider.checkIsAlmostExpired(refreshToken) ?
+            return tokenProvider.checkIsRefreshTokenAlmostExpired(refreshToken) ?
                      tokenProvider.generateTokenDTO(authentication)
                             :
                      tokenProvider.generateAccessToken(authentication);
@@ -101,7 +101,7 @@ public class MemberService {
 
         if(auth.isPresent() && member.isPresent()) {
             refreshToken = auth.get().getRefreshTokenExpiresIn();
-            return tokenProvider.checkIsAlmostExpired(refreshToken) ?
+            return tokenProvider.checkIsRefreshTokenAlmostExpired(refreshToken) ?
                     tokenProvider.generateTokenDTO(authentication)
                     :
                     tokenProvider.generateAccessToken(authentication);

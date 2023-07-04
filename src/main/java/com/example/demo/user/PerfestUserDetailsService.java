@@ -21,7 +21,7 @@ public class PerfestUserDetailsService implements UserDetailsService {
     private final MemberRepository memberRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public PerfestUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.info("loadUserByUsername = {}", memberRepository.findByUsername(username));
         if(memberRepository.findByUsername(username).isPresent()) {
             Member member = memberRepository.findByUsername(username).get();

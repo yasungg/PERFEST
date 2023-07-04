@@ -2,12 +2,11 @@ package com.example.demo.user;
 
 import com.example.demo.constant.Authority;
 import com.example.demo.entity.Member;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -38,6 +37,8 @@ public class PerfestUserDetails implements UserDetails {
     public String getUsername() {
         return user.getUsername();
     }
+    public Long getId() { return user.getId(); }
+    public String getNickname() { return user.getNickname(); }
 
     @Override
     public boolean isAccountNonExpired() {

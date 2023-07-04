@@ -1,6 +1,6 @@
 package com.example.demo.jwt;
 
-import com.example.demo.dto.memberDTOs.MemberRequestDTO;
+import com.example.demo.constant.Authority;
 import com.example.demo.dto.memberDTOs.RefreshTokenDTO;
 import com.example.demo.dto.memberDTOs.TokenDTO;
 import com.example.demo.entity.Auth;
@@ -8,9 +8,11 @@ import com.example.demo.entity.Member;
 import com.example.demo.repository.AuthRepository;
 import com.example.demo.repository.MemberRepository;
 import com.example.demo.user.PerfestKakaoAuthenticationProvider;
+import com.example.demo.user.PerfestUserDetails;
+import com.example.demo.user.PerfestUserDetailsService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
-import lombok.RequiredArgsConstructor;
+import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,19 +20,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.security.Key;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static com.example.demo.constant.Authority.*;
 
 @Slf4j
 @Component
@@ -47,6 +44,8 @@ public class TokenProvider {
     private AuthRepository authRepository;
     @Autowired
     private PerfestKakaoAuthenticationProvider kakaoAuthProvider;
+    @Autowired
+    private PerfestUserDetailsService userDetailsService;
 
     private final Key key;
 
@@ -63,6 +62,10 @@ public class TokenProvider {
                 .collect(Collectors.joining(","));
         long now = (new Date()).getTime();
 
+        PerfestUserDetails member = userDetailsService.loadUserByUsername(authentication.getName());
+        String id = member.getId().toString();
+        String nickname = member.getNickname();
+
         Date tokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
         log.info("access token 만료 시간 = {}", tokenExpiresIn);
         Date refreshTokenExpiresIn = new Date(now + REFRESH_TOKEN_EXPIRE_TIME);
@@ -71,6 +74,8 @@ public class TokenProvider {
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim(AUTHORITIES_KEY, authorities)
+                .claim("Id", id)
+                .claim("nickname", nickname)
                 .setExpiration(tokenExpiresIn)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
@@ -121,14 +126,20 @@ public class TokenProvider {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
-        long now = (new Date()).getTime();
 
+        PerfestUserDetails member = userDetailsService.loadUserByUsername(authentication.getName());
+        String id = member.getId().toString();
+        String nickname = member.getNickname();
+
+        long now = (new Date()).getTime();
         Date tokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
         log.info("access token 만료 시간 = {}", tokenExpiresIn);
 
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim(AUTHORITIES_KEY, authorities)
+                .claim("Id", id)
+                .claim("nickname", nickname)
                 .setExpiration(tokenExpiresIn)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
@@ -152,8 +163,24 @@ public class TokenProvider {
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
 
-        UserDetails principal = new User(claims.getSubject(), "", authorities);
+        String id = (String) claims.get("Id");
+        Long userId = Long.parseLong(id);
+        PerfestUserDetails principal = new PerfestUserDetails(new Member());
 
+        if(claims.get(AUTHORITIES_KEY).equals(ROLE_USER.name())) {
+            log.info("!");
+            principal = new PerfestUserDetails(new Member(userId, claims.getSubject(), "", (String) claims.get("nickname"), ROLE_USER));
+            log.info("!-1");
+        }
+        if(claims.get(AUTHORITIES_KEY).equals(ROLE_KAKAO.name())) {
+            log.info("3");
+            principal = new PerfestUserDetails(new Member(userId, claims.getSubject(), "", (String) claims.get("nickname"), ROLE_KAKAO));
+        }
+        if(claims.get(AUTHORITIES_KEY).equals(ROLE_ADMIN.name())) {
+            log.info("4");
+            principal = new PerfestUserDetails(new Member(userId, claims.getSubject(), "", (String) claims.get("nickname"), ROLE_ADMIN));
+        }
+        log.info("여기 도달했나?");
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
     //access token 유효성 검사
@@ -182,8 +209,8 @@ public class TokenProvider {
             Date expiredTime = parseClaims(token).getExpiration();
             log.info("access token expires in = {}", expiredTime);
 
-            if(checkIsAlmostExpired(expiredTime)) { // 토큰 만료 기간이 5분 미만 남았을 경우 예외 처리
-                log.info("남은 refresh token 유효시간이 5분 미만입니다! refresh token 재발급 로직을 실행합니다.");
+            if(checkIsRefreshTokenAlmostExpired(expiredTime)) { // 토큰 만료 기간이 5분 미만 남았을 경우 예외 처리
+                log.info("남은 refresh token 유효시간이 하루 미만입니다! refresh token 재발급 로직을 실행합니다.");
                 reAuthenticateRefreshToken(token);
                 return true;
             }
@@ -211,7 +238,7 @@ public class TokenProvider {
         }
     }
 
-    //토큰의 만료 기간이 5분 미만일 경우 true를 반환
+    //ACCESS TOKEN의 만료 기한이 하루 이내로 남았는지 여부를 계산 후 boolean 결과값을 리턴
     public boolean checkIsAlmostExpired(Date expiresIn) {
         Date expiredTime = expiresIn;
         Date now = new Date(System.currentTimeMillis());
@@ -221,7 +248,19 @@ public class TokenProvider {
         log.info("location: checkIsExpired method / isExpired? = {}", isAlmostExpired);
         return isAlmostExpired;
     }
+    //REFRESH TOKEN의 만료 기한이 하루 이내로 남았는지 여부를 계산 후 boolean 결과값을 리턴
+    public boolean checkIsRefreshTokenAlmostExpired(Date expiresIn) {
+        Date expiredTime = expiresIn;
+        Date now = new Date(System.currentTimeMillis());
+        long lastTime = expiredTime.getTime() - now.getTime();
+        boolean isAlmostExpired = lastTime <= 86400000L && lastTime > 0;
 
+        log.info("location: checkIsExpired method / isExpired? = {}", isAlmostExpired);
+        return isAlmostExpired;
+    }
+
+    //ACCESS TOKEN의 만료 기한과 REFRESH TOKEN의 유효성을 검사 후,
+    //ACCESS TOKEN의 만료 기한이 5분 이내로 남았을 경우 재발급 로직 자동 실행.
     public void setNewAccessTokenToHeader(HttpServletResponse response) {
         String jwt = (String) httpSession.getAttribute("jwt");
         Date expiredTime = parseClaims(jwt).getExpiration();

@@ -4,6 +4,7 @@ import com.example.demo.constant.Authority;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -66,6 +67,14 @@ public class Member {
         this.badges = badges;
         this.totalPrice = totalPrice;
         this.joinTime = joinTime;
+        this.authority = authority;
+    }
+
+    public Member(Long id, String username, String password, String nickname, Authority authority) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.nickname = nickname;
         this.authority = authority;
     }
 }

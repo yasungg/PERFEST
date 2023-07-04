@@ -4,10 +4,14 @@ import com.example.demo.constant.CommunityCategory;
 import com.example.demo.dto.CommunityDTO;
 import com.example.demo.jwt.TokenProvider;
 import com.example.demo.service.CommunityService;
+import com.example.demo.user.ContextGetter;
+import com.example.demo.user.PerfestUserDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +25,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class CommunityController {
     private final CommunityService communityService;
+    private final ContextGetter info;
 
     // 커뮤니티 게시글 전체 조회(GET)
     @GetMapping(value = "/getallboard")
@@ -59,8 +64,8 @@ public class CommunityController {
         String communityTitle = (String)communityData.get("communityTitle");
         String communityCategory = (String)communityData.get("communityCategory");
         String communityDesc = (String)communityData.get("communityDesc");
-        String memberId = (String)communityData.get("memberId");
-        boolean result = communityService.insertCommunity(communityTitle, CommunityCategory.valueOf(communityCategory), communityDesc,Long.parseLong(memberId));
+        Long memberId = info.getId();
+        boolean result = communityService.insertCommunity(communityTitle, CommunityCategory.valueOf(communityCategory), communityDesc, memberId);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
     // 커뮤니티 게시글 수정(POST)
