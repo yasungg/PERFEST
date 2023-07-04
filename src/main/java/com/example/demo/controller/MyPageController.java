@@ -31,7 +31,7 @@ public class MyPageController {
     // 회원 닉네임 수정 API
     @PostMapping(value = "/nickname")
     public ResponseEntity<Boolean> updateNickname(@RequestBody Map<String, Object> updateData) {
-        String email = (String)updateData.get("username");
+        String email = (String) updateData.get("username");
         String nickname = (String) updateData.get("nickname");
         boolean result = myPageService.updateNickname(email, nickname);
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -131,6 +131,10 @@ public class MyPageController {
     }
 
     // 마이페이지 내 리뷰 삭제 API
-
+    @DeleteMapping("/deleteMyReivew")
+    public ResponseEntity<Boolean> deleteReviewsByMemberId(@RequestParam("memberId") Long memberId) {
+        boolean result = myPageService.deleteReviewPostsByMemberId(memberId);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 
 }

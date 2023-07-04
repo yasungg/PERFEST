@@ -277,4 +277,16 @@ public class MyPageService {
         return reviewDTOS;
     }
 
+    // 마이페이지 내 리뷰 삭제
+    @Transactional
+    public boolean deleteReviewPostsByMemberId(Long memberId) {
+        List<Review> reviewList = reviewRepository.findByMemberId(memberId);
+        for(Review review : reviewList) {
+            reviewRepository.delete(review);
+        }
+        log.info("내 리뷰 삭제 완료");
+        return true;
+    }
+
+
 }
