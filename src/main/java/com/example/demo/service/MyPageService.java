@@ -296,5 +296,8 @@ public class MyPageService {
         return true;
     }
 
+    // 체험활동 예매목록 조회
+
+
 
 }
