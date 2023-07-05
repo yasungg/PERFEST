@@ -23,6 +23,7 @@ import java.util.Optional;
 
 public class CommentService {
     private final CommentRepository commentRepository;
+    private final NoticeService noticeService;
 
     // 댓글 작성(POST)
     public boolean insertComment(String commentBody, Long communityId, Long memberId) {
@@ -39,6 +40,12 @@ public class CommentService {
         comment.setMember(member);
 
         commentRepository.save(comment);
+
+
+        // 댓글이 생성될 때 알림 생성 및 저장
+        String notificationContents = member.getNickname() + "님이 회원님의 게시물에 댓글을 남겼습니다.";
+        noticeService.createAndSaveNotification(community.getMember(), notificationContents);
+
         return true;
     }
     // 대댓글 작성(POST)
