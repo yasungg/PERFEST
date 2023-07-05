@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.CommentDTO;
 import com.example.demo.service.CommentService;
+import com.example.demo.service.MyPageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class CommentController {
     private final CommentService commentService;
+    private final MyPageService myPageService;
 
     // 댓글 작성(POST)
     @PostMapping(value = "/writecomment")
@@ -25,6 +27,10 @@ public class CommentController {
         String commentBody = (String)commentData.get("commentBody");
         String communityId = (String)commentData.get("communityId");
         String memberId = (String)commentData.get("memberId");
+
+        // Member 객체 조회하여 닉네임 가져오기
+        String nickname = myPageService.getMemberNickname(Long.parseLong(memberId));
+
         boolean result = commentService.insertComment(commentBody, Long.parseLong(communityId), Long.parseLong(memberId));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

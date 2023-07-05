@@ -16,6 +16,9 @@ public interface MyPageRepository extends JpaRepository<Member, Long> {
     // 이메일로 회원 조회
     List<Member> findByUsername(String email); // string Token
 
+    // 회원 아이디로 회원조회
+    Optional<Member> findById(Long id);
+
     // 전체 회원 닉네임 조회 (닉네임 수정을 위한)
     Optional<Member> findByNickname(String nickname);
 

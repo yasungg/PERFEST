@@ -34,10 +34,8 @@ public class MyPageService {
     private final NoticeRepository noticeRepository;
 
 
-
     @PersistenceContext
     private EntityManager entityManager;
-
 
 
     // 회원 이메일로 회원정보 조회
@@ -293,7 +291,7 @@ public class MyPageService {
     @Transactional
     public boolean deleteReviewPostsByMemberId(Long memberId) {
         List<Review> reviewList = reviewRepository.findByMemberId(memberId);
-        for(Review review : reviewList) {
+        for (Review review : reviewList) {
             reviewRepository.delete(review);
         }
         log.info("내 리뷰 삭제 완료");
@@ -319,5 +317,16 @@ public class MyPageService {
             activityDTOs.add(activityDTO);
         }
         return activityDTOs;
+    }
+
+    public String getMemberNickname(Long memberId) {
+        Optional<Member> optionalMember = myPageRepository.findById(memberId);
+        if (optionalMember.isPresent()) {
+            Member member = optionalMember.get();
+            return member.getNickname();
+        } else {
+            // 해당 아이디에 해당하는 회원이 존재하지 않을 경우 처리
+            throw new IllegalArgumentException("Member not found with id: " + memberId);
+        }
     }
 }
