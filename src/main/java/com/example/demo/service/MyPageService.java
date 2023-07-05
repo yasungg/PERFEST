@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.event.TransactionalEventListener;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,6 +31,7 @@ public class MyPageService {
     private final PaymentRepository paymentRepository;
     private final ReviewRepository reviewRepository;
     private final MyReservationRepository myReservationRepository;
+    private final NoticeRepository noticeRepository;
 
 
 
@@ -297,6 +299,7 @@ public class MyPageService {
         log.info("내 리뷰 삭제 완료");
         return true;
     }
+
 
     // 체험활동 예매목록 조회
     public List<ActivityDTO> getReservedActivitiesForMember(Long memberId) {
