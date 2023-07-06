@@ -6,6 +6,7 @@ import com.example.demo.entity.Comment;
 import com.example.demo.entity.Community;
 import com.example.demo.entity.Member;
 import com.example.demo.repository.CommentRepository;
+import com.example.demo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -44,8 +45,7 @@ public class CommentService {
 
 
         // 댓글이 생성될 때 알림 생성 및 저장
-        String notificationContents = member.getNickname() + "님이 회원님의 게시물에 댓글을 남겼습니다.";
-        noticeService.createAndSaveNotification(community.getMember(), notificationContents);
+
 
         return true;
     }
