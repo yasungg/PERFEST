@@ -49,7 +49,7 @@ public class CommentService {
 
         // 댓글이 생성될 때 알림 생성 및 저장
         String nickname = myPageService.getMemberNicknameByMemberId(memberId);
-        String message = nickname + "님이 댓글을 작성했습니다.";
+        String message = nickname + "님이 회원님의 게시글에 댓글을 작성했습니다.";
         noticeService.createAndSaveNotification(nickname, message);
 
         return true;
