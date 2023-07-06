@@ -37,6 +37,11 @@ public class CommunityService {
             communityDTO.setCommunityImgLink(community.getCommunityImgLink());
             communityDTO.setLikeCount(community.getLikeCount());
             communityDTO.setWrittenTime(community.getWrittenTime());
+            Optional<Member> optionalMember = memberRepository.findById(community.getId());
+            if (optionalMember.isPresent()) {
+                Member member = optionalMember.get();
+                communityDTO.setNickname(member.getNickname());
+            }
             communityDTOS.add(communityDTO);
         }
         return communityDTOS;
