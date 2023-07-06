@@ -74,11 +74,11 @@ public class MemberService {
 
         Optional<Member> member = memberRepository.findByUsername(requestDto.getUsername());
         Optional<Auth> auth = authRepository.findByMemberId(member.get().getId());
-        Date refreshToken;
+        Date refreshTokenExpiresIn;
 
         if(auth.isPresent() && member.isPresent()) {
-            refreshToken = auth.get().getRefreshTokenExpiresIn();
-            return tokenProvider.checkIsRefreshTokenAlmostExpired(refreshToken) ?
+            refreshTokenExpiresIn = auth.get().getRefreshTokenExpiresIn();
+            return tokenProvider.checkIsRefreshTokenAlmostExpired(refreshTokenExpiresIn) ?
                      tokenProvider.generateTokenDTO(authentication)
                             :
                      tokenProvider.generateAccessToken(authentication);

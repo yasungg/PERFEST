@@ -1,5 +1,6 @@
 package com.example.demo.security;
 
+import com.example.demo.handler.PerfestLogoutSuccessHandler;
 import com.example.demo.jwt.TokenProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -15,11 +16,16 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.http.HttpSession;
+
+import static java.lang.invoke.VarHandle.AccessMode.GET;
 
 @RequiredArgsConstructor
 @Configuration
@@ -66,10 +72,10 @@ public class WebSecurityConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry corsRegistry) {
         corsRegistry.addMapping("/**")
+                .allowedOriginPatterns("http://localhost:3000")
                 .allowedOrigins("http://localhost:3000")
                 .allowedHeaders("*")
-                .allowedMethods("*")
-                .allowCredentials(true);
+                .exposedHeaders("accessToken", "tokenExpiresIn")
+                .allowedMethods("*");
     }
-
 }

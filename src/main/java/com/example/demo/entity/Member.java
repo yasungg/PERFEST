@@ -4,7 +4,6 @@ import com.example.demo.constant.Authority;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.math.BigDecimal;

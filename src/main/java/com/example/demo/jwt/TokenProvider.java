@@ -34,7 +34,7 @@ import static com.example.demo.constant.Authority.*;
 public class TokenProvider {
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "bearer";
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 40;
+    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 3;
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 7L * 24 * 60 * 60 * 1000;
     @Autowired
     private MemberRepository memberRepository;
@@ -168,16 +168,14 @@ public class TokenProvider {
         PerfestUserDetails principal = new PerfestUserDetails(new Member());
 
         if(claims.get(AUTHORITIES_KEY).equals(ROLE_USER.name())) {
-            log.info("!");
             principal = new PerfestUserDetails(new Member(userId, claims.getSubject(), "", (String) claims.get("nickname"), ROLE_USER));
-            log.info("!-1");
         }
+
         if(claims.get(AUTHORITIES_KEY).equals(ROLE_KAKAO.name())) {
-            log.info("3");
             principal = new PerfestUserDetails(new Member(userId, claims.getSubject(), "", (String) claims.get("nickname"), ROLE_KAKAO));
         }
+
         if(claims.get(AUTHORITIES_KEY).equals(ROLE_ADMIN.name())) {
-            log.info("4");
             principal = new PerfestUserDetails(new Member(userId, claims.getSubject(), "", (String) claims.get("nickname"), ROLE_ADMIN));
         }
         log.info("여기 도달했나?");
@@ -281,8 +279,9 @@ public class TokenProvider {
             log.info("authentication = {}", authentication);
 
             TokenDTO newAccessToken = generateAccessToken(authentication);
-            response.setHeader("accessToken", newAccessToken.getAccessToken());
-            response.setDateHeader("tokenExpiresIn", newAccessToken.getTokenExpiresIn());
+
+            response.addHeader("accessToken", newAccessToken.getAccessToken());
+            response.addDateHeader("tokenExpiresIn", newAccessToken.getTokenExpiresIn());
         }
     }
     private void reAuthenticateRefreshToken(String token) {
@@ -294,13 +293,14 @@ public class TokenProvider {
 
         Authentication authentication = kakaoAuthProvider.authenticate(authenticationToken);
         log.info("authentication = {}", authentication);
+        generateRefreshToken(authentication);
 
         Optional<Member> member = memberRepository.findByUsername(mail);
         Long memberId = null;
         if(member.isPresent()) {
             memberId = member.get().getId();
         }
-        generateRefreshToken(authentication);
+
         Optional<Auth> newRefreshToken = authRepository.findByMemberId(memberId);
         if(newRefreshToken.isPresent()) {
             String newToken = newRefreshToken.get().getRefreshToken();

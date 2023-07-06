@@ -43,6 +43,10 @@ public class JwtFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
+        if(isKoauthEndpoint(request)) {
+            filterChain.doFilter(request, response);
+            return;
+        }
         // jwt 유효성 검사
         String jwt = resolveToken(request);
         log.info("resolved jwt = {}", jwt);
@@ -50,9 +54,11 @@ public class JwtFilter extends OncePerRequestFilter {
 
         if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
             Authentication authentication = tokenProvider.getAuthentication(jwt);
+            log.info("jwtfilter.belowgetAuthentication");
             SecurityContextHolder.getContext().setAuthentication(authentication);
             session.setAttribute("jwt", jwt);
         }
+        log.info("나왔니?");
         filterChain.doFilter(request, response);
     }
 
@@ -60,5 +66,9 @@ public class JwtFilter extends OncePerRequestFilter {
     private boolean isAuthEndpoint(HttpServletRequest request) {
         String requestURI = request.getRequestURI();
         return requestURI.startsWith("/auth");
+    }
+    private boolean isKoauthEndpoint(HttpServletRequest request) {
+        String requestURI = request.getRequestURI();
+        return requestURI.startsWith("/koauth/login");
     }
 }

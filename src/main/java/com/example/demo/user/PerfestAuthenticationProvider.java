@@ -1,6 +1,5 @@
 package com.example.demo.user;
 
-import com.example.demo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.*;
@@ -28,19 +27,19 @@ public class PerfestAuthenticationProvider implements AuthenticationProvider {
 
         log.info("is passwords equals? = {}", passwordEncoder.matches(password, dbPassword));
         if(userDetails == null || (!passwordEncoder.matches(password, dbPassword))) { //ID,PW 틀린 경우 OR 계정이 없는 경우
-            log.info("1");
+            log.info("location: PerfestAuthenticationProvider, BadCredentialsException");
             throw new BadCredentialsException(memberId);
         } else if(!userDetails.isAccountNonLocked()) {			//계정이 잠긴 경우(true로 고정, 추후 옵션처리 가능)
-            log.info("2");
+            log.info("location: PerfestAuthenticationProvider, LockedException");
             throw new LockedException(memberId);
         } else if(!userDetails.isEnabled()) {					//계정이 비활성화된 경우
-            log.info("3");
+            log.info("location: PerfestAuthenticationProvider, DisabledException");
             throw new DisabledException(memberId);
         } else if(!userDetails.isAccountNonExpired()) {			//계정이 만료된 경우
-            log.info("4");
+            log.info("location: PerfestAuthenticationProvider, AccountExpiredException");
             throw new AccountExpiredException(memberId);
         } else if(!userDetails.isCredentialsNonExpired()) {		//비밀번호가 만료된 경우
-            log.info("5");
+            log.info("location: PerfestAuthenticationProvider, CredentialsExpiredException");
             throw new CredentialsExpiredException(memberId);
         }
 

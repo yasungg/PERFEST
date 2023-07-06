@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.util.UriBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.nio.charset.StandardCharsets;
@@ -16,7 +15,7 @@ import java.nio.charset.StandardCharsets;
 @Slf4j
 @RequiredArgsConstructor
 @Controller
-@CrossOrigin(origins = "*", allowedHeaders= "*")
+@CrossOrigin(originPatterns = "*", allowedHeaders= "*")
 @RequestMapping("/koauth/login")
 public class KakaoController {
     private final KakaoLoginService kakaoLoginService;
