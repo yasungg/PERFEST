@@ -37,9 +37,8 @@ public class CommunityService {
             communityDTO.setCommunityImgLink(community.getCommunityImgLink());
             communityDTO.setLikeCount(community.getLikeCount());
             communityDTO.setWrittenTime(community.getWrittenTime());
-            Optional<Member> optionalMember = memberRepository.findById(community.getId());
-            if (optionalMember.isPresent()) {
-                Member member = optionalMember.get();
+            Member member = community.getMember();
+            if (member != null) {
                 communityDTO.setNickname(member.getNickname());
             }
             communityDTOS.add(communityDTO);
@@ -59,6 +58,10 @@ public class CommunityService {
             communityDTO.setCommunityImgLink(community.getCommunityImgLink());
             communityDTO.setLikeCount(community.getLikeCount());
             communityDTO.setWrittenTime(community.getWrittenTime());
+            Member member = community.getMember();
+            if (member != null) {
+                communityDTO.setNickname(member.getNickname());
+            }
             communityDTOS.add(communityDTO);
         }
         return communityDTOS;
@@ -76,6 +79,10 @@ public class CommunityService {
             communityDTO.setCommunityImgLink(community.getCommunityImgLink());
             communityDTO.setLikeCount(community.getLikeCount());
             communityDTO.setWrittenTime(community.getWrittenTime());
+            Member member = community.getMember();
+            if (member != null) {
+                communityDTO.setNickname(member.getNickname());
+            }
             communityDTOS.add(communityDTO);
         }
         return communityDTOS;
@@ -94,9 +101,8 @@ public class CommunityService {
             communityDTO.setCommunityImgLink(community.getCommunityImgLink());
             communityDTO.setLikeCount(community.getLikeCount());
             communityDTO.setWrittenTime(community.getWrittenTime());
-            Optional<Member> optionalMember = memberRepository.findById(community.getId());
-            if (optionalMember.isPresent()) {
-                Member member = optionalMember.get();
+            Member member = community.getMember();
+            if (member != null) {
                 communityDTO.setNickname(member.getNickname());
             }
             communityDTOS.add(communityDTO);

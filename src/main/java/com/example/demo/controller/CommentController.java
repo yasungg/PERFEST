@@ -26,12 +26,12 @@ public class CommentController {
     public ResponseEntity<Boolean> commentInsert(@RequestBody Map<String, Object> commentData) {
         String commentBody = (String)commentData.get("commentBody");
         String communityId = (String)commentData.get("communityId");
-        String memberId = (String)commentData.get("memberId");
+        int memberId = (Integer)commentData.get("memberId");
 
         // Member 객체 조회하여 닉네임 가져오기
-        String nickname = myPageService.getMemberNickname(Long.parseLong(memberId));
+        String nickname = myPageService.getMemberNickname((long) memberId);
 
-        boolean result = commentService.insertComment(commentBody, Long.parseLong(communityId), Long.parseLong(memberId));
+        boolean result = commentService.insertComment(commentBody, Long.parseLong(communityId), (long) memberId);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
     // 대댓글 작성(POST)

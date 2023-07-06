@@ -6,6 +6,7 @@ import com.example.demo.entity.Comment;
 import com.example.demo.entity.Community;
 import com.example.demo.entity.Member;
 import com.example.demo.repository.CommentRepository;
+import com.example.demo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ import java.util.Optional;
 
 public class CommentService {
     private final CommentRepository commentRepository;
+    private final MemberRepository memberRepository;
     private final NoticeService noticeService;
 
     // 댓글 작성(POST)
@@ -49,7 +51,7 @@ public class CommentService {
         return true;
     }
     // 대댓글 작성(POST)
-    public boolean insertReplyComment(Long parentId,Long memberId, String replyBody) {
+    public boolean insertReplyComment(Long parentId, Long memberId, String replyBody) {
         Comment parentComment = commentRepository.findById(parentId)
                 .orElseThrow(() -> new IllegalArgumentException("Parent comment not found"));
 
@@ -117,6 +119,10 @@ public class CommentService {
             commentDTO.setCommentBody(comment.getCommentBody());
             commentDTO.setCommentWrittenTime(comment.getCommentWrittenTime());
             commentDTO.setCommentLikeCount(comment.getCommentLikeCount());
+            Member member = comment.getMember();
+            if (member != null) {
+                commentDTO.setNickname(member.getNickname());
+            }
             commentDTOS.add(commentDTO);
         }
         return commentDTOS;
