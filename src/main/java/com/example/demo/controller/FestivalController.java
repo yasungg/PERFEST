@@ -6,10 +6,13 @@ import com.example.demo.service.FestivalService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
@@ -38,6 +41,29 @@ public class FestivalController {
     public ResponseEntity<Festival> getFestivalById(@PathVariable Long id) {
         Festival festival = festivalService.getFestivalById(id);
         return new ResponseEntity<>(festival, HttpStatus.OK);
+    }
+
+    @GetMapping("/LatLng")
+    public ResponseEntity<Map<Long, String[]>> getAllFestivalsLatLng() {
+        List<Festival> festivals = festivalService.getAllFestivals();
+
+        Map<Long, String[]> LatLngMap = new HashMap<>();
+        for(Festival festival : festivals) {
+            Long festivalId = festival.getId();
+            String wedo = festival.getWedo();
+            String kyungdo = festival.getKyungdo();
+            String festivalLocation = festival.getFestivalLocation();
+            String festivalDoro = festival.getFestivalDoro();
+
+            if(wedo == null && kyungdo == null) {
+                festivalLocation = festival.getFestivalLocation();
+            }
+            if(festivalLocation == null) {
+                festivalDoro = festival.getFestivalDoro();
+            }
+            LatLngMap.put(festivalId, new String[]{wedo, kyungdo, festivalLocation, festivalDoro});
+        }
+        return new ResponseEntity<>(LatLngMap, HttpStatus.OK);
     }
 
 
