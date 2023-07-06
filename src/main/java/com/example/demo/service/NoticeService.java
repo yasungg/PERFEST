@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.dto.NoticeDTO;
 import com.example.demo.entity.Member;
 import com.example.demo.entity.Notice;
+import com.example.demo.repository.MyPageRepository;
 import com.example.demo.repository.NoticeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,16 +22,21 @@ import java.util.List;
 public class NoticeService {
 
     private final NoticeRepository noticeRepository;
+    private final MyPageRepository myPageRepository;
 
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void createAndSaveNotification(Member member, String contents) {
+    public void createAndSaveNotification(String nickname, String contents) {
+        Member member = myPageRepository.findByNickname(nickname)
+                .orElseThrow(() -> new IllegalArgumentException("해당 닉네임에 해당하는 회원이 존재하지 않습니다."));
+
         // 알림 생성 및 저장
         Notice notice = new Notice();
-        notice.setMember(member); // 알림을 받을 회원(Member) 설정
+        notice.setMember(member); // 알림을 받을 회원 설정
         notice.setContents(contents); // 알림 내용 설정
         noticeRepository.save(notice); // 알림 저장
     }
+
 
     // 특정 회원의 알림 목록 가져오기
     public List<NoticeDTO> getNoticesByMember(Long memberId) {
@@ -51,4 +57,7 @@ public class NoticeService {
         }
         return noticeDTOList;
     }
+
+
+
 }

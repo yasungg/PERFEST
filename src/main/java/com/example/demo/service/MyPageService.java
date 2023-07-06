@@ -319,7 +319,7 @@ public class MyPageService {
         return activityDTOs;
     }
 
-    public String getMemberNickname(Long memberId) {
+    public String getMemberNicknameByMemberId(Long memberId) {
         Optional<Member> optionalMember = myPageRepository.findById(memberId);
         if (optionalMember.isPresent()) {
             Member member = optionalMember.get();
@@ -329,4 +329,5 @@ public class MyPageService {
             throw new IllegalArgumentException("회원 없음!" + memberId);
         }
     }
+
 }

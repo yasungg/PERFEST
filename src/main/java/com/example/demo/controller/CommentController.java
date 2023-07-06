@@ -29,7 +29,7 @@ public class CommentController {
         int memberId = (Integer)commentData.get("memberId");
 
         // Member 객체 조회하여 닉네임 가져오기
-        String nickname = myPageService.getMemberNickname((long) memberId);
+        String nickname = myPageService.getMemberNicknameByMemberId((long) memberId);
 
         boolean result = commentService.insertComment(commentBody, Long.parseLong(communityId), (long) memberId);
         return new ResponseEntity<>(result, HttpStatus.OK);
