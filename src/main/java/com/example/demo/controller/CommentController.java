@@ -24,16 +24,14 @@ public class CommentController {
     // 댓글 작성(POST)
     @PostMapping(value = "/writecomment")
     public ResponseEntity<Boolean> commentInsert(@RequestBody Map<String, Object> commentData) {
-        String commentBody = (String)commentData.get("commentBody");
-        String communityId = (String)commentData.get("communityId");
-        int memberId = (Integer)commentData.get("memberId");
-
-        // Member 객체 조회하여 닉네임 가져오기
-        String nickname = myPageService.getMemberNicknameByMemberId((long) memberId);
+        String commentBody = (String) commentData.get("commentBody");
+        String communityId = (String) commentData.get("communityId");
+        int memberId = (Integer) commentData.get("memberId");
 
         boolean result = commentService.insertComment(commentBody, Long.parseLong(communityId), (long) memberId);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
     // 대댓글 작성(POST)
     @PostMapping(value = "/writereplycomment")
     public ResponseEntity<Boolean> replycommentInsert(@RequestBody Map<String, Object> replycommentData) {

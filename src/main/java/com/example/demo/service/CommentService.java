@@ -7,6 +7,7 @@ import com.example.demo.entity.Community;
 import com.example.demo.entity.Member;
 import com.example.demo.repository.CommentRepository;
 import com.example.demo.repository.MemberRepository;
+import com.example.demo.repository.MyPageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,9 @@ import java.util.Optional;
 public class CommentService {
     private final CommentRepository commentRepository;
     private final MemberRepository memberRepository;
+    private final MyPageRepository myPageRepository;
     private final NoticeService noticeService;
+    private final MyPageService myPageService;
 
     // 댓글 작성(POST)
     public boolean insertComment(String commentBody, Long communityId, Long memberId) {
@@ -37,18 +40,21 @@ public class CommentService {
         community.setId(communityId);
         comment.setCommunity(community);
 
-        Member member = new Member();
-        member.setId(memberId);
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 회원이 존재하지 않습니다."));
+
         comment.setMember(member);
 
         commentRepository.save(comment);
 
-
         // 댓글이 생성될 때 알림 생성 및 저장
-
+        String nickname = myPageService.getMemberNicknameByMemberId(memberId);
+        String message = nickname + "님이 댓글을 작성했습니다.";
+        noticeService.createAndSaveNotification(nickname, message);
 
         return true;
     }
+
     // 대댓글 작성(POST)
     public boolean insertReplyComment(Long parentId, Long memberId, String replyBody) {
         Comment parentComment = commentRepository.findById(parentId)
