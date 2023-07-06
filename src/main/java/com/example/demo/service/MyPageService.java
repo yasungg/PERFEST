@@ -326,7 +326,7 @@ public class MyPageService {
             return member.getNickname();
         } else {
             // 해당 아이디에 해당하는 회원이 존재하지 않을 경우 처리
-            throw new IllegalArgumentException("Member not found with id: " + memberId);
+            throw new IllegalArgumentException("회원 없음!" + memberId);
         }
     }
 }
