@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -31,7 +32,7 @@ import static java.lang.invoke.VarHandle.AccessMode.GET;
 @Configuration
 @EnableWebSecurity
 @Component
-public class WebSecurityConfig implements WebMvcConfigurer {
+public class WebSecurityConfig {
     private final TokenProvider tokenProvider;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandle jwtAccessDeniedHandler;
@@ -59,23 +60,14 @@ public class WebSecurityConfig implements WebMvcConfigurer {
                 //해당 경로에 대해 인증 없이 접근을 허용
                 .antMatchers("/auth/**", "/koauth/**", "/thymeleaf/**", "/thymeleaf1/**", "/payment/**","/community/**","/comment/**").permitAll()
                 .antMatchers("/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger/**", "/sign-api/exception").permitAll()
+                .antMatchers("/", "/static/**").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .anyRequest().authenticated()
 
                 .and()
-                .apply(new JwtSecurityConfig(tokenProvider, session, objectMapper))
-
-                .and()
-                .cors();
+                .apply(new JwtSecurityConfig(tokenProvider, session, objectMapper));
 
         return http.build();
     }
-    @Override
-    public void addCorsMappings(CorsRegistry corsRegistry) {
-        corsRegistry.addMapping("/**")
-                .allowedOriginPatterns("http://localhost:3000")
-                .allowedOrigins("http://localhost:3000")
-                .allowedHeaders("*")
-                .exposedHeaders("accessToken", "tokenExpiresIn")
-                .allowedMethods("*");
-    }
+
 }

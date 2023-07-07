@@ -1,37 +1,26 @@
-HELP.md
-.gradle
-build/
-!gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**/build/
-!**/src/test/**/build/
+# dependencies
+src/main/frontend/node_modules
+src/main/node_modules
+src/main/frontend/.pnp
+src/main/frontend.pnp.js
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-bin/
-!**/src/main/**/bin/
-!**/src/test/**/bin/
+# testing
+src/main/frontend/coverage
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-out/
-!**/src/main/**/out/
-!**/src/test/**/out/
+# production
+src/main/frontend/build
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
+# misc
+src/main/frontend/.DS_Store
+src/main/frontend/.env
+src/main/frontend/.env.local
+src/main/frontend/.env.development.local
+src/main/frontend/.env.test.local
+src/main/frontend/.env.production.local
 
-### VS Code ###
-.vscode/
+src/main/frontend/npm-debug.log*
+src/main/frontend/yarn-debug.log*
+src/main/frontend/yarn-error.log*
+
+# Resources
+src/main/resources/static/static

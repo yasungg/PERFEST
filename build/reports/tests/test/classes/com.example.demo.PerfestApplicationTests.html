@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - PerfestApplicationTests</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>PerfestApplicationTests</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.example.demo.html">com.example.demo</a> &gt; PerfestApplicationTests</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">1</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.442s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">contextLoads()</td>
+<td class="success">0.442s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>16:58:24.713 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
+16:58:24.760 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
+16:58:25.014 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [com.example.demo.PerfestApplicationTests] from class [org.springframework.boot.test.context.SpringBootTestContextBootstrapper]
+16:58:25.083 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.example.demo.PerfestApplicationTests], using SpringBootContextLoader
+16:58:25.101 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.example.demo.PerfestApplicationTests]: class path resource [com/example/demo/PerfestApplicationTests-context.xml] does not exist
+16:58:25.149 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.example.demo.PerfestApplicationTests]: class path resource [com/example/demo/PerfestApplicationTestsContext.groovy] does not exist
+16:58:25.150 [Test worker] INFO org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [com.example.demo.PerfestApplicationTests]: no resource found for suffixes {-context.xml, Context.groovy}.
+16:58:25.153 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.example.demo.PerfestApplicationTests]: PerfestApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+16:58:25.340 [Test worker] DEBUG org.springframework.test.context.support.ActiveProfilesUtils - Could not find an 'annotation declaring class' for annotation type [org.springframework.test.context.ActiveProfiles] and class [com.example.demo.PerfestApplicationTests]
+16:58:25.552 [Test worker] DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider - Identified candidate component class: file [C:\Dev\Backend\PERFEST_BACK_FINAL\build\classes\java\main\com\example\demo\PerfestApplication.class]
+16:58:25.556 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.example.demo.PerfestApplication for test class com.example.demo.PerfestApplicationTests
+16:58:25.961 [Test worker] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - @TestExecutionListeners is not present for class [com.example.demo.PerfestApplicationTests]: using defaults.
+16:58:25.964 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener, org.springframework.security.test.context.support.ReactorContextTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+16:58:26.064 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@6e46d9f4, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@5cc69cfe, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@29cfd92b, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@21c64522, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@7997b197, org.springframework.test.context.support.DirtiesContextTestExecutionListener@11dee337, org.springframework.test.context.transaction.TransactionalTestExecutionListener@460f76a6, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@55f3c410, org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener@11acdc30, org.springframework.test.context.event.EventPublishingTestExecutionListener@770d4269, org.springframework.security.test.context.support.ReactorContextTestExecutionListener@4a8ab068, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@1922e6d, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@76a82f33, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@6bab2585, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@74bdc168, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@644c78d4, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@532a02d9]
+16:58:26.082 [Test worker] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@3f19b8b3 testClass = PerfestApplicationTests, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@7de0c6ae testClass = PerfestApplicationTests, locations = '{}', classes = '{class com.example.demo.PerfestApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@3212a8d7, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@5cde6747, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@614df0a4, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@13f95696, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@1cdc4c27, org.springframework.boot.test.web.reactive.server.WebTestClientContextCustomizer@628c4ac0, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@4b8ee4de], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -&gt; true]], class annotated with @DirtiesContext [false] with mode [null].
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::               (v2.7.12)
+
+2023-07-07 16:58:27.422  INFO 17080 --- [    Test worker] c.example.demo.PerfestApplicationTests   : Starting PerfestApplicationTests using Java 17.0.2 on DESKTOP-97OVCD7 with PID 17080 (started by 정우진 in C:\Dev\Backend\PERFEST_BACK_FINAL)
+2023-07-07 16:58:27.426  INFO 17080 --- [    Test worker] c.example.demo.PerfestApplicationTests   : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2023-07-07 16:58:35.056  INFO 17080 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-07-07 16:58:36.636  INFO 17080 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1508 ms. Found 12 JPA repository interfaces.
+2023-07-07 16:58:39.978  INFO 17080 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-07-07 16:58:40.426  INFO 17080 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.15.Final
+2023-07-07 16:58:41.285  INFO 17080 --- [    Test worker] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-07-07 16:58:41.824  INFO 17080 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-07-07 16:58:42.628  INFO 17080 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-07-07 16:58:42.672  INFO 17080 --- [    Test worker] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+Hibernate: 
+    
+    alter table t_activity 
+       drop 
+       foreign key FKkef8x2t0fjsafh11w72ql60ke
+Hibernate: 
+    
+    alter table t_auth 
+       drop 
+       foreign key FK6u7dt9e1efoehl50j9iqijbx
+Hibernate: 
+    
+    alter table t_calender 
+       drop 
+       foreign key FKjp63f6yi1iekvgrrr432bdgam
+Hibernate: 
+    
+    alter table t_calender 
+       drop 
+       foreign key FKq7oyx6xbex0caqiq07efw7hcu
+Hibernate: 
+    
+    alter table t_comment 
+       drop 
+       foreign key FKohacbj4fe8agixnbrf061thy4
+Hibernate: 
+    
+    alter table t_comment 
+       drop 
+       foreign key FKek9gtla50yebsqo5cocsdtx55
+Hibernate: 
+    
+    alter table t_comment 
+       drop 
+       foreign key FK4pij75ao6ppyjtj1h6bls8bky
+Hibernate: 
+    
+    alter table t_community 
+       drop 
+       foreign key FKngmpjofwd024ktxwdltai3x1d
+Hibernate: 
+    
+    alter table t_my_reservation 
+       drop 
+       foreign key FKkn4f55phqqbtc29dxwpluc5ys
+Hibernate: 
+    
+    alter table t_my_reservation 
+       drop 
+       foreign key FKpo6eye2jguydb17jkp4jy36qk
+Hibernate: 
+    
+    alter table t_notice 
+       drop 
+       foreign key FKir7v80xy351uufhhxk6wqyxbm
+Hibernate: 
+    
+    alter table t_payment 
+       drop 
+       foreign key FK71r5jp3mxhnuu7ru6ti5582b0
+Hibernate: 
+    
+    alter table t_payment 
+       drop 
+       foreign key FKleqf4tr7d50wmwskxg5f67y71
+Hibernate: 
+    
+    alter table t_product 
+       drop 
+       foreign key FKagt8un48b78w4um2hghqrwkpv
+Hibernate: 
+    
+    alter table t_product_payment 
+       drop 
+       foreign key FKtqqw7ciw5ye72m93ouih4xk3p
+Hibernate: 
+    
+    alter table t_product_payment 
+       drop 
+       foreign key FKophxs9rlg7ivm72d8eynd8ywg
+Hibernate: 
+    
+    alter table t_reservation 
+       drop 
+       foreign key FKdpqbu98q8qmityeb6pbjmgffu
+Hibernate: 
+    
+    alter table t_reservation_payment 
+       drop 
+       foreign key FKbmvkv7rrnsivh4v7kj5dxbgv3
+Hibernate: 
+    
+    alter table t_reservation_payment 
+       drop 
+       foreign key FKqev9ygwto4e4axftcfwyl9xh5
+Hibernate: 
+    
+    alter table t_review 
+       drop 
+       foreign key FK5kwba28p6ybcgv0gk5ogepu1b
+Hibernate: 
+    
+    alter table t_review 
+       drop 
+       foreign key FK3p8b9uac1f704hqxshrc3oq3k
+Hibernate: 
+    
+    drop table if exists hibernate_sequence
+Hibernate: 
+    
+    drop table if exists t_activity
+Hibernate: 
+    
+    drop table if exists t_auth
+Hibernate: 
+    
+    drop table if exists t_calender
+Hibernate: 
+    
+    drop table if exists t_comment
+Hibernate: 
+    
+    drop table if exists t_community
+Hibernate: 
+    
+    drop table if exists t_festival
+Hibernate: 
+    
+    drop table if exists t_member
+Hibernate: 
+    
+    drop table if exists t_my_reservation
+Hibernate: 
+    
+    drop table if exists t_notice
+Hibernate: 
+    
+    drop table if exists t_payment
+Hibernate: 
+    
+    drop table if exists t_product
+Hibernate: 
+    
+    drop table if exists t_product_payment
+Hibernate: 
+    
+    drop table if exists t_reservation
+Hibernate: 
+    
+    drop table if exists t_reservation_payment
+Hibernate: 
+    
+    drop table if exists t_review
+Hibernate: 
+    
+    create table hibernate_sequence (
+       next_val bigint
+    ) engine=InnoDB
+Hibernate: 
+    
+    insert into hibernate_sequence values ( 1 )
+Hibernate: 
+    
+    create table t_activity (
+       activity_id bigint not null auto_increment,
+        activity_desc varchar(255),
+        activity_end_date datetime(6),
+        activity_name varchar(255),
+        activity_price decimal(19,2) default 0,
+        activity_quantity integer default 0,
+        activity_start_date datetime(6),
+        festival_id bigint,
+        primary key (activity_id)
+    ) engine=InnoDB
+Hibernate: 
+    
+    create table t_auth (
+       auth_id bigint not null,
+        grant_type varchar(255),
+        refresh_token varchar(255),
+        refresh_token_expires_in datetime(6),
+        member_id bigint,
+        primary key (auth_id)
+    ) engine=InnoDB
+Hibernate: 
+    
+    create table t_calender (
+       calender_id bigint not null,
+        festival_id bigint,
+        member_id bigint,
+        primary key (calender_id)
+    ) engine=InnoDB
+Hibernate: 
+    
+    create table t_comment (
+       comment_id bigint not null,
+        comment_body varchar(255) not null,
+        comment_like_count integer default 0,
+        comment_written_time datetime(6),
+        community_id bigint,
+        member_id bigint,
+        parent_id bigint,
+        primary key (comment_id)
+    ) engine=InnoDB
+Hibernate: 
+    
+    create table t_community (
+       community_id bigint not null,
+        community_category varchar(255),
+        community_desc varchar(255),
+        community_img varchar(255),
+        community_title varchar(255) not null,
+        like_count integer default 0,
+        written_time datetime(6),
+        member_id bigint,
+        primary key (community_id)
+    ) engine=InnoDB
+Hibernate: 
+    
+    create table t_festival (
+       festival_id bigint not null,
+        end_date datetime(6),
+        description varchar(255),
+        festival_doro varchar(255),
+        festival_img varchar(255),
+        festival_location varchar(255),
+        festival_name varchar(255) not null,
+        festival_tel varchar(255),
+        kyungdo varchar(255),
+        main_org varchar(255),
+        start_date datetime(6),
+        wedo varchar(255),
+        primary key (festival_id)
+    ) engine=InnoDB
+Hibernate: 
+    
+    create table t_member (
+       member_id bigint not null,
+        address varchar(255),
+        authority varchar(255),
+        badges integer default 0 not null,
+        img varchar(500),
+        is_delete varchar(255) default 'N',
+        join_time datetime(6),
+        member_name varchar(255),
+        nickname varchar(20),
+        password varchar(255),
+        total_price decimal(19,2) default 0,
+        username varchar(255),
+        primary key (member_id)
+    ) engine=InnoDB
+Hibernate: 
+    
+    create table t_my_reservation (
+       my_reservation_id bigint not null,
+        member_id bigint,
+        reservation_id bigint,
+        primary key (my_reservation_id)
+    ) engine=InnoDB
+Hibernate: 
+    
+    create table t_notice (
+       notice_id bigint not null auto_increment,
+        contents varchar(255),
+        member_id bigint,
+        primary key (notice_id)
+    ) engine=InnoDB
+Hibernate: 
+    
+    create table t_payment (
+       payment_id bigint not null,
+        cancel_date datetime(6),
+        create_date datetime(6),
+        is_cancel varchar(255),
+        price integer not null,
+        quantity integer not null,
+        tax_free_amount integer not null,
+        tid_key varchar(255) not null,
+        member_id bigint,
+        product_id bigint,
+        primary key (payment_id)
+    ) engine=InnoDB
+Hibernate: 
+    
+    create table t_product (
+       product_id bigint not null,
+        product_desc varchar(255),
+        product_name varchar(255),
+        product_price decimal(19,2) default 0,
+        product_quantity varchar(255) default 0,
+        festival_id bigint,
+        primary key (product_id)
+    ) engine=InnoDB
+Hibernate: 
+    
+    create table t_product_payment (
+       product_payment_id bigint not null,
+        amount integer not null,
+        cancel_date datetime(6),
+        reservation_payment_time datetime(6) not null,
+        is_cancelled varchar(255),
+        member_id bigint,
+        product_id bigint,
+        primary key (product_payment_id)
+    ) engine=InnoDB
+Hibernate: 
+    
+    create table t_reservation (
+       reservation_id bigint not null,
+        activity_id bigint,
+        primary key (reservation_id)
+    ) engine=InnoDB
+Hibernate: 
+    
+    create table t_reservation_payment (
+       reservation_payment_id bigint not null,
+        amount integer not null,
+        is_cancelled varchar(255) not null,
+        cancel_date datetime(6),
+        reservation_payment_time datetime(6) not null,
+        member_id bigint,
+        reservation_id bigint,
+        primary key (reservation_payment_id)
+    ) engine=InnoDB
+Hibernate: 
+    
+    create table t_review (
+       review_id bigint not null,
+        review_content varchar(255) not null,
+        review_img varchar(255),
+        review_title varchar(255) not null,
+        review_written_time datetime(6) not null,
+        festival_id bigint,
+        member_id bigint,
+        primary key (review_id)
+    ) engine=InnoDB
+Hibernate: 
+    
+    alter table t_activity 
+       add constraint UK_3u5db69fy70r0r6bitbasvkm5 unique (activity_desc)
+Hibernate: 
+    
+    alter table t_activity 
+       add constraint UK_f3qtr0t3y8r4rg94xqgbhyeu7 unique (activity_name)
+Hibernate: 
+    
+    alter table t_member 
+       add constraint UK_fs4lu1nvdahnyrrtjmysqdwiu unique (nickname)
+Hibernate: 
+    
+    alter table t_member 
+       add constraint UK_jsq350597tb0mqt7rnfevte0h unique (username)
+Hibernate: 
+    
+    alter table t_product 
+       add constraint UK_5errjddrqptl5ggss9df994lg unique (product_name)
+Hibernate: 
+    
+    alter table t_activity 
+       add constraint FKkef8x2t0fjsafh11w72ql60ke 
+       foreign key (festival_id) 
+       references t_festival (festival_id)
+Hibernate: 
+    
+    alter table t_auth 
+       add constraint FK6u7dt9e1efoehl50j9iqijbx 
+       foreign key (member_id) 
+       references t_member (member_id)
+Hibernate: 
+    
+    alter table t_calender 
+       add constraint FKjp63f6yi1iekvgrrr432bdgam 
+       foreign key (festival_id) 
+       references t_festival (festival_id)
+Hibernate: 
+    
+    alter table t_calender 
+       add constraint FKq7oyx6xbex0caqiq07efw7hcu 
+       foreign key (member_id) 
+       references t_member (member_id)
+Hibernate: 
+    
+    alter table t_comment 
+       add constraint FKohacbj4fe8agixnbrf061thy4 
+       foreign key (community_id) 
+       references t_community (community_id)
+Hibernate: 
+    
+    alter table t_comment 
+       add constraint FKek9gtla50yebsqo5cocsdtx55 
+       foreign key (member_id) 
+       references t_member (member_id)
+Hibernate: 
+    
+    alter table t_comment 
+       add constraint FK4pij75ao6ppyjtj1h6bls8bky 
+       foreign key (parent_id) 
+       references t_comment (comment_id)
+Hibernate: 
+    
+    alter table t_community 
+       add constraint FKngmpjofwd024ktxwdltai3x1d 
+       foreign key (member_id) 
+       references t_member (member_id)
+Hibernate: 
+    
+    alter table t_my_reservation 
+       add constraint FKkn4f55phqqbtc29dxwpluc5ys 
+       foreign key (member_id) 
+       references t_member (member_id)
+Hibernate: 
+    
+    alter table t_my_reservation 
+       add constraint FKpo6eye2jguydb17jkp4jy36qk 
+       foreign key (reservation_id) 
+       references t_reservation (reservation_id)
+Hibernate: 
+    
+    alter table t_notice 
+       add constraint FKir7v80xy351uufhhxk6wqyxbm 
+       foreign key (member_id) 
+       references t_member (member_id)
+Hibernate: 
+    
+    alter table t_payment 
+       add constraint FK71r5jp3mxhnuu7ru6ti5582b0 
+       foreign key (member_id) 
+       references t_member (member_id)
+Hibernate: 
+    
+    alter table t_payment 
+       add constraint FKleqf4tr7d50wmwskxg5f67y71 
+       foreign key (product_id) 
+       references t_product (product_id)
+Hibernate: 
+    
+    alter table t_product 
+       add constraint FKagt8un48b78w4um2hghqrwkpv 
+       foreign key (festival_id) 
+       references t_festival (festival_id)
+Hibernate: 
+    
+    alter table t_product_payment 
+       add constraint FKtqqw7ciw5ye72m93ouih4xk3p 
+       foreign key (member_id) 
+       references t_member (member_id)
+Hibernate: 
+    
+    alter table t_product_payment 
+       add constraint FKophxs9rlg7ivm72d8eynd8ywg 
+       foreign key (product_id) 
+       references t_product (product_id)
+Hibernate: 
+    
+    alter table t_reservation 
+       add constraint FKdpqbu98q8qmityeb6pbjmgffu 
+       foreign key (activity_id) 
+       references t_activity (activity_id)
+Hibernate: 
+    
+    alter table t_reservation_payment 
+       add constraint FKbmvkv7rrnsivh4v7kj5dxbgv3 
+       foreign key (member_id) 
+       references t_member (member_id)
+Hibernate: 
+    
+    alter table t_reservation_payment 
+       add constraint FKqev9ygwto4e4axftcfwyl9xh5 
+       foreign key (reservation_id) 
+       references t_reservation (reservation_id)
+Hibernate: 
+    
+    alter table t_review 
+       add constraint FK5kwba28p6ybcgv0gk5ogepu1b 
+       foreign key (festival_id) 
+       references t_festival (festival_id)
+Hibernate: 
+    
+    alter table t_review 
+       add constraint FK3p8b9uac1f704hqxshrc3oq3k 
+       foreign key (member_id) 
+       references t_member (member_id)
+2023-07-07 16:58:47.695  INFO 17080 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-07-07 16:58:47.709  INFO 17080 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-07-07 16:58:51.321  WARN 17080 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-07-07 16:58:52.284  INFO 17080 --- [    Test worker] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2023-07-07 16:58:52.290  INFO 17080 --- [    Test worker] com.example.demo.config.SwaggerConfig    : 스웨거 api() 함수 호출 !!
+2023-07-07 16:58:52.323  INFO 17080 --- [    Test worker] com.example.demo.config.SwaggerConfig    : 스웨거 apiInfo() 함수 호출 !!
+2023-07-07 16:58:53.606  INFO 17080 --- [    Test worker] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2023-07-07 16:58:54.116  INFO 17080 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@1b32aaca, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7b5afde5, org.springframework.security.web.context.SecurityContextPersistenceFilter@7ae49d52, org.springframework.security.web.header.HeaderWriterFilter@27df4dcb, org.springframework.web.filter.CorsFilter@5a14a8c1, org.springframework.security.web.authentication.logout.LogoutFilter@3a7be6e6, com.example.demo.jwt.JwtExceptionFilter@879f852, com.example.demo.jwt.JwtFilter@693676d, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@69ca71b3, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@371a7fd5, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2a0a178f, org.springframework.security.web.session.SessionManagementFilter@557fe039, org.springframework.security.web.access.ExceptionTranslationFilter@310db5c4, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@14cf30b3]
+2023-07-07 16:58:55.321  WARN 17080 --- [    Test worker] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2023-07-07 16:58:56.019  INFO 17080 --- [    Test worker] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2023-07-07 16:58:56.098  INFO 17080 --- [    Test worker] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2023-07-07 16:58:56.200  INFO 17080 --- [    Test worker] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2023-07-07 16:58:56.651  INFO 17080 --- [    Test worker] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: communitySelectListUsingGET_1
+2023-07-07 16:58:57.244  INFO 17080 --- [    Test worker] c.example.demo.PerfestApplicationTests   : Started PerfestApplicationTests in 31.005 seconds (JVM running for 38.104)
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 7.6.1</a> at 2023. 7. 7. 오후 4:59:07</p>
+</div>
+</div>
+</body>
+</html>

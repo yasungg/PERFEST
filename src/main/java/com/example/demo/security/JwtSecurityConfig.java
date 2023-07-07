@@ -23,7 +23,7 @@ public class JwtSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurity
         JwtExceptionFilter jwtExceptionFilter = new JwtExceptionFilter(objectMapper);
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-        http.addFilterBefore(jwtExceptionFilter, JwtFilter.class);
+//        http.addFilterBefore(jwtExceptionFilter, JwtFilter.class);
     }
 
 

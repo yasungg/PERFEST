@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@CrossOrigin(originPatterns = "*", allowedHeaders= "*")
+//@CrossOrigin(originPatterns = "*", allowedHeaders= "*")
 @RequestMapping("/logout")
 public class LogoutController {
     private final HttpSession session;
