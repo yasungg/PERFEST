@@ -189,17 +189,15 @@ public class TokenProvider {
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
             log.info("잘못된 JWT 서명입니다.");
             e.printStackTrace();
-            throw new JwtException("401-1");
         } catch (ExpiredJwtException e) {
             log.info("만료된 access 토큰입니다.");
-            throw new JwtException("401-2");
         } catch (UnsupportedJwtException e) {
             log.info("지원되지 않는 access 토큰입니다.");
-            throw new JwtException("401-3");
         } catch (IllegalArgumentException e) {
             log.info("access 토큰이 잘못되었습니다.");
-            throw new JwtException("401-4");
+            e.printStackTrace();
         }
+        return false;
     }
     // refresh token 유효성 검사
     public boolean validateRefreshToken(String token) {

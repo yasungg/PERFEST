@@ -32,12 +32,10 @@ import static java.lang.invoke.VarHandle.AccessMode.GET;
 @Configuration
 @EnableWebSecurity
 @Component
-public class WebSecurityConfig {
+public class WebSecurityConfig implements WebMvcConfigurer{
     private final TokenProvider tokenProvider;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandle jwtAccessDeniedHandler;
-    private final ObjectMapper objectMapper;
-    private final HttpSession session;
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -58,14 +56,14 @@ public class WebSecurityConfig {
                 .and()
                 .authorizeRequests()
                 //해당 경로에 대해 인증 없이 접근을 허용
-                .antMatchers("/auth/**", "/koauth/**", "/thymeleaf/**", "/thymeleaf1/**", "/payment/**","/community/**","/comment/**").permitAll()
+                .antMatchers("/auth/**", "/koauth/**", "/pages/**", "/js/**", "/css/**", "/media/**", "/public/**", "/build/**").permitAll()
                 .antMatchers("/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger/**", "/sign-api/exception").permitAll()
                 .antMatchers("/", "/static/**").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .anyRequest().authenticated()
 
                 .and()
-                .apply(new JwtSecurityConfig(tokenProvider, session, objectMapper));
+                .apply(new JwtSecurityConfig(tokenProvider));
 
         return http.build();
     }

@@ -28,30 +28,29 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/Login" element={<Login />} />
-        <Route path="/MyPage" element={<MyPage />} />
+        <Route path="/pages/login" element={<Login />} />
+        <Route path="/pages/mypage" element={<MyPage />} />
         {/* sidebar 테스트용 수정예정/ */}
-        <Route path="/Sidebar" element={<SideBar />} /> 
-        <Route path="/MyRanking" element={<MyRanking />} />
-        <Route path="/Setting" element={<MySetting />} />
-        <Route path="/MyReview" element={<MyReview />} />
-        <Route path="/ReserveList" element={<MyReserveList />} />
-        <Route path="/PayList" element={<MyPayList />} />
-        <Route path="/MyWrite" element={<MyWrite />} />
-        <Route path="/payready" element={<PayReady />} />
-        <Route path="/payresult" element={<PayResult />} />
-        <Route path="/paycancel" element={<PayCancel />} />
-        <Route path="/resultFail" element={<ResultFalse />} />
-        <Route path="/resultSuccess" element={<ResultSuccess />} />
-        <Route path="/Board" element={<Board />} />
-        <Route path="/WriteBoard" element={<WriteBoard />} />
-        <Route path="/UpdateBoard" element={<UpdateBoard />} />
-        <Route path="/Ranking" element={<Ranking />} />
-        <Route path="/BoardArticle/:communityId" element={<BoardArticle />} />
-        <Route path="/Festival" element={<Festival />} />
-        <Route path="/FestivalDetail" element={<FestivalDetail />} />
-        <Route path="/MyCalender" element={<MyCalendar />} />
-
+        <Route path="/pages/sidebar" element={<SideBar />} />
+        <Route path="/pages/myranking" element={<MyRanking />} />
+        <Route path="/pages/setting" element={<MySetting />} />
+        <Route path="/pages/myreview" element={<MyReview />} />
+        <Route path="/pages/reservelist" element={<MyReserveList />} />
+        <Route path="/pages/paylist" element={<MyPayList />} />
+        <Route path="/pages/mywrite" element={<MyWrite />} />
+        <Route path="/pages/payready" element={<PayReady />} />
+        <Route path="/pages/payresult" element={<PayResult />} />
+        <Route path="/pages/paycancel" element={<PayCancel />} />
+        <Route path="/pages/resultfail" element={<ResultFalse />} />
+        <Route path="/pages/resultsuccess" element={<ResultSuccess />} />
+        <Route path="/pages/board" element={<Board />} />
+        <Route path="/pages/writeboard" element={<WriteBoard />} />
+        <Route path="/pages/updateboard" element={<UpdateBoard />} />
+        <Route path="/pages/ranking" element={<Ranking />} />
+        <Route path="/pages/boardarticle/:communityid" element={<BoardArticle />} />
+        <Route path="/pages/festival" element={<Festival />} />
+        <Route path="/pages/festivaldetail" element={<FestivalDetail />} />
+        <Route path="/pages/myCalender" element={<MyCalendar />} />
       </Routes>
     </Router>
   );

@@ -2,7 +2,8 @@ import React, { useState, useEffect, useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import kakaoButton from "../images/kakaoButton.png";
-import loginBackgroundImg from "../images/loginboxbackground.jpg";
+import loginBackgroundImg from "../images/loginBackground.jpg";
+import test from "../images/test.jpg";
 import LoginAPI from "../api/LoginAPI";
 import SignupAPI from "../api/SignupAPI";
 import LoginModal from "../utils/LoginModal";
@@ -12,11 +13,13 @@ const Container = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
+  background-size: cover;
   justify-content: ${(props) => props.justifyContent};
   align-items: ${(props) => props.alignItems};
-  background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+  background-image: url(${test});
   overflow: scroll;
 `;
+// linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
 const Box = styled.div`
   display: flex;
   flex-flow: column;
@@ -24,10 +27,10 @@ const Box = styled.div`
   width: 464px;
   height: 600px;
   border-radius: 5px;
-  background-image: url(${loginBackgroundImg});
+  background: transparent;
   background-size: cover;
   border: none;
-  box-shadow: 5px 20px 50px black;
+  box-shadow: 3px 5px 10px black;
   overflow: hidden;
 `;
 const SignUpBox = styled.div`
@@ -39,6 +42,7 @@ const SignUpBox = styled.div`
   height: 600px;
   border-radius: 5px;
   border: none;
+  backdrop-filter: blur(20px);
 `;
 const LoginBox = styled.div`
   display: flex;
@@ -60,6 +64,7 @@ const LogoBox = styled.div`
   justify-content: ${(props) => props.justifyContent};
   align-items: center;
   width: 100%;
+  border: none;
   height: ${(props) => props.height};
   border: none;
   border-radius: 5px;
@@ -87,7 +92,7 @@ const SignUpLogo = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 5px 10px 30px black;
+  /* box-shadow: 5px 10px 30px black; */
   width: 300px;
   height: 32px;
   margin-top: ${(props) => props.marginTop};
@@ -131,7 +136,7 @@ const SignUpInputBox = styled.input`
   width: 320px;
   height: ${(props) => props.height};
   background-color: white;
-  box-shadow: 5px 10px 20px black;
+  box-shadow: 2px 5px 10px black;
   border-radius: 5px;
   border: none;
   font-size: 16px;
@@ -204,8 +209,8 @@ const SignUpBtn = styled.button`
   }
   &:hover {
     cursor: pointer;
-    background: #302b63;
-    color: white;
+    background: transparent;
+    color: black;
   }
 `;
 const KakaoBtn = styled.button`
@@ -228,7 +233,7 @@ const Login = () => {
   const isKakao = searchParams.get("isKakao");
   const needSignup = searchParams.get("needSignup");
   //로그인 페이지 상태 변경을 위해 사용하는 useState
-  const [loginBoxTransformY, setLoginBoxTransformY] = useState("-350px");
+  const [loginBoxTransformY, setLoginBoxTransformY] = useState("-340px");
   const [loginLogoSize, setLoginLogoSize] = useState("64px");
   const [logoYLocation, setLogoYLocation] = useState("64px");
   const [signUpLogoSize, setSignUpLogoSize] = useState("24px");
@@ -245,7 +250,7 @@ const Login = () => {
   const [loginPassword, setLoginPassword] = useState("");
 
   const changeLoginForm = () => {
-    setLoginBoxTransformY("-350px");
+    setLoginBoxTransformY("-340px");
     setLoginLogoSize("64px");
     setLogoYLocation("64px");
     setSignUpLogoYLocation("-48px");

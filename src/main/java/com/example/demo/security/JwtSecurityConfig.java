@@ -15,15 +15,11 @@ import javax.servlet.http.HttpSession;
 @RequiredArgsConstructor
 public class JwtSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
     private final TokenProvider tokenProvider;
-    private final HttpSession httpSession;
-    private final ObjectMapper objectMapper;
     @Override
     public void configure(HttpSecurity http) {
-        JwtFilter jwtFilter= new JwtFilter(tokenProvider, httpSession);
-        JwtExceptionFilter jwtExceptionFilter = new JwtExceptionFilter(objectMapper);
+        JwtFilter jwtFilter= new JwtFilter(tokenProvider);
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-//        http.addFilterBefore(jwtExceptionFilter, JwtFilter.class);
     }
 
 
