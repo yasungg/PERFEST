@@ -171,23 +171,30 @@ const CommentReplyWrite = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-.commentreply{
+  margin-top: 10px;
+
+  .commentreply {
     width: 85%;
     padding: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 14px;
     resize: none;
+    outline: none;
   }
 `;
+
 const CommentReplyWriteButton = styled.button`
   width: 10%;
   padding: 8px;
-  background-color: #f1f1f1;
+  background-color: #f5f5f5;
   border: none;
   border-radius: 4px;
   font-weight: bold;
   cursor: pointer;
+  color: #333;
+  transition: background-color 0.3s;
+
   &:hover {
     background-color: #e0e0e0;
   }
@@ -229,7 +236,8 @@ const Heart = styled(GoHeart)`
 const BoardArticle = () => {
     const {communityId} = useParams(); // 게시판 번호 전달 하기 위해서 useparams 사용
     const [inputComment, setInputComment] = useState("");
-    const [inputReplyComment, setInputReplyComment] = useState("");
+    const [replyCommentInput, setReplyCommentInput] = useState(new Map());
+    const [showReplyInput, setShowReplyInput] = useState(new Map()); // 대댓글 입력창 보여줄지 여부를 관리하는 상태 변수
     const [commentCount, setCommentCount] = useState("");
     const [boardArticle, setBoardArticle] = useState([]);
     const [commentData, setCommentData] = useState([]);
@@ -243,7 +251,7 @@ const BoardArticle = () => {
         if (inputComment.trim() === "") {
             // textarea 내용이 비어 있는 경우
             return;
-          }
+        }
         const memberId = 1;
         const response = await CommentAPI.CommentWrite(inputComment,communityId,memberId);
         console.log(response.data);
@@ -252,20 +260,20 @@ const BoardArticle = () => {
     }
     // 게시판에 있는 댓글 갯수 가져오기
     useEffect(() => {
-    const getCommentCount = async() =>{
-        const rsp = await CommentAPI.CommentGetCount(communityId);
-        setCommentCount(rsp.data);
-    }
-    getCommentCount();
+        const getCommentCount = async() =>{
+            const rsp = await CommentAPI.CommentGetCount(communityId);
+            setCommentCount(rsp.data);
+        }
+        getCommentCount();
     },[commentUpdateTrigger])
     // 게시판 본문 가져오기
     useEffect(() => {
-    const getBoardArticle = async() => {
-        const response = await BoardAPI.GetBoardArticle(communityId);
-        console.log(response.data);
-        setBoardArticle(response.data);
-    }
-    getBoardArticle();
+        const getBoardArticle = async() => {
+            const response = await BoardAPI.GetBoardArticle(communityId);
+            console.log(response.data);
+            setBoardArticle(response.data);
+        }
+        getBoardArticle();
     },[communityId])
     // 게시판 공감하기 눌르면 공감하기 1 추가
     const onClickBoardLike = async() => {
@@ -280,82 +288,111 @@ const BoardArticle = () => {
     }
     // 해당 게시판 댓글 가져오기
     useEffect(() => {
-    const getBoardComment = async() => {
-        const response = await CommentAPI.GetComment(communityId);
-        console.log(response.data);
-        setCommentData(response.data);
-    }
-    getBoardComment();
+        const getBoardComment = async() => {
+            const response = await CommentAPI.GetComment(communityId);
+            console.log(response.data);
+            setCommentData(response.data);
+        }
+        getBoardComment();
     },[commentUpdateTrigger])
     const getCategoryText = (category) => {
         switch (category) {
-          case 'FIND_PARTY':
-            return '파티원 찾기';
-          case 'FREE_BOARD':
-            return '자유게시판';
-          case 'Q_A':
-            return 'Q&A';
-          default:
-            return '';
+            case 'FIND_PARTY':
+                return '파티원 찾기';
+            case 'FREE_BOARD':
+                return '자유게시판';
+            case 'Q_A':
+                return 'Q&A';
+            default:
+                return '';
         }
-      };
-      // 게시판 대댓글 작성
-      const onClickWriteReplyComment = async(commentId) => {
+    };
+    // 대댓글 창 보여주기
+    const onClickShowReplyWrite = (commentId) => {
+        setShowReplyInput((prevMap) => {
+            const newMap = new Map(prevMap);
+            newMap.set(commentId, !newMap.get(commentId));
+            return newMap;
+        });
+    };
+    // 게시판 대댓글 작성
+    const onClickWriteReplyComment = async (commentId) => {
         const memberId = 2;
-        const response = await CommentAPI.ReplyCommentWrite(commentId,memberId,inputReplyComment);
-          console.log(response.data);
-          setInputReplyComment(""); // 대댓글 작성 후 inputReplyComment 상태를 초기화하여 textarea의 내용을 지움
-      };
-      const onChangeReplyComment = (e) => {
-        setInputReplyComment(e.target.value);
-      };
+        const replyComment = replyCommentInput.get(commentId); // 해당 댓글의 대댓글 내용 가져오기
+        const response = await CommentAPI.ReplyCommentWrite(commentId, memberId, replyComment);
+        console.log(response.data);
+        setReplyCommentInput((prevMap) => {
+            const newMap = new Map(prevMap);
+            newMap.delete(commentId); // 대댓글 작성 후 해당 댓글의 대댓글 내용 삭제
+            return newMap;
+        });
+    };
+    const onChangeReplyComment = (e, commentId) => {
+        const value = e.target.value;
+        setReplyCommentInput((prevMap) => {
+            const newMap = new Map(prevMap);
+            newMap.set(commentId, value); // 대댓글 내용 업데이트
+            return newMap;
+        });
+    };
     return(
         <Container justifyContent="center" alignItems="center">
             <BodyContainer>
-            {boardArticle&&boardArticle.map((community) => (
-                <BoardInfo key={community.communityId}>
-                <Title><h1>{getCategoryText(community.communityCategory)}</h1></Title> 
-                <BoardTitle>{community.communityTitle}</BoardTitle>
-                <UserInfo>
-                    <BoardNickname>{community.nickname}</BoardNickname>
-                    <BoardDate>{formatDate(community.writtenTime)}</BoardDate>
-                </UserInfo>
-                <hr></hr>
-                <BoardDesc>{community.communityDesc}</BoardDesc>
-                </BoardInfo>
+                {boardArticle&&boardArticle.map((community) => (
+                    <BoardInfo key={community.communityId}>
+                        <Title><h1>{getCategoryText(community.communityCategory)}</h1></Title>
+                        <BoardTitle>{community.communityTitle}</BoardTitle>
+                        <UserInfo>
+                            <BoardNickname>{community.nickname}</BoardNickname>
+                            <BoardDate>{formatDate(community.writtenTime)}</BoardDate>
+                        </UserInfo>
+                        <hr></hr>
+                        <BoardDesc>{community.communityDesc}</BoardDesc>
+                    </BoardInfo>
                 ))}
+                <BoardLike>
+                    <button className="like-button" onClick={onClickBoardLike}>
+                        이 글이 도움!
+                    </button>
+                </BoardLike>
                 <CommentInfo>
-                <CommentCount>댓글{commentCount}</CommentCount>
+                    <CommentCount>댓글{commentCount}</CommentCount>
                 </CommentInfo>
                 <CommentWrite>
                     <textarea className="commentwrite"  cols="160" rows="3" value={inputComment} onChange={onChangeComment}></textarea>
                     <CommentWriteButton onClick={onClickWriteComment}>댓글 작성하기</CommentWriteButton>
                 </CommentWrite>
                 {commentData&&commentData.map((comment) => (
-                <CommentDesc key={comment.commentId}>
-                    <Comment>
-                    <CommentHead>
-                        <CommentNickName>{comment.nickname}</CommentNickName>
-                        <CommentWrittenTime>{formatDate(comment.commentWrittenTime)}</CommentWrittenTime>
-                        <CommentReWrite><button className="replycomment" onClick={() => onClickWriteReplyComment(comment.commentId)}>대댓글</button></CommentReWrite>
-                        <CommentLike><button className="like" onClick={() => onClickCommentLike(comment.commentId)}>좋아요</button></CommentLike>
-                    </CommentHead>
-                    <CommentArr>
-                    <CommentBody>{comment.commentBody}</CommentBody>
-                    <CommentLikeCount><Heart/>{comment.commentLikeCount}</CommentLikeCount>
-                    </CommentArr>
-                    <CommentReplyWrite>
-                    <textarea className="commentreply" cols="160" rows="3" value={inputReplyComment} onChange={onChangeReplyComment}></textarea>
-                    <CommentReplyWriteButton>댓댓글 작성하기</CommentReplyWriteButton>
-                     </CommentReplyWrite>
-                    <hr></hr>
-                    </Comment>
-                </CommentDesc>
+                    <CommentDesc key={comment.commentId}>
+                        <Comment>
+                            <CommentHead>
+                                <CommentNickName>{comment.nickname}</CommentNickName>
+                                <CommentWrittenTime>{formatDate(comment.commentWrittenTime)}</CommentWrittenTime>
+                                <CommentReWrite><button className="replycomment" onClick={() => onClickShowReplyWrite(comment.commentId)}>대댓글</button></CommentReWrite>
+                                <CommentLike><button className="like" onClick={() => onClickCommentLike(comment.commentId)}>좋아요</button></CommentLike>
+                            </CommentHead>
+                            <CommentArr>
+                                <CommentBody>{comment.commentBody}</CommentBody>
+                                <CommentLikeCount><Heart/>{comment.commentLikeCount}</CommentLikeCount>
+                            </CommentArr>
+                            {showReplyInput.get(comment.commentId) && (
+                                <CommentReplyWrite>
+                    <textarea
+                        className="commentreply"
+                        cols="160"
+                        rows="3"
+                        value={replyCommentInput.get(comment.commentId) || ""}
+                        onChange={(e) => onChangeReplyComment(e, comment.commentId)}
+                    ></textarea>
+                                    <CommentReplyWriteButton onClick={() => onClickWriteReplyComment(comment.commentId)}>
+                                        댓댓글 작성하기
+                                    </CommentReplyWriteButton>
+                                </CommentReplyWrite>
+                            )}
+                            <hr></hr>
+                        </Comment>
+                    </CommentDesc>
                 ))}
-                <BoardLike>
-                    <button className="like-button" onClick={onClickBoardLike}>
-                    이 글이 도움!
-                    </button></BoardLike>
             </BodyContainer>
         </Container>
     );

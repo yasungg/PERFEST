@@ -11,9 +11,9 @@ const CommentAPI = {
         return await axios.post( `/auth/comment/writecomment`, writeComment);
     },
     // 대댓글 작성하기
-    ReplyCommentWrite : async(parentId,memberId,commentBody) => {
+    ReplyCommentWrite : async(commentId,memberId,commentBody) => {
         const writeReplyComment = {
-            parentId: parentId,
+            commentId: commentId,
             memberId: memberId,
             commentBody: commentBody           
         };
