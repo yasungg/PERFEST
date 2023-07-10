@@ -199,6 +199,10 @@ const CommentReplyWriteButton = styled.button`
     background-color: #e0e0e0;
   }
 `;
+const ReplyCommentDesc = styled.div`
+`;
+const ReplyCommentIcon = styled.div`
+`
 const BoardLike = styled.div`
   display: flex;
   width: 100%;
@@ -236,8 +240,9 @@ const Heart = styled(GoHeart)`
 const BoardArticle = () => {
     const {communityId} = useParams(); // 게시판 번호 전달 하기 위해서 useparams 사용
     const [inputComment, setInputComment] = useState("");
-    const [replyCommentInput, setReplyCommentInput] = useState(new Map());
+    const [replyCommentInput, setReplyCommentInput] = useState(new Map()); // 각 댓글에 맞는 대댓글 작성하는 상태 변수
     const [showReplyInput, setShowReplyInput] = useState(new Map()); // 대댓글 입력창 보여줄지 여부를 관리하는 상태 변수
+    const [replyCommentData, setReplyCommentData] = useState([]);
     const [commentCount, setCommentCount] = useState("");
     const [boardArticle, setBoardArticle] = useState([]);
     const [commentData, setCommentData] = useState([]);
@@ -327,6 +332,7 @@ const BoardArticle = () => {
             return newMap;
         });
     };
+    // 게시판 대댓글 작성
     const onChangeReplyComment = (e, commentId) => {
         const value = e.target.value;
         setReplyCommentInput((prevMap) => {
@@ -335,6 +341,20 @@ const BoardArticle = () => {
             return newMap;
         });
     };
+    // 해당 댓글의 대댓글 가져오기
+    useEffect(() => {
+        const getReplyCommentData = async (commentId) => {
+            const response = await CommentAPI.GetReplyComment(commentId);
+            console.log(response.data);
+            setReplyCommentData((prevData) => ({
+                ...prevData,
+                [commentId]: response.data,
+            }));
+        };
+        commentData.forEach((comment) => {
+            getReplyCommentData(comment.commentId);
+        });
+    }, [commentData]);
     return(
         <Container justifyContent="center" alignItems="center">
             <BodyContainer>
@@ -375,6 +395,23 @@ const BoardArticle = () => {
                                 <CommentBody>{comment.commentBody}</CommentBody>
                                 <CommentLikeCount><Heart/>{comment.commentLikeCount}</CommentLikeCount>
                             </CommentArr>
+                            {/* 대댓글 렌더링 */}
+                            {replyCommentData[comment.commentId] &&
+                                replyCommentData[comment.commentId].map((comment) => (
+                                    <ReplyCommentDesc key={comment.commentId}>
+                                        <ReplyCommentIcon></ReplyCommentIcon>
+                                        <CommentHead>
+                                            <CommentNickName>{comment.nickname}</CommentNickName>
+                                            <CommentWrittenTime>{formatDate(comment.commentWrittenTime)}</CommentWrittenTime>
+                                            <CommentReWrite><button className="replycomment" onClick={() => onClickShowReplyWrite(comment.commentId)}>대댓글</button></CommentReWrite>
+                                            <CommentLike><button className="like" onClick={() => onClickCommentLike(comment.commentId)}>좋아요</button></CommentLike>
+                                        </CommentHead>
+                                        <CommentArr>
+                                            <CommentBody>{comment.commentBody}</CommentBody>
+                                            <CommentLikeCount><Heart/>{comment.commentLikeCount}</CommentLikeCount>
+                                        </CommentArr>
+                                    </ReplyCommentDesc>
+                                ))}
                             {showReplyInput.get(comment.commentId) && (
                                 <CommentReplyWrite>
                     <textarea

@@ -19,6 +19,10 @@ const CommentAPI = {
         };
         return await axios.post( `/auth/comment/writereplycomment`, writeReplyComment)
     },
+    // 대댓글 조회
+    GetReplyComment : async(parentId) => {
+        return await axios.get(`/auth/comment/getreplycomment?parentId=${parentId}`)
+    },
     // 댓글 갯수 가져오기
     CommentGetCount : async(communityId) => {
         return await axios.get( `/auth/comment/commentcount?communityId=${communityId}`)
