@@ -1,6 +1,5 @@
 import axios from "axios";
 
-
 const LoginAPI = {
   Login: async (email, password) => {
     // 로그인
@@ -36,8 +35,6 @@ const LoginAPI = {
       headers: {
         "Content-Type": "application/json",
         Authorization: Authorization,
-        "Cache-Control": "no-cache, no-store",
-        Pragma: "no-cache",
       },
     });
   },

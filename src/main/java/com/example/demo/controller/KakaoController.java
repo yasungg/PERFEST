@@ -33,9 +33,9 @@ public class KakaoController {
             redirectAttributes.addAttribute("needSignup", false);
             redirectAttributes.addAttribute("jwt", jwt);
 
-            return "redirect:http://localhost:3000/";
+            return "redirect:http://localhost:8111/";
         }
-        return "redirect:" + UriComponentsBuilder.fromUriString("http://localhost:3000/login")
+        return "redirect:" + UriComponentsBuilder.fromUriString("http://localhost:8111/pages/login")
                 .queryParam("isKakao", true)
                 .queryParam("needSignup", true)
                 .encode(StandardCharsets.UTF_8)

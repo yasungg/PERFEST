@@ -123,13 +123,13 @@ const Header = () => {
           <SearchIcon style={{ color: "white" }} />
         </SearchBoxContainer> */}
         <HeaderNaviButtons>
-          <HeaderNaviBtn>
+          <HeaderNaviBtn onClick={() => navigate("/pages/festival")}>
             <span>Festivals</span>
           </HeaderNaviBtn>
           <HeaderNaviBtn>
             <span>Ranking</span>
           </HeaderNaviBtn>
-          <HeaderNaviBtn>
+          <HeaderNaviBtn onClick={() => navigate("/pages/board")}>
             <span>Community</span>
           </HeaderNaviBtn>
           <HeaderNaviBtn>
@@ -137,7 +137,7 @@ const Header = () => {
           </HeaderNaviBtn>
         </HeaderNaviButtons>
         <UserBox>
-          <LoginButton onClick={() => navigate("/Login")}>
+          <LoginButton onClick={() => navigate("/pages/login")}>
             <span>Login / Signup</span>
           </LoginButton>
         </UserBox>

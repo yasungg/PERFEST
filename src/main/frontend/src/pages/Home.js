@@ -2,58 +2,66 @@ import { Container, BodyContainer } from "../components/StandardStyles";
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import styled from "styled-components";
 import Header from "../components/Header";
-import { useLocation } from "react-router";
+import Footer from "../components/Footer";
+import { useLocation, useNavigate } from "react-router";
 import SearchIcon from "@mui/icons-material/Search";
-import Logo from "../images/PERFEST LOGO BLACK.png";
-import FirstSlider from "../components/FirstSlider";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { Banner } from "../components/Banner";
+import Picture from "../images/newimage.png";
 
 const VideoContainer = styled.div`
-  box-sizing: border-box;
   width: 100%;
   height: 100%;
   overflow: hidden;
-  margin: 0px auto;
   position: relative;
   border: none;
-  .whatFestival {
-    display: inline-block;
-    font-size: 48px;
-    color: white;
-    position: absolute;
-    /* top: 200px;
-    left: 335px; */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    user-select: none;
-    transition: all 0.7s linear;
-  }
-  &:hover .whatFestival {
-    top: 42%;
-    left: 33%;
-  }
   &:hover .sbcontainer {
     opacity: 1;
     width: 768px;
   }
   @media screen and (max-width: 1025px) {
-    &:hover .whatFestival {
-      top: 42%;
-      left: 45%;
-    }
     &:hover .sbcontainer {
       opacity: 1;
       width: 400px;
     }
   }
+  @media screen and (max-width: 769px) {
+    &:hover .sbcontainer {
+      opacity: 1;
+      width: 320px;
+    }
+  }
+  @media screen and (max-width: 320px) {
+    &:hover .sbcontainer {
+      opacity: 1;
+      width: 240px;
+    }
+  }
 `;
 const Video = styled.video`
   width: 1440px;
+  height: 100%;
   border: none;
   outline: none;
   z-index: 0;
   overflow: hidden;
+`;
+const TMPbox = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  .whatFestival {
+    font-size: calc(16px + 2vw);
+    color: white;
+    margin-bottom: 8px;
+    user-select: none;
+    transition: all 0.7s linear;
+  }
 `;
 const SearchBoxContainer = styled.div`
   display: flex;
@@ -65,15 +73,29 @@ const SearchBoxContainer = styled.div`
   background: transparent;
   align-items: center;
   align-self: center;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   transition: all 0.7s ease-out;
   opacity: 0;
   &:focus {
     opacity: 1;
     width: 768px;
+  }
+  @media screen and (max-width: 1025px) {
+    &:focus {
+      opacity: 1;
+      width: 400px;
+    }
+  }
+  @media screen and (max-width: 769px) {
+    &:focus {
+      opacity: 1;
+      width: 320px;
+    }
+  }
+  @media screen and (max-width: 320px) {
+    &:focus {
+      opacity: 1;
+      width: 240px;
+    }
   }
 `;
 const SearchBox = styled.input`
@@ -93,6 +115,10 @@ const SearchBox = styled.input`
   }
 `;
 const SearchBtn = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
   background: transparent;
   outline: none;
   border: none;
@@ -100,11 +126,170 @@ const SearchBtn = styled.button`
     cursor: pointer;
   }
 `;
+const ItemBox = styled.div`
+  display: grid;
+  grid-template-columns: 0.5fr 0.5fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: "box1 box2";
+  width: 100%;
+  height: 100vh;
 
+  @media screen and (max-width: 853px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.5fr 0.5fr;
+    grid-template-areas:
+      "box2"
+      "box1";
+    height: 160vh;
+  }
+`;
+const ItemBoxForPic = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+`;
+const PictureForItemBox = styled.img`
+  width: 40vw;
+  position: absolute;
+  z-index: 0;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-110%, -50%);
+  transition: all 0.2s linear;
+  overflow: hidden;
+  @media screen and (max-width: 853px) {
+    width: 60vw;
+    transform: translate(-30%, -50%);
+    opacity: 0.5;
+    border-radius: 20px;
+  }
+`;
+const GridBox1 = styled.div`
+  grid-area: box1;
+  position: relative;
+`;
+const GridBox2 = styled.div`
+  grid-area: box2;
+  position: relative;
+  background: transparent;
+`;
+const DescBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40vw;
+  height: 30vh;
+  background: transparent;
+  z-index: 1;
+  @media screen and (max-width: 853px) {
+    width: 90vw;
+    height: 40vh;
+  }
+  .div1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: transparent;
+  }
+  .desc1 {
+    font-size: calc(16px + 1.5vw);
+    font-weight: 500;
+    user-select: none;
+    @media screen and (max-width: 853px) {
+      font-size: calc(16px + 4vw);
+      font-weight: 800;
+    }
+  }
+  .desc2 {
+    user-select: none;
+    @media screen and (max-width: 853px) {
+      font-size: calc(16px + 1vw);
+    }
+  }
+`;
+const DescBoxForPicture = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(20%, -50%);
+  width: 40vw;
+  height: 30vh;
+  background: transparent;
+  z-index: 1;
+  @media screen and (max-width: 853px) {
+    width: 90vw;
+    height: 40vh;
+    transform: translate(-50%, -50%);
+  }
+  .div1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: transparent;
+  }
+  .desc1 {
+    font-size: calc(16px + 1.5vw);
+    font-weight: 500;
+    user-select: none;
+    @media screen and (max-width: 853px) {
+      font-size: calc(16px + 4vw);
+      font-weight: 800;
+    }
+  }
+  .desc2 {
+    user-select: none;
+    @media screen and (max-width: 853px) {
+      font-size: calc(16px + 1vw);
+    }
+  }
+`;
+const DescButtons = styled.button`
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  border: 1px solid black;
+  width: 24vw;
+  height: 6vh;
+  padding: 16px;
+  user-select: none;
+  &:hover {
+    cursor: pointer;
+  }
+  @media screen and (max-width: 853px) {
+    width: 300px;
+  }
+`;
+const VideoForItemBox1 = styled.video`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 36vw;
+  border: none;
+  border-radius: 20px;
+  outline: none;
+  z-index: 0;
+  overflow: hidden;
+  @media screen and (max-width: 853px) {
+    width: 70vw;
+  }
+`;
 const Home = () => {
   const location = useLocation();
   const getJWT = new URLSearchParams(location.search);
   // console.log(getJWT.get("jwt"));
+  const navigate = useNavigate();
 
   useEffect(() => {
     const JWT = JSON.parse(getJWT.get("jwt"));
@@ -112,6 +297,7 @@ const Home = () => {
     if (JWT != null) {
       localStorage.setItem("accessToken", JWT.accessToken);
       localStorage.setItem("tokenExpiresIn", JWT.tokenExpiresIn);
+      console.log(localStorage.getItem("accessToken"));
     }
 
     // console.log(localStorage.getItem("accessToken"));
@@ -126,21 +312,77 @@ const Home = () => {
           muted
           autoPlay
           loop
-          src="/static/media/BackgroundVideo4.mp4"
+          src="/videos/BackgroundVideo4.mp4"
           type="video/mp4"
         ></Video>
-        <span className="whatFestival">need search?</span>
-        <SearchBoxContainer className="sbcontainer">
-          <SearchBox type="text" className="sb" />
-          <SearchBtn>
-            <SearchIcon
-              style={{ color: "white", fontSize: "32px" }}
-              className="finder"
-            />
-          </SearchBtn>
-        </SearchBoxContainer>
+        <TMPbox>
+          <span className="whatFestival">need search?</span>
+          <SearchBoxContainer className="sbcontainer">
+            <SearchBox type="text" className="sb" />
+            <SearchBtn>
+              <SearchIcon
+                style={{ color: "white", fontSize: "32px" }}
+                className="finder"
+              />
+            </SearchBtn>
+          </SearchBoxContainer>
+        </TMPbox>
       </VideoContainer>
-      <BodyContainer></BodyContainer>
+      <ItemBoxForPic>
+        <DescBoxForPicture>
+          <div className="div1">
+            <span className="desc1">축제의 모든 것들을 한 눈에</span>
+          </div>
+          <div className="div1">
+            <span className="desc2">
+              축제 날짜부터 위치, 구성 프로그램과 특산물까지
+            </span>
+            <span className="desc2">모든 정보들에 간편하게 접근하세요.</span>
+          </div>
+          <div>
+            <DescButtons>
+              <span>need more information?</span>
+              <NavigateNextIcon />
+            </DescButtons>
+          </div>
+        </DescBoxForPicture>
+        <PictureForItemBox src={Picture} />
+      </ItemBoxForPic>
+      <ItemBox>
+        <GridBox1 id="box1">
+          <DescBox>
+            <div className="div1">
+              <span className="desc1">축제가 끝나도</span>
+              <span className="desc1">끝나지 않는 즐거움</span>
+            </div>
+            <div className="div1">
+              <span className="desc2">
+                축제 활동 내용을 기반으로 한 랭킹 시스템,
+              </span>
+              <span className="desc2">
+                활성화된 커뮤니티에서 색다른 재미를 찾아보세요!
+              </span>
+            </div>
+            <div>
+              <DescButtons onClick={() => navigate("/pages/board")}>
+                <span>need more information?</span>
+                <NavigateNextIcon />
+              </DescButtons>
+            </div>
+          </DescBox>
+        </GridBox1>
+        <GridBox2 id="box2">
+          <VideoForItemBox1
+            muted
+            autoPlay
+            loop
+            src="/videos/Ranking.mp4"
+            type="video/mp4"
+          ></VideoForItemBox1>
+        </GridBox2>
+      </ItemBox>
+
+      <Footer />
     </>
   );
 };

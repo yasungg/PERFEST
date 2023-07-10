@@ -34,6 +34,7 @@ import static java.lang.invoke.VarHandle.AccessMode.GET;
 @Component
 public class WebSecurityConfig implements WebMvcConfigurer{
     private final TokenProvider tokenProvider;
+    private final HttpSession session;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandle jwtAccessDeniedHandler;
     @Bean
@@ -63,7 +64,15 @@ public class WebSecurityConfig implements WebMvcConfigurer{
                 .anyRequest().authenticated()
 
                 .and()
-                .apply(new JwtSecurityConfig(tokenProvider));
+                .logout()
+                .logoutUrl("/logout/bye")
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .logoutSuccessHandler(new PerfestLogoutSuccessHandler())
+
+
+                .and()
+                .apply(new JwtSecurityConfig(tokenProvider, session));
 
         return http.build();
     }
