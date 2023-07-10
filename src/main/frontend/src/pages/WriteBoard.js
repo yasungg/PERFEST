@@ -171,20 +171,20 @@ const WriteBoard = () => {
                 </WriteTitle>
                 <WriteCategory>
                     <label htmlFor="boardCategory" className="boardTitle">글 분류</label>
-                <CategoryRadio>
-                    <label htmlFor="freeBoard">
-                        <input type="radio" name="category"  value="FREE_BOARD" checked={selectedCategory === "FREE_BOARD"} onChange={onChangeCategory}/>
-                        자유게시판
+                    <CategoryRadio>
+                        <label htmlFor="freeBoard">
+                            <input type="radio" name="category"  value="FREE_BOARD" checked={selectedCategory === "FREE_BOARD"} onChange={onChangeCategory}/>
+                            자유게시판
                         </label>
-                    <label htmlFor="Q&A">
-                        <input type="radio" name="category" value="Q_A" checked={selectedCategory === "Q_A"} onChange={onChangeCategory}/>
-                        Q&A
+                        <label htmlFor="Q&A">
+                            <input type="radio" name="category" value="Q_A" checked={selectedCategory === "Q_A"} onChange={onChangeCategory}/>
+                            Q&A
                         </label>
-                    <label htmlFor="findParty">
-                        <input type="radio" name="category" value="FIND_PARTY" checked={selectedCategory === "FIND_PARTY"} onChange={onChangeCategory}/>
-                        파티원 찾기
+                        <label htmlFor="findParty">
+                            <input type="radio" name="category" value="FIND_PARTY" checked={selectedCategory === "FIND_PARTY"} onChange={onChangeCategory}/>
+                            파티원 찾기
                         </label>
-                        </CategoryRadio>
+                    </CategoryRadio>
                 </WriteCategory>
                 <WriteText>
                     <label htmlFor="writeText">글 작성</label>
