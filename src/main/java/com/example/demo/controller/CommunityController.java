@@ -35,8 +35,14 @@ public class CommunityController {
     }
     // 커뮤니티 게시글 최신순 조회(GET)
     @GetMapping(value = "/getnewestboard")
-    public ResponseEntity<List<CommunityDTO>> communityNewestList() {
-        List<CommunityDTO> list = communityService.getCommunityNewestList();
+    public ResponseEntity<List<CommunityDTO>> communityNewestList(@RequestParam String communityCategory) {
+        List<CommunityDTO> list = communityService.getCommunityNewestList(CommunityCategory.valueOf(communityCategory));
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+    // 커뮤니티 게시글 인기순 조회(GET)
+    @GetMapping(value = "/getlikestboard")
+    public ResponseEntity<List<CommunityDTO>> communityLikestList(@RequestParam String communityCategory) {
+        List<CommunityDTO> list = communityService.getCommunityLikestList(CommunityCategory.valueOf(communityCategory));
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
     // 커뮤니티 게시글 본문 조회(GET)

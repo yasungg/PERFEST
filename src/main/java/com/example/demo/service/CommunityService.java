@@ -67,8 +67,29 @@ public class CommunityService {
         return communityDTOS;
     }
     // 커뮤니티 게시글 최신순 조회(GET)
-    public List<CommunityDTO> getCommunityNewestList() {
-        List<Community> communityList = communityRepository.findByOrderByWrittenTimeDesc();
+    public List<CommunityDTO> getCommunityNewestList(CommunityCategory communityCategory) {
+        List<Community> communityList = communityRepository.findByCommunityCategoryOrderByWrittenTimeDesc(communityCategory);
+        List<CommunityDTO> communityDTOS = new ArrayList<>();
+        for(Community community : communityList) {
+            CommunityDTO communityDTO = new CommunityDTO();
+            communityDTO.setCommunityCategory(String.valueOf(community.getCommunityCategory()));
+            communityDTO.setCommunityId(community.getId());
+            communityDTO.setCommunityTitle(community.getCommunityTitle());
+            communityDTO.setCommunityDesc(community.getCommunityDesc());
+            communityDTO.setCommunityImgLink(community.getCommunityImgLink());
+            communityDTO.setLikeCount(community.getLikeCount());
+            communityDTO.setWrittenTime(community.getWrittenTime());
+            Member member = community.getMember();
+            if (member != null) {
+                communityDTO.setNickname(member.getNickname());
+            }
+            communityDTOS.add(communityDTO);
+        }
+        return communityDTOS;
+    }
+    // 커뮤니티 게시글 인기순 조회(GET)
+    public List<CommunityDTO> getCommunityLikestList(CommunityCategory communityCategory) {
+        List<Community> communityList = communityRepository.findByCommunityCategoryOrderByLikeCountDesc(communityCategory);
         List<CommunityDTO> communityDTOS = new ArrayList<>();
         for(Community community : communityList) {
             CommunityDTO communityDTO = new CommunityDTO();
