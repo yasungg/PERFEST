@@ -358,7 +358,7 @@ const Home = () => {
           muted
           autoPlay
           loop
-          src="/videos/BackgroundVideo4.mp4"
+          src="/static/media/BackgroundVideo4.mp4"
           type="video/mp4"
         ></Video>
         <TMPbox>
@@ -422,7 +422,7 @@ const Home = () => {
             muted
             autoPlay
             loop
-            src="/videos/Ranking.mp4"
+            src="/static/media/Ranking.mp4"
             type="video/mp4"
           ></VideoForItemBox1>
         </GridBox2>

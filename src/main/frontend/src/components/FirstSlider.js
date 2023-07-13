@@ -86,7 +86,7 @@ const FirstSlider = () => {
         muted
         autoPlay
         loop
-        src="/videos/BackgroundVideo3.mp4"
+        src="/static/media/BackgroundVideo3.mp4"
         type="video/mp4"
       ></Video>
     </Slider1>

@@ -7,8 +7,6 @@ S
 #src/main/frontend/package-lock.json,6\6\667c3f418bd932076f449856c3cce3e9817bb8c2
 S
 #src/main/frontend/public/index.html,f\b\fb4c430928484f1ec2ebc33fae3a74884b42f4fb
-L
-src/main/frontend/src/App.js,6\5\65107325a79051577112de2ce586496b00ad83a7
 Z
 *src/main/frontend/src/components/Banner.js,1\5\1570eb7f262ba7ce07372c0528d69697ca0f3d51
 b
@@ -85,8 +83,6 @@ w
 G.idea/sonarlint/issuestore/6/5/65107325a79051577112de2ce586496b00ad83a7,9\7\97c1f9e0086caa30f0981b85dc586d54837b509f
 U
 %src/main/frontend/src/api/LoginAPI.js,6\5\65e0854b40fc52512a5b34e50e1bde1361e875b3
-`
-0src/main/frontend/src/components/SecondSlider.js,9\9\990f7ee22eae531c8e622308d3bcb82491eb20d8
 T
 $src/main/frontend/src/pages/Board.js,0\8\08e30cb5d0c8fa3c7f3669fb5f2c2970ccee12c7
 n
@@ -99,8 +95,6 @@ n
 >src/main/java/com/example/demo/security/JwtSecurityConfig.java,6\c\6cda335ebaa73c050e840d7cadbaf0fca66a18e2
 n
 >src/main/java/com/example/demo/security/WebSecurityConfig.java,0\5\0556c52ff9ce77e98caa8b8bf58ff2a71f5ae831
-_
-/src/main/frontend/src/components/FirstSlider.js,d\8\d83bbef987c353532bc03cde02b3939b888015fb
 W
 'src/main/frontend/src/api/CommentAPI.js,2\a\2a8734374f02d165960c858c95a41df297f4b310
 m

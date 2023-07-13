@@ -49,8 +49,6 @@ n
 Q.idea/sonarlint/securityhotspotstore/9/f/9fe84ebb15faf917b7def6236dba604453cc61e0,b\b\bbf202272a96de5cd6b6828ffdc55fb3ce45289c
 w
 G.idea/sonarlint/issuestore/6/6/667c3f418bd932076f449856c3cce3e9817bb8c2,2\5\25109c0c50250f7ad34f2629ba25c9f4d469445a
-`
-0src/main/frontend/src/components/SecondSlider.js,9\9\990f7ee22eae531c8e622308d3bcb82491eb20d8
 w
 G.idea/sonarlint/issuestore/a/7/a74ae1b6aba0ed925422a20b1a4ec6268cc85763,1\8\18dc85c0f31c1efe988419d8ad98f5b458a5cc1e
 Å
@@ -73,8 +71,6 @@ w
 G.idea/sonarlint/issuestore/6/5/65107325a79051577112de2ce586496b00ad83a7,9\7\97c1f9e0086caa30f0981b85dc586d54837b509f
 W
 'src/main/frontend/src/api/CommentAPI.js,2\a\2a8734374f02d165960c858c95a41df297f4b310
-_
-/src/main/frontend/src/components/FirstSlider.js,d\8\d83bbef987c353532bc03cde02b3939b888015fb
 m
 =src/main/java/com/example/demo/service/KakaoLoginService.java,0\9\09fbef2b5d68a7acef67b14798d551bedf55ee3f
 a

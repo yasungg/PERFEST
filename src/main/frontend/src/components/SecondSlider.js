@@ -45,7 +45,7 @@ const SecondSlider = () => {
         muted
         autoPlay
         loop
-        src="/videos/BackgroundVideo2.mp4"
+        src="/static/media/BackgroundVideo2.mp4"
         type="video/mp4"
       ></Video>
       <SpanBox>
