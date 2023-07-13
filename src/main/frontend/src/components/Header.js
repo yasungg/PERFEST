@@ -1,16 +1,18 @@
 import styled from "styled-components";
 import BlackLogo from "../images/PERFEST LOGO BLACK.png";
 import WhiteLogo from "../images/PERFEST LOGO WHITE.png";
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
+import MenuIcon from "@mui/icons-material/Menu";
+import { UserContext } from "../context/UserStore";
 
 const HeaderContainer = styled.div`
   box-sizing: border-box;
   display: flex;
   width: 100%;
   height: 58px;
-  background: ${(props) => props.background};
+  background: white;
   border: none;
   position: fixed;
   top: 0;
@@ -19,6 +21,7 @@ const HeaderContainer = styled.div`
 const PerfestLogo = styled.img`
   height: 100%;
   user-select: none;
+  z-index: 100;
   &:hover {
     cursor: pointer;
   }
@@ -27,6 +30,7 @@ const HeaderBody = styled.div`
   box-sizing: border-box;
   display: flex;
   justify-content: flex-end;
+  align-content: center;
   width: 90%;
   height: 100%;
 `;
@@ -68,6 +72,9 @@ const UserBox = styled.div`
   height: 100%;
   background: transparent;
   margin: 0 30px 0 30px;
+  @media screen and (max-width: 1025px) {
+    display: none;
+  }
 `;
 const LoginButton = styled.button`
   display: flex;
@@ -84,6 +91,29 @@ const LoginButton = styled.button`
   user-select: none;
   &:hover {
     cursor: pointer;
+  }
+`;
+const HamburgerBtn = styled.button`
+  display: none;
+  width: 40px;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+  background: black;
+  border: none;
+  border-radius: 5px;
+  margin: auto 12px auto 0;
+  .menuIcon {
+    transition: all 0.1s ease-in;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+  &:hover .menuIcon {
+    transform: scale(1.2);
+  }
+  @media screen and (max-width: 1025px) {
+    display: flex;
   }
 `;
 // const SearchBoxContainer = styled.div` 임시!!
@@ -114,6 +144,10 @@ const LoginButton = styled.button`
 // `;
 const Header = () => {
   const navigate = useNavigate();
+  const { isLogin, setIsSidebar } = useContext(UserContext);
+  useEffect(() => {
+    return setIsSidebar("-300px");
+  }, []);
   return (
     <HeaderContainer>
       <PerfestLogo src={BlackLogo} alt="" onClick={() => navigate("/")} />
@@ -137,10 +171,17 @@ const Header = () => {
           </HeaderNaviBtn>
         </HeaderNaviButtons>
         <UserBox>
-          <LoginButton onClick={() => navigate("/pages/login")}>
-            <span>Login / Signup</span>
-          </LoginButton>
+          {isLogin ? (
+            <span>곽용석님 안녕하세요.</span>
+          ) : (
+            <LoginButton onClick={() => navigate("/pages/login")}>
+              <span>Login / Signup</span>
+            </LoginButton>
+          )}
         </UserBox>
+        <HamburgerBtn onClick={() => setIsSidebar("-2px")}>
+          <MenuIcon className="menuIcon" style={{ color: "white" }} />
+        </HamburgerBtn>
       </HeaderBody>
     </HeaderContainer>
   );

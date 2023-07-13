@@ -1,5 +1,5 @@
-import { Container, BodyContainer } from "../components/StandardStyles";
-import React, { useState, useEffect, useMemo, useRef } from "react";
+import React, { useState, useEffect, useMemo, useRef, useContext } from "react";
+import { UserContext } from "../context/UserStore";
 import styled from "styled-components";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -8,7 +8,13 @@ import SearchIcon from "@mui/icons-material/Search";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { Banner } from "../components/Banner";
 import Picture from "../images/newimage.png";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 
+const Container = styled.div`
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+`;
 const VideoContainer = styled.div`
   width: 100%;
   height: 100%;
@@ -285,11 +291,48 @@ const VideoForItemBox1 = styled.video`
     width: 70vw;
   }
 `;
+const UpBtn = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  position: fixed;
+  bottom: 72px;
+  right: 72px;
+  background: transparent;
+  border: 2px solid black;
+  border-radius: 50%;
+  outline: none;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+const SidebarContainer = styled.div`
+  display: flex;
+  position: fixed;
+  width: calc(300px + 1vw);
+  height: 100vh;
+  top: 0;
+  right: -5px;
+  background: black;
+  border: none;
+  border-radius: 5px;
+  z-index: 100;
+  @media screen and (min-width: 1025px) {
+    display: none;
+  }
+`;
 const Home = () => {
   const location = useLocation();
   const getJWT = new URLSearchParams(location.search);
   // console.log(getJWT.get("jwt"));
   const navigate = useNavigate();
+  const { isSidebar, setIsSidebar } = useContext(UserContext);
+
+  const scrollTo = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   useEffect(() => {
     const JWT = JSON.parse(getJWT.get("jwt"));
@@ -303,8 +346,11 @@ const Home = () => {
     // console.log(localStorage.getItem("accessToken"));
   }, [getJWT]);
 
+  useEffect(() => {
+    console.log(window.scrollY);
+  });
   return (
-    <>
+    <Container>
       <Header background="transparent" />
       <Banner />
       <VideoContainer>
@@ -381,9 +427,12 @@ const Home = () => {
           ></VideoForItemBox1>
         </GridBox2>
       </ItemBox>
-
+      <UpBtn onClick={scrollTo}>
+        <ArrowUpwardIcon />
+      </UpBtn>
+      <SidebarContainer right={isSidebar} />
       <Footer />
-    </>
+    </Container>
   );
 };
 export default Home;
