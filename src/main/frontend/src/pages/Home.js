@@ -9,6 +9,7 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { Banner } from "../components/Banner";
 import Picture from "../images/newimage.png";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import Sidebar from "../components/Sidebar";
 
 const Container = styled.div`
   width: 100%;
@@ -430,7 +431,7 @@ const Home = () => {
       <UpBtn onClick={scrollTo}>
         <ArrowUpwardIcon />
       </UpBtn>
-      <SidebarContainer right={isSidebar} />
+      <Sidebar />
       <Footer />
     </Container>
   );

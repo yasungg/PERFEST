@@ -34,8 +34,6 @@ Q.idea/sonarlint/securityhotspotstore/f/0/f07866736216be0ee2aba49e392191aeae700a
 Å
 Q.idea/sonarlint/securityhotspotstore/6/6/667c3f418bd932076f449856c3cce3e9817bb8c2,c\7\c7b227bd7edffc91ce6f9d78cd16fe721df4bcab
 w
-G.idea/sonarlint/issuestore/6/9/694440bc08fc0a92b83bcaefb1bb947eb302475f,a\6\a681c60561360004a996be8d8869a3018baa3b3e
-w
 G.idea/sonarlint/issuestore/2/c/2cbcefdf539fc498ca376cf16f7848ca082b3969,6\8\68d20b1eb5a0d9d93057a253a24678cbfd6c955b
 w
 G.idea/sonarlint/issuestore/f/b/fb4c430928484f1ec2ebc33fae3a74884b42f4fb,a\6\a65202fa9d5866e5634fe9502b6ad6ce0c7b262d
@@ -65,12 +63,8 @@ G.idea/sonarlint/issuestore/3/7/37d8cea481454febd3c3f81b4e32f3a4a9f32cee,5\9\59
 Q.idea/sonarlint/securityhotspotstore/9/f/9fe84ebb15faf917b7def6236dba604453cc61e0,b\b\bbf202272a96de5cd6b6828ffdc55fb3ce45289c
 w
 G.idea/sonarlint/issuestore/6/6/667c3f418bd932076f449856c3cce3e9817bb8c2,2\5\25109c0c50250f7ad34f2629ba25c9f4d469445a
-w
-G.idea/sonarlint/issuestore/a/7/a74ae1b6aba0ed925422a20b1a4ec6268cc85763,1\8\18dc85c0f31c1efe988419d8ad98f5b458a5cc1e
 Å
 Q.idea/sonarlint/securityhotspotstore/d/c/dc3846aa64416d03926d9c6e1e2b3230d296423f,e\5\e54e368dbb383bb865f2dc21f8d2ddfa10c87519
-Å
-Q.idea/sonarlint/securityhotspotstore/a/7/a74ae1b6aba0ed925422a20b1a4ec6268cc85763,7\7\77d1e352e1f5fff2ffad406ef378ff28d2750ddf
 Å
 Q.idea/sonarlint/securityhotspotstore/f/8/f8212f22942a6e2e368497f87b185499f3c85587,b\8\b86e0393ef5645267e6e21333579f0e83f2748ee
 w
@@ -127,3 +121,9 @@ p
 @src/main/java/com/example/demo/controller/CommentController.java,e\8\e8b37830134d5d21fe04e730d3f51ce40fcd624d
 r
 Bsrc/main/java/com/example/demo/controller/CommunityController.java,7\d\7d167a597533b75d19c47b22c18d3da30c35121a
+Z
+*src/main/frontend/src/components/Footer.js,f\0\f02195d21d4e77e7a9f8c161fd9eded648ea0dce
+Z
+*src/main/frontend/src/components/Header.js,a\3\a38fb24f994555f8cffe167aaabd5095558edc5c
+u
+Esrc/main/java/com/example/demo/controller/BadgeRankingController.java,f\1\f16043f109aef8fd3e056744f95042659c4e4b77
