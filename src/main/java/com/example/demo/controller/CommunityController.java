@@ -79,6 +79,18 @@ public class CommunityController {
         boolean result = communityService.updateCommunity((long) communityId, communityTitle, CommunityCategory.valueOf(communityCategory), communityDesc);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+    // 커뮤니티 게시판 제목 검색(GET)
+    @GetMapping(value="/getboardtitle")
+    public ResponseEntity<List<CommunityDTO>> communityBoardTitle(@RequestParam String communityTitle) {
+        List<CommunityDTO> list = communityService.getCommunityBoardTitle(communityTitle);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+    // 커뮤니티 게시판 닉네임 검색(GET)
+    @GetMapping(value = "/getboardnickname")
+    public ResponseEntity<List<CommunityDTO>> communityBoardNickName(@RequestParam String nickName) {
+        List<CommunityDTO> list = communityService.getCommunityByNickName(nickName);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
 
 
 }

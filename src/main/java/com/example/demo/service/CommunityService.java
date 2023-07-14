@@ -173,5 +173,48 @@ public class CommunityService {
         }
         return false;
     }
+    // 게시판 게시글 제목 검색(GET)
+    public List<CommunityDTO> getCommunityBoardTitle(String communityTitle) {
+        List<Community> communityList = communityRepository.findByCommunityTitleContaining(communityTitle);
+        List<CommunityDTO> communityDTOS = new ArrayList<>();
+        for(Community community : communityList) {
+            CommunityDTO communityDTO = new CommunityDTO();
+            communityDTO.setCommunityCategory(String.valueOf(community.getCommunityCategory()));
+            communityDTO.setCommunityId(community.getId());
+            communityDTO.setCommunityTitle(community.getCommunityTitle());
+            communityDTO.setCommunityDesc(community.getCommunityDesc());
+            communityDTO.setCommunityImgLink(community.getCommunityImgLink());
+            communityDTO.setLikeCount(community.getLikeCount());
+            communityDTO.setWrittenTime(community.getWrittenTime());
+            Member member = community.getMember();
+            if (member != null) {
+                communityDTO.setNickname(member.getNickname());
+            }
+            communityDTOS.add(communityDTO);
+        }
+        return communityDTOS;
+    }
+    // 게시판 닉네임으로 검색
+    public List<CommunityDTO> getCommunityByNickName(String nickname) {
+        List<Community> communityList = communityRepository.findAll();
+        List<CommunityDTO> communityDTOs = new ArrayList<>();
+
+        for (Community community : communityList) {
+            Member member = community.getMember();
+            if (member.getNickname().contains(nickname)) {
+                CommunityDTO communityDTO = new CommunityDTO();
+                communityDTO.setCommunityCategory(String.valueOf(community.getCommunityCategory()));
+                communityDTO.setCommunityId(community.getId());
+                communityDTO.setCommunityTitle(community.getCommunityTitle());
+                communityDTO.setCommunityDesc(community.getCommunityDesc());
+                communityDTO.setCommunityImgLink(community.getCommunityImgLink());
+                communityDTO.setLikeCount(community.getLikeCount());
+                communityDTO.setWrittenTime(community.getWrittenTime());
+                communityDTO.setNickname(member.getNickname());
+                communityDTOs.add(communityDTO);
+            }
+        }
+        return communityDTOs;
+    }
 
 }
