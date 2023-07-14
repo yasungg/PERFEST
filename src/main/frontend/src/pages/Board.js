@@ -16,8 +16,43 @@ const Title = styled.div`
   font-weight: bold;
 `;
 const SearchBoard = styled.div`
-display: flex;
-justify-content: flex-end;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center; 
+  
+   .select-box {
+    margin-right: 10px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f8f8f8; 
+    color: #333; 
+    cursor: pointer;
+  }
+
+  /* 선택 상자 드롭다운 스타일링 */
+  .select-box select {
+    background-color: transparent;
+    border: none;
+    appearance: none;
+    outline: none;
+    cursor: pointer;
+  }
+  .search {
+    padding: 5px 10px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+  }
+
+  .search-button {
+    background-color: #007bff; 
+    color: #fff; 
+    padding: 5px 10px;
+    border: none; 
+    border-radius: 5px; 
+    margin-left: 5px;
+    cursor: pointer; 
+  }
 `;
 const Category = styled.div`
   display: flex;
@@ -276,7 +311,7 @@ const Board = () => {
               <option value="title">제목</option>
               <option value="nickname">닉네임</option>
             </select>
-            <input type="text" id="search-title" value={search} onChange={onChangeSearch}/>
+            <input type="text" className="search" value={search} onChange={onChangeSearch}/>
             <button className="search-button" onClick={searchByTitle}>검색</button>
           </SearchBoard>
           <Category>
