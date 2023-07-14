@@ -167,7 +167,7 @@ const WriteBoard = () => {
                 <Title><h1>게시글 작성</h1></Title>
                 <WriteTitle>
                     <label htmlFor="boardTitle">글 제목</label>
-                    <input type="text" className="writeTitle" id="boardTitle" value={inputBoardTitle} onChange={onChangeBoardTitle}/>
+                    <input type="text" className="writeTitle" id="boardTitle" placeholder="30자 이내로 입력하세요" value={inputBoardTitle} onChange={onChangeBoardTitle}/>
                 </WriteTitle>
                 <WriteCategory>
                     <label htmlFor="boardCategory" className="boardTitle">글 분류</label>
