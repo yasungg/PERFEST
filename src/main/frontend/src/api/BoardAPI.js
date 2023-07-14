@@ -11,12 +11,21 @@ const BoardAPI = {
         `/auth/community/getselectboard?communityCategory=${selectCategory}`
     );
   },
+  // 게시판 최신순 조회
   BoardGetByNewest: async (selectCategory) => {
     return await axios.get( `/auth/community/getnewestboard?communityCategory=${selectCategory}`);
   },
   // 게시판 인기순 조회
   BoardGetByLikest: async (selectCategory) => {
     return await axios.get(`/auth/community/getlikestboard?communityCategory=${selectCategory}`);
+  },
+  // 게시판 제목 검색
+  BoardSearchByTitle: async (communityTitle) => {
+    return await axios.get( `/auth/community/getboardtitle?communityTitle=${communityTitle}`);
+  },
+  // 게시판 닉네임 검색
+  BoardSearchByNickName: async(memberNickName) => {
+    return await axios.get(`/auth/community/getboardnickname?nickName=${memberNickName}`);
   },
   // 게시판 본문 내용 가져오기
   GetBoardArticle: async (communityId) => {

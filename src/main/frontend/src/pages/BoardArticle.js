@@ -7,6 +7,7 @@ import BoardAPI from "../api/BoardAPI";
 import { useParams } from "react-router";
 import {formatDate} from "../components/DateStyle";
 import { GoHeart } from 'react-icons/go';
+import { FaHeart } from 'react-icons/fa';
 import { MdSubdirectoryArrowRight } from 'react-icons/md';
 const Title = styled.div`
 display: flex;
@@ -230,13 +231,29 @@ const BoardLike = styled.div`
     color: #333;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
     &:hover {
       background-color: #e0e0e0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
+  }
+
+  .board-like-count {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+    font-size: 23px;
+    font-weight: bold;
+    color: #ff4f4f;
   }
 `;
 
+const Heart2 = styled(FaHeart)`
+  color: #ff4f4f;
+  margin-right: 3px;
+  margin-top: 5px;
+`;
 
 
 
@@ -371,13 +388,14 @@ const BoardArticle = () => {
                         </UserInfo>
                         <hr></hr>
                         <BoardDesc>{community.communityDesc}</BoardDesc>
+                        <BoardLike>
+                            <button className="like-button" onClick={onClickBoardLike}>
+                                이 글이 도움!
+                            </button>
+                            <div className="board-like-count"><Heart2 />{community.likeCount}</div>
+                        </BoardLike>
                     </BoardInfo>
                 ))}
-                <BoardLike>
-                    <button className="like-button" onClick={onClickBoardLike}>
-                        이 글이 도움!
-                    </button>
-                </BoardLike>
                 <CommentInfo>
                     <CommentCount>댓글{commentCount}</CommentCount>
                 </CommentInfo>

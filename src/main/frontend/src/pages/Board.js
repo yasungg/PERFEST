@@ -15,6 +15,10 @@ const Title = styled.div`
   font-size: 32px;
   font-weight: bold;
 `;
+const SearchBoard = styled.div`
+display: flex;
+justify-content: flex-end;
+`;
 const Category = styled.div`
   display: flex;
   flex-direction: row;
@@ -47,11 +51,11 @@ const CatButton = styled.button`
 
 
 const Arrange = styled.div` // 정렬 방법 선택 div(최신순, 인기순)
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-top: 10px;
-  margin-bottom: 10px;
+display: flex;
+justify-content: flex-end;
+align-items: center;
+margin-top: 10px;
+margin-bottom: 10px;
 `;
 const ArrButton = styled.div`
   margin-left: 5px;
@@ -156,6 +160,7 @@ const BLikeCount = styled.div`
   padding: 0 10px;
   font-size: 14px;
   color: #888888;
+  margin-right: 5px;
 `;
 const WriteButton = styled.div`
 display: flex;
@@ -176,12 +181,15 @@ margin-top: 20px;
   `;
 const Heart = styled(FaHeart)`
   color: red;
+  padding-right: 2px;
 `;
 const Board = () => {
   const navigate = useNavigate();
   const [selectedBoardInfo, setSelectedBoardInfo] = useState([]);
   const [selectCategory, setSelectCategory] = useState("");
   const [activeButton, setActiveButton] = useState(""); // 버튼의 활성화 여부를 저장하는 상태
+  const [search, setSearch] = useState("");
+  const [searchType, setSearchType] = useState('title'); // 기본적으로 제목 검색
 
 
   // 게시판 전체 글 목록 가져오기
@@ -240,6 +248,22 @@ const Board = () => {
       console.log(rsp.data);
     }
   }
+  // 게시판 제목 검색
+  const searchByTitle = async() => {
+    if(searchType === 'title') {
+      const rsp = await BoardAPI.BoardSearchByTitle(search);
+      if(rsp.status === 200) setSelectedBoardInfo(rsp.data);
+    } else if(searchType === 'nickname'){
+      const rsp2 = await BoardAPI.BoardSearchByNickName(search);
+      if(rsp2.status === 200) setSelectedBoardInfo(rsp2.data);
+    }
+  }
+  const onChangeSearch = (e) => {
+    setSearch(e.target.value);
+  }
+  const onChangeType = (e) => {
+    setSearchType(e.target.value);
+  }
   const boardClick = (communityId) => {
     navigate(`/BoardArticle/${communityId}`);
   }
@@ -247,12 +271,20 @@ const Board = () => {
       <Container justifyContent="center" alignItems="center">
         <BodyContainer>
           <Title>커뮤니티</Title>
+          <SearchBoard>
+            <select className="select-box" value={searchType} onChange={onChangeType}>
+              <option value="title">제목</option>
+              <option value="nickname">닉네임</option>
+            </select>
+            <input type="text" id="search-title" value={search} onChange={onChangeSearch}/>
+            <button className="search-button" onClick={searchByTitle}>검색</button>
+          </SearchBoard>
           <Category>
             <CatButton
                 isActive={activeButton === ""}
                 onClick={() => {
                   BoardGetAll();
-                  handleCategoryClick("ALL");
+                  handleCategoryClick("");
                 }}
             >
               전체
@@ -297,7 +329,8 @@ const Board = () => {
                 </BoardContents>
               </BoardText>
           ))}
-          <WriteButton><button className="write" onClick={()=> navigate("/WriteBoard")}>글쓰기</button></WriteButton>
+          <WriteButton>
+            <button className="write" onClick={()=> navigate("/WriteBoard")}>글쓰기</button></WriteButton>
         </BodyContainer>
       </Container>
   );
