@@ -84,6 +84,7 @@ public class CommentService {
             commentDTO.setCommentBody(comment.getCommentBody());
             commentDTO.setCommentWrittenTime(comment.getCommentWrittenTime());
             commentDTO.setCommentLikeCount(comment.getCommentLikeCount());
+            commentDTO.setParentId(comment.getParent().getId());
 
             Member member = comment.getMember();
             if (member != null) {

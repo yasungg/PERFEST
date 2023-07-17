@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-
 @RestController
 @Slf4j
 @RequestMapping("/auth/review")
@@ -22,11 +21,11 @@ public class ReviewController {
     // 리뷰 작성(POST)
     @PostMapping(value = "/writereview")
     public ResponseEntity<Boolean> reviewInsert(@RequestBody Map<String, Object> reviewData) {
-        String festivalId = (String)reviewData.get("festivalId");
-        String reviewTitle = (String)reviewData.get("reviewTitle");
+        int festivalId = (Integer)reviewData.get("festivalId");
         String reviewContent = (String)reviewData.get("reviewContent");
-        String reviewImg = (String)reviewData.get("reviewImg");
-        boolean result = reviewService.insertReview(Long.parseLong(festivalId),reviewTitle, reviewContent, reviewImg);
+        int memberId = (Integer)reviewData.get("memberId");
+//        String reviewImg = (String)reviewData.get("reviewImg");
+        boolean result = reviewService.insertReview((long) festivalId, reviewContent,(long) memberId);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
     // 해당 축제 리뷰 가져오기(GET)
@@ -36,7 +35,7 @@ public class ReviewController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
     // 해당 축제의 리뷰 갯수 가져오기(GET)
-    @GetMapping(value = "/reviewcount")
+    @GetMapping(value = "/getreviewcount")
     public ResponseEntity<Long> reviewCount(@RequestParam String festivalId) {
         long result = reviewService.getReviewCount(Long.parseLong(festivalId));
         return new ResponseEntity<>(result, HttpStatus.OK);

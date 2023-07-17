@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.constant.CommunityCategory;
 import com.example.demo.dto.CommunityDTO;
+import com.example.demo.dto.MemberDTO;
 import com.example.demo.entity.Community;
 import com.example.demo.entity.Member;
 import com.example.demo.repository.CommunityRepository;
@@ -127,7 +128,7 @@ public class CommunityService {
                 communityDTO.setNickname(member.getNickname());
             }
             communityDTOS.add(communityDTO);
-            }
+        }
         return communityDTOS;
     }
 
@@ -217,4 +218,20 @@ public class CommunityService {
         return communityDTOs;
     }
 
+//    // insert Dummy Data service for Community
+//    public Community createPost(CommunityDTO request){
+//        Member member = memberRepository.findById(request.getMemberId())
+//                .orElseThrow(() -> new IllegalArgumentException("해당 유저 없음"));
+//        CommunityDTO communityDTO = new CommunityDTO();
+//        communityDTO.setCommunityTitle(request.getCommunityTitle());
+//        communityDTO.setCommunityCategory(request.getCommunityCategory());
+//        communityDTO.setCommunityDesc(request.getCommunityDesc());
+//        communityDTO.setLikeCount(request.getLikeCount());
+//        communityDTO.setCommunityImgLink(request.getCommunityImgLink());
+//
+//        Community community = communityDTO.toEn
+//
+//    }
 }
+
+

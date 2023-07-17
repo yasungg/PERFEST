@@ -311,7 +311,7 @@ const Board = () => {
               <option value="title">제목</option>
               <option value="nickname">닉네임</option>
             </select>
-            <input type="text" className="search" value={search} onChange={onChangeSearch}/>
+            <input type="text" className="search" placeholder="제목 또는 닉네임으로 검색하세요"value={search} onChange={onChangeSearch}/>
             <button className="search-button" onClick={searchByTitle}>검색</button>
           </SearchBoard>
           <Category>

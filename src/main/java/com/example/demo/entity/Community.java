@@ -1,9 +1,7 @@
 package com.example.demo.entity;
 
 import com.example.demo.constant.CommunityCategory;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-
 @RestController
 @Slf4j
 @RequestMapping("/auth/comment")
@@ -33,8 +32,8 @@ public class CommentController {
     // 대댓글 작성(POST)
     @PostMapping(value = "/writereplycomment")
     public ResponseEntity<Boolean> replycommentInsert(@RequestBody Map<String, Object> replycommentData) {
-        int parentId = (Integer) replycommentData.get("commentId");
-        int memberId = (Integer) replycommentData.get("memberId");
+        int parentId = (Integer)replycommentData.get("commentId");
+        int memberId = (Integer)replycommentData.get("memberId");
         String commentBody = (String)replycommentData.get("commentBody");
         boolean result = commentService.insertReplyComment((long) parentId,(long) memberId, commentBody);
         return new ResponseEntity<>(result, HttpStatus.OK);

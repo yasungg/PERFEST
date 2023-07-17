@@ -9,8 +9,8 @@ import java.time.LocalDateTime;
 public class ReviewDTO {
     private Long reviewId;
     private Long memberId;
-    private String reviewTitle;
     private LocalDateTime reviewWrittenTime;
     private String reviewImg;
     private String reviewContent;
+    private String nickname;
 }

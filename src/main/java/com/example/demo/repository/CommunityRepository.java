@@ -28,7 +28,5 @@ public interface CommunityRepository extends JpaRepository<Community, Long> {
     // 게시글 제목 검색
     List<Community> findByCommunityTitleContaining(String communityTitle);
 
-    // 게시글 삭제
-
 
 }
