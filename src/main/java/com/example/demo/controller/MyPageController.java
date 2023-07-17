@@ -75,10 +75,17 @@ public class MyPageController {
         return new ResponseEntity<>(communities, HttpStatus.OK);
     }
 
-    // 마이페이지에서 특정 회원의 게시글 삭제 API
+    // 마이페이지에서 특정 회원의 게시글 일괄삭제 API
     @DeleteMapping("/deleteMyCommunities")
     public ResponseEntity<Boolean> deleteCommunitiesByMemberId(@RequestParam("memberId") Long memberId) {
         boolean result = myPageService.deleteCommunityPostsByMemberId(memberId);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    // 마이페이지 게시글 삭제 API
+    @DeleteMapping("/delCommunity")
+    public ResponseEntity<Boolean> deleteCommunity(@RequestParam("communityId") Long communityId) {
+        boolean result = myPageService.deleteCommunityPosts(communityId);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -89,10 +96,17 @@ public class MyPageController {
         return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 
-    // 마이페이지 내 댓글 삭제 API
+    // 마이페이지 내 댓글 일괄 삭제 API
     @DeleteMapping("/deleteMyComments")
     public ResponseEntity<Boolean> deleteCommentsByMemberId(@RequestParam("memberId") Long memberId) {
         boolean result = myPageService.deleteCommentPostsByMemberId(memberId);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    // 마이페이지 내 댓글 선택 삭제 API
+    @DeleteMapping("/delComment")
+    public ResponseEntity<Boolean> deleteMyComment(@RequestParam("commentId") Long commentId) {
+        boolean result = myPageService.deleteMyComment(commentId);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -103,17 +117,18 @@ public class MyPageController {
         return new ResponseEntity<>(payments, HttpStatus.OK);
     }
 
-    // 전체 회원 큰손 랭킹 조회 API
+    // 회원 큰손 랭킹 조회 API
     @GetMapping("/ranking/{memberId}")
     public ResponseEntity<Integer> getRankingByTotalPrice(@PathVariable Long memberId) {
         Member member = new Member();
         member.setId(memberId);
 
+
         int ranking = myPageService.getRankingByTotalPrice(member);
         return ResponseEntity.ok(ranking);
     }
 
-    // 전체 회원 뱃지 랭킹 조회 API
+    // 회원 뱃지 랭킹 조회 API
     @GetMapping("/ranking/badges/{memberId}")
     public ResponseEntity<Integer> getRankingByBadges(@PathVariable Long memberId) {
         Member member = new Member();
@@ -130,10 +145,17 @@ public class MyPageController {
         return new ResponseEntity<>(reviews, HttpStatus.OK);
     }
 
-    // 마이페이지 내 리뷰 삭제 API
+    // 마이페이지 내 리뷰 전체 삭제 API
     @DeleteMapping("/deleteMyReview")
     public ResponseEntity<Boolean> deleteReviewsByMemberId(@RequestParam("memberId") Long memberId) {
         boolean result = myPageService.deleteReviewPostsByMemberId(memberId);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    // 마이페이지 내 리뷰 개별 삭제
+    @DeleteMapping("/delReview")
+    public ResponseEntity<Boolean> deleteReviews(@RequestParam("reviewId") Long reviewId) {
+        boolean result = myPageService.deleteReview(reviewId);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
