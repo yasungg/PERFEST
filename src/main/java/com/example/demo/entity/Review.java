@@ -24,9 +24,6 @@ public class Review {
     @JoinColumn(name = "festival_id")
     private Festival festival;
 
-    @Column(name = "review_title", nullable = false)
-    private String reviewTitle;
-
     @Column(name = "review_written_time", nullable = false)
     private LocalDateTime reviewWrittenTime;
 
