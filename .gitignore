@@ -3,6 +3,7 @@ src/main/frontend/node_modules
 src/main/node_modules
 src/main/frontend/.pnp
 src/main/frontend.pnp.js
+src/main/frontend/.env
 
 # testing
 src/main/frontend/coverage

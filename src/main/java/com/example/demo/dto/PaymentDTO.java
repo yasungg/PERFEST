@@ -15,6 +15,7 @@ public class PaymentDTO {
     private Long productId;
     private Product product;
     private Member member;
+    private String productName;
     private int price;
     private int quantity;
     private String tid;

@@ -169,7 +169,23 @@ public class MyPageService {
         return communityDTOS;
     }
 
-    // 마이페이지 내 게시글 삭제
+    // 마이페이지 내 게시글 개별 삭제
+    @Transactional
+    public boolean deleteCommunityPosts(Long communityId) {
+        Optional<Community> community = communityRepository.findById(communityId);
+        if (community.isPresent()) {
+            Community community1 = community.get();
+            communityRepository.delete(community1);
+            log.info("게시글 삭제 완료");
+            return true;
+        } else {
+            log.info("해당 게시글을 찾을 수 없습니다.");
+            return false;
+        }
+    }
+
+
+    // 마이페이지 내 게시글 전체 삭제
     @Transactional
     public boolean deleteCommunityPostsByMemberId(Long memberId) {
         List<Community> communityList = communityRepository.findByMemberId(memberId);
@@ -202,29 +218,44 @@ public class MyPageService {
 
     //마이페이지 내 결제 조회
     public List<PaymentDTO> getPaymentByMemberId(Long memberId) {
-        List<Payment> paymentList = paymentRepository.findByMemberId(memberId);
-        List<PaymentDTO> paymentDTOS = new ArrayList<>();
-        for (Payment payment : paymentList) {
-            if (payment.getMember() != null) {
-                PaymentDTO paymentDTO = new PaymentDTO();
-                paymentDTO.setPaymentId(payment.getId());
-                paymentDTO.setMemberId(payment.getMember().getId());
-                paymentDTO.setPrice(payment.getPrice());
-                paymentDTO.setProductId(payment.getProduct().getId());
-                paymentDTO.setTid(payment.getTidKey());
-                paymentDTO.setQuantity(payment.getQuantity());
-                paymentDTO.setCreate_date(payment.getCreateDate());
-                paymentDTO.setPaymentStatus(String.valueOf(payment.getPaymentStatus()));
+        List<Payment> myPayments = paymentRepository.findByMemberId(memberId);
+        List<PaymentDTO> paymentDTOs = new ArrayList<>();
 
+        for (Payment payment : myPayments) {
+            PaymentDTO paymentDTO = new PaymentDTO();
+            paymentDTO.setPaymentId(payment.getId());
+            paymentDTO.setMemberId(payment.getMember().getId());
+            paymentDTO.setProductId(payment.getProduct().getId());
+            paymentDTO.setProductName(payment.getProduct().getProductName()); // productName 추가
+            paymentDTO.setPrice(payment.getPrice());
+            paymentDTO.setQuantity(payment.getQuantity());
+            paymentDTO.setCreate_date(payment.getCreateDate());
+            paymentDTO.setPaymentStatus(String.valueOf(payment.getPaymentStatus()));
+            paymentDTO.setCancel_date(payment.getCancelDate());
 
-                paymentDTOS.add(paymentDTO);
-            }
+            paymentDTOs.add(paymentDTO);
         }
-        return paymentDTOS;
+
+        return paymentDTOs;
     }
 
 
-    // 마이페이지 내 댓글 삭제
+    // 마이페이지 내 댓글 선택 삭제
+    @Transactional
+    public boolean deleteMyComment(Long commentId) {
+        Optional<Comment> optionalComment = commentRepository.findById(commentId);
+        if (optionalComment.isPresent()) {
+            Comment comment = optionalComment.get();
+            commentRepository.delete(comment);
+            log.info("내 댓글 삭제 완료");
+            return true;
+        } else {
+            log.info("해당 댓글을 찾을 수 없습니다.");
+            return false;
+        }
+    }
+
+    // 마이페이지 내 댓글 전체 삭제
     @Transactional
     public boolean deleteCommentPostsByMemberId(Long memberId) {
         List<Comment> commentList = commentRepository.findByMemberId(memberId);
@@ -278,7 +309,6 @@ public class MyPageService {
             reviewDTO.setReviewId(review.getId());
             reviewDTO.setMemberId(reviewDTO.getMemberId());
             reviewDTO.setReviewImg(review.getReviewImg());
-            reviewDTO.setReviewTitle(review.getReviewTitle());
             reviewDTO.setReviewContent(review.getReviewContent());
             reviewDTO.setReviewWrittenTime(review.getReviewWrittenTime());
 
@@ -287,7 +317,23 @@ public class MyPageService {
         return reviewDTOS;
     }
 
-    // 마이페이지 내 리뷰 삭제
+    // 내 리뷰 개별 삭제
+    @Transactional
+    public boolean deleteReview(Long reviewId) {
+        Optional<Review> optionalReview = reviewRepository.findById(reviewId);
+
+        if (optionalReview.isPresent()) {
+            Review review = optionalReview.get();
+            reviewRepository.delete(review);
+            log.info("리뷰 삭제 완료");
+            return true;
+        } else {
+            log.info("해당 리뷰를 찾을 수 없습니다.");
+            return false;
+        }
+    }
+
+    // 마이페이지 내 리뷰 전체 삭제
     @Transactional
     public boolean deleteReviewPostsByMemberId(Long memberId) {
         List<Review> reviewList = reviewRepository.findByMemberId(memberId);
@@ -311,6 +357,7 @@ public class MyPageService {
             Activity activity = myReservation.getReservation().getActivity();
             ActivityDTO activityDTO = new ActivityDTO();
             activityDTO.setActivityName(activity.getActivityName());
+            activityDTO.setActivityDesc(activity.getActivityDesc());
             activityDTO.setStartDate(activity.getActivityStartDate());
             activityDTO.setEndDate(activity.getActivityEndDate());
 
@@ -318,6 +365,8 @@ public class MyPageService {
         }
         return activityDTOs;
     }
+
+
 
     public String getMemberNicknameByMemberId(Long memberId) {
         Optional<Member> optionalMember = myPageRepository.findById(memberId);

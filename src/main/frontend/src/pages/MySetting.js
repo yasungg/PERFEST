@@ -8,7 +8,7 @@ import Modal from "../utils/Modal";
 
 
 const BodyContainer = styled.div`
-  width: 100vw;
+  width: 100%;
 `;
 
 const Container = styled.div`
@@ -85,7 +85,7 @@ const DeleteMem = styled.div`
 const ModalStyle = styled.div`
   width: 100%;
   margin: 0 auto;
-  
+
   input {
     width: 80%;
     height: 30px;
@@ -101,6 +101,13 @@ const ModalStyle = styled.div`
     font-weight: bold;
     color: #B5B2FF;
   }
+`;
+
+const Tm = styled.div`
+  display: flex;
+  justify-content: center;
+  font-size: 1.8em;
+
 `;
 
 const MySetting = () => {
@@ -129,7 +136,7 @@ const MySetting = () => {
     const memberInfo = async() => {
       const rsp = await MemberAPI.getMemberInfo(userEmail);
       if(rsp.status === 200) setMemberInfo(rsp.data);
-     
+
     };
     memberInfo();
   },[userEmail]);
@@ -146,7 +153,7 @@ const MySetting = () => {
     setNicModalOpen(true);
   }
 
-  // 
+  //
 
   const confirm = async(modalType) => {
     if(modalType === "del") {
@@ -164,7 +171,7 @@ const MySetting = () => {
             setMemberInfo(updateInfo.data);
             setAddModalOpen(false);
             setInputAdd("");
-            
+
           }
         }
       } else {
@@ -205,11 +212,11 @@ const MySetting = () => {
     setAddModalOpen(false);
     setNicModalOpen(false);
   }
-  
+
   return (
     <>
       <BodyContainer>
-        <p>내 정보 관리</p>
+        <Tm>내 정보 관리</Tm>
         <Container>
           <Header />
           {memberInfo && memberInfo.map(member => (
@@ -253,7 +260,7 @@ const MySetting = () => {
               </Label>
             </Section2>
           ))}
-  
+
           <DeleteMem>
             <button onClick={deleteMem}>회원탈퇴</button>
             <hr />
@@ -283,10 +290,9 @@ const MySetting = () => {
           </div>
         </ModalStyle>
       </Modal>
-
     </>
   );
-  
+
 };
 
 export default MySetting;
