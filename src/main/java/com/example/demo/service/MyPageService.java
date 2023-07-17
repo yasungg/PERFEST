@@ -278,7 +278,6 @@ public class MyPageService {
             reviewDTO.setReviewId(review.getId());
             reviewDTO.setMemberId(reviewDTO.getMemberId());
             reviewDTO.setReviewImg(review.getReviewImg());
-            reviewDTO.setReviewTitle(review.getReviewTitle());
             reviewDTO.setReviewContent(review.getReviewContent());
             reviewDTO.setReviewWrittenTime(review.getReviewWrittenTime());
 
