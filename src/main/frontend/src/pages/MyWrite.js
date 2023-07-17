@@ -1,154 +1,156 @@
-import React, { useContext, useEffect, useState } from "react";
-import styled from "styled-components";
-import { UserContext } from "../context/UserStore";
-import MemberAPI from "../api/MemberAPI";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import MemberAPI from '../api/MemberAPI';
 
-const BodyContainer = styled.div`
-  width: 100vw;
-  
+const CardContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
 `;
 
-const Container = styled.div`
+const Card = styled.div`
+  width: 18rem;
+  margin: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 20px;
 `;
 
-const PostContainer = styled.div`
+const CardImage = styled.img`
   width: 100%;
-  max-width: 600px;
-  background-color: #fff;
-  border-radius: 10px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  height: 180px;
+  object-fit: cover;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 `;
 
-const Title = styled.h3`
-  font-size: 20px;
+const CardBody = styled.div`
+  padding: 1rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+`;
+
+const CardTitle = styled.h5`
+  font-size: 1.25rem;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 0.5rem;
 `;
 
-const Category = styled.p`
-  font-size: 14px;
-  color: #888;
-  margin-bottom: 10px;
+const CardText = styled.p`
+  font-size: 1rem;
+  margin-bottom: 0;
 `;
 
-const Description = styled.p`
-  font-size: 16px;
-  margin-bottom: 10px;
+const ListGroup = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
 `;
 
-const Image = styled.img`
+const ListItem = styled.li`
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid #ccc;
+`;
+
+const CardLink = styled.a`
+  color: #007bff;
+  text-decoration: none;
+  margin-right: 1rem;
+`;
+
+const PageBtn = styled.div`
   width: 100%;
-  max-width: 300px;
-  height: auto;
-  margin-bottom: 10px;
-`;
-
-const LikeCount = styled.p`
-  font-size: 14px;
-  color: #888;
-`;
-
-const WrittenTime = styled.p`
-  font-size: 14px;
-  color: #888;
-  margin-top: 10px;
-`;
-
-const Pagination = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
   margin-top: 20px;
 `;
 
-const PageButton = styled.button`
-  padding: 5px 10px;
-  margin: 0 5px;
-  background-color: ${(props) => (props.active ? "#293846" : "#fff")};
-  color: ${(props) => (props.active ? "#fff" : "#293846")};
-  border: 1px solid #293846;
-  border-radius: 5px;
+const PaginationButton = styled.button`
+  width: 100px;
+  height: 35px;
+  font-size: 0.8em;
+  font-weight: bold;
+  background-color: #2f4050;
+  color: white;
+  border: none;
+  border-radius: 2px;
   cursor: pointer;
+
+  &:hover {
+    background-color: skyblue;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 `;
 
-const MyWrite = () => {
-  // const context = useContext(UserContext);
-  // const { memberId } = context; // 로그인후 컨텍스트로 가져올 예정
-  let memberId = 1;
 
+function MyWrite() {
   const [memberWrite, setMemberWrite] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(5);
-  
+  let memberId = 1; // context로 가져올 예정
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
-    const memberInfo = async () => {
-      const rsp = await MemberAPI.getMyWrite(memberId);
-      if (rsp.status === 200) setMemberWrite(rsp.data);
+    const fetchMemberWrite = async () => {
+      const response = await MemberAPI.getMyWrite(memberId);
+      if (response.status === 200) {
+        setMemberWrite(response.data);
+      }
     };
-    memberInfo();
+    fetchMemberWrite();
   }, [memberId]);
 
-  const formatTime = (timeString) => {
-    const date = new Date(timeString);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    const hours = String(date.getHours()).padStart(2, "0");
-    const minutes = String(date.getMinutes()).padStart(2, "0");
-    return `${year}-${month}-${day} ${hours}:${minutes}`;
+  // 페이징 처리
+  const startIndex = (page - 1) * 3;
+  const endIndex = startIndex + 3;
+  const paginatedData = memberWrite.slice(startIndex, endIndex);
+
+  const nextPage = () => {
+    setPage((prevPage) => prevPage + 1);
   };
 
-  // 현재 페이지
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = memberWrite.slice(indexOfFirstPost, indexOfLastPost);
-
-
-  const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
+  const previousPage = () => {
+    setPage((prevPage) => prevPage - 1);
   };
-
-  const [delPost, setDelPost] = useState("");
-
-  const onClickDelMyPost = () => {
-    const rsd = MemberAPI.delMyWrite(memberId);
-    if(rsd.status === 200) setDelPost(rsd.data);
-    console.log(rsd.data);
-  };
-
-  
 
   return (
-    <BodyContainer>
-      <Container>
-        {currentPosts.map((post) => (
-          <PostContainer key={post.communityId}>
-            <Title>{post.communityTitle}</Title>
-            <Category>{post.communityCategory}</Category>
-            <Description>{post.communityDesc}</Description>
-            {post.communityImgLink && <Image src={post.communityImgLink} alt="Post Image" />}
-            <LikeCount>Likes: {post.likeCount}</LikeCount>
-            <WrittenTime>{formatTime(post.writtenTime)}</WrittenTime>
-          </PostContainer>
-        ))}
-        <Pagination>
-          {Array.from({ length: Math.ceil(memberWrite.length / postsPerPage) }, (_, index) => (
-            <PageButton key={index + 1} active={index + 1 === currentPage} onClick={() => paginate(index + 1)}>
-              {index + 1}
-            </PageButton>
-          ))}
-        </Pagination>
-      </Container>
-    </BodyContainer>
+    <>
+    <CardContainer>
+      {paginatedData.map((write) => (
+        <Card key={write.communityId}>
+          <CardImage src={write.communityImgLink} alt="Card Image" />
+          <CardBody>
+            <CardTitle>{write.communityTitle}</CardTitle>
+            <CardText>{write.communityDesc}</CardText>
+          </CardBody>
+          <ListGroup>
+            <ListItem>Category: {write.communityCategory}</ListItem>
+            <ListItem>좋아요: {write.likeCount}</ListItem>
+            <ListItem>작성일: {write.writtenTime}</ListItem>
+          </ListGroup>
+          <CardBody>
+            <CardLink href="#">게시글 보러가기</CardLink>
+            <CardLink href="#">작성자 프로필 보기</CardLink>
+          </CardBody>
+        </Card>
+      ))}
+      <PageBtn>
+        <PaginationButton onClick={previousPage} disabled={page === 1}>
+          이전
+        </PaginationButton>
+        <PaginationButton onClick={nextPage} disabled={endIndex >= memberWrite.length}>
+          다음
+        </PaginationButton>
+      </PageBtn>
+    </CardContainer>
+    </>
   );
-};
+}
 
 export default MyWrite;
-
