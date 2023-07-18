@@ -20,6 +20,9 @@ public class Community {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @OneToMany(mappedBy = "community", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
+
     @Column(name = "community_img")
     private String communityImgLink;
 
