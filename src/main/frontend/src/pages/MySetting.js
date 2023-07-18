@@ -218,7 +218,6 @@ const MySetting = () => {
       <BodyContainer>
         <Tm>내 정보 관리</Tm>
         <Container>
-          <Header />
           {memberInfo && memberInfo.map(member => (
             <Section2 key={member.email}>
               <Label>
