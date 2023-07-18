@@ -6,6 +6,7 @@ import com.example.demo.entity.Comment;
 import com.example.demo.entity.Community;
 import com.example.demo.entity.Member;
 import com.example.demo.repository.CommentRepository;
+import com.example.demo.repository.CommunityRepository;
 import com.example.demo.repository.MemberRepository;
 import com.example.demo.repository.MyPageRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,7 @@ public class CommentService {
     private final MyPageRepository myPageRepository;
     private final NoticeService noticeService;
     private final MyPageService myPageService;
+    private final CommunityRepository communityRepository;
 
     // 댓글 작성(POST)
     public boolean insertComment(String commentBody, Long communityId, Long memberId) {
@@ -36,13 +38,12 @@ public class CommentService {
         comment.setCommentBody(commentBody);
         comment.setCommentWrittenTime(LocalDateTime.now());
 
-        Community community = new Community();
-        community.setId(communityId);
+        Community community = communityRepository.findById(communityId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 커뮤니티가 존재하지 않습니다."));
         comment.setCommunity(community);
 
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 회원이 존재하지 않습니다."));
-
         comment.setMember(member);
 
         commentRepository.save(comment);
@@ -50,7 +51,10 @@ public class CommentService {
         // 댓글이 생성될 때 알림 생성 및 저장
         String nickname = myPageService.getMemberNicknameByMemberId(memberId);
         String message = nickname + "님이 회원님의 게시글에 댓글을 작성했습니다.";
-        noticeService.createAndSaveNotification(nickname, message);
+
+        // 커뮤니티 게시글 작성자에게 알림 보내기
+        String communityAuthorNickname = myPageService.getMemberNicknameByMemberId(community.getMember().getId());
+        noticeService.createAndSaveNotification(communityAuthorNickname, message);
 
         return true;
     }
