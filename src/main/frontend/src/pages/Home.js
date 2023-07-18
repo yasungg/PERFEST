@@ -10,7 +10,6 @@ import { Banner } from "../components/Banner";
 import Picture from "../images/newimage.png";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import Sidebar from "../components/Sidebar";
-
 const Container = styled.div`
   width: 100%;
   height: 100%;
@@ -18,7 +17,7 @@ const Container = styled.div`
 `;
 const VideoContainer = styled.div`
   width: 100%;
-  height: 100%;
+  height: 100vh;
   overflow: hidden;
   position: relative;
   border: none;
@@ -46,12 +45,14 @@ const VideoContainer = styled.div`
   }
 `;
 const Video = styled.video`
-  width: 1440px;
-  height: 100%;
+  width: 100%;
+  background-size: cover;
   border: none;
   outline: none;
   z-index: 0;
-  overflow: hidden;
+  @media screen and (max-width: 1441px) {
+    width: 1440px;
+  }
 `;
 const TMPbox = styled.div`
   position: absolute;
@@ -147,13 +148,14 @@ const ItemBox = styled.div`
     grid-template-areas:
       "box2"
       "box1";
-    height: 160vh;
+    height: 1440px;
   }
 `;
 const ItemBoxForPic = styled.div`
   position: relative;
   width: 100%;
   height: 100vh;
+  min-height: 1024px;
   overflow: hidden;
 `;
 const PictureForItemBox = styled.img`
@@ -197,6 +199,7 @@ const DescBox = styled.div`
   @media screen and (max-width: 853px) {
     width: 90vw;
     height: 40vh;
+    min-height: 400px;
   }
   .div1 {
     display: flex;
@@ -235,6 +238,7 @@ const DescBoxForPicture = styled.div`
   @media screen and (max-width: 853px) {
     width: 90vw;
     height: 40vh;
+    min-height: 400px;
     transform: translate(-50%, -50%);
   }
   .div1 {

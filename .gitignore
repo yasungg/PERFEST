@@ -3,7 +3,6 @@ src/main/frontend/node_modules
 src/main/node_modules
 src/main/frontend/.pnp
 src/main/frontend.pnp.js
-src/main/frontend/.env
 
 # testing
 src/main/frontend/coverage
@@ -24,4 +23,6 @@ src/main/frontend/yarn-debug.log*
 src/main/frontend/yarn-error.log*
 
 # Resources
-src/main/resources/static/static
+src/main/resources/static/
+src/main/resources/application.properties
+src/main/frontend/public/videos/

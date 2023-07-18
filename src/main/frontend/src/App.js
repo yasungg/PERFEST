@@ -17,44 +17,49 @@ import BoardArticle from "./pages/BoardArticle";
 import { PayCancel, PayReady, PayResult } from "./pages/Payments";
 import ResultFalse from "./pages/PayResultFalse";
 import ResultSuccess from "./pages/PaySuccess";
-import UserStore from "./context/UserStore"
+import UserStore from "./context/UserStore";
 import Festival from "./pages/Festival";
 import FestivalDetail from "./pages/FestivalDetail";
 import SideBar from "./pages/Sidebar";
 import Calendar from "./pages/Calender.js";
+import Admin from "./pages/Admin";
 
 function App() {
   return (
-      <UserStore>
-        <Router>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/pages/login" element={<Login />} />
-            <Route path="/pages/mypage" element={<MyPage />} />
-            {/* sidebar 테스트용 수정예정/ */}
-            <Route path="/pages/sidebar" element={<SideBar />} />
-            <Route path="/pages/myranking" element={<MyRanking />} />
-            <Route path="/pages/setting" element={<MySetting />} />
-            <Route path="/pages/myreview" element={<MyReview />} />
-            <Route path="/pages/reservelist" element={<MyReserveList />} />
-            <Route path="/pages/paylist" element={<MyPayList />} />
-            <Route path="/pages/mywrite" element={<MyWrite />} />
-            <Route path="/pages/payready" element={<PayReady />} />
-            <Route path="/pages/payresult" element={<PayResult />} />
-            <Route path="/pages/paycancel" element={<PayCancel />} />
-            <Route path="/pages/resultfail" element={<ResultFalse />} />
-            <Route path="/pages/resultsuccess" element={<ResultSuccess />} />
-            <Route path="/pages/board" element={<Board />} />
-            <Route path="/pages/writeboard" element={<WriteBoard />} />
-            <Route path="/pages/updateboard" element={<UpdateBoard />} />
-            <Route path="/pages/ranking" element={<Ranking />} />
-            <Route path="/pages/boardarticle/:communityid" element={<BoardArticle />} />
-            <Route path="/pages/festival" element={<Festival />} />
-            <Route path="/pages/festivaldetail" element={<FestivalDetail />} />
-            <Route path="/pages/Calender" element={<Calendar />} />
-          </Routes>
-        </Router>
-      </UserStore>
+    <UserStore>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/pages/login" element={<Login />} />
+          <Route path="/pages/mypage" element={<MyPage />} />
+          {/* sidebar 테스트용 수정예정/ */}
+          <Route path="/pages/sidebar" element={<SideBar />} />
+          <Route path="/pages/myranking" element={<MyRanking />} />
+          <Route path="/pages/setting" element={<MySetting />} />
+          <Route path="/pages/myreview" element={<MyReview />} />
+          <Route path="/pages/reservelist" element={<MyReserveList />} />
+          <Route path="/pages/paylist" element={<MyPayList />} />
+          <Route path="/pages/mywrite" element={<MyWrite />} />
+          <Route path="/pages/payready" element={<PayReady />} />
+          <Route path="/pages/payresult" element={<PayResult />} />
+          <Route path="/pages/paycancel" element={<PayCancel />} />
+          <Route path="/pages/resultfail" element={<ResultFalse />} />
+          <Route path="/pages/resultsuccess" element={<ResultSuccess />} />
+          <Route path="/pages/board" element={<Board />} />
+          <Route path="/pages/writeboard" element={<WriteBoard />} />
+          <Route path="/pages/updateboard" element={<UpdateBoard />} />
+          <Route path="/pages/ranking" element={<Ranking />} />
+          <Route
+            path="/pages/boardarticle/:communityid"
+            element={<BoardArticle />}
+          />
+          <Route path="/pages/festival" element={<Festival />} />
+          <Route path="/pages/festivaldetail" element={<FestivalDetail />} />
+          <Route path="/pages/Calender" element={<Calendar />} />
+          <Route path="/pages/Admin" element={<Admin />} />
+        </Routes>
+      </Router>
+    </UserStore>
   );
 }
 

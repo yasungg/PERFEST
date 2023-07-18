@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import kakaoButton from "../images/kakaoButton.png";
 import loginBackgroundImg from "../images/loginBackground.jpg";
@@ -224,6 +224,7 @@ const KakaoBtn = styled.button`
 const Login = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
+  const navigate = useNavigate();
 
   const REST_API_KEY = "86c9013e77a6aad5b8b2c49eddca45b7";
   const REDIRECT_URI = "http://localhost:8111/koauth/login/kakao";
@@ -293,6 +294,7 @@ const Login = () => {
         console.log(result.accessToken);
         console.log(result.tokenExpiresIn);
         console.log(localStorage.getItem("accessToken"));
+        navigate("/");
       })
       .catch((error) => {
         if (error) {

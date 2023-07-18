@@ -12,11 +12,14 @@ const Slider2 = styled.div`
 `;
 const Video = styled.video`
   position: absolute;
-  width: 1440px;
+  width: 100%;
   border: none;
   outline: none;
   overflow: hidden;
   z-index: 0;
+  @media screen and (max-width: 1441px) {
+    width: 1440px;
+  }
 `;
 const SpanBox = styled.div`
   display: flex;

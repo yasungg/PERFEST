@@ -14,9 +14,9 @@ const HeaderContainer = styled.div`
   height: 58px;
   background: white;
   border: none;
-  position: fixed;
-  top: 0;
-  z-index: 99;
+//  position: fixed;
+//  top: 0;
+//  z-index: 99;
 `;
 const PerfestLogo = styled.img`
   height: 100%;
