@@ -160,7 +160,7 @@ const Header = () => {
           <HeaderNaviBtn onClick={() => navigate("/pages/festival")}>
             <span>Festivals</span>
           </HeaderNaviBtn>
-          <HeaderNaviBtn>
+          <HeaderNaviBtn onClick={() => navigate("/pages/ranking")}>
             <span>Ranking</span>
           </HeaderNaviBtn>
           <HeaderNaviBtn onClick={() => navigate("/pages/board")}>

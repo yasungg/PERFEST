@@ -278,7 +278,7 @@ const BoardArticle = () => {
             return;
         }
         const memberId = 1;
-        const response = await CommentAPI.CommentWrite(inputComment,communityId,memberId);
+        const response = await CommentAPI.CommentWrite(inputComment,communityId);
         console.log(response.data);
         setCommentUpdateTrigger(prev => !prev);
         setInputComment(""); // 댓글 작성 후 inputComment 상태를 초기화하여 textarea의 내용을 지움
@@ -344,7 +344,7 @@ const BoardArticle = () => {
     const onClickWriteReplyComment = async (commentId) => {
         const memberId = 2;
         const replyComment = replyCommentInput.get(commentId); // 해당 댓글의 대댓글 내용 가져오기
-        const response = await CommentAPI.ReplyCommentWrite(commentId, memberId, replyComment);
+        const response = await CommentAPI.ReplyCommentWrite(commentId, replyComment);
         console.log(response.data);
         setReplyCommentInput((prevMap) => {
             const newMap = new Map(prevMap);

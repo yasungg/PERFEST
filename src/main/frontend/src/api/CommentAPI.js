@@ -2,22 +2,52 @@ import axios from "axios";
 
 const CommentAPI = {
     // 댓글 작성하기
-    CommentWrite : async(commentBody, communityId, memberId) => {
+    CommentWrite : async(commentBody, communityId) => {
         const writeComment = {
             commentBody: commentBody,
             communityId: communityId,
-            memberId: memberId
         };
-        return await axios.post( `/auth/comment/writecomment`, writeComment);
+        const Authorization =
+            "Bearer " + window.localStorage.getItem("accessToken");
+        console.log(Authorization);
+        return await axios.post(`/comment/writecomment`, writeComment, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: Authorization,
+            }, // 여기까지가 서버로 header를 실은 요청을 던지는 기능
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response;
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     },
     // 대댓글 작성하기
-    ReplyCommentWrite : async(commentId,memberId,commentBody) => {
+    ReplyCommentWrite : async(commentId,commentBody) => {
         const writeReplyComment = {
             commentId: commentId,
-            memberId: memberId,
-            commentBody: commentBody           
+            commentBody: commentBody
         };
-        return await axios.post( `/auth/comment/writereplycomment`, writeReplyComment)
+        const Authorization =
+            "Bearer " + window.localStorage.getItem("accessToken");
+        console.log(Authorization);
+        return await axios.post( `/comment/writereplycomment`, writeReplyComment, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: Authorization,
+            }, // 여기까지가 서버로 header를 실은 요청을 던지는 기능
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response;
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     },
     // 대댓글 조회
     GetReplyComment : async(parentId) => {

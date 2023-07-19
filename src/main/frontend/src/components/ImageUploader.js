@@ -4,11 +4,32 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import styled from 'styled-components';
 
 const ImageUpload = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-top: 20px;
+`;
 
-.Image-seen{
-    width: 15%;
-    height: 15%;
-}
+const InputWrapper = styled.label`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 300px;
+  height: 180px;
+`;
+
+const InputText = styled.span`
+  font-size: 16px;
+  color: #333;
+`;
+
+const ImagePreview = styled.img`
+  width: 130px;
+  height: 130px;
+  border-radius: 8px;
 `;
 const firebaseConfig = {
     apiKey: "AIzaSyBaDK9wBsy7cj-T1IiIiShSICh4N9S2VCw",
@@ -47,10 +68,11 @@ const ImageUploader = ({ onImageUpload }) => {
 
     return (
         <ImageUpload>
-            <input type="file" onChange={handleFileInputChange} />
-            {uploadedImage && (
-                <img src={uploadedImage} alt="Uploaded" className='Image-seen' />
-            )}
+            <InputText>이미지 선택</InputText>
+            <InputWrapper>
+                <input type="file" onChange={handleFileInputChange} style={{ display: "none" }} />
+                {uploadedImage && <ImagePreview src={uploadedImage} alt="Uploaded" />}
+            </InputWrapper>
         </ImageUpload>
     );
 };
