@@ -84,16 +84,12 @@ const Container = styled.div`
 
 const MyPayList = () => {
 
-    // const context = UserContext(UserContext);
-    // const { memberId } = context; // 로그인후 컨텍스트담아올예정
-    let memberId = 1;
-
     const [memberPayInfo, setMemberPayInfo] = useState([]);
 
     useEffect(() => {
         const fetchPayment = async () => {
           try {
-            const response = await MemberAPI.getPayment(memberId);
+            const response = await MemberAPI.getPayment();
             if (response.status === 200) {
               const payments = response.data.filter(
                 (payment) => payment.paymentStatus === "PAID"

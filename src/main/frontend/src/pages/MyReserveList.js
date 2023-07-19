@@ -85,19 +85,17 @@ const Container = styled.div`
 
 
 const MyReserveList = () => {
-  // const context = UserContext(UserContext);
-  // const { memberId } = context; // 로그인후 컨텍스트담아올예정
-  let memberId = 1;
+
 
   const [memberReserve, setMemberReserve] = useState([]);
 
   useEffect(() => {
     const fetchMemberReservation = async () => {
-      const rsp = await MemberAPI.getReservation(memberId);
+      const rsp = await MemberAPI.getReservation();
       if (rsp.status === 200) setMemberReserve(rsp.data);
     };
     fetchMemberReservation();
-  }, [memberId]);
+  }, []);
 
   const formatTime = (timeString) => {
     const date = new Date(timeString);

@@ -5,45 +5,142 @@ import axios from "axios";
 const MemberAPI = {
 
     // 이메일로 특정회원 조회
-    getMemberInfo: async(email) => {
-        return await axios.get(`/auth/member/email?email=${email}`);
+    getMemberInfo: async() => {
+        const Authorization =
+        "Bearer " + window.localStorage.getItem("accessToken");
+        console.log(Authorization);
+        return await axios.get(`/member/email` , {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: Authorization,
+            }, // 여기까지가 서버로 header를 실은 요청을 던지는 기능
+          })
+          .then((response) => {
+            if (response.status === 200) {
+              return response;
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
 
     // 회원 닉네임 수정
-    updateNickName: async(email, nickname) => {
+    updateNickName: async(nickname) => {
+        const Authorization =
+        "Bearer " + window.localStorage.getItem("accessToken");
+        console.log(Authorization);
         const updateData = {
-            username: email,
             nickname: nickname
         };
-        return await axios.post("/auth/member/nickname", updateData);
+        return await axios.post("/member/nickname", updateData,{
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: Authorization,
+            }, // 여기까지가 서버로 header를 실은 요청을 던지는 기능
+          })
+          .then((response) => {
+            if (response.status === 200) {
+              return response;
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
 
     // 닉네임 수정 중복값 체크
     nickNameRegCheck: async(nicknameCheck) => {
-        return await axios.get(`/auth/member/nicknameCheck?nickname=${nicknameCheck}`);
+        const Authorization =
+        "Bearer " + window.localStorage.getItem("accessToken");
+        console.log(Authorization);
+        return await axios.get(`/member/nicknameCheck?nickname=${nicknameCheck}`,{
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: Authorization,
+            }, // 여기까지가 서버로 header를 실은 요청을 던지는 기능
+          })
+          .then((response) => {
+            if (response.status === 200) {
+              return response;
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
 
     // 회원 탈퇴
-    deleteMem: async(email) => {
+    deleteMem: async() => {
+        const Authorization =
+        "Bearer " + window.localStorage.getItem("accessToken");
+        console.log(Authorization);
         const deleteMem = {
-            username: email
+
         };
-        return await axios.post("/auth/member/del", deleteMem);
+        return await axios.post("/member/del", deleteMem,{
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: Authorization,
+              "Cache-Control": "no-cache, no-store",
+              Pragma: "no-cache",
+            }, // 여기까지가 서버로 header를 실은 요청을 던지는 기능
+          })
+          .then((response) => {
+            if (response.status === 200) {
+              return response;
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
 
     // 주소 수정
-    updateAdd: async(email, address) => {
+    updateAdd: async(address) => {
+        const Authorization =
+        "Bearer " + window.localStorage.getItem("accessToken");
+        console.log(Authorization);
         const updateData = {
-            username: email,
             address: address
         };
-        return await axios.post("/auth/member/updateAdd", updateData);
+        return await axios.post("/member/updateAdd", updateData,{
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: Authorization,
+            }, // 여기까지가 서버로 header를 실은 요청을 던지는 기능
+          })
+          .then((response) => {
+            if (response.status === 200) {
+              return response;
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
 
+
     // 주소 수정 중복값 체크 (중복시 errorMsg)
-    addRegCheck: async(email, address) => {
-        return await axios.get(`/auth/member/addressCheck?email=${email}&address=${address}`);
-      },
+    addRegCheck: async(address) => {
+        const Authorization =
+        "Bearer " + window.localStorage.getItem("accessToken");
+        console.log(Authorization);
+        return await axios.get(`/member/addressCheck?address=${address}`,{
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: Authorization,
+            }, // 여기까지가 서버로 header를 실은 요청을 던지는 기능
+          })
+          .then((response) => {
+            if (response.status === 200) {
+              return response;
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    },
 
 
     // 이미지 수정
@@ -56,76 +153,299 @@ const MemberAPI = {
     },
 
     // 내 게시글 조회
-    getMyWrite: async(memberId) => {
-        return await axios.get(`/auth/member/communities?memberId=${memberId}`);
+    getMyWrite: async() => {
+        const Authorization =
+        "Bearer " + window.localStorage.getItem("accessToken");
+        console.log(Authorization);
+        return await axios.get(`/member/communities`,{
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: Authorization,
+            }, // 여기까지가 서버로 header를 실은 요청을 던지는 기능
+          })
+          .then((response) => {
+            if (response.status === 200) {
+              return response;
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
 
     // 내 게시글 전체 삭제
-    delMyWrite: async(memberId) => {
-        return await axios.delete(`/auth/member/deleteMyCommunities?memberId=${memberId}`);
+    delMyWrite: async() => {
+        const Authorization =
+        "Bearer " + window.localStorage.getItem("accessToken");
+        console.log(Authorization);
+        return await axios.delete(`/member/deleteMyCommunities`,{
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: Authorization,
+            }, // 여기까지가 서버로 header를 실은 요청을 던지는 기능
+          })
+          .then((response) => {
+            if (response.status === 200) {
+              return response;
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
 
     // 내 게시글 선택 삭제
     deleteCommunitySelection: async(communityId) => {
-        return await axios.delete(`/auth/member/delCommunity?communityId=${communityId}`);
+        const Authorization =
+        "Bearer " + window.localStorage.getItem("accessToken");
+        console.log(Authorization);
+        return await axios.delete(`/member/delCommunity?communityId=${communityId}`,{
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: Authorization,
+            }, // 여기까지가 서버로 header를 실은 요청을 던지는 기능
+          })
+          .then((response) => {
+            if (response.status === 200) {
+              return response;
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
 
     // 내 댓글 조회
-    getComment: async(memberId) => {
-        return await axios.get(`/auth/member/comments?memberId=${memberId}`);
+    getComment: async() => {
+        const Authorization =
+        "Bearer " + window.localStorage.getItem("accessToken");
+        console.log(Authorization);
+        return await axios.get(`/member/comments`,{
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: Authorization,
+            }, // 여기까지가 서버로 header를 실은 요청을 던지는 기능
+          })
+          .then((response) => {
+            if (response.status === 200) {
+              return response;
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
 
     // 내 댓글 전체 삭제
-    delComment: async(memberId) => {
-        return await axios.delete(`/auth/member/deleteMyComments?memberId=${memberId}`);
+    delComment: async() => {
+        const Authorization =
+        "Bearer " + window.localStorage.getItem("accessToken");
+        console.log(Authorization);
+        return await axios.delete(`/member/deleteMyComments`,{
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: Authorization,
+            }, // 여기까지가 서버로 header를 실은 요청을 던지는 기능
+          })
+          .then((response) => {
+            if (response.status === 200) {
+              return response;
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
 
     // 내 댓글 선택 삭제
     deleteCommentSelection: async(commentId) => {
-        return await axios.delete(`/auth/member/delComment?commentId=${commentId}`);
+        const Authorization =
+        "Bearer " + window.localStorage.getItem("accessToken");
+        console.log(Authorization);
+        return await axios.delete(`/member/delComment?commentId=${commentId}`,{
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: Authorization,
+            }, // 여기까지가 서버로 header를 실은 요청을 던지는 기능
+          })
+          .then((response) => {
+            if (response.status === 200) {
+              return response;
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
 
     // 내 결제목록 조회(특산품)
-    getPayment: async(memberId) => {
-        return await axios.get(`/auth/member/payments?memberId=${memberId}`);
+    getPayment: async() => {
+        const Authorization =
+        "Bearer " + window.localStorage.getItem("accessToken");
+        console.log(Authorization);
+        return await axios.get(`/member/payments`,{
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: Authorization,
+            }, // 여기까지가 서버로 header를 실은 요청을 던지는 기능
+          })
+          .then((response) => {
+            if (response.status === 200) {
+              return response;
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
 
     // 내 큰손랭킹 조회
-    myRichRanking: async(memberId) => {
-        return await axios.get(`/auth/member/ranking/${memberId}`);
+    myRichRanking: async() => {
+        const Authorization =
+        "Bearer " + window.localStorage.getItem("accessToken");
+        console.log(Authorization);
+        return await axios.get(`/member/ranking`,{
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: Authorization,
+            }, // 여기까지가 서버로 header를 실은 요청을 던지는 기능
+          })
+          .then((response) => {
+            if (response.status === 200) {
+              return response;
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
-
     // 내 뱃지랭킹 조회
-    myBadgeRanking: async(memberId) => {
-        return await axios.get(`/auth/member/ranking/badges/${memberId}`);
+    myBadgeRanking: async() => {
+        const Authorization =
+        "Bearer " + window.localStorage.getItem("accessToken");
+        console.log(Authorization);
+        return await axios.get(`/member/ranking/badges`,{
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: Authorization,
+            }, // 여기까지가 서버로 header를 실은 요청을 던지는 기능
+          })
+          .then((response) => {
+            if (response.status === 200) {
+              return response;
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
 
     // 내 리뷰 조회
-    getReview: async(memberId) => {
-        return await axios.get(`/auth/member/reviews?memberId=${memberId}`);
+    getReview: async() => {
+        const Authorization =
+        "Bearer " + window.localStorage.getItem("accessToken");
+        console.log(Authorization);
+        return await axios.get(`/member/reviews`,{
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: Authorization,
+            }, // 여기까지가 서버로 header를 실은 요청을 던지는 기능
+          })
+          .then((response) => {
+            if (response.status === 200) {
+              return response;
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
 
     // 내 리뷰 전체 삭제
-    delReview: async(memberId) => {
-        return await axios.delete(`/auth/member/deleteMyReview?memberId=${memberId}`);
+    delReview: async() => {
+        const Authorization =
+        "Bearer " + window.localStorage.getItem("accessToken");
+        console.log(Authorization);
+        return await axios.delete(`/member/deleteMyReview`,{
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: Authorization,
+            }, // 여기까지가 서버로 header를 실은 요청을 던지는 기능
+          })
+          .then((response) => {
+            if (response.status === 200) {
+              return response;
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
 
     // 내 리뷰 선택 삭제
     deleteReviewSelection: async(reviewId) => {
-        return await axios.delete(`/auth/member/delReview?reviewId=${reviewId}`);
+        const Authorization =
+        "Bearer " + window.localStorage.getItem("accessToken");
+        console.log(Authorization);
+        return await axios.delete(KH_DOMAIN + `/member/delReview?reviewId=${reviewId}`,{
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: Authorization,
+            }, // 여기까지가 서버로 header를 실은 요청을 던지는 기능
+          })
+          .then((response) => {
+            if (response.status === 200) {
+              return response;
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
 
     // 내 예약목록 조회
-    getReservation: async(memberId) => {
-        return await axios.get(`/auth/member/activities?memberId=${memberId}`);
+    getReservation: async() => {
+        const Authorization =
+        "Bearer " + window.localStorage.getItem("accessToken");
+        console.log(Authorization);
+        return await axios.get(`/member/activities`,{
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: Authorization,
+            }, // 여기까지가 서버로 header를 실은 요청을 던지는 기능
+          })
+          .then((response) => {
+            if (response.status === 200) {
+              return response;
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
 
     // 내 예약목록 삭제
 
 
     // 사용자의 알림 목록 가져오기(GET)
-    getNotice: async(memberId) => {
-        return await axios.get(`/auth/member/noticeList?memberId=${memberId}`);
+    getNotice: async() => {
+        const Authorization =
+        "Bearer " + window.localStorage.getItem("accessToken");
+        console.log(Authorization);
+        return await axios.get(`/member/noticeList`,{
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: Authorization,
+            }, // 여기까지가 서버로 header를 실은 요청을 던지는 기능
+          })
+          .then((response) => {
+            if (response.status === 200) {
+              return response;
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
 
 
