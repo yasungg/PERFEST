@@ -3,17 +3,19 @@ import { BodyContainer, Container } from "../components/StandardStyles";
 import { useState } from "react";
 import BoardAPI from "../api/BoardAPI";
 import { useNavigate } from "react-router";
+import ImageUploader from "../components/ImageUploader.js";
 const Title = styled.div`
-display: flex;
-justify-content: center;
-align-items: center;
-margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
 `;
 const WriteTitle = styled.div`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   font-size: 24px;
+  margin-top: 30px;
 
   .boardTitle {
     font-size: 18px;
@@ -106,6 +108,8 @@ const WriteText = styled.div`
     border-color: #6c63ff;
   }
 `;
+const WriteImage = styled.div`
+`;
 const WriteButton = styled.div`
   display: flex;
   justify-content: center;
@@ -129,13 +133,17 @@ const Button = styled.button`
     transform: scale(1.05);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
-`
+`;
 const WriteBoard = () => {
     const navigate = useNavigate();
     const [inputBoardTitle, setInputBoardTitle] = useState("");
     const [inputBoardText, setInputBoardText] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("");
+    const [uploadedImageUrl, setUploadedImageUrl] = useState(""); // 업로드된 이미지 URL을 저장하는 상태 변수
 
+    const handleImageUpload = (imageUrl) => {
+        setUploadedImageUrl(imageUrl);
+    };
     const onChangeBoardTitle = (e) => {
         setInputBoardTitle(e.target.value);
     };
@@ -148,14 +156,15 @@ const WriteBoard = () => {
     // 게시판 작성하기
     const onClickWriteBoard = async() => {
         const memberId = 1;
-        const response = await BoardAPI.BoardWrite(inputBoardTitle,selectedCategory,inputBoardText,memberId);
+        const response = await BoardAPI.BoardWrite(inputBoardTitle,selectedCategory,inputBoardText,memberId,uploadedImageUrl);
         console.log(response.data);
         setInputBoardTitle("");
         setSelectedCategory("");
         setInputBoardText("");
+
         if(response.data === true) {
             console.log(response.data);
-            navigate("/Board")
+            navigate("/pages/Board")
         }
         else {
             console.log(response.data);
@@ -190,9 +199,12 @@ const WriteBoard = () => {
                     <label htmlFor="writeText">글 작성</label>
                     <textarea name="writeText" className="writeText" cols="120" rows="30" value={inputBoardText} onChange={onChangeBoardText}></textarea>
                 </WriteText>
+                <WriteImage>
+                    <ImageUploader onImageUpload={handleImageUpload}/>
+                </WriteImage>
                 <WriteButton>
                     <Button onClick={onClickWriteBoard}>작성</Button>
-                    <Button onClick={() =>navigate("/Board")}>취소</Button>
+                    <Button onClick={() =>navigate("/pages/Board")}>취소</Button>
                 </WriteButton>
             </BodyContainer>
         </Container>

@@ -42,15 +42,16 @@ const BoardAPI = {
     );
   },
   // 게시판 작성
-  BoardWrite: async (title, category, text, memberId) => {
+  BoardWrite: async (title, category, text, memberId, communityImg) => {
     const writeBoard = {
       communityTitle: title,
       communityCategory: category,
       communityDesc: text,
       memberId: memberId,
+      communityImg : communityImg
     };
     return await axios.post(`/auth/community/writeboard`,
-      writeBoard
+        writeBoard
     );
   },
   // 게시판 수정

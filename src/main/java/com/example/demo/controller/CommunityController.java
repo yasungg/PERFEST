@@ -64,8 +64,9 @@ public class CommunityController {
         String communityCategory = (String)communityData.get("communityCategory");
         String communityDesc = (String)communityData.get("communityDesc");
         int memberId = (Integer)communityData.get("memberId");
+        String communityImg = (String)communityData.get("communityImg");
 //      Long memberId = info.getId();
-        boolean result = communityService.insertCommunity(communityTitle, CommunityCategory.valueOf(communityCategory), communityDesc, (long) memberId);
+        boolean result = communityService.insertCommunity(communityTitle, CommunityCategory.valueOf(communityCategory), communityDesc, (long) memberId, communityImg);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
     // 커뮤니티 게시글 수정(POST)
