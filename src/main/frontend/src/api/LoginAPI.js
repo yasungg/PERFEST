@@ -31,12 +31,17 @@ const LoginAPI = {
   Logout: async () => {
     const Authorization =
       "Bearer " + window.localStorage.getItem("accessToken");
-    return await axios.get(`/logout/bye`, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: Authorization,
-      },
-    });
+    return await axios
+      .get(`/logout/bye`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: Authorization,
+        },
+      })
+      .then(() => {
+        localStorage.setItem("accessToken", "");
+        localStorage.setItem("tokenExpiresIn", "");
+      });
   },
 };
 export default LoginAPI;

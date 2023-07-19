@@ -339,7 +339,7 @@ const Login = () => {
               name="signUpMail"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
-              placeholder="이메일을 입력하세요."
+              placeholder="example@example.com"
               height="32px"
             />
             <RegexResult fontColor="red">
