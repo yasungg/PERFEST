@@ -93,18 +93,18 @@ const PaginationButton = styled.button`
 
 function MyWrite() {
   const [memberWrite, setMemberWrite] = useState([]);
-  let memberId = 1; // context로 가져올 예정
+
   const [page, setPage] = useState(1);
 
   useEffect(() => {
     const fetchMemberWrite = async () => {
-      const response = await MemberAPI.getMyWrite(memberId);
+      const response = await MemberAPI.getMyWrite();
       if (response.status === 200) {
         setMemberWrite(response.data);
       }
     };
     fetchMemberWrite();
-  }, [memberId]);
+  }, []);
 
   // 페이징 처리
   const startIndex = (page - 1) * 3;

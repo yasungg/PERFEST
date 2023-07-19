@@ -2,7 +2,9 @@ package com.example.demo.controller;
 
 import com.example.demo.constant.CommunityCategory;
 import com.example.demo.dto.CommunityDTO;
+import com.example.demo.service.CommentService;
 import com.example.demo.service.CommunityService;
+import com.example.demo.user.ContextGetter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -14,58 +16,22 @@ import java.util.Map;
 
 @RestController
 @Slf4j
-@RequestMapping("/auth/community")
+@RequestMapping("/community")
 @RequiredArgsConstructor
 public class CommunityController {
     private final CommunityService communityService;
-//  private final ContextGetter info;
+    private final ContextGetter info;
 
-    // 커뮤니티 게시글 전체 조회(GET)
-    @GetMapping(value = "/getallboard")
-    public ResponseEntity<List<CommunityDTO>> communityList() {
-        List<CommunityDTO> list = communityService.getCommunityList();
-        return new ResponseEntity<>(list, HttpStatus.OK);
-    }
-    // 커뮤니티 게시글 카테고리별 조회(GET)
-    @GetMapping(value = "/getselectboard")
-    public ResponseEntity<List<CommunityDTO>> communitySelectList(@RequestParam String communityCategory) {
-        List<CommunityDTO> list = communityService.getCommunitySelectList(CommunityCategory.valueOf(communityCategory));
-        return new ResponseEntity<>(list, HttpStatus.OK);
-    }
-    // 커뮤니티 게시글 최신순 조회(GET)
-    @GetMapping(value = "/getnewestboard")
-    public ResponseEntity<List<CommunityDTO>> communityNewestList(@RequestParam String communityCategory) {
-        List<CommunityDTO> list = communityService.getCommunityNewestList(CommunityCategory.valueOf(communityCategory));
-        return new ResponseEntity<>(list, HttpStatus.OK);
-    }
-    // 커뮤니티 게시글 인기순 조회(GET)
-    @GetMapping(value = "/getlikestboard")
-    public ResponseEntity<List<CommunityDTO>> communityLikestList(@RequestParam String communityCategory) {
-        List<CommunityDTO> list = communityService.getCommunityLikestList(CommunityCategory.valueOf(communityCategory));
-        return new ResponseEntity<>(list, HttpStatus.OK);
-    }
-    // 커뮤니티 게시글 본문 조회(GET)
-    @GetMapping(value = "/getboardarticle")
-    public ResponseEntity<List<CommunityDTO>> communityBoardArticle(@RequestParam long communityId) {
-        List<CommunityDTO> list = communityService.getCommunityBoardArticle(communityId);
-        return new ResponseEntity<>(list, HttpStatus.OK);
-    }
-    // 커뮤니티 게시글 좋아요 누르면 좋아요 +1(POST)
-    @PostMapping(value="/BoardArticle/{communityId}/addlike")
-    public ResponseEntity<Boolean> likeInsert(@RequestBody Map<String, Object> communityData) {
-        String communityId = (String) communityData.get("communityId");
-        boolean result = communityService.insertHeart(Long.parseLong(communityId));
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
     // 커뮤니티 게시글 작성(POST)
     @PostMapping(value="/writeboard")
     public ResponseEntity<Boolean> boardInsert(@RequestBody Map<String, Object> communityData) {
         String communityTitle = (String)communityData.get("communityTitle");
         String communityCategory = (String)communityData.get("communityCategory");
         String communityDesc = (String)communityData.get("communityDesc");
-        int memberId = (Integer)communityData.get("memberId");
-//      Long memberId = info.getId();
-        boolean result = communityService.insertCommunity(communityTitle, CommunityCategory.valueOf(communityCategory), communityDesc, (long) memberId);
+//      int memberId = (Integer)communityData.get("memberId");
+        Long memberId = info.getId();
+        String communityImg = (String)communityData.get("communityImg");
+        boolean result = communityService.insertCommunity(communityTitle, CommunityCategory.valueOf(communityCategory), communityDesc, memberId, communityImg);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
     // 커뮤니티 게시글 수정(POST)
@@ -78,18 +44,4 @@ public class CommunityController {
         boolean result = communityService.updateCommunity((long) communityId, communityTitle, CommunityCategory.valueOf(communityCategory), communityDesc);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-    // 커뮤니티 게시판 제목 검색(GET)
-    @GetMapping(value="/getboardtitle")
-    public ResponseEntity<List<CommunityDTO>> communityBoardTitle(@RequestParam String communityTitle) {
-        List<CommunityDTO> list = communityService.getCommunityBoardTitle(communityTitle);
-        return new ResponseEntity<>(list, HttpStatus.OK);
-    }
-    // 커뮤니티 게시판 닉네임 검색(GET)
-    @GetMapping(value = "/getboardnickname")
-    public ResponseEntity<List<CommunityDTO>> communityBoardNickName(@RequestParam String nickName) {
-        List<CommunityDTO> list = communityService.getCommunityByNickName(nickName);
-        return new ResponseEntity<>(list, HttpStatus.OK);
-    }
-
-
 }

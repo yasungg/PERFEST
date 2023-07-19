@@ -96,17 +96,14 @@ const MyReview = () => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [reviewToDelete, setReviewToDelete] = useState(null);
 
-  // const context = UserContext(UserContext);
-  // const { memberId } = context; // 로그인후 컨텍스트로 받아올예정
-  let memberId = 1;
 
   useEffect(() => {
     const fetchMemberReview = async () => {
-      const rsp = await MemberAPI.getReview(memberId);
+      const rsp = await MemberAPI.getReview();
       if (rsp.status === 200) setMemberReview(rsp.data);
     };
     fetchMemberReview();
-  }, [memberId]);
+  }, []);
 
   const formatTime = (timeString) => {
     const date = new Date(timeString);

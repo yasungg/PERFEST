@@ -113,9 +113,8 @@ const Tm = styled.div`
 const MySetting = () => {
 
   const navigate = useNavigate();
-  // const context = useContext(UserContext);
-  // const { userEmail } = context;  // 로그인후 컨텍스트에 담아올 예정..
-  let userEmail = "qhwkal1@naver.com"
+  const {isLogin, setIsLogin} = useContext(UserContext);
+  // let userEmail = "qhwkal1@naver.com"
 
   // 회원정보 조회 및 닉네임 , 주소 수정
   const [memberInfo, setMemberInfo] = useState("");
@@ -134,12 +133,12 @@ const MySetting = () => {
   // 회원 조회
   useEffect(() => {
     const memberInfo = async() => {
-      const rsp = await MemberAPI.getMemberInfo(userEmail);
+      const rsp = await MemberAPI.getMemberInfo();
       if(rsp.status === 200) setMemberInfo(rsp.data);
 
     };
     memberInfo();
-  },[userEmail]);
+  },[]);
 
   const deleteMem = () => {
     setDelModalOpen(true);
@@ -153,20 +152,24 @@ const MySetting = () => {
     setNicModalOpen(true);
   }
 
-  //
+
 
   const confirm = async(modalType) => {
     if(modalType === "del") {
-      const response = await MemberAPI.deleteMem(userEmail);
+      const response = await MemberAPI.deleteMem();
       console.log(response.data);
-      if(response.data === true) navigate("/Login"); // 탈퇴시 로그인 화면
+      if(response.data === true) {
+        navigate("/Login"); // 탈퇴시 로그인 화면
+        setIsLogin(false);
+        localStorage.setItem("accessToken", "");
+        localStorage.setItem("tokenExpiresIn", "");
+      }
     } else if(modalType === "updateAdd") {
-      const addCheck = await MemberAPI.addRegCheck(userEmail, inputAdd);
-      if(addCheck.data === true) {
-        const response = await MemberAPI.updateAdd(userEmail, inputAdd);
+
+        const response = await MemberAPI.updateAdd(inputAdd);
         console.log(response.data);
         if(response.data === true) {
-          const updateInfo = await MemberAPI.getMemberInfo(userEmail);
+          const updateInfo = await MemberAPI.getMemberInfo();
           if(updateInfo.status === 200) {
             setMemberInfo(updateInfo.data);
             setAddModalOpen(false);
@@ -174,17 +177,15 @@ const MySetting = () => {
 
           }
         }
-      } else {
-        setAddMsg("현재 등록되어있는 주소 입니다.")
-      }
+
     } else if(modalType === "upNicname") {
       const nicNameCheck = await MemberAPI.nickNameRegCheck(inputNicName);
       console.log(nicNameCheck.data);
       if(nicNameCheck.data === true) {
-        const response = await MemberAPI.updateNickName(userEmail, inputNicName);
+        const response = await MemberAPI.updateNickName(inputNicName);
         console.log(response.data);
         if(response.data === true) {
-          const updatedInfo = await MemberAPI.getMemberInfo(userEmail);
+          const updatedInfo = await MemberAPI.getMemberInfo();
           if(updatedInfo.status === 200) {
             setMemberInfo(updatedInfo.data);
             setNicModalOpen(false);
@@ -218,6 +219,7 @@ const MySetting = () => {
       <BodyContainer>
         <Tm>내 정보 관리</Tm>
         <Container>
+          <Header />
           {memberInfo && memberInfo.map(member => (
             <Section2 key={member.email}>
               <Label>

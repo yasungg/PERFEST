@@ -146,12 +146,13 @@ public class CommunityService {
     }
 
     // 커뮤니티 게시글 작성(POST)
-    public boolean insertCommunity(String communityTitle, CommunityCategory communityCategory, String communityDesc, Long memberId) {
+    public boolean insertCommunity(String communityTitle, CommunityCategory communityCategory, String communityDesc, Long memberId, String communityImg) {
         Community community = new Community();
         community.setCommunityTitle(communityTitle);
         community.setCommunityCategory(communityCategory);
         community.setCommunityDesc(communityDesc);
         community.setWrittenTime(LocalDateTime.now());
+        community.setCommunityImgLink(communityImg);
 
         Member member = new Member();
         member.setId(memberId);

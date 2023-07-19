@@ -300,7 +300,7 @@ const Board = () => {
     setSearchType(e.target.value);
   }
   const boardClick = (communityId) => {
-    navigate(`/BoardArticle/${communityId}`);
+    navigate(`/pages/BoardArticle/${communityId}`);
   }
   return (
       <Container justifyContent="center" alignItems="center">
@@ -365,7 +365,7 @@ const Board = () => {
               </BoardText>
           ))}
           <WriteButton>
-            <button className="write" onClick={()=> navigate("/WriteBoard")}>글쓰기</button></WriteButton>
+            <button className="write" onClick={()=> navigate("/pages/WriteBoard")}>글쓰기</button></WriteButton>
         </BodyContainer>
       </Container>
   );
