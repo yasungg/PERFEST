@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.dto.*;
 import com.example.demo.entity.Community;
 import com.example.demo.entity.Member;
+import com.example.demo.jwt.TokenProvider;
 import com.example.demo.service.MyPageService;
 import com.example.demo.user.ContextGetter;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -25,12 +27,17 @@ public class MyPageController {
     private final MyPageService myPageService;
     private final ContextGetter info;
     private final HttpServletRequest request;
+    private final TokenProvider tokenProvider;
+    private final HttpServletResponse response;
 
     // 이메일로 회원 조회 API
     @GetMapping(value = "/email")
     public ResponseEntity<List<MemberDTO>> getMemberInfoByEmail() {
+        log.info("1");
         String username = info.getUsername();
+        log.info("2");
         List<MemberDTO> memberList = myPageService.getMemberByEmail(username);
+        tokenProvider.setNewAccessTokenToHeader(response);
         return new ResponseEntity<>(memberList, HttpStatus.OK);
     }
 
@@ -41,6 +48,7 @@ public class MyPageController {
 //        String email = (String) updateData.get("username");
         String nickname = (String) updateData.get("nickname");
         boolean result = myPageService.updateNickname(username, nickname);
+        tokenProvider.setNewAccessTokenToHeader(response);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -48,6 +56,7 @@ public class MyPageController {
     @GetMapping("/nicknameCheck")
     public ResponseEntity<Boolean> checkNicknameAvailability(@RequestParam String nickname) {
         boolean isAvailable = myPageService.isNicknameAvailable(nickname);
+        tokenProvider.setNewAccessTokenToHeader(response);
         return ResponseEntity.ok(isAvailable);
     }
 
@@ -59,6 +68,7 @@ public class MyPageController {
         boolean result = myPageService.deleteMember(username);
         SecurityContextHolder.clearContext();
         request.getSession().invalidate();
+        tokenProvider.setNewAccessTokenToHeader(response);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
@@ -70,6 +80,7 @@ public class MyPageController {
         String username = info.getUsername();
         String address = (String) updateData.get("address");
         boolean result = myPageService.updateAddress(username, address);
+        tokenProvider.setNewAccessTokenToHeader(response);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -86,6 +97,7 @@ public class MyPageController {
     public ResponseEntity<List<CommunityDTO>> getCommunitiesByMemberId() {
         Long memberId = info.getId();
         List<CommunityDTO> communities = myPageService.getCommunitiesByMemberId(memberId);
+        tokenProvider.setNewAccessTokenToHeader(response);
         return new ResponseEntity<>(communities, HttpStatus.OK);
     }
 
@@ -94,6 +106,7 @@ public class MyPageController {
     public ResponseEntity<Boolean> deleteCommunitiesByMemberId() {
         Long memberId = info.getId();
         boolean result = myPageService.deleteCommunityPostsByMemberId(memberId);
+        tokenProvider.setNewAccessTokenToHeader(response);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -101,6 +114,7 @@ public class MyPageController {
     @DeleteMapping("/delCommunity")
     public ResponseEntity<Boolean> deleteCommunity(@RequestParam("communityId") Long communityId) {
         boolean result = myPageService.deleteCommunityPosts(communityId);
+        tokenProvider.setNewAccessTokenToHeader(response);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -109,6 +123,7 @@ public class MyPageController {
     public ResponseEntity<List<CommentDTO>> getCommentsByMemberId() {
         Long memberId = info.getId();
         List<CommentDTO> comments = myPageService.getCommentByMemberId(memberId);
+        tokenProvider.setNewAccessTokenToHeader(response);
         return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 
@@ -117,6 +132,7 @@ public class MyPageController {
     public ResponseEntity<Boolean> deleteCommentsByMemberId() {
         Long memberId = info.getId();
         boolean result = myPageService.deleteCommentPostsByMemberId(memberId);
+        tokenProvider.setNewAccessTokenToHeader(response);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -124,6 +140,7 @@ public class MyPageController {
     @DeleteMapping("/delComment")
     public ResponseEntity<Boolean> deleteMyComment(@RequestParam("commentId") Long commentId) {
         boolean result = myPageService.deleteMyComment(commentId);
+        tokenProvider.setNewAccessTokenToHeader(response);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -132,6 +149,7 @@ public class MyPageController {
     public ResponseEntity<List<PaymentDTO>> getPaymentsByMemberId() {
         Long memberId = info.getId();
         List<PaymentDTO> payments = myPageService.getPaymentByMemberId(memberId);
+        tokenProvider.setNewAccessTokenToHeader(response);
         return new ResponseEntity<>(payments, HttpStatus.OK);
     }
 
@@ -144,6 +162,7 @@ public class MyPageController {
 
 
         int ranking = myPageService.getRankingByTotalPrice(member);
+        tokenProvider.setNewAccessTokenToHeader(response);
         return ResponseEntity.ok(ranking);
     }
 
@@ -155,6 +174,7 @@ public class MyPageController {
         member.setId(memberId);
 
         int ranking = myPageService.getRankingByBadges(member);
+        tokenProvider.setNewAccessTokenToHeader(response);
         return ResponseEntity.ok(ranking);
     }
 
@@ -163,6 +183,7 @@ public class MyPageController {
     public ResponseEntity<List<ReviewDTO>> getReviewsByMemberId() {
         Long memberId = info.getId();
         List<ReviewDTO> reviews = myPageService.getReviewByMemberId(memberId);
+        tokenProvider.setNewAccessTokenToHeader(response);
         return new ResponseEntity<>(reviews, HttpStatus.OK);
     }
 
@@ -171,6 +192,7 @@ public class MyPageController {
     public ResponseEntity<Boolean> deleteReviewsByMemberId() {
         Long memberId = info.getId();
         boolean result = myPageService.deleteReviewPostsByMemberId(memberId);
+        tokenProvider.setNewAccessTokenToHeader(response);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -178,6 +200,7 @@ public class MyPageController {
     @DeleteMapping("/delReview")
     public ResponseEntity<Boolean> deleteReviews(@RequestParam("reviewId") Long reviewId) {
         boolean result = myPageService.deleteReview(reviewId);
+        tokenProvider.setNewAccessTokenToHeader(response);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -186,6 +209,7 @@ public class MyPageController {
     public ResponseEntity<List<ActivityDTO>> getActivitiesByMemberId() {
         Long memberId = info.getId();
         List<ActivityDTO> activityDTOList = myPageService.getReservedActivitiesForMember(memberId);
+        tokenProvider.setNewAccessTokenToHeader(response);
         return new ResponseEntity<>(activityDTOList, HttpStatus.OK);
     }
 
