@@ -13,6 +13,8 @@ import com.example.demo.user.PerfestAuthenticationProvider;
 import com.example.demo.user.PerfestKakaoAuthenticationProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -107,5 +109,10 @@ public class MemberService {
                     tokenProvider.generateAccessToken(authentication);
         }
         return tokenProvider.generateTokenDTO(authentication);
+    }
+
+    public Page<Member> getAllMembers(int pageNum, int pageSize) {
+        PageRequest pageRequest = PageRequest.of(pageNum, pageSize);
+        return memberRepository.findAll(pageRequest);
     }
 }

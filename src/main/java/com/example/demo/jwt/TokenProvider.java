@@ -1,6 +1,7 @@
 package com.example.demo.jwt;
 
 import com.example.demo.constant.Authority;
+import com.example.demo.dto.memberDTOs.MemberRequestDTO;
 import com.example.demo.dto.memberDTOs.RefreshTokenDTO;
 import com.example.demo.dto.memberDTOs.TokenDTO;
 import com.example.demo.entity.Auth;
@@ -120,17 +121,19 @@ public class TokenProvider {
         saveRefreshToken(refreshToken, refreshTokenExpiresIn);
     }
 
-    //refresh token이 존재하고 유효성 검사도 통과되었을 경우 --> access token만 생성
+    // refresh token이 존재하고 유효성 검사도 통과되었을 경우 --> access token만 생성
     public TokenDTO generateAccessToken(Authentication authentication) {
         log.info("access token만 생성됩니다!");
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
+        // access token의 claims에 담을 member_id와 nickname을 불러옵니다.
         PerfestUserDetails member = userDetailsService.loadUserByUsername(authentication.getName());
         String id = member.getId().toString();
         String nickname = member.getNickname();
 
+        // 만료 시간을 설정합니다.
         long now = (new Date()).getTime();
         Date tokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
         log.info("access token 만료 시간 = {}", tokenExpiresIn);

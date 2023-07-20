@@ -1,9 +1,0 @@
-
-\	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(’˜›Ö
-a	java:S112Õ"FDefine and throw a dedicated exception instead of using a generic one.(ãîÚîúÿÿÿÿ
-d
-java:S1192N"IDefine a constant instead of duplicating this literal "nickname" 5 times.(ßôûşÿÿÿÿ
-a
-java:S2184%"FCast one of the operands of this multiplication operation to a "long".(äÓĞ–ıÿÿÿÿ
-g
-java:S3655Î"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(Úäêğ
