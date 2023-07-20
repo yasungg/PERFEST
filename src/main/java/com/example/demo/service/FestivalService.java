@@ -26,7 +26,7 @@ public class FestivalService {
     private final FestivalRepository festivalRepository;
     private final ObjectMapper mapper;
 
-    public Boolean getFestivalInfo() throws IOException {
+    public void getFestivalInfo() throws IOException {
         StringBuilder urlBuilder = new StringBuilder("http://api.data.go.kr/openapi/tn_pubr_public_cltur_fstvl_api"); /*URL*/
         urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=%2FXYuwTLe9VasAXKNRHVLE4M%2Fp1irVQjOYUyOu2TWynXen7QM6i5ppj4oJGYyvQLe4Qf0mXtUtMz7onXSkBT%2B8A%3D%3D"); /*Service Key*/
         urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지 번호*/
@@ -72,8 +72,6 @@ public class FestivalService {
 
 
         saveData(sb.toString());
-
-        return true;
     }
 
     private void saveData(String response) {

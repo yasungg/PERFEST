@@ -14,8 +14,8 @@ import java.io.IOException;
 public class FestivalController {
     private final FestivalService festivalService;
 
-    @GetMapping("/get-festival-info")
-    public Boolean getFestivalInfo() throws IOException {
-        return festivalService.getFestivalInfo();
+    @GetMapping("/getfestivals")
+    public void getFestivalInfo() throws IOException {
+        festivalService.getFestivalInfo();
     }
 }
