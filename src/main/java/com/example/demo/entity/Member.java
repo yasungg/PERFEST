@@ -47,9 +47,9 @@ public class Member {
     @ColumnDefault("0")
     private BigDecimal totalPrice;
 
-    @Column(name = "is_delete") // 회원탈퇴여부
-    @ColumnDefault("'N'")
-    private String isDelete;
+    @Column(name = "is_enabled") // 회원탈퇴여부
+    @ColumnDefault("true")
+    private boolean isEnabled;
 
     @Column(name = "join_time")
     private LocalDateTime joinTime;

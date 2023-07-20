@@ -15,5 +15,5 @@ public class MemberDTO {
     private String img;
     private int badges;
     private BigDecimal totalPrice;
-    private String isDelete; // N: 사용유저, Y: 탈퇴유저
+    private boolean isEnabled; // 회원 탈퇴여부 1 True / 탈퇴시 0 false
 }
