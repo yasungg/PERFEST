@@ -40,6 +40,8 @@ dependencies {
 	testImplementation 'org.projectlombok:lombok:1.18.26'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.2'
+	implementation 'org.json:json:20210307'
 }
 
 tasks.named('test') {

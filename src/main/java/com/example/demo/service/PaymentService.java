@@ -83,4 +83,30 @@ public class PaymentService {
 
         return paymentDTOList;
     }
+
+    // 카카오페이 결제 취소가 성공된 경우 DB에 저장 된 결제 내역의 결제 상태를 CANCEL 로 변경
+    public boolean deletePaymentInfo(Long memberId, Long productId, Long paymentId) {
+        Payment payment = new Payment();
+
+        Optional<Payment> optionalPayment = paymentRepository.findByMemberIdAndProductIdAndId(memberId, productId, paymentId);
+        try {
+            Member member = new Member();
+            Product product = new Product();
+            if (optionalPayment.isPresent()) {
+                member.setId(memberId);
+                product.setId(productId);
+            }
+            payment.setId(paymentId);
+            payment.setMember(member);
+            payment.setProduct(product);
+            payment.setPaymentStatus(PaymentStatus.CANCELLED);
+            payment.setCancelDate(LocalDateTime.now());
+
+            paymentRepository.save(payment);
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
 }

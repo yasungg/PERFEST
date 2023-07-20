@@ -181,9 +181,17 @@ const PayResult = () => {
 
 
 // 카카오페이 결제 취소 함수
-const PayCancel = ({memberId, productId}) => {
+const PayCancel = ({memberId, productId, paymentId}) => {
   const navigate = useNavigate();
+
+  // DB에 상품 결제 내역이 있는 지 먼저 통신 한 뒤, 결제 내역이 있는 경우에
+  // 카카오페이 결제 취소 api를 실행하기 위한 useState
   const [isCancel, setIsCancel] = useState(false);
+
+  // 카카오페이 결제 취소 api를 성공했을 경우
+  // DB에 있는 상품 결제 내역을 삭제하기 위한 useState
+  const [isKakao, setIsKakao] = useState(false);
+
   // 사용자가 예약한 주문 내역이 있는지 확인하기 위한 로직
   const [memberData, setMemberData] = useState({
     data : {
@@ -222,7 +230,8 @@ const PayCancel = ({memberId, productId}) => {
         console.log("해당 상품 주문 데이터 없음");
       }
     }
-    getData();
+    // getData();
+    setIsKakao(true);
   }, []);
 
   const [data, setData] = useState({
@@ -234,25 +243,45 @@ const PayCancel = ({memberId, productId}) => {
     }
   });
 
+//  useEffect(() => {
+//    const { params } = data;
+//    isCancel &&
+//      axios({
+//        url: "https://kapi.kakao.com/v1/payment/cancel",
+//        method: "POST",
+//        headers: {
+//          Authorization: `KakaoAK 632fb98346e85fd6ea660b71beaf9b70`,
+//          "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
+//        },
+//        params
+//      }).then((response) => {
+//        console.log("통신완료");
+//        console.log("카카오페이 결제 취소 통신 완료"+response);
+//        setIsKakao(true);
+//      }).catch(error => {
+//        console.log(error);
+//      });
+//    },[isCancel]
+//  )
+
   useEffect(() => {
-    const { params } = data;
-    isCancel && 
-      axios({
-        url: "https://kapi.kakao.com/v1/payment/cancel",
-        method: "POST",
-        headers: {
-          Authorization: `KakaoAK 632fb98346e85fd6ea660b71beaf9b70`,
-          "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
-        },
-        params
-      }).then((response) => {
-        console.log("통신완료");
-        console.log("카카오페이 결제 취소 통신 완료"+response);
-      }).catch(error => {
-        console.log(error);
-      });
-    },[isCancel])
-  }
+    const deleteData = async() => {
+      const memberId = 1;
+      const productId = 1;
+      const paymentId = 1;
+      const response = await PaymentAPI.DeletePaymentData(memberId, productId, paymentId)
+      if(response.status === 200) {
+        console.log("deleteData 통신 완료");
+        alert("결제 취소가 완료됐습니다.")
+      } else {
+        console.log("deleteData 통신 실패");
+        alert("결제 취소가 실패 했습니다.")
+      }
+    }
+    isKakao && deleteData();
+  })
+
+}
 
 
 export {PayReady, PayResult, PayCancel};

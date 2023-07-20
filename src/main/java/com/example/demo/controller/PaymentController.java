@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
-
 @RestController
 @Slf4j
 @RequestMapping("/auth/payment")
@@ -53,6 +52,18 @@ public class PaymentController {
         System.out.println("checkPaymentInfo 실행결과 : ");
         for(PaymentDTO paymentDTO : list) System.out.println(paymentDTO);
         return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/deletePaymentData")
+    public ResponseEntity<Boolean> deletePaymentData(@RequestBody Map<String, Object> paymentData) {
+//        tokenProvider.setNewAccessTokenToHeader(response);
+        System.out.println("deletePaymentData 메소드 실행");
+        int memberId = (int) paymentData.get("memberId");
+        int productId = (int) paymentData.get("productId");
+        int paymentId = (int) paymentData.get("paymentId");
+
+        boolean result = paymentService.deletePaymentInfo((long) memberId, (long) productId, (long)paymentId);
+        return new ResponseEntity<>(result,HttpStatus.OK);
     }
 
 }
