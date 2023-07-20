@@ -47,10 +47,10 @@ public class Festival {
     private String festivalTel;
 
     @Column(name = "festival_img")
-    private String festivalImgLink;
+    private String festivalImg;
 
     @Builder
-    public Festival (String festivalName, String festivalLocation, String festivalDoro, Date startDate, Date endDate, String festivalDesc, String mainOrg, String wedo, String kyungdo, String festivalTel, String festivalImgLink) {
+    public Festival (String festivalName, String festivalLocation, String festivalDoro, Date startDate, Date endDate, String festivalDesc, String mainOrg, String wedo, String kyungdo, String festivalTel, String festivalImg) {
         this.festivalName = festivalName;
         this.festivalLocation = festivalLocation;
         this.festivalDoro = festivalDoro;
@@ -61,6 +61,6 @@ public class Festival {
         this.wedo = wedo;
         this.kyungdo = kyungdo;
         this.festivalTel = festivalTel;
-        this.festivalImgLink = festivalImgLink;
+        this.festivalImg = festivalImg;
     }
 }
