@@ -131,6 +131,8 @@ const CommentReWrite = styled.div`
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-left: 3px;
+    margin-right: 3px;
     &:hover {
       background-color: #f1f1f1;
     }
@@ -138,6 +140,8 @@ const CommentReWrite = styled.div`
 `;
 
 const CommentLike = styled.div`
+  margin-left: 3px;
+  margin-right: 3px;
   .like {
     border: none;
     background-color: white;
@@ -387,7 +391,10 @@ const BoardArticle = () => {
                             <BoardDate>{formatDate(community.writtenTime)}</BoardDate>
                         </UserInfo>
                         <hr></hr>
-                        <BoardDesc>{community.communityDesc}</BoardDesc>
+                        <BoardDesc>
+                            {community.communityDesc}
+                            <img className="community-img" src={community.communityImgLink} alt="" />
+                        </BoardDesc>
                         <BoardLike>
                             <button className="like-button" onClick={onClickBoardLike}>
                                 이 글이 도움!
