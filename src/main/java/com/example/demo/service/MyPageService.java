@@ -53,7 +53,7 @@ public class MyPageService {
             memberDTO.setImg(member.getImg());
             memberDTO.setBadges(member.getBadges());
             memberDTO.setTotalPrice(member.getTotalPrice());
-            memberDTO.setIsDelete(member.getIsDelete());
+            memberDTO.setEnabled(member.isEnabled());
 
             memberDTOS.add(memberDTO);
         }
@@ -111,7 +111,7 @@ public class MyPageService {
             throw new IllegalArgumentException("회원 없음");
         }
         Member member = memberList.get(0);
-        member.setIsDelete("Y");
+        member.setEnabled(false);
         myPageRepository.save(member);
         log.info("회원탈퇴 완료");
         return true;
