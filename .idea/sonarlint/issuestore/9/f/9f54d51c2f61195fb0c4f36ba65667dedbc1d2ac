@@ -1,0 +1,13 @@
+
+f
+java:S1192Z"IDefine a constant instead of duplicating this literal "latitude" 6 times.(‡™üş8æƒİ™—1
+l
+java:S1192["JDefine a constant instead of duplicating this literal "longitude" 6 times.(¾¹œøÿÿÿÿ8çƒİ™—1
+h
+java:S1192"FDefine a constant instead of duplicating this literal "UTF-8" 8 times.(†¨Ìñúÿÿÿÿ8èƒİ™—1
+W
+java:S1141"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8êƒİ™—1
+Z	java:S1068"9Replace this use of System.out or System.err by a logger.(³°Íøÿÿÿÿ8Ù†İ™—1
+o
+java:S3776O"RRefactor this method to reduce its Cognitive Complexity from 29 to the 15 allowed.(Ï÷‡8ù†İ™—1
+Z	java:S106^"9Replace this use of System.out or System.err by a logger.(°¯ÿÁüÿÿÿÿ8ˆ‡İ™—1

@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.memberDTOs.MemberListDTO;
 import com.example.demo.entity.Member;
 import com.example.demo.repository.MemberRepository;
 import com.example.demo.service.AdminService;
@@ -28,8 +29,12 @@ public class AdminMemberController {
     private final MemberService memberService;
 
     @GetMapping("/get-member-all")
-    public ResponseEntity<Page<Member>> getMemberAll(@RequestParam(defaultValue = "0") int pageNumber,
-    @RequestParam(defaultValue = "10") int pageSize) {
+    public ResponseEntity<Page<MemberListDTO>> getMemberAll(@RequestParam(defaultValue = "0") int pageNumber,
+                                                            @RequestParam(defaultValue = "10") int pageSize) {
+        log.info("get-member-all method 진입");
         return new ResponseEntity<>(memberService.getAllMembers(pageNumber, pageSize), HttpStatus.OK);
     }
+//    @GetMapping("/get-member-sortedby")
+//    public ResponseEntity<Page<Member>> getMemberSoretedBy(@RequestParam(defaultValue = "0") int pageNumber,
+//                                                           @RequestParam(defaultValue = "10") int pageSize, String)
 }

@@ -32,6 +32,7 @@ export const AdminCard = styled.div`
   right: 16px;
   bottom: 16px;
   border: 0.8px solid #222;
+  background: white;
   border-radius: 3px;
   box-shadow: 5px 10px 20px;
   transition: all 0.3s ease-in;

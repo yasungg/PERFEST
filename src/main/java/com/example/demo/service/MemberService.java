@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.constant.Authority;
+import com.example.demo.dto.memberDTOs.MemberListDTO;
 import com.example.demo.dto.memberDTOs.MemberRequestDTO;
 import com.example.demo.dto.memberDTOs.MemberResponseDTO;
 import com.example.demo.dto.memberDTOs.TokenDTO;
@@ -111,8 +112,12 @@ public class MemberService {
         return tokenProvider.generateTokenDTO(authentication);
     }
 
-    public Page<Member> getAllMembers(int pageNum, int pageSize) {
+    public Page<MemberListDTO> getAllMembers(int pageNum, int pageSize) {
         PageRequest pageRequest = PageRequest.of(pageNum, pageSize);
-        return memberRepository.findAll(pageRequest);
+        Page<MemberListDTO> info = memberRepository.findAllMemberExceptPassword(pageRequest);
+
+        log.info("location: memberService / getAllMembers = {}", info);
+
+        return info;
     }
 }

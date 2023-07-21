@@ -13,7 +13,6 @@ import com.example.demo.user.PerfestUserDetails;
 import com.example.demo.user.PerfestUserDetailsService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
-import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,7 +34,7 @@ import static com.example.demo.constant.Authority.*;
 public class TokenProvider {
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "bearer";
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 3;
+    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 40;
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 7L * 24 * 60 * 60 * 1000;
     @Autowired
     private MemberRepository memberRepository;

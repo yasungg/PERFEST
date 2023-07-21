@@ -37,12 +37,6 @@ m
 =src/main/java/com/example/demo/service/KakaoLoginService.java,0\9\09fbef2b5d68a7acef67b14798d551bedf55ee3f
 a
 1src/main/java/com/example/demo/jwt/JwtFilter.java,d\3\d3a11fcffc1066215ee8d5b0d0eb7c488c3226f5
-s
-Csrc/main/java/com/example/demo/dto/memberDTOs/MemberRequestDTO.java,1\f\1fc2a73a9094af358b3e6bcad3183808df547caf
-o
-?src/main/java/com/example/demo/controller/MemberController.java,3\0\30f0f6084bb53b20935f868fd476a7ee6e903bd4
-f
-6src/main/java/com/example/demo/PerfestApplication.java,5\0\50ab633ac87dfd14df68e911d39952e9452bb062
 o
 ?src/main/java/com/example/demo/controller/LogoutController.java,a\9\a9352ac7688b34d4303eb2427333992ec9b1daa0
 r
@@ -51,12 +45,8 @@ Z
 *src/main/frontend/src/components/Footer.js,f\0\f02195d21d4e77e7a9f8c161fd9eded648ea0dce
 u
 Esrc/main/java/com/example/demo/controller/BadgeRankingController.java,f\1\f16043f109aef8fd3e056744f95042659c4e4b77
-v
-Fsrc/test/java/com/example/demo/repository/CommunityRepositoryTest.java,4\5\4519b3a4937887a0db63182bd70e188cb34fb3f2
 k
 ;src/test/java/com/example/demo/PerfestApplicationTests.java,4\5\4527a806cfbe93fe9ef192c6d9ef6e35c423664d
-t
-Dsrc/test/java/com/example/demo/controller/PaymentControllerTest.java,6\9\69d997e0cf3e2365f906e4f922abb7fd633eab76
 [
 +src/main/frontend/src/components/Sidebar.js,9\a\9adef664974dfe251ce41d388105ccf4a956fa1c
 _
@@ -78,12 +68,8 @@ f
 :
 
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
-<
-build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
 L
 src/main/frontend/src/App.js,6\5\65107325a79051577112de2ce586496b00ad83a7
-Z
-*src/main/frontend/src/components/Header.js,a\3\a38fb24f994555f8cffe167aaabd5095558edc5c
 `
 0src/main/frontend/src/components/SecondSlider.js,9\9\990f7ee22eae531c8e622308d3bcb82491eb20d8
 S
@@ -110,8 +96,6 @@ e
 5src/main/frontend/src/components/AdminFestivalList.js,3\6\36100e1927a5ce0593497b4b01d68f5929b296be
 h
 8src/main/frontend/src/components/AdminFestivalSidebar.js,b\f\bf0b3e812607f6253b11ea9b65cd2bc50463cd4b
-_
-/src/main/frontend/src/components/AdminHeader.js,3\8\38265e16e8e000258373846abfab2f31bbbc334f
 f
 6src/main/frontend/src/components/AdminMemberSidebar.js,a\a\aa1ee58ba705b7ffe25b7d68a175ce2cc7579df3
 d
@@ -126,8 +110,6 @@ c
 3src/main/frontend/src/components/BoardManagement.js,f\8\f8bc1050c29f7666617beffe5ae0dc7061ef9aff
 e
 5src/main/frontend/src/components/CommentManagement.js,9\9\99fc67ea9f86617129a9b6ee234e88494006fad4
-h
-8src/main/frontend/src/components/MembershipManagement.js,5\8\5846f92c3a02cd2f633765490adeaec17653bd15
 c
 3src/main/frontend/src/components/ProductPurchase.js,f\5\f51c78e349c9d198ef55d8a7af7d828cb0df86c2
 e
@@ -146,8 +128,6 @@ d
 4src/main/frontend/src/components/ReportManagement.js,1\1\11d19fe6e9c8b605d127bdc00fb89ebe854c5353
 b
 2src/main/frontend/src/components/RequestProgram.js,f\8\f8772f16faeab765173d5e22eeb0f96fac1107d8
-b
-2src/main/frontend/src/components/StandardStyles.js,f\8\f8212f22942a6e2e368497f87b185499f3c85587
 Z
 *src/main/frontend/src/context/UserStore.js,b\1\b1799965b7a67cb863031198f0748726c7a92669
 T
@@ -156,3 +136,49 @@ K
 src/main/frontend/yarn.lock,2\c\2cbcefdf539fc498ca376cf16f7848ca082b3969
 d
 4src/main/java/com/example/demo/entity/Community.java,e\c\ec4ebd7b8ca58688aecd04de56d9ab788f3b14fd
+O
+src/main/frontend/src/index.css,0\2\02f38d17933111cb5a7b89b41de0f98525d7cd81
+Z
+*src/main/frontend/src/components/Banner.js,1\5\1570eb7f262ba7ce07372c0528d69697ca0f3d51
+N
+src/main/frontend/src/index.js,c\6\c6cb98d7f9fa1b50106cd95cc089f9fc178f5efe
+O
+src/main/frontend/src/README.md,6\e\6e2c25627d6f5c5e0d2660bcef699194dcfb3ea7
+n
+>src/main/java/com/example/demo/controller/KakaoController.java,5\5\55a9329635b44710014bfbb9e0d66986c619e128
+v
+Fsrc/main/java/com/example/demo/user/PerfestAuthenticationProvider.java,2\9\29429a1fa9010873ea4de6dbaa7c8cc96f0966c8
+{
+Ksrc/main/java/com/example/demo/user/PerfestKakaoAuthenticationProvider.java,f\f\ff6717ea99373747716a189ee01c093fe40bc46e
+r
+Bsrc/main/java/com/example/demo/user/PerfestUserDetailsService.java,8\5\85e1f4cc10dc64ca95123752c559f175cba95cd1
+e
+5src/main/java/com/example/demo/constant/Category.java,6\7\6769fc1b26de964c2200202d415016f6e015c9c5
+W
+'src/main/frontend/src/api/CommentAPI.js,2\a\2a8734374f02d165960c858c95a41df297f4b310
+U
+%src/main/frontend/src/api/BoardAPI.js,f\b\fb9578f94cf9a34ec61d44cd3498ef12e1add64a
+T
+$src/main/frontend/src/pages/Board.js,0\8\08e30cb5d0c8fa3c7f3669fb5f2c2970ccee12c7
+9
+	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
+T
+$src/main/frontend/src/pages/Admin.js,8\c\8c2ad57dc3da3f46c8c82af4bed2c54294ff42fd
+h
+8src/main/java/com/example/demo/service/AdminService.java,1\b\1b8b9106804573cf48901dc9012e8331a892542f
+k
+;src/main/java/com/example/demo/user/PerfestUserDetails.java,9\2\920bb61e4393e216c7775b5afd2b6836601b3fa2
+V
+&src/main/frontend/src/api/MemberAPI.js,7\e\7ee377fc12b23b3fd83558970af4cf6d004d1f7e
+o
+?src/main/java/com/example/demo/controller/MemberController.java,3\0\30f0f6084bb53b20935f868fd476a7ee6e903bd4
+o
+?src/main/java/com/example/demo/controller/MyPageController.java,2\2\22f464772762d3e407ded14e79958a73c4ff49b5
+f
+6src/main/java/com/example/demo/PerfestApplication.java,5\0\50ab633ac87dfd14df68e911d39952e9452bb062
+p
+@src/main/java/com/example/demo/controller/CommentController.java,e\8\e8b37830134d5d21fe04e730d3f51ce40fcd624d
+k
+;src/main/java/com/example/demo/service/FestivalService.java,9\f\9f54d51c2f61195fb0c4f36ba65667dedbc1d2ac
+s
+Csrc/main/java/com/example/demo/dto/memberDTOs/MemberRequestDTO.java,1\f\1fc2a73a9094af358b3e6bcad3183808df547caf

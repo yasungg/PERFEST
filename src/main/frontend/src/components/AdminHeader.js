@@ -10,9 +10,6 @@ const Header = styled.div`
   width: 100%;
   height: 60px;
   align-items: center;
-  @media (max-width: 1025px) {
-    justify-content: space-between;
-  }
   .logo {
     height: 48px;
     background: transparent;
@@ -60,9 +57,6 @@ const Header = styled.div`
       font-size: 0.8em;
       margin-right: 16px;
     }
-    @media (max-width: 1025px) {
-      display: none;
-    }
   }
   .logout-btn {
     width: 100px;
@@ -73,25 +67,6 @@ const Header = styled.div`
     margin-right: 16px;
     &:hover {
       cursor: pointer;
-    }
-  }
-  .hamburger {
-    display: none;
-    width: 40px;
-    height: 40px;
-    margin-right: 16px;
-    justify-content: center;
-    align-items: center;
-    background: white;
-    border: none;
-    outline: none;
-
-    &:hover {
-      cursor: pointer;
-    }
-
-    @media (max-width: 1025px) {
-      display: flex;
     }
   }
 `;
@@ -242,8 +217,16 @@ const AdminHeader = () => {
     setProgramReview("none");
   };
   const logout = () => {
-    const Logout = LoginAPI.Logout();
-    Logout();
+    const Logout = LoginAPI.Logout()
+      .then((result) => {
+        if (result.status === 200) {
+          console.log("네트워크 상태" + result.status);
+          console.log("로그아웃 성공!");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     navigate("/");
   };
   return (
@@ -290,9 +273,6 @@ const AdminHeader = () => {
           <span>로그아웃</span>
         </button>
       </div>
-      <button className="hamburger">
-        <MenuIcon />
-      </button>
     </Header>
   );
 };

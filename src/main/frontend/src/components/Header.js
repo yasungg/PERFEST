@@ -14,9 +14,9 @@ const HeaderContainer = styled.div`
   height: 58px;
   background: white;
   border: none;
-//  position: fixed;
-//  top: 0;
-//  z-index: 99;
+  //  position: fixed;
+  //  top: 0;
+  //  z-index: 99;
 `;
 const PerfestLogo = styled.img`
   height: 100%;
@@ -34,7 +34,7 @@ const HeaderBody = styled.div`
   width: 90%;
   height: 100%;
 `;
-const HeaderNaviButtons = styled.div`
+const HeaderNaviButtons = styled.nav`
   box-sizing: border-box;
   display: flex;
   justify-content: space-evenly;
