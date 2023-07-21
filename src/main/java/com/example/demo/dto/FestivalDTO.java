@@ -18,5 +18,5 @@ public class FestivalDTO {
     private String wedo;
     private String kyungdo;
     private String festivalTel;
-    private String festivalImgLink;
+    private String festivalImg;
 }
