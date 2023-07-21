@@ -47,7 +47,7 @@ public class Member {
     @ColumnDefault("0")
     private BigDecimal totalPrice;
 
-    @Column(name = "is_enabled") // 회원탈퇴여부
+    @Column(name = "is_enabled", columnDefinition = "TINYINT(1)") // 회원탈퇴여부
     @ColumnDefault("true")
     private boolean isEnabled;
 
