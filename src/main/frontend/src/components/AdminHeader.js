@@ -73,6 +73,7 @@ const Header = styled.div`
 
 const AdminHeader = () => {
   const navigate = useNavigate();
+  const { setIsLogin } = useContext(UserContext);
   const {
     setIsAdminBadgeSidebar,
     setIsAdminMemberSidebar,
@@ -222,6 +223,7 @@ const AdminHeader = () => {
         if (result.status === 200) {
           console.log("네트워크 상태" + result.status);
           console.log("로그아웃 성공!");
+          setIsLogin(false);
         }
       })
       .catch((error) => {

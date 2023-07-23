@@ -26,10 +26,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -112,12 +114,32 @@ public class MemberService {
         return tokenProvider.generateTokenDTO(authentication);
     }
 
+    //Admin 페이지에 멤버 리스트를 페이지네이션 처리하여 응답
+    @Transactional
     public Page<MemberListDTO> getAllMembers(int pageNum, int pageSize) {
         PageRequest pageRequest = PageRequest.of(pageNum, pageSize);
         Page<MemberListDTO> info = memberRepository.findAllMemberExceptPassword(pageRequest);
 
-        log.info("location: memberService / getAllMembers = {}", info);
-
         return info;
+    }
+    //Admin 회원 관리 시스템 속 회원 이름 검색 기능
+    public List<MemberListDTO> memberSearchResult(String word) {
+        List<MemberListDTO> result = memberRepository.findByMemberNameContaining(word);
+        log.info("location: member service / memberSearchResult = {}", result);
+
+        return result;
+    }
+
+    //Admin 페이지에서 회원 탈퇴 및 재가입
+    @Transactional
+    public boolean changeMemberStatus(List<Long> memberIds, boolean isEnabled) {
+        List<Boolean> checkIsEnabled = memberRepository.findIsEnabledByIdIn(memberIds);
+        for(Boolean rst : checkIsEnabled) {
+            if(rst == isEnabled) {
+                return false;
+            }
+        }
+        memberRepository.updateIsEnabledByIdIn(memberIds, isEnabled);
+        return true;
     }
 }

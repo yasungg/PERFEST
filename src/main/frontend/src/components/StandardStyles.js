@@ -36,6 +36,7 @@ export const AdminCard = styled.div`
   border-radius: 3px;
   box-shadow: 5px 10px 20px;
   transition: all 0.3s ease-in;
+  overflow: hidden;
   opacity: ${(props) => props.opacity};
 `;
 export const Xbox = styled.div`
@@ -71,6 +72,7 @@ export const SearchBoxContainer = styled.div`
   height: 80%;
   border: none;
   background: white;
+  justify-content: space-between;
   align-items: center;
   align-self: center;
 `;

@@ -39,7 +39,6 @@ public class MemberListDTO {
         this.address = address;
         this.authority = authority;
     }
-
     public static MemberListDTO in(Member member) {
         return MemberListDTO.builder()
                 .username(member.getUsername())

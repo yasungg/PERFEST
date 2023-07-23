@@ -5,7 +5,10 @@ import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { UserContext } from "../context/UserStore";
+import MemberAPI from "../api/MemberAPI";
+import LoginAPI from "../api/LoginAPI";
 
 const HeaderContainer = styled.div`
   box-sizing: border-box;
@@ -66,7 +69,7 @@ const HeaderNaviBtn = styled.button`
 const UserBox = styled.div`
   box-sizing: border-box;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   width: 180px;
   height: 100%;
@@ -74,6 +77,14 @@ const UserBox = styled.div`
   margin: 0 30px 0 30px;
   @media screen and (max-width: 1025px) {
     display: none;
+  }
+  .logout-button {
+    background: none;
+    outline: none;
+    border: none;
+    &:hover {
+      cursor: pointer;
+    }
   }
 `;
 const LoginButton = styled.button`
@@ -116,6 +127,25 @@ const HamburgerBtn = styled.button`
     display: flex;
   }
 `;
+const MypageButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 160px;
+  height: 80%;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  background: white;
+  color: #222;
+  font-weight: 300px;
+  user-select: none;
+  transition: 0.3s ease-in-out;
+  &:hover {
+    cursor: pointer;
+    transform: translateX(-5px);
+  }
+`;
 // const SearchBoxContainer = styled.div` 임시!!
 //   display: flex;
 //   box-sizing: border-box;
@@ -144,8 +174,33 @@ const HamburgerBtn = styled.button`
 // `;
 const Header = () => {
   const navigate = useNavigate();
-  const { isLogin, setIsSidebar } = useContext(UserContext);
+  const { isLogin, setIsLogin, setIsSidebar } = useContext(UserContext);
+  const [headerName, setHeaderName] = useState("");
+
+  const logout = () => {
+    const Logout = LoginAPI.Logout()
+      .then((result) => {
+        setIsLogin(false);
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    navigate("/");
+  };
+
   useEffect(() => {
+    const getName = async () => {
+      const naming = await MemberAPI.Name()
+        .then((result) => {
+          console.log(result.data);
+          setHeaderName(result.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+    getName();
     return setIsSidebar("-300px");
   }, []);
   return (
@@ -172,7 +227,14 @@ const Header = () => {
         </HeaderNaviButtons>
         <UserBox>
           {isLogin ? (
-            <span>곽용석님 안녕하세요.</span>
+            <>
+              <MypageButton onClick={() => navigate("/pages/mypage")}>
+                MY PAGE
+              </MypageButton>
+              <button className="logout-button" onClick={logout}>
+                <LogoutIcon />
+              </button>
+            </>
           ) : (
             <LoginButton onClick={() => navigate("/pages/login")}>
               <span>Login / Signup</span>

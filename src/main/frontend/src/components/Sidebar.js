@@ -1,10 +1,11 @@
 import CloseIcon from "@mui/icons-material/Close";
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../context/UserStore";
 import styled from "@emotion/styled";
 import PerfestLogoWhite from "../images/PERFEST LOGO WHITE.png";
 import { useNavigate } from "react-router-dom";
-
+import MemberAPI from "../api/MemberAPI";
+import LoginAPI from "../api/LoginAPI";
 const SidebarContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -122,10 +123,39 @@ const SidebarNaviBtn = styled.button`
     transition: 0.2s ease-in-out;
   }
 `;
+const LogoutBtn = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: flex-end;
+  width: 200px;
+  height: 80%;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  margin: 0 auto;
+  background: #222;
+  color: white;
+  font-weight: 300px;
+  user-select: none;
+`;
 const Sidebar = () => {
   const navigate = useNavigate();
-  const { isLogin, isSidebar, setIsSidebar } = useContext(UserContext);
+  const { isLogin, setIsLogin, isSidebar, setIsSidebar } =
+    useContext(UserContext);
+  const [sidebarName, setSidebarName] = useState("");
 
+  const logout = () => {
+    const Logout = LoginAPI.Logout()
+      .then((result) => {
+        setIsLogin(false);
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    navigate("/");
+  };
   return (
     <SidebarContainer right={isSidebar}>
       <SidebarXbox>
@@ -137,7 +167,9 @@ const Sidebar = () => {
         <SidebarProfileImg src={PerfestLogoWhite} />
         <MemberBox>
           {isLogin ? (
-            <span>곽용석님 안녕하세요.</span>
+            <LoginButton onClick={() => navigate("/pages/mypage")}>
+              <span>MYPAGE</span>
+            </LoginButton>
           ) : (
             <LoginButton onClick={() => navigate("/pages/login")}>
               <span>Login / Signup</span>
@@ -159,6 +191,7 @@ const Sidebar = () => {
           <span className="sidenavispan">About</span>
         </SidebarNaviBtn>
       </SidebarNaviBtns>
+      <LogoutBtn onClick={logout}>LOG OUT</LogoutBtn>
     </SidebarContainer>
   );
 };
