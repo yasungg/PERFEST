@@ -72,7 +72,8 @@ const LocationCheckbox = styled.div`
   box-shadow: 1px 1px 5px 0px #E2E2E2;
 
   &:hover {
-    background-color: #FFF5FB;
+    color: #FFF;
+    background-color: #222222;
   }
 
   input {
@@ -89,7 +90,7 @@ const LocationCheckbox = styled.div`
   }
 
   label:hover {
-    color: #0475F4;
+    color: #FFF;
   }
 `;
 
@@ -182,7 +183,8 @@ const SeasonCheckBox = styled.div`
   box-shadow: 1px 1px 5px 0px #E2E2E2;
 
   &:hover {
-    background-color: #FFF5FB;
+    color: #FFF;
+    background-color: #222222;
   }
 
   input {
@@ -199,7 +201,7 @@ const SeasonCheckBox = styled.div`
   }
 
   label:hover {
-    color: #0475F4;
+    color: #FFF;
   }
 `;
 
@@ -275,18 +277,18 @@ const FestivalSearchCategory = () => {
 			}
 		};
 
-		const hanldeEscapeKey = (event) => {
+		const handleEscapeKey = (event) => {
 			if(event.key === 'Escape') {
 				setIsOpenLocation(false);
 			}
 		};
 
 		document.addEventListener('click', handleClickOutside);
-		document.addEventListener('keydown', hanldeEscapeKey);
+		document.addEventListener('keydown', handleEscapeKey);
 
 		return () => {
 			document.removeEventListener('click', handleClickOutside);
-			document.removeEventListener('keydown', hanldeEscapeKey);
+			document.removeEventListener('keydown', handleEscapeKey);
 		};
 	}, []);
 
@@ -298,18 +300,18 @@ const FestivalSearchCategory = () => {
 			}
 		};
 
-		const hanldeEscapeKey = (event) => {
+		const handleEscapeKey = (event) => {
 			if(event.key === 'Escape') {
 				setIsOpenPeriod(false);
 			}
 		};
 
 		document.addEventListener('click', handleClickOutside);
-		document.addEventListener('keydown', hanldeEscapeKey);
+		document.addEventListener('keydown', handleEscapeKey);
 
 		return () => {
 			document.removeEventListener('click', handleClickOutside);
-			document.removeEventListener('keydown', hanldeEscapeKey);
+			document.removeEventListener('keydown', handleEscapeKey);
 		};
 
 	}, []);
@@ -322,18 +324,18 @@ const FestivalSearchCategory = () => {
 			}
 		};
 
-		const hanldeEscapeKey = (event) => {
+		const handleEscapeKey = (event) => {
 			if(event.key === 'Escape') {
 				setIsOpenSeason(false);
 			}
 		};
 
 		document.addEventListener('click', handleClickOutside);
-		document.addEventListener('keydown', hanldeEscapeKey);
+		document.addEventListener('keydown', handleEscapeKey);
 
 		return () => {
 			document.removeEventListener('click', handleClickOutside);
-			document.removeEventListener('keydown', hanldeEscapeKey);
+			document.removeEventListener('keydown', handleEscapeKey);
 		};
 
 	}, []);
@@ -343,7 +345,6 @@ const FestivalSearchCategory = () => {
       <CategoryFilterList>
         <CategoryFilterItem>
           <CategoryFilterButton
-            className="category_filter_button_location"
             onClick={() => handleFilterButtonClick('location', isOpenLocation, setIsOpenLocation)}
             onMouseEnter={handleLocationButtonHover}
             onMouseLeave={handleLocationButtonLeave}
@@ -353,7 +354,6 @@ const FestivalSearchCategory = () => {
 
         <CategoryFilterItem>
           <CategoryFilterButton
-            className="category_filter_button_period"
             onClick={() => handleFilterButtonClick('period', isOpenPeriod, setIsOpenPeriod)}
             onMouseEnter={handlePeriodButtonHover}
             onMouseLeave={handlePeriodButtonLeave}
@@ -363,7 +363,6 @@ const FestivalSearchCategory = () => {
 
         <CategoryFilterItem>
           <CategoryFilterButton
-            className="category_filter_button_theme"
             onClick={() => handleFilterButtonClick('season', isOpenSeason, setIsOpenSeason)}
             onMouseEnter={handleThemeButtonHover}
             onMouseLeave={handleThemeButtonLeave}

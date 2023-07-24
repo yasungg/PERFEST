@@ -58,7 +58,6 @@ const Festival = () => {
 					{/* 지도 */}
 					<MapContainer>
 						<NaverMap data={festivalData}/>
-						<Category/>
 						<FestivalSearchCategory/>
 					</MapContainer>
         </BodyContainer>
