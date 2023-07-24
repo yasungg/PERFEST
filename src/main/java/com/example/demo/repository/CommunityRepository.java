@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,8 +29,11 @@ public interface CommunityRepository extends JpaRepository<Community, Long> {
     List<Community> findByMemberId(Long memberId);
 
     // 게시글 제목 검색
-
     List<Community> findByCommunityTitleContaining(String communityTitle);
+    // 게시판 내림차순 전체 정렬 인기순
+    List<Community> findAllByOrderByLikeCountDesc();
+    // 게시판 내림차순 전체 정렬 최신순
+    List<Community> findAllByOrderByWrittenTimeDesc();
 
 
 }

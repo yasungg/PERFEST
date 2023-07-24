@@ -398,6 +398,9 @@ const Board = () => {
       if (rsp.status === 200) setBoardList(rsp.data);
       console.log(selectCategory);
       console.log(rsp.data);
+    } else {
+      const rsp = await BoardAPI.BoardGetAllByNewest();
+      setBoardList(rsp.data);
     }
   }
   // 게시판 인기순 정렬
@@ -406,6 +409,9 @@ const Board = () => {
       const rsp = await BoardAPI.BoardGetByLikest(selectCategory);
       if (rsp.status === 200) setBoardList(rsp.data);
       console.log(rsp.data);
+    } else {
+      const rsp = await BoardAPI.BoardGetAllByLikest();
+      setBoardList(rsp.data);
     }
   }
   // 게시판 제목 검색

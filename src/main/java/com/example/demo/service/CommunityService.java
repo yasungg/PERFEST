@@ -122,6 +122,48 @@ public class CommunityService {
         }
         return communityDTOS;
     }
+    // 커뮤니티 게시글 최신순 조회(GET)
+    public List<CommunityDTO> getCommunityAllNewestList() {
+        List<Community> communityList = communityRepository.findAllByOrderByWrittenTimeDesc();
+        List<CommunityDTO> communityDTOS = new ArrayList<>();
+        for(Community community : communityList) {
+            CommunityDTO communityDTO = new CommunityDTO();
+            communityDTO.setCommunityCategory(String.valueOf(community.getCommunityCategory()));
+            communityDTO.setCommunityId(community.getId());
+            communityDTO.setCommunityTitle(community.getCommunityTitle());
+            communityDTO.setCommunityDesc(community.getCommunityDesc());
+            communityDTO.setCommunityImgLink(community.getCommunityImgLink());
+            communityDTO.setLikeCount(community.getLikeCount());
+            communityDTO.setWrittenTime(community.getWrittenTime());
+            Member member = community.getMember();
+            if (member != null) {
+                communityDTO.setNickname(member.getNickname());
+            }
+            communityDTOS.add(communityDTO);
+        }
+        return communityDTOS;
+    }
+    // 커뮤니티 게시글 인기순 조회(GET)
+    public List<CommunityDTO> getCommunityAllLikestList() {
+        List<Community> communityList = communityRepository.findAllByOrderByLikeCountDesc();
+        List<CommunityDTO> communityDTOS = new ArrayList<>();
+        for(Community community : communityList) {
+            CommunityDTO communityDTO = new CommunityDTO();
+            communityDTO.setCommunityCategory(String.valueOf(community.getCommunityCategory()));
+            communityDTO.setCommunityId(community.getId());
+            communityDTO.setCommunityTitle(community.getCommunityTitle());
+            communityDTO.setCommunityDesc(community.getCommunityDesc());
+            communityDTO.setCommunityImgLink(community.getCommunityImgLink());
+            communityDTO.setLikeCount(community.getLikeCount());
+            communityDTO.setWrittenTime(community.getWrittenTime());
+            Member member = community.getMember();
+            if (member != null) {
+                communityDTO.setNickname(member.getNickname());
+            }
+            communityDTOS.add(communityDTO);
+        }
+        return communityDTOS;
+    }
     // 커뮤니티 게시글 본문 조회(GET)
     public List<CommunityDTO> getCommunityBoardArticle(Long communityId) {
         Optional<Community> optionalCommunity = communityRepository.findById(communityId);
