@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Container } from "./StandardStyles";
 import FestivalAPI from "../api/FestivalAPI";
 import festivalPoster2 from "../images/2023안양충훈벚꽃축제.jpg";
 
@@ -255,14 +254,14 @@ const SearchSideBar = () => {
   return(
       <SearchContainer>
         <SearchArea>
-					<InputBoxArea>
-						<SearchInputBox
+		  <InputBoxArea>
+			<SearchInputBox
               type="text"
-              placeholder="찾을 지역이나 축제 이름을 입력하세요."
+              placeholder="찾을 축제 이름을 입력하세요."
             />
-						<SearchButton>돋보기</SearchButton>
-					</InputBoxArea>
-				</SearchArea>
+			<SearchButton>돋보기</SearchButton>
+		</InputBoxArea>
+		</SearchArea>
 
         {/* 검색 결과 */}
         <ListContainer>

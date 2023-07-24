@@ -8,16 +8,26 @@ const NaverMap = () => {
   const [map, setMap] = useState(null);
 
   useEffect(() => {
-    const map = document.getElementById('map');
-    const options = { center: new naver.maps.LatLng(37.497914, 127.027646), zoom : 15 };
-    const navermap = new naver.maps.Map(map, options);
+    const mapElement = document.getElementById('map');
+    const options = { center: new naver.maps.LatLng(37.497914, 127.027646), zoom: 15 };
+    const navermap = new naver.maps.Map(mapElement, options);
     setMap(navermap);
-	},[])
 
-const marker = new naver.maps.Marker({
-    position: new naver.maps.LatLng(37.497914, 127.027646),
-    map: map
-});
+    var HOME_PATH = window.HOME_PATH || '.';
+
+    const markerOptions = {
+      position: new naver.maps.LatLng(37.497914, 127.027646),
+      map: navermap,
+        icon: {
+          url: process.env.PUBLIC_URL + '/images/perfesta-marker_preview_rev_1.png',
+          size: new naver.maps.Size(40, 42),
+          origin: new naver.maps.Point(0,0),
+          anchor: new naver.maps.Point(25,50)
+      }
+    };
+
+    const marker = new naver.maps.Marker(markerOptions);
+  }, []);
 
 // 	const [myLocation, setMyLocation] = useState<
 // 		{ latitude: number, longitude: number } | 'string'
