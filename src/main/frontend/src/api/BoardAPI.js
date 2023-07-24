@@ -2,8 +2,8 @@ import axios from "axios";
 
 const BoardAPI = {
   // 게시판 전체조회
-  BoardGet: async () => {
-    return await axios.get(`/auth/community/getallboard`);
+  BoardGet: async (pageNumber) => {
+    return await axios.get(`/auth/community/getallboard?pageNumber=${pageNumber}&pageSize=10`);
   },
   // 게시판 카테고리별 조회
   BoardGetByCategory: async (selectCategory) => {
