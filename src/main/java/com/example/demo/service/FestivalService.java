@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.FestivalDTO;
 import com.example.demo.entity.Festival;
 import com.example.demo.repository.FestivalRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -17,7 +18,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -186,8 +189,29 @@ public class FestivalService {
 
     private void saveFestivalInfo(JSONArray data) throws IOException {
         log.info("saveFestivalInfo 진입!!");
-        List<Festival> list = mapper.readValue(data.toString(), new TypeReference<List<Festival>>() {});
+        List<Festival> list = mapper.readValue(data.toString(), new TypeReference<List<Festival>>() {
+        });
         log.info("list = {}", list);
         festivalRepository.saveAll(list);
+    }
+
+    // 축제 상세 정보 가져오기(GET)
+    public List<FestivalDTO> getFestivalDetail(Long festivalId) {
+        Optional<Festival> optionalFestival = festivalRepository.findById(festivalId);
+        List<FestivalDTO> festivalDTOS = new ArrayList<>();
+        FestivalDTO festivalDTO = new FestivalDTO();
+        if (optionalFestival.isPresent()) {
+            Festival festival = optionalFestival.get();
+            festivalDTO.setFestivalName(festival.getFestivalName());
+            festivalDTO.setFestivalImg(festival.getFestivalImg());
+            festivalDTO.setFestivalDoro(festival.getFestivalDoro());
+            festivalDTO.setFestivalLocation(festival.getFestivalLocation());
+            festivalDTO.setFestivalTel(festival.getFestivalTel());
+            festivalDTO.setMainOrg(festival.getMainOrg());
+            festivalDTO.setStartDate(festival.getStartDate());
+            festivalDTO.setEndDate(festival.getEndDate());
+            festivalDTOS.add(festivalDTO);
+        }
+        return festivalDTOS;
     }
 }
