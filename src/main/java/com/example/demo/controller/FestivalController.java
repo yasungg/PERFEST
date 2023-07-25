@@ -1,9 +1,14 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.Festival;
 import com.example.demo.dto.FestivalDTO;
 import com.example.demo.service.FestivalService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,5 +32,13 @@ public class FestivalController {
     public ResponseEntity<List<FestivalDTO>> festvialDetail(@RequestParam int festivalId) {
         List<FestivalDTO> list = festivalService.getFestivalDetail((long) festivalId);
         return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+    @GetMapping("/get-name-searchresult")
+    public ResponseEntity<Page<Festival>> getFestivalSearchResultByName(@NotNull @RequestParam String keyword, @RequestParam int pageNum, @RequestParam int pageSize) {
+        return new ResponseEntity<>(festivalService.searchFestivalByKeyword(keyword, pageNum, pageSize), HttpStatus.OK);
+    }
+    @GetMapping("/get-region-searchresult")
+    public ResponseEntity<Page<Festival>> getFestivalSearchResultByRegion(@NotNull @RequestParam String keyword, @RequestParam int pageNum, @RequestParam int pageSize) {
+        return null;
     }
 }

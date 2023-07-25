@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -59,9 +61,9 @@ public class FestivalService {
         System.out.println("Response code: " + conn.getResponseCode());
         BufferedReader rd;
         if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
         } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
         }
 
         StringBuilder sb = new StringBuilder();
@@ -73,9 +75,7 @@ public class FestivalService {
         rd.close();
         conn.disconnect();
 
-
         saveData(sb.toString());
-
         return true;
     }
 
@@ -155,9 +155,9 @@ public class FestivalService {
             BufferedReader br;
 
             if (responseCode == 200) {
-                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                br = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
             } else {
-                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+                br = new BufferedReader(new InputStreamReader(con.getErrorStream(), "UTF-8"));
             }
 
             String inputLine;
@@ -213,5 +213,10 @@ public class FestivalService {
             festivalDTOS.add(festivalDTO);
         }
         return festivalDTOS;
+    }
+    // Festival 제목 검색 메소드
+    public Page<Festival> searchFestivalByKeyword(String keyword, int pageNum, int pageSize) {
+        PageRequest pageRequest = PageRequest.of(pageNum, pageSize);
+        return festivalRepository.findbySearchKeyword(keyword, pageRequest);
     }
 }

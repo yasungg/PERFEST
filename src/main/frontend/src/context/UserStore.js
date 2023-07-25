@@ -39,6 +39,9 @@ const UserStore = ({ children }) => {
   const [programReview, setProgramReview] = useState("none");
   const [badgeOpacity, setBadgeOpacity] = useState("none");
   const [approveBadge, setApproveBadge] = useState("none");
+  // 마커
+  const [contextLatitude, setContextLatitude] = useState([]);
+  const [contextLongitude, setContextLongitude] = useState([]);
   const ContextValue = {
     userEmail,
     setUserEmail,
@@ -104,6 +107,10 @@ const UserStore = ({ children }) => {
     setForthFestOpacity,
     approveBadge,
     setApproveBadge,
+    contextLatitude,
+    setContextLatitude,
+    contextLongitude,
+    setContextLongitude,
   };
 
   return (

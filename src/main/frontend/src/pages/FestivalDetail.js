@@ -6,12 +6,9 @@ import Footer from "../components/Footer";
 import SearchSideBar from "../components/SearchSideBar";
 import FestivalAPI from "../api/FestivalAPI";
 
-
-const BodyContainer = styled.div`
-`
+const BodyContainer = styled.div``;
 
 const FestivalDetail = () => {
-
   return (
     <Container>
       <Header />
@@ -23,4 +20,4 @@ const FestivalDetail = () => {
     </Container>
   );
 };
-export default FestivalDetail
+export default FestivalDetail;

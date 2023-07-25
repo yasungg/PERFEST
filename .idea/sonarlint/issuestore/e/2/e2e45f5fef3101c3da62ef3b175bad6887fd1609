@@ -1,0 +1,11 @@
+
+Pjavascript:S1128"(Remove this unused import of 'useState'.(ïâ…şÿÿÿÿ8ï„¢•˜1
+Ojavascript:S1128"'Remove this unused import of 'useMemo'.(ïâ…şÿÿÿÿ8ñ„¢•˜1
+Njavascript:S1128"&Remove this unused import of 'useRef'.(ïâ…şÿÿÿÿ8ò„¢•˜1
+Gjavascript:S125Î"Remove this commented out code.(ïÆşúÿÿÿÿ8ô„¢•˜1
+cjavascript:S1481Ğ":Remove the declaration of the unused 'isSidebar' variable.(¬µÌÿÿÿÿÿ8ô„¢•˜1
+`javascript:S1854Ğ"7Remove this useless assignment to variable "isSidebar".(¬µÌÿÿÿÿÿ8ô„¢•˜1
+fjavascript:S1481Ğ"=Remove the declaration of the unused 'setIsSidebar' variable.(¬µÌÿÿÿÿÿ8ô„¢•˜1
+cjavascript:S1854Ğ":Remove this useless assignment to variable "setIsSidebar".(¬µÌÿÿÿÿÿ8ô„¢•˜1
+Gjavascript:S125Ø"Remove this commented out code.(Ûî«·şÿÿÿÿ8ô„¢•˜1
+Gjavascript:S125ß"Remove this commented out code.(ıòÕûÿÿÿÿ8ô„¢•˜1

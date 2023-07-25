@@ -5,6 +5,7 @@ import BlackLogo from "../images/PERFEST LOGO BLACK.png";
 import { UserContext } from "../context/UserStore";
 import LoginAPI from "../api/LoginAPI";
 import { useNavigate } from "react-router";
+import MemberAPI from "../api/MemberAPI";
 const Header = styled.div`
   display: flex;
   width: 100%;
@@ -100,6 +101,8 @@ const AdminHeader = () => {
     setBadgeOpacity,
     setApproveBadge,
   } = useContext(UserContext);
+
+  const [headerName, setHeaderName] = useState("");
 
   const member = () => {
     setIsAdminBadgeSidebar("-400px");
@@ -231,6 +234,20 @@ const AdminHeader = () => {
       });
     navigate("/");
   };
+
+  useEffect(() => {
+    const getName = async () => {
+      const name = await MemberAPI.Name()
+        .then((result) => {
+          console.log(result);
+          setHeaderName(result.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+    getName();
+  }, []);
   return (
     <Header className="header-container">
       <img
@@ -270,7 +287,7 @@ const AdminHeader = () => {
       </div>
       <div className="admin-user-box">
         <span className="admin-info">관리책임자 : </span>
-        <span className="admin-info">곽용석</span>
+        <span className="admin-info">{headerName}</span>
         <button className="logout-btn" onClick={logout}>
           <span>로그아웃</span>
         </button>

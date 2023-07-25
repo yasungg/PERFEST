@@ -79,6 +79,8 @@ const UserBox = styled.div`
     display: none;
   }
   .logout-button {
+    display: flex;
+    align-items: center;
     background: none;
     outline: none;
     border: none;
@@ -200,7 +202,9 @@ const Header = () => {
           console.error(error);
         });
     };
-    getName();
+    if (isLogin) {
+      getName();
+    }
     return setIsSidebar("-300px");
   }, []);
   return (

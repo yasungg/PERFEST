@@ -26,3 +26,9 @@ src/main/frontend/yarn-error.log*
 src/main/resources/static/
 src/main/resources/application.properties
 src/main/frontend/public/videos/
+/.gradle/
+/.idea/
+/bin/
+/build/
+/gradle/
+/out/

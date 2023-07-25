@@ -54,7 +54,10 @@ function App() {
             element={<BoardArticle />}
           />
           <Route path="/pages/festival" element={<Festival />} />
-          <Route path="/pages/festivaldetail" element={<FestivalDetail />} />
+          <Route
+            path="/pages/festivaldetail/:id"
+            element={<FestivalDetail />}
+          />
           <Route path="/pages/Calender" element={<Calendar />} />
           <Route path="/pages/Admin" element={<Admin />} />
         </Routes>
