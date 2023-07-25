@@ -5,6 +5,7 @@ import com.example.demo.dto.CommunityDTO;
 import com.example.demo.service.CommunityService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,9 +22,10 @@ public class AuthCommunityController {
 
     // 커뮤니티 게시글 전체 조회(GET)
     @GetMapping(value = "/getallboard")
-    public ResponseEntity<List<CommunityDTO>> communityList() {
-        List<CommunityDTO> list = communityService.getCommunityList();
-        return new ResponseEntity<>(list, HttpStatus.OK);
+    public ResponseEntity<Page<CommunityDTO>> communityList(@RequestParam(defaultValue = "0") int pageNumber,
+                                                            @RequestParam(defaultValue = "10") int pageSize) {
+        Page<CommunityDTO> communityDTOPage = communityService.getCommunityList(pageNumber, pageSize);
+        return new ResponseEntity<>(communityDTOPage, HttpStatus.OK);
     }
     // 커뮤니티 게시글 카테고리별 조회(GET)
     @GetMapping(value = "/getselectboard")
@@ -41,6 +43,18 @@ public class AuthCommunityController {
     @GetMapping(value = "/getlikestboard")
     public ResponseEntity<List<CommunityDTO>> communityLikestList(@RequestParam String communityCategory) {
         List<CommunityDTO> list = communityService.getCommunityLikestList(CommunityCategory.valueOf(communityCategory));
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+    // 커뮤니티 게시글 최신순 전체 조회(GET)
+    @GetMapping(value = "/getAllnewestboard")
+    public ResponseEntity<List<CommunityDTO>> communityAllNewestList() {
+        List<CommunityDTO> list = communityService.getCommunityAllNewestList();
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+    // 커뮤니티 게시글 인기순 전체 조회(GET)
+    @GetMapping(value = "/getAlllikestboard")
+    public ResponseEntity<List<CommunityDTO>> communityAllLikestList() {
+        List<CommunityDTO> list = communityService.getCommunityAllLikestList();
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
     // 커뮤니티 게시글 본문 조회(GET)
