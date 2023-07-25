@@ -16,7 +16,7 @@ import java.util.Map;
 
 @RestController
 @Slf4j
-@RequestMapping("/auth/memberlike")
+@RequestMapping("/memberlike")
 @RequiredArgsConstructor
 public class MemberLikeController {
     private final MemberLikeService memberLikeService;
@@ -25,10 +25,9 @@ public class MemberLikeController {
     // 게시판 좋아요 한번만 누르기
     @PostMapping(value = "/likeboard")
     public ResponseEntity<Boolean> likeBoardInsert(@RequestBody Map<String, Object> likeBoardData) {
-        int communityId = (Integer)likeBoardData.get("communityId");
-        int memberId = (Integer)likeBoardData.get("memberId");
-//        Long memberId = info.getId();
-        boolean result = memberLikeService.insertBoardLike((long)communityId, (long)memberId);
+        String communityId = (String)likeBoardData.get("communityId");
+        Long memberId = info.getId();
+        boolean result = memberLikeService.insertBoardLike(Long.parseLong(communityId), memberId);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
     // 댓글 좋아요 한번만 누르기

@@ -49,6 +49,29 @@ const BoardAPI = {
       addLike
     );
   },
+  // 게시판 좋아요 한번만 누르기
+  checkBoardLike: async (communityId) => {
+    const checkLike = {
+      communityId: communityId
+    };
+     const Authorization =
+        "Bearer " + window.localStorage.getItem("accessToken");
+    console.log(Authorization);
+    return await axios.post( `/memberlike/likeboard`, checkLike, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Authorization,
+      }, // 여기까지가 서버로 header를 실은 요청을 던지는 기능
+    })
+        .then((response) => {
+          if (response.status === 200) {
+            return response;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+  },
   // 게시판 작성
   BoardWrite : async(title, category, text, communityImg) => {
     const writeBoard = {

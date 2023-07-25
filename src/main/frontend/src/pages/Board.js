@@ -268,6 +268,7 @@ const Board = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
 
+
   // -----------------------------------> 페이지네이션 상태관리
   //숫자 버튼을 누르면 숫자에 맞는 페이지 렌더링
   const renderThisPage = async(page) => {
