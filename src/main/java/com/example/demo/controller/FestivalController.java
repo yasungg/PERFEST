@@ -23,16 +23,20 @@ import java.util.List;
 public class FestivalController {
     private final FestivalService festivalService;
 
+    // 관리자 전용 : 축제 전체 공공 데이터 받아와서 파싱 후 DB에 저장
     @GetMapping("/get-festival-info")
     public Boolean getFestivalInfo() throws IOException {
         return festivalService.getFestivalInfo();
     }
+
     // 축제 상세 정보 가져오기(GET)
     @GetMapping(value = "/getfestivaldetail")
     public ResponseEntity<List<FestivalDTO>> festvialDetail(@RequestParam int festivalId) {
         List<FestivalDTO> list = festivalService.getFestivalDetail((long) festivalId);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
+
+    //축제 검색 결과 가져오기
     @GetMapping("/get-name-searchresult")
     public ResponseEntity<Page<Festival>> getFestivalSearchResultByName(@NotNull @RequestParam String keyword, @RequestParam int pageNum, @RequestParam int pageSize) {
         return new ResponseEntity<>(festivalService.searchFestivalByKeyword(keyword, pageNum, pageSize), HttpStatus.OK);

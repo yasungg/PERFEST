@@ -58,11 +58,12 @@ public class Member {
     private Authority authority;
 
     @Builder
-    public Member(String username, String password, String memberName, String nickname, int badges, BigDecimal totalPrice, LocalDateTime joinTime, Authority authority) {
+    public Member(String username, String password, String memberName, String nickname, int badges, BigDecimal totalPrice, LocalDateTime joinTime, Authority authority, boolean isEnabled) {
         this.username = username;
         this.password = password;
         this.memberName = memberName;
         this.nickname = nickname;
+        this.isEnabled = isEnabled;
         this.badges = badges;
         this.totalPrice = totalPrice;
         this.joinTime = joinTime;
