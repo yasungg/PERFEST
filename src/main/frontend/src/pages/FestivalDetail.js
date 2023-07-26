@@ -21,7 +21,7 @@ const FestivalDetail = () => {
             setFestivalDetail(response.data);
         }
         getFestivalDetail();
-    },[festivalId]);
+    },[id]);
   return (
     <Container>
       <Header />
