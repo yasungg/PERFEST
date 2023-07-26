@@ -17,7 +17,7 @@ const SidebarContainer = styled.div`
   background: #222;
   border: none;
   border-radius: 3px;
-  box-shadow: 5px 10px 20px black;
+  /* box-shadow: 5px 10px 20px black; */
   z-index: 99;
   overflow: hidden;
   transition: all 0.5s ease-out;
@@ -191,7 +191,7 @@ const Sidebar = () => {
           <span className="sidenavispan">About</span>
         </SidebarNaviBtn>
       </SidebarNaviBtns>
-      <LogoutBtn onClick={logout}>LOG OUT</LogoutBtn>
+      {isLogin && <LogoutBtn onClick={logout}>LOG OUT</LogoutBtn>}
     </SidebarContainer>
   );
 };

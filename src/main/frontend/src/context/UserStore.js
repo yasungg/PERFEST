@@ -42,6 +42,12 @@ const UserStore = ({ children }) => {
   // 마커
   const [contextLatitude, setContextLatitude] = useState([]);
   const [contextLongitude, setContextLongitude] = useState([]);
+  const [centerLatitude, setCenterLatitude] = useState("");
+  const [centerLongitude, setCenterLongitude] = useState("");
+  //페스티벌 창, 모바일 모드에서 searchbox의 움직임 제어
+  const [searchBoxMove, setSearchBoxMove] = useState("0");
+  //모바일 모드에서 검색창 내용을 searchbox로 전달
+  const [contextFestivalSearch, setContextFestivalSearch] = useState("");
   const ContextValue = {
     userEmail,
     setUserEmail,
@@ -111,6 +117,14 @@ const UserStore = ({ children }) => {
     setContextLatitude,
     contextLongitude,
     setContextLongitude,
+    centerLatitude,
+    setCenterLatitude,
+    centerLongitude,
+    setCenterLongitude,
+    searchBoxMove,
+    setSearchBoxMove,
+    contextFestivalSearch,
+    setContextFestivalSearch,
   };
 
   return (

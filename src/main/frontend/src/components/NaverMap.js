@@ -7,18 +7,17 @@ const { number } = window;
 
 const NaverMap = () => {
   const [map, setMap] = useState(null);
-  const {
-    contextLongitude,
-    setContextLongitude,
-    contextLatitude,
-    setContextLatitude,
-  } = useContext(UserContext);
+  const { contextLongitude, contextLatitude, centerLatitude, centerLongitude } =
+    useContext(UserContext);
 
   useEffect(() => {
     const markers = [];
     const mapElement = document.getElementById("map");
+    // 페스티벌 정보가 담긴 카드가 클릭되었을 때 좌표가 넘어와 자동으로 해당 위치 마커로 지도 포커스를 이동
     const options = {
-      center: new naver.maps.LatLng(37.497914, 127.027646),
+      center: centerLatitude
+        ? new naver.maps.LatLng(centerLatitude, centerLongitude)
+        : new naver.maps.LatLng(37.497914, 127.027646),
       zoom: 15,
     };
     const navermap = new naver.maps.Map(mapElement, options);
@@ -26,6 +25,7 @@ const NaverMap = () => {
 
     var HOME_PATH = window.HOME_PATH || ".";
 
+    //검색 결과가 들어온 만큼 마커를 찍어줌
     for (let i = 0; i < contextLatitude.length; i++) {
       const markerOptions = {
         position: new naver.maps.LatLng(
@@ -47,7 +47,7 @@ const NaverMap = () => {
       markers.push(marker);
       console.log("marker에 위치정보 전달 성공!!");
     }
-  }, [contextLatitude, contextLongitude]);
+  }, [centerLatitude, contextLatitude, contextLongitude]);
 
   // 	const [myLocation, setMyLocation] = useState<
   // 		{ latitude: number, longitude: number } | 'string'

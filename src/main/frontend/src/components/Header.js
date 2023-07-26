@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
 import LogoutIcon from "@mui/icons-material/Logout";
+import NotificationsIcon from "@mui/icons-material/Notifications";
 import { UserContext } from "../context/UserStore";
 import MemberAPI from "../api/MemberAPI";
 import LoginAPI from "../api/LoginAPI";
@@ -24,7 +25,7 @@ const HeaderContainer = styled.div`
 const PerfestLogo = styled.img`
   height: 100%;
   user-select: none;
-  z-index: 100;
+  z-index: 2;
   &:hover {
     cursor: pointer;
   }
@@ -78,7 +79,7 @@ const UserBox = styled.div`
   @media screen and (max-width: 1025px) {
     display: none;
   }
-  .logout-button {
+  .userbox-button {
     display: flex;
     align-items: center;
     background: none;
@@ -87,6 +88,9 @@ const UserBox = styled.div`
     &:hover {
       cursor: pointer;
     }
+  }
+  .notification {
+    margin-right: 8px;
   }
 `;
 const LoginButton = styled.button`
@@ -108,8 +112,8 @@ const LoginButton = styled.button`
 `;
 const HamburgerBtn = styled.button`
   display: none;
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   justify-content: center;
   align-items: center;
   background: black;
@@ -192,19 +196,6 @@ const Header = () => {
   };
 
   useEffect(() => {
-    const getName = async () => {
-      const naming = await MemberAPI.Name()
-        .then((result) => {
-          console.log(result.data);
-          setHeaderName(result.data);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    };
-    if (isLogin) {
-      getName();
-    }
     return setIsSidebar("-300px");
   }, []);
   return (
@@ -235,7 +226,10 @@ const Header = () => {
               <MypageButton onClick={() => navigate("/pages/mypage")}>
                 MY PAGE
               </MypageButton>
-              <button className="logout-button" onClick={logout}>
+              <button className="userbox-button notification">
+                <NotificationsIcon style={{ color: "#222" }} />
+              </button>
+              <button className="userbox-button" onClick={logout}>
                 <LogoutIcon />
               </button>
             </>

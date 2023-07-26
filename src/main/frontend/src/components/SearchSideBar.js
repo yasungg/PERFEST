@@ -6,27 +6,40 @@ import FestivalAPI from "../api/FestivalAPI";
 import festivalPoster2 from "../images/2023안양충훈벚꽃축제.jpg";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
-import { formatDate } from "./DateStyle";
+import { formatDateForFestival } from "./DateStyle";
 import { useNavigate } from "react-router";
+import BlackLogo from "../images/PERFEST LOGO BLACK.png";
 const SearchContainer = styled.div`
+  box-sizing: border-box;
   display: inline-block;
-  max-width: 400px;
-  min-width: 400px;
+  width: 400px;
+  min-width: 320px;
   height: calc(100vh - 58px);
-  /* background: linear-gradient(to right, #654ea3, #eaafc8); */
   background-color: #fff;
   overflow-y: hidden;
   z-index: 3;
   box-shadow: 1px 0px 5px 0px #555555;
+  transition: all 0.3s ease-in;
+  @media screen and (max-width: 767px) {
+    position: absolute;
+    width: 100vw;
+    max-width: 100vw;
+    bottom: ${(props) => props.bottom};
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+  }
 `;
 const SearchArea = styled.div`
   display: flex;
   width: 100%;
   height: 8%;
   min-height: 80px;
-  background: #222;
+  background: rgba(255, 255, 255, 0);
   align-items: center;
   justify-content: center;
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
   /* box-shadow: 5px 0 5px -5px #333; */
   /* border-bottom: 1px solid lightgray; */
 `;
@@ -80,7 +93,43 @@ const SearchButton = styled.button`
     transform: scale(1.2);
   }
 `;
+const Xbox = styled.div`
+  width: 100%;
+  height: 40px;
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  background: transparent;
+  @media screen and (max-width: 767px) {
+    display: flex;
+  }
+`;
+const Xbtn = styled.button`
+  display: flex;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  outline: none;
+  justify-content: center;
+  background: transparent;
 
+  &:hover {
+    cursor: pointer;
+  }
+  &:hover .xIcon {
+    transform: scale(1.2);
+    transition: all 0.2s linear;
+  }
+`;
+const PerfestLogo = styled.img`
+  height: 100%;
+  user-select: none;
+  z-index: 2;
+  &:hover {
+    cursor: pointer;
+  }
+`;
 const ListContainer = styled.div`
   display: block;
   align-items: center;
@@ -100,12 +149,12 @@ const ListContainer = styled.div`
   /* 스크롤바 커스터마이징 */
   &::-webkit-scrollbar {
     width: 10px;
-    background: #f4ebff;
+    background: #fff;
     border-radius: 2px;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: lightgray;
+    background: #222;
     border-radius: 10px;
     background-clip: padding-box;
     border: 1px solid transparent;
@@ -167,7 +216,7 @@ const SortByDateOrDistance = styled.li`
 const CardList = styled.ul`
   width: 100%;
   margin: 0;
-  padding: 0;
+  padding: 0 8px;
 `;
 
 const CardWrap = styled.li`
@@ -188,7 +237,7 @@ const CardInner = styled.div`
   grid-template-columns: auto 1fr;
   grid-template-rows: auto auto 1fr;
   gap: 10px;
-  width: 350px;
+  width: 100%;
   align-items: center;
   justify-content: center;
 
@@ -205,7 +254,7 @@ const ImageArea = styled.div`
 
   img {
     width: 120px;
-    margin-right: 10px;
+    margin: 0 10px 0 8px;
     transition: transform 0.3s ease;
 
     &:hover {
@@ -218,9 +267,9 @@ const ImageArea = styled.div`
 const TextArea = styled.div`
   grid-column: 2;
   grid-row: 1;
-  margin: 10px 0;
+  margin: 10px 8px 10px 0;
   h4 {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     color: #222;
     &:hover {
@@ -236,12 +285,13 @@ const TextArea = styled.div`
 const ContentArea = styled.div`
   grid-column: 1 / span 2;
   grid-row: 3;
-  background-color: #fff5fb;
+  background-color: #e2f6ff;
   border-radius: 10px;
+  width: 96%;
   cursor: pointer;
 
   &:hover {
-    background-color: #f4ebff;
+    background-color: #e2f6ff;
   }
 
   p,
@@ -254,17 +304,41 @@ const ContentArea = styled.div`
     text-overflow: ellipsis;
   }
 `;
-
+const FestivalCardBtns = styled.div`
+  width: auto;
+  height: auto;
+  display: flex;
+  .left {
+    margin-right: 8px;
+  }
+`;
+const LocationButton = styled.button`
+  width: auto;
+  height: auto;
+  background: none;
+  outline: none;
+  border: none;
+  font-size: 12px;
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+`;
 const SearchSideBar = () => {
   const navigate = useNavigate();
   const [festival, setFestival] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [totalElements, setTotalElements] = useState("");
   const {
-    contextLongitude,
     setContextLongitude,
-    contextLatitude,
     setContextLatitude,
+    setCenterLatitude,
+    setCenterLongitude,
+    centerLatitude,
+    centerLongitude,
+    searchBoxMove,
+    setSearchBoxMove,
+    contextFestivalSearch,
   } = useContext(UserContext);
   const latitudeArr = [];
   const longitudeArr = [];
@@ -289,8 +363,42 @@ const SearchSideBar = () => {
       setContextLongitude(longitudeArr);
     });
   };
+  //카드를 클릭하면 해당 마커의 위치로 지도 위치를 이동시키기 위한 context 설정
+  const setCenterMarker = (latitude, longitude) => {
+    setCenterLatitude(latitude);
+    setCenterLongitude(longitude);
+    setSearchBoxMove("-100vh");
+    console.log(latitude);
+    console.log(longitude);
+    console.log(centerLatitude, centerLongitude);
+  };
+
+  useEffect(() => {
+    const searchFromHeader = async () => {
+      const search = await FestivalAPI.GetSearchResultByFestivalName(
+        contextFestivalSearch,
+        0
+      ).then((result) => {
+        console.log(result);
+        console.log(result.data.content);
+
+        setFestival(result.data.content);
+        setTotalElements(result.data.totalElements);
+
+        //마커 찍기 위한 위도 경도 배열을 콘텍스트에 전달
+        for (let i = 0; i < result.data.content.length; i++) {
+          latitudeArr.push(result.data.content[i].latitude);
+          longitudeArr.push(result.data.content[i].longitude);
+        }
+
+        setContextLatitude(latitudeArr);
+        setContextLongitude(longitudeArr);
+      });
+    };
+    searchFromHeader();
+  }, [contextFestivalSearch]);
   return (
-    <SearchContainer>
+    <SearchContainer bottom={searchBoxMove}>
       <SearchArea>
         <InputBoxArea>
           <SearchInputBox
@@ -299,11 +407,21 @@ const SearchSideBar = () => {
             placeholder="찾을 지역이나 축제 이름을 입력하세요."
             onChange={(e) => setSearchKeyword(e.target.value)}
           />
-          <SearchButton onClick={searchDefaultByFestivalName}>
+          <SearchButton type="submit" onClick={searchDefaultByFestivalName}>
             <SearchIcon className="searchIcon" />
           </SearchButton>
         </InputBoxArea>
       </SearchArea>
+      <Xbox>
+        <PerfestLogo src={BlackLogo} />
+        <Xbtn>
+          <CloseIcon
+            className="xIcon"
+            style={{ color: "#222" }}
+            onClick={() => setSearchBoxMove("-100vh")}
+          />
+        </Xbtn>
+      </Xbox>
 
       {/* 검색 결과 */}
 
@@ -340,21 +458,38 @@ const SearchSideBar = () => {
             festival.map((e, idx) => (
               <CardWrap key={idx}>
                 <CardInner>
-                  <ImageArea onClick={() => navigate("/pages/festivaldetail")}>
+                  <ImageArea
+                    onClick={() => navigate(`/pages/festivaldetail/${e.id}`)}
+                  >
                     <img src={festivalPoster2} alt="festival_poster" />
                   </ImageArea>
                   <TextArea>
                     <h4
-                      onClick={() => navigate(`/pages/festivaldetail/:${e.id}`)}
+                      onClick={() => navigate(`/pages/festivaldetail/${e.id}`)}
                     >
                       {e.fstvlNm}
                     </h4>
-                    <p>시작일: {formatDate(e.fstvlStartDate)}</p>
-                    <p>종료일: {formatDate(e.fstvlEndDate)}</p>
+                    <p>시작일: {formatDateForFestival(e.fstvlStartDate)}</p>
+                    <p>종료일: {formatDateForFestival(e.fstvlEndDate)}</p>
                     <p className="address">
                       {e.rdnmadr ? e.rdnmadr : e.lnmadr}
                     </p>
                     <p>{e.phoneNumber}</p>
+                    <FestivalCardBtns>
+                      <LocationButton
+                        className="left"
+                        onClick={() => setCenterMarker(e.latitude, e.longitude)}
+                      >
+                        위치보기
+                      </LocationButton>
+                      <LocationButton
+                        onClick={() =>
+                          navigate(`/pages/festivaldetail/${e.id}`)
+                        }
+                      >
+                        자세히 보기
+                      </LocationButton>
+                    </FestivalCardBtns>
                   </TextArea>
                   <ContentArea>
                     <p>{e.fstvlCo}</p>
