@@ -22,7 +22,8 @@ import Festival from "./pages/Festival";
 import FestivalDetail from "./pages/FestivalDetail";
 import SideBar from "./pages/Sidebar";
 import Calendar from "./pages/Calender.js";
-import Admin from "./pages/Admin";
+import Review from "./pages/Review";
+// import Admin from "./pages/Admin";
 import Timeline from "./pages/Timeline";
 
 function App() {
@@ -60,7 +61,8 @@ function App() {
             element={<FestivalDetail />}
           />
           <Route path="/pages/Calender" element={<Calendar />} />
-          <Route path="/pages/Admin" element={<Admin />} />
+          <Route path="/pages/review" element={<Review />} />
+          {/*<Route path="/pages/Admin" element={<Admin />} />*/}
           <Route path="/pages/Timeline" element={<Timeline />} />
         </Routes>
       </Router>
