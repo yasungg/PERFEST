@@ -22,6 +22,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -218,5 +219,10 @@ public class FestivalService {
     public Page<Festival> searchFestivalByKeyword(String keyword, int pageNum, int pageSize) {
         PageRequest pageRequest = PageRequest.of(pageNum, pageSize);
         return festivalRepository.findbySearchKeyword(keyword, pageRequest);
+    }
+
+    public List<Festival> searchFestivalInfo(Optional<List<String>> selectedLocations, Optional<Map<String, String>> selectedPeriod, Optional<List<String>> selectedSeasons) {
+        List<Festival> list = festivalRepository.findByFestivalNameAndStartDateBetweenEndDateAndSeasonIn(selectedLocations, selectedPeriod, selectedSeasons);
+        return list;
     }
 }

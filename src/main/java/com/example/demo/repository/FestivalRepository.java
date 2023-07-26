@@ -9,7 +9,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Repository
@@ -25,4 +27,7 @@ public interface FestivalRepository extends JpaRepository<Festival, Long> {
     Page<Festival> findbySearchKeyword(@Param("keyword") String keyword, Pageable pageable);
     //Festival 지역 검색 결과 페이지네이션
 //    @Query("SELECT f FROM Festival f WHERE f.festivalLocation LIKE %:keyword% OR ")
+
+    List<Festival> findByFestivalNameAndStartDateBetweenEndDateAndSeasonIn(Optional<List<String>> locations, Optional<Map<String, String>> selectedPeriod, Optional<List<String>> seasons);
+
 }
