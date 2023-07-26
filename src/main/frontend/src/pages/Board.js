@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import { BodyContainer, Container } from "../components/StandardStyles";
 import BoardAPI from "../api/BoardAPI";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { formatDate } from "../components/DateStyle";
 import { FaHeart } from 'react-icons/fa';
+import Pagination from "../components/Pagination.js";
 const Title = styled.div`
   display: flex;
   justify-content: center;
@@ -218,25 +219,150 @@ const Heart = styled(FaHeart)`
   color: red;
   padding-right: 2px;
 `;
+const ChangeBtn = styled.button`
+  display: flex;
+  width: 40px;
+  height: 24px;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  outline: none;
+  background: white;
+  font-weight: 600;
+  color: #222;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+const ButtonWrapper = styled.div`
+  display: flex;
+  width: auto;
+  height: 24px;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  border: none;
+  outline: none;
+  background: white;
+  margin-bottom: 8px;
+`;
+const NumBtnWrapper = styled.div`
+  display: flex;
+  width: auto;
+  height: 24px;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  outline: none;
+  background: white;
+`;
 const Board = () => {
   const navigate = useNavigate();
-  const [selectedBoardInfo, setSelectedBoardInfo] = useState([]);
+  // const [selectedBoardInfo, setSelectedBoardInfo] = useState([]);
   const [selectCategory, setSelectCategory] = useState("");
   const [activeButton, setActiveButton] = useState(""); // 버튼의 활성화 여부를 저장하는 상태
   const [search, setSearch] = useState("");
   const [searchType, setSearchType] = useState('title'); // 기본적으로 제목 검색
+  const page = 0;
+  const [BoardList, setBoardList] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
 
 
-  // 게시판 전체 글 목록 가져오기
-  const BoardGetAll = async () => {
-    const rsp = await BoardAPI.BoardGet();
-    if (rsp.status === 200) setSelectedBoardInfo(rsp.data);
-    console.log(rsp.data);
+  // -----------------------------------> 페이지네이션 상태관리
+  //숫자 버튼을 누르면 숫자에 맞는 페이지 렌더링
+  const renderThisPage = async(page) => {
+    const getInfo = await BoardAPI.BoardGet(page)
+        .then((result) => {
+          if (result.status === 200) {
+            console.log(result.data);
+            console.log(result.data.content);
+            setCurrentPage(page - 1);
+            setBoardList(result.data.content);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+  };
+  // 이전 버튼을 클릭했을 때 -1 페이지네이션의 결과를 요청
+  const onClickPreviousPage = async () => {
+    if (currentPage > 0) {
+      const getPreviousPage = await BoardAPI.BoardGet(currentPage - 1)
+          .then((result) => {
+            if (result.status === 200) {
+              console.log(result.data);
+              console.log(result.data.content);
+              setBoardList(result.data.content);
+              setCurrentPage(currentPage - 1);
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    }
   };
 
+  // 다음 버튼을 클릭했을 때 +1 페이지네이션의 결과를 요청
+  const onClickNextPage = async () => {
+    if (currentPage + 1 < totalPages) {
+      const getNextPage = await BoardAPI.BoardGet(currentPage + 1)
+          .then((result) => {
+            if (result.status === 200) {
+              console.log(result.data);
+              console.log(result.data.content);
+              setBoardList(result.data.content);
+              setCurrentPage(currentPage + 1);
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    }
+  };
+  const onClickRefresh = async () => {
+    const getInfo = await BoardAPI.BoardGet(currentPage)
+        .then((result) => {
+          if (result.status === 200) {
+            console.log(result.data);
+            console.log(result.data.content);
+            setBoardList(result.data.content);
+            setTotalPages(result.data.totalPages);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+  };
+  const getBoardList = async () => {
+    const getInfo = await BoardAPI.BoardGet(currentPage)
+        .then((result) => {
+          if (result.status === 200) {
+            console.log(result.data);
+            console.log(result.data.content);
+            setBoardList(result.data.content);
+            setTotalPages(result.data.totalPages);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+  };
+  //멤버 리스트 1페이지를 자동으로 렌더링
   useEffect(() => {
-    BoardGetAll();
-  }, []);
+    getBoardList();
+  }, [currentPage, totalPages]);
+
+  // 게시판 전체 글 목록 가져오기
+  // const BoardGetAll = async () => {
+  //   const rsp = await BoardAPI.BoardGet();
+  //   if (rsp.status === 200) setSelectedBoardInfo(rsp.data);
+  //   console.log(rsp.data);
+  // };
+  //
+  // useEffect(() => {
+  //   BoardGetAll();
+  // }, []);
 
   // 게시판 카테고리별 가져오기
   useEffect(() => {
@@ -244,7 +370,7 @@ const Board = () => {
       if (selectCategory) {
         const rsp = await BoardAPI.BoardGetByCategory(selectCategory);
         console.log(selectCategory);
-        if (rsp.status === 200) setSelectedBoardInfo(rsp.data);
+        if (rsp.status === 200) setBoardList(rsp.data);
         console.log(rsp.data);
       }
     };
@@ -270,27 +396,33 @@ const Board = () => {
   const onClickNewestBoard = async() => {
     if(selectCategory) {
       const rsp = await BoardAPI.BoardGetByNewest(selectCategory);
-      if (rsp.status === 200) setSelectedBoardInfo(rsp.data);
+      if (rsp.status === 200) setBoardList(rsp.data);
       console.log(selectCategory);
       console.log(rsp.data);
+    } else {
+      const rsp = await BoardAPI.BoardGetAllByNewest();
+      setBoardList(rsp.data);
     }
   }
   // 게시판 인기순 정렬
   const onClickLikestBoard = async() => {
     if(selectCategory) {
       const rsp = await BoardAPI.BoardGetByLikest(selectCategory);
-      if (rsp.status === 200) setSelectedBoardInfo(rsp.data);
+      if (rsp.status === 200) setBoardList(rsp.data);
       console.log(rsp.data);
+    } else {
+      const rsp = await BoardAPI.BoardGetAllByLikest();
+      setBoardList(rsp.data);
     }
   }
   // 게시판 제목 검색
   const searchByTitle = async() => {
     if(searchType === 'title') {
       const rsp = await BoardAPI.BoardSearchByTitle(search);
-      if(rsp.status === 200) setSelectedBoardInfo(rsp.data);
+      if(rsp.status === 200) setBoardList(rsp.data);
     } else if(searchType === 'nickname'){
       const rsp2 = await BoardAPI.BoardSearchByNickName(search);
-      if(rsp2.status === 200) setSelectedBoardInfo(rsp2.data);
+      if(rsp2.status === 200) setBoardList(rsp2.data);
     }
   }
   const onChangeSearch = (e) => {
@@ -318,7 +450,7 @@ const Board = () => {
             <CatButton
                 isActive={activeButton === ""}
                 onClick={() => {
-                  BoardGetAll();
+                  getBoardList();
                   handleCategoryClick("");
                 }}
             >
@@ -353,7 +485,7 @@ const Board = () => {
               <Label htmlFor="likest">인기순</Label>
             </ArrButton>
           </Arrange>
-          {selectedBoardInfo.map((community) => (
+          {BoardList.map((community) => (
               <BoardText key={community.communityId}>
                 <BoardContents onClick={() => boardClick(community.communityId)}>
                   <BCategory>{getCategoryText(community.communityCategory)}</BCategory>
@@ -364,6 +496,17 @@ const Board = () => {
                 </BoardContents>
               </BoardText>
           ))}
+          <ButtonWrapper>
+            <ChangeBtn onClick={onClickPreviousPage}>이전</ChangeBtn>
+            <NumBtnWrapper>
+              <Pagination
+                  totalPages={totalPages}
+                  currentPage={currentPage}
+                  onPageChange={renderThisPage}
+              />
+            </NumBtnWrapper>
+            <ChangeBtn onClick={onClickNextPage}>다음</ChangeBtn>
+          </ButtonWrapper>
           <WriteButton>
             <button className="write" onClick={()=> navigate("/pages/WriteBoard")}>글쓰기</button></WriteButton>
         </BodyContainer>

@@ -24,7 +24,5 @@ public class NoticeController {
     public ResponseEntity<List<NoticeDTO>> getNoticeList(@RequestParam("memberId") Long memberId) {
         List<NoticeDTO> noticeDTOList = noticeService.getNoticesByMember(memberId);
         return new ResponseEntity<>(noticeDTOList, HttpStatus.OK);
-
-
     }
 }

@@ -1,40 +1,46 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { UserContext } from "../context/UserStore";
 import styled from "styled-components";
 import { Container } from "./StandardStyles";
 import FestivalAPI from "../api/FestivalAPI";
 import festivalPoster2 from "../images/2023안양충훈벚꽃축제.jpg";
-
+import SearchIcon from "@mui/icons-material/Search";
+import CloseIcon from "@mui/icons-material/Close";
+import { formatDate } from "./DateStyle";
+import { useNavigate } from "react-router";
 const SearchContainer = styled.div`
-	display: inline-block;
-	max-width: 400px;
-	min-width: 400px;
-	height: 100vh;
-	/* background: linear-gradient(to right, #654ea3, #eaafc8); */
-	background-color: #FFF;
-	overflow-y: hidden;
-	z-index: 3;
-	box-shadow: 1px 0px 5px 0px #555555;
+  display: inline-block;
+  max-width: 400px;
+  min-width: 400px;
+  height: calc(100vh - 58px);
+  /* background: linear-gradient(to right, #654ea3, #eaafc8); */
+  background-color: #fff;
+  overflow-y: hidden;
+  z-index: 3;
+  box-shadow: 1px 0px 5px 0px #555555;
 `;
 const SearchArea = styled.div`
   display: flex;
   width: 100%;
   height: 8%;
-  min-height: 74.95px;
+  min-height: 80px;
+  background: #222;
   align-items: center;
   justify-content: center;
-  box-shadow: 5px 0 5px -5px #333;
-  border-bottom: 1px solid lightgray;
+  /* box-shadow: 5px 0 5px -5px #333; */
+  /* border-bottom: 1px solid lightgray; */
 `;
 
 const InputBoxArea = styled.div`
   display: flex;
   width: 90%;
-  height: 45px;
+  height: 36px;
   border-radius: 5px;
   border: 1px solid transparent;
-  background-image: linear-gradient(#FFF, #FFF),
-  linear-gradient(to right, #fbfcb9be, #ffcdf3aa, #65d3ffaa);
+  background-image: linear-gradient(#fff, #fff),
+    linear-gradient(to right, #fbfcb9be, #ffcdf3aa, #65d3ffaa);
   /* linear-gradient(to right, #7E2BFE, #23C3F4); */
+  align-items: center;
   background-origin: border-box;
   background-clip: content-box, border-box;
   outline: none;
@@ -45,8 +51,8 @@ const InputBoxArea = styled.div`
 
 const SearchInputBox = styled.input`
   width: 83%;
-  height: 43px;
-  background-color: #FFF;
+  height: 32px;
+  background-color: #fff;
   border: none;
   outline: none;
   font-size: 13px;
@@ -54,14 +60,25 @@ const SearchInputBox = styled.input`
 `;
 
 const SearchButton = styled.button`
-  margin: 3px;
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-  background-color: #FFF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 3px 3px 3px 8px;
+  width: 24px;
+  height: 24px;
+  background-color: #fff;
   border: none;
+
   border-radius: 5px;
-  box-shadow: 1px 1px 4px -1px #555555;
+  .searchIcon {
+    transition: all 0.1s ease-in;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+  &:hover .searchIcon {
+    transform: scale(1.2);
+  }
 `;
 
 const ListContainer = styled.div`
@@ -72,7 +89,7 @@ const ListContainer = styled.div`
   height: 92%;
   min-height: 80;
   margin-top: auto;
-  background-color: #FFF;
+  background-color: #fff;
   overflow-y: auto;
   overflow-x: hidden;
 
@@ -83,7 +100,7 @@ const ListContainer = styled.div`
   /* 스크롤바 커스터마이징 */
   &::-webkit-scrollbar {
     width: 10px;
-    background: #F4EBFF;
+    background: #f4ebff;
     border-radius: 2px;
   }
 
@@ -101,13 +118,15 @@ const ListContainer = styled.div`
 `;
 
 const Result = styled.div`
+  box-sizing: border-box;
   display: flex;
   width: 100%;
-  height: 40px;
+  height: 24px;
   /* min-height: 40px; */
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  background-color: #FFF;
+  padding: 0 8px 0 8px;
+  font-size: 14px;
 `;
 
 const ResultSort = styled.ol`
@@ -117,13 +136,13 @@ const ResultSort = styled.ol`
   justify-content: center;
 
   li:not(:last-child)::after {
-		content: "";
-		display: inline-block;
-		width: 1px;
-		height: 10px;
-		background-color: lightgray;
-		margin: 0px 5px;
-	}
+    content: "";
+    display: inline-block;
+    width: 1px;
+    height: 10px;
+    background-color: lightgray;
+    margin: 0px 5px;
+  }
 `;
 
 const SortByDateOrDistance = styled.li`
@@ -131,17 +150,17 @@ const SortByDateOrDistance = styled.li`
   list-style: none;
 
   a {
-		font-size: 12px;
-		text-decoration: none;
-		color: black;
+    font-size: 12px;
+    text-decoration: none;
+    color: black;
 
     &:hover {
       text-decoration: underline;
     }
-	
-	  &:active{
-		  color: #0475F4;
-	  }
+
+    &:active {
+      color: #0475f4;
+    }
   }
 `;
 
@@ -155,12 +174,12 @@ const CardWrap = styled.li`
   display: flex;
   flex-direction: column;
   list-style: none;
-  background-color: #FFF;
+  background-color: #fff;
   width: 100%;
   height: 300px;
   justify-content: center;
   align-items: center;
-  background-color: #FFF;
+  background-color: #fff;
   border-bottom: 1px solid lightgray;
 `;
 
@@ -191,7 +210,7 @@ const ImageArea = styled.div`
 
     &:hover {
       transform: scale(1.1);
-	    position: relative;
+      position: relative;
     }
   }
 `;
@@ -199,33 +218,34 @@ const ImageArea = styled.div`
 const TextArea = styled.div`
   grid-column: 2;
   grid-row: 1;
-	margin: 10px 0;
-
-  a {
+  margin: 10px 0;
+  h4 {
     font-size: 18px;
-    font-weight: bold;
-    text-decoration: none;
-    color: #0475F4;
+    font-weight: 600;
+    color: #222;
+    &:hover {
+      cursor: pointer;
+    }
   }
-
   p {
     margin: 10px 0;
-	  margin-right: 20px;
+    margin-right: 20px;
   }
 `;
 
 const ContentArea = styled.div`
   grid-column: 1 / span 2;
   grid-row: 3;
-	background-color: #FFF5FB;
-	border-radius: 10px;
-	cursor: pointer;
+  background-color: #fff5fb;
+  border-radius: 10px;
+  cursor: pointer;
 
   &:hover {
-    background-color: #F4EBFF;
+    background-color: #f4ebff;
   }
 
-  p, .address {
+  p,
+  .address {
     margin: 20px;
     display: -webkit-box;
     -webkit-line-clamp: 2; /* 보여줄 줄 수 */
@@ -235,40 +255,62 @@ const ContentArea = styled.div`
   }
 `;
 
-
 const SearchSideBar = () => {
-
+  const navigate = useNavigate();
   const [festival, setFestival] = useState([]);
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const [totalElements, setTotalElements] = useState("");
+  const {
+    contextLongitude,
+    setContextLongitude,
+    contextLatitude,
+    setContextLatitude,
+  } = useContext(UserContext);
+  const latitudeArr = [];
+  const longitudeArr = [];
+  const searchDefaultByFestivalName = async () => {
+    const search = await FestivalAPI.GetSearchResultByFestivalName(
+      searchKeyword,
+      0
+    ).then((result) => {
+      console.log(result);
+      console.log(result.data.content);
 
-  useEffect(() => {
-    const FestivalInfo = async() => {
-      try {
-        const rsp = await FestivalAPI.getFestivalInfo();
-        if(rsp.status === 200) setFestival(rsp.data);
-      } catch (error) {
-        console.error("Error while fetching festival information:", error);
+      setFestival(result.data.content);
+      setTotalElements(result.data.totalElements);
+
+      //마커 찍기 위한 위도 경도 배열을 콘텍스트에 전달
+      for (let i = 0; i < result.data.content.length; i++) {
+        latitudeArr.push(result.data.content[i].latitude);
+        longitudeArr.push(result.data.content[i].longitude);
       }
-    }
-    FestivalInfo();
-  },[]);
 
-  return(
-      <SearchContainer>
-        <SearchArea>
-					<InputBoxArea>
-						<SearchInputBox
-              type="text"
-              placeholder="찾을 지역이나 축제 이름을 입력하세요."
-            />
-						<SearchButton>돋보기</SearchButton>
-					</InputBoxArea>
-				</SearchArea>
+      setContextLatitude(latitudeArr);
+      setContextLongitude(longitudeArr);
+    });
+  };
+  return (
+    <SearchContainer>
+      <SearchArea>
+        <InputBoxArea>
+          <SearchInputBox
+            value={searchKeyword}
+            type="text"
+            placeholder="찾을 지역이나 축제 이름을 입력하세요."
+            onChange={(e) => setSearchKeyword(e.target.value)}
+          />
+          <SearchButton onClick={searchDefaultByFestivalName}>
+            <SearchIcon className="searchIcon" />
+          </SearchButton>
+        </InputBoxArea>
+      </SearchArea>
 
-        {/* 검색 결과 */}
-        <ListContainer>
+      {/* 검색 결과 */}
+
+      <ListContainer>
+        {totalElements ? (
           <Result>
-            <p>검색된 결과 '0'개가 있습니다.</p>
-            {/* 결과 정렬버튼 */}
+            <p>검색된 결과 '{totalElements}'개가 있습니다.</p>
             <ResultSort>
               <SortByDateOrDistance>
                 <a href="#none">날짜순</a>
@@ -278,30 +320,51 @@ const SearchSideBar = () => {
               </SortByDateOrDistance>
             </ResultSort>
           </Result>
-          {/* 결과 카드 */}
-          <CardList>
-            {festival && festival.map((e, idx) => (
-            <CardWrap key={idx}>
-              <CardInner>
-                <ImageArea>
-                  <img src={festivalPoster2} alt="festival_poster"></img>
-                </ImageArea>
-                <TextArea>
-                  <a href="#none"><strong>{e.festivalName}</strong></a>
-                  <p>{e.startDate.substring(0, 10)} ~ {e.endDate.substring(0, 10)}</p>
-                  <p className="address">{e.festivalLocation ? e.festivalLocation : e.festivalDoro}</p>
-                  <p>{e.festivalTel}</p>
-                </TextArea>
-                <ContentArea>
-                  <p>{e.festivalDesc}</p>
-                </ContentArea>
-              </CardInner>
-            </CardWrap>
-            ))}
-          </CardList>
-        </ListContainer>
-      </SearchContainer>
+        ) : (
+          <Result>
+            <p>검색된 결과가 없습니다.</p>
+            <ResultSort>
+              <SortByDateOrDistance>
+                <a href="#none">날짜순</a>
+              </SortByDateOrDistance>
+              <SortByDateOrDistance>
+                <a href="#none">거리순</a>
+              </SortByDateOrDistance>
+            </ResultSort>
+          </Result>
+        )}
 
+        {/* 결과 카드 */}
+        <CardList>
+          {festival &&
+            festival.map((e, idx) => (
+              <CardWrap key={idx}>
+                <CardInner>
+                  <ImageArea onClick={() => navigate("/pages/festivaldetail")}>
+                    <img src={festivalPoster2} alt="festival_poster" />
+                  </ImageArea>
+                  <TextArea>
+                    <h4
+                      onClick={() => navigate(`/pages/festivaldetail/:${e.id}`)}
+                    >
+                      {e.fstvlNm}
+                    </h4>
+                    <p>시작일: {formatDate(e.fstvlStartDate)}</p>
+                    <p>종료일: {formatDate(e.fstvlEndDate)}</p>
+                    <p className="address">
+                      {e.rdnmadr ? e.rdnmadr : e.lnmadr}
+                    </p>
+                    <p>{e.phoneNumber}</p>
+                  </TextArea>
+                  <ContentArea>
+                    <p>{e.fstvlCo}</p>
+                  </ContentArea>
+                </CardInner>
+              </CardWrap>
+            ))}
+        </CardList>
+      </ListContainer>
+    </SearchContainer>
   );
 };
 export default SearchSideBar;

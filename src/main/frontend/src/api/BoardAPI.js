@@ -2,8 +2,8 @@ import axios from "axios";
 
 const BoardAPI = {
   // 게시판 전체조회
-  BoardGet: async () => {
-    return await axios.get(`/auth/community/getallboard`);
+  BoardGet: async (pageNumber) => {
+    return await axios.get(`/auth/community/getallboard?pageNumber=${pageNumber}&pageSize=10`);
   },
   // 게시판 카테고리별 조회
   BoardGetByCategory: async (selectCategory) => {
@@ -18,6 +18,14 @@ const BoardAPI = {
   // 게시판 인기순 조회
   BoardGetByLikest: async (selectCategory) => {
     return await axios.get(`/auth/community/getlikestboard?communityCategory=${selectCategory}`);
+  },
+  // 게시판 최신순 전체 조회
+  BoardGetAllByNewest: async () => {
+    return await axios.get( `/auth/community/getAllnewestboard`);
+  },
+  // 게시판 인기순 전체 조회
+  BoardGetAllByLikest: async () => {
+    return await axios.get(`/auth/community/getAlllikestboard`);
   },
   // 게시판 제목 검색
   BoardSearchByTitle: async (communityTitle) => {
@@ -40,6 +48,29 @@ const BoardAPI = {
     return await axios.post(`/auth/community/BoardArticle/${communityId}/addlike`,
       addLike
     );
+  },
+  // 게시판 좋아요 한번만 누르기
+  checkBoardLike: async (communityId) => {
+    const checkLike = {
+      communityId: communityId
+    };
+     const Authorization =
+        "Bearer " + window.localStorage.getItem("accessToken");
+    console.log(Authorization);
+    return await axios.post( `/memberlike/likeboard`, checkLike, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Authorization,
+      }, // 여기까지가 서버로 header를 실은 요청을 던지는 기능
+    })
+        .then((response) => {
+          if (response.status === 200) {
+            return response;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
   },
   // 게시판 작성
   BoardWrite : async(title, category, text, communityImg) => {

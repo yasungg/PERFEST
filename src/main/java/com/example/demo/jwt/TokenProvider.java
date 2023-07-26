@@ -13,7 +13,6 @@ import com.example.demo.user.PerfestUserDetails;
 import com.example.demo.user.PerfestUserDetailsService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
-import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

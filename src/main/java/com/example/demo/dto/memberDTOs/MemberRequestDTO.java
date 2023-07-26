@@ -28,6 +28,7 @@ public class MemberRequestDTO {
                 .memberName(memberName)
                 .nickname(nickname)
                 .badges(0)
+                .isEnabled(true)
                 .totalPrice(BigDecimal.ZERO)
                 .joinTime(LocalDateTime.now())
                 .authority(Authority.ROLE_USER)

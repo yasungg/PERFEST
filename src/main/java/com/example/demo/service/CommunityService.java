@@ -9,6 +9,9 @@ import com.example.demo.repository.CommunityRepository;
 import com.example.demo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -16,6 +19,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -26,26 +30,35 @@ public class CommunityService {
     private final MemberRepository memberRepository;
 
     // 커뮤니티 게시글 전체 조회(GET)
-    public List<CommunityDTO> getCommunityList() {
-        List<Community> communityList = communityRepository.findAll();
-        List<CommunityDTO> communityDTOS = new ArrayList<>();
-        for(Community community : communityList) {
-            CommunityDTO communityDTO = new CommunityDTO();
-            communityDTO.setCommunityCategory(String.valueOf(community.getCommunityCategory()));
-            communityDTO.setCommunityId(community.getId());
-            communityDTO.setCommunityTitle(community.getCommunityTitle());
-            communityDTO.setCommunityDesc(community.getCommunityDesc());
-            communityDTO.setCommunityImgLink(community.getCommunityImgLink());
-            communityDTO.setLikeCount(community.getLikeCount());
-            communityDTO.setWrittenTime(community.getWrittenTime());
-            Member member = community.getMember();
-            if (member != null) {
-                communityDTO.setNickname(member.getNickname());
-            }
-            communityDTOS.add(communityDTO);
-        }
-        return communityDTOS;
+    public Page<CommunityDTO> getCommunityList(int pageNum, int pageSize) {
+        PageRequest pageRequest = PageRequest.of(pageNum, pageSize);
+        Page<Community> communityPage = communityRepository.findAll(pageRequest);
+
+        List<CommunityDTO> communityDTOS = communityPage.getContent().stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(communityDTOS, pageRequest, communityPage.getTotalElements());
     }
+
+    private CommunityDTO convertToDTO(Community community) {
+        CommunityDTO communityDTO = new CommunityDTO();
+        communityDTO.setCommunityCategory(String.valueOf(community.getCommunityCategory()));
+        communityDTO.setCommunityId(community.getId());
+        communityDTO.setCommunityTitle(community.getCommunityTitle());
+        communityDTO.setCommunityDesc(community.getCommunityDesc());
+        communityDTO.setCommunityImgLink(community.getCommunityImgLink());
+        communityDTO.setLikeCount(community.getLikeCount());
+        communityDTO.setWrittenTime(community.getWrittenTime());
+
+        Member member = community.getMember();
+        if (member != null) {
+            communityDTO.setNickname(member.getNickname());
+        }
+
+        return communityDTO;
+    }
+
     // 커뮤니티 게시글 카테고리별 조회(GET)
     public List<CommunityDTO> getCommunitySelectList(CommunityCategory communityCategory) {
         List<Community> communityList = communityRepository.findByCommunityCategory(communityCategory);
@@ -91,6 +104,48 @@ public class CommunityService {
     // 커뮤니티 게시글 인기순 조회(GET)
     public List<CommunityDTO> getCommunityLikestList(CommunityCategory communityCategory) {
         List<Community> communityList = communityRepository.findByCommunityCategoryOrderByLikeCountDesc(communityCategory);
+        List<CommunityDTO> communityDTOS = new ArrayList<>();
+        for(Community community : communityList) {
+            CommunityDTO communityDTO = new CommunityDTO();
+            communityDTO.setCommunityCategory(String.valueOf(community.getCommunityCategory()));
+            communityDTO.setCommunityId(community.getId());
+            communityDTO.setCommunityTitle(community.getCommunityTitle());
+            communityDTO.setCommunityDesc(community.getCommunityDesc());
+            communityDTO.setCommunityImgLink(community.getCommunityImgLink());
+            communityDTO.setLikeCount(community.getLikeCount());
+            communityDTO.setWrittenTime(community.getWrittenTime());
+            Member member = community.getMember();
+            if (member != null) {
+                communityDTO.setNickname(member.getNickname());
+            }
+            communityDTOS.add(communityDTO);
+        }
+        return communityDTOS;
+    }
+    // 커뮤니티 게시글 최신순 조회(GET)
+    public List<CommunityDTO> getCommunityAllNewestList() {
+        List<Community> communityList = communityRepository.findAllByOrderByWrittenTimeDesc();
+        List<CommunityDTO> communityDTOS = new ArrayList<>();
+        for(Community community : communityList) {
+            CommunityDTO communityDTO = new CommunityDTO();
+            communityDTO.setCommunityCategory(String.valueOf(community.getCommunityCategory()));
+            communityDTO.setCommunityId(community.getId());
+            communityDTO.setCommunityTitle(community.getCommunityTitle());
+            communityDTO.setCommunityDesc(community.getCommunityDesc());
+            communityDTO.setCommunityImgLink(community.getCommunityImgLink());
+            communityDTO.setLikeCount(community.getLikeCount());
+            communityDTO.setWrittenTime(community.getWrittenTime());
+            Member member = community.getMember();
+            if (member != null) {
+                communityDTO.setNickname(member.getNickname());
+            }
+            communityDTOS.add(communityDTO);
+        }
+        return communityDTOS;
+    }
+    // 커뮤니티 게시글 인기순 조회(GET)
+    public List<CommunityDTO> getCommunityAllLikestList() {
+        List<Community> communityList = communityRepository.findAllByOrderByLikeCountDesc();
         List<CommunityDTO> communityDTOS = new ArrayList<>();
         for(Community community : communityList) {
             CommunityDTO communityDTO = new CommunityDTO();

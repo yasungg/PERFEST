@@ -333,7 +333,7 @@ const Home = () => {
   const getJWT = new URLSearchParams(location.search);
   // console.log(getJWT.get("jwt"));
   const navigate = useNavigate();
-  const { isSidebar, setIsSidebar } = useContext(UserContext);
+  const { isSidebar, setIsSidebar, isLogin } = useContext(UserContext);
 
   const scrollTo = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -347,7 +347,7 @@ const Home = () => {
       localStorage.setItem("tokenExpiresIn", JWT.tokenExpiresIn);
       console.log(localStorage.getItem("accessToken"));
     }
-
+    console.log(isLogin);
     // console.log(localStorage.getItem("accessToken"));
   }, [getJWT]);
 

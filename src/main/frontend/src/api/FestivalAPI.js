@@ -1,10 +1,15 @@
 import axios from "axios";
 
-
 const FestivalAPI = {
-  // 전체 축제 조회
-  getFestivalInfo: async() => {
-    return await axios.get( '/auth/festival/getfestivals') ;
-  }
-}
+  // 전체 축제 리스트 받아오기(관리자 전용)
+  getFestivalInfo: async () => {
+    return await axios.get("/auth/festival/getfestivals");
+  },
+  //축제 제목 검색 결과 받아오기
+  GetSearchResultByFestivalName: async (keyword, pageNum) => {
+    return await axios.get(
+      `/auth/festival/get-name-searchresult?keyword=${keyword}&pageNum=${pageNum}&pageSize=10`
+    );
+  },
+};
 export default FestivalAPI;

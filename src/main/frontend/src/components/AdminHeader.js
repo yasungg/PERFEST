@@ -5,14 +5,12 @@ import BlackLogo from "../images/PERFEST LOGO BLACK.png";
 import { UserContext } from "../context/UserStore";
 import LoginAPI from "../api/LoginAPI";
 import { useNavigate } from "react-router";
+import MemberAPI from "../api/MemberAPI";
 const Header = styled.div`
   display: flex;
   width: 100%;
   height: 60px;
   align-items: center;
-  @media (max-width: 1025px) {
-    justify-content: space-between;
-  }
   .logo {
     height: 48px;
     background: transparent;
@@ -60,9 +58,6 @@ const Header = styled.div`
       font-size: 0.8em;
       margin-right: 16px;
     }
-    @media (max-width: 1025px) {
-      display: none;
-    }
   }
   .logout-btn {
     width: 100px;
@@ -75,29 +70,11 @@ const Header = styled.div`
       cursor: pointer;
     }
   }
-  .hamburger {
-    display: none;
-    width: 40px;
-    height: 40px;
-    margin-right: 16px;
-    justify-content: center;
-    align-items: center;
-    background: white;
-    border: none;
-    outline: none;
-
-    &:hover {
-      cursor: pointer;
-    }
-
-    @media (max-width: 1025px) {
-      display: flex;
-    }
-  }
 `;
 
 const AdminHeader = () => {
   const navigate = useNavigate();
+  const { setIsLogin } = useContext(UserContext);
   const {
     setIsAdminBadgeSidebar,
     setIsAdminMemberSidebar,
@@ -124,6 +101,8 @@ const AdminHeader = () => {
     setBadgeOpacity,
     setApproveBadge,
   } = useContext(UserContext);
+
+  const [headerName, setHeaderName] = useState("");
 
   const member = () => {
     setIsAdminBadgeSidebar("-400px");
@@ -242,10 +221,33 @@ const AdminHeader = () => {
     setProgramReview("none");
   };
   const logout = () => {
-    const Logout = LoginAPI.Logout();
-    Logout();
+    const Logout = LoginAPI.Logout()
+      .then((result) => {
+        if (result.status === 200) {
+          console.log("네트워크 상태" + result.status);
+          console.log("로그아웃 성공!");
+          setIsLogin(false);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     navigate("/");
   };
+
+  useEffect(() => {
+    const getName = async () => {
+      const name = await MemberAPI.Name()
+        .then((result) => {
+          console.log(result);
+          setHeaderName(result.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+    getName();
+  }, []);
   return (
     <Header className="header-container">
       <img
@@ -285,14 +287,11 @@ const AdminHeader = () => {
       </div>
       <div className="admin-user-box">
         <span className="admin-info">관리책임자 : </span>
-        <span className="admin-info">곽용석</span>
+        <span className="admin-info">{headerName}</span>
         <button className="logout-btn" onClick={logout}>
           <span>로그아웃</span>
         </button>
       </div>
-      <button className="hamburger">
-        <MenuIcon />
-      </button>
     </Header>
   );
 };

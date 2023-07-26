@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserStore";
 import styled from "styled-components";
 import kakaoButton from "../images/kakaoButton.png";
 import loginBackgroundImg from "../images/loginBackground.jpg";
@@ -225,7 +226,7 @@ const Login = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const navigate = useNavigate();
-
+  const { setIsLogin } = useContext(UserContext);
   const REST_API_KEY = "86c9013e77a6aad5b8b2c49eddca45b7";
   const REDIRECT_URI = "http://localhost:8111/koauth/login/kakao";
   const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code&prompt=login`;
@@ -294,6 +295,7 @@ const Login = () => {
         console.log(result.accessToken);
         console.log(result.tokenExpiresIn);
         console.log(localStorage.getItem("accessToken"));
+        setIsLogin(true);
         navigate("/");
       })
       .catch((error) => {

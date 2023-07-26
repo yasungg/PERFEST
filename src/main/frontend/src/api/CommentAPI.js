@@ -68,5 +68,28 @@ const CommentAPI = {
         };
         return await axios.post( `/auth/comment/addcommentlike`, addLike)
     },
+    // 댓글 좋아요 한번만 누르기
+    checkCommentLike: async(commentId) => {
+        const checkLike = {
+            commentId: commentId
+        }
+        const Authorization =
+        "Bearer " + window.localStorage.getItem("accessToken");
+    console.log(Authorization);
+    return await axios.post( `/memberlike/likecomment`, checkLike, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Authorization,
+      }, // 여기까지가 서버로 header를 실은 요청을 던지는 기능
+    })
+        .then((response) => {
+          if (response.status === 200) {
+            return response;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
 }
 export default CommentAPI;
