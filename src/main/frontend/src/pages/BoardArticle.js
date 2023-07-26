@@ -9,6 +9,7 @@ import { formatDate } from "../components/DateStyle";
 import { GoHeart } from "react-icons/go";
 import { FaHeart } from "react-icons/fa";
 import { MdSubdirectoryArrowRight } from "react-icons/md";
+import Modal from "../utils/Modal";
 const Title = styled.div`
   display: flex;
   justify-content: center;
@@ -266,6 +267,19 @@ const BoardArticle = () => {
   const [boardArticle, setBoardArticle] = useState([]);
   const [commentData, setCommentData] = useState([]);
   const [commentUpdateTrigger, setCommentUpdateTrigger] = useState(false); // 댓글 업데이트를 트리거하는 상태 추가
+  const [openModal, setOpenModal] = useState(false);
+  const [modalMsg, setModalMsg] = useState("");
+  const [boardLikeCount, setBoardLikeCount] = useState("");
+
+
+  const confirmBtn = () => {
+    setOpenModal(false);
+     console.log("확인 버튼이 눌려 졌습니다.");
+  }
+ const closeModal = () => {
+    setOpenModal(false);
+  };
+
 
   const onChangeComment = (e) => {
     setInputComment(e.target.value);
@@ -276,7 +290,6 @@ const BoardArticle = () => {
       // textarea 내용이 비어 있는 경우
       return;
     }
-    const memberId = 1;
     const response = await CommentAPI.CommentWrite(inputComment, communityId);
     console.log(response.data);
     setCommentUpdateTrigger((prev) => !prev);
@@ -296,6 +309,7 @@ const BoardArticle = () => {
       const response = await BoardAPI.GetBoardArticle(communityId);
       console.log(response.data);
       setBoardArticle(response.data);
+      // setBoardLikeCount(response.data.likeCount);
     };
     getBoardArticle();
   }, [communityId]);
@@ -306,12 +320,15 @@ const BoardArticle = () => {
       if (response.data === false) {
         // 중복 좋아요 방지 실패 시
         console.log("이미 공감한 게시글입니다.");
+        setOpenModal(true);
+        setModalMsg("이미 공감한 게시글입니다.");
         return;
       }
 
       // 중복 체크를 통과한 경우, 실제로 좋아요를 추가
       const likeResponse = await BoardAPI.AddBoardLike(communityId);
       console.log(likeResponse.data);
+      // setBoardLikeCount(likeResponse.data.likeCount);
     } catch (error) {
       console.error("좋아요 추가에 실패했습니다.", error);
     }
@@ -324,6 +341,8 @@ const BoardArticle = () => {
       if (response.data === false) {
         // 중복 좋아요 방지 실패 시
         console.log("이미 공감한 댓글입니다.");
+        setOpenModal(true);
+        setModalMsg("이미 공감한 댓글입니다.");
         return;
       }
 
@@ -366,7 +385,6 @@ const BoardArticle = () => {
   };
   // 게시판 대댓글 작성
   const onClickWriteReplyComment = async (commentId) => {
-    const memberId = 2;
     const replyComment = replyCommentInput.get(commentId); // 해당 댓글의 대댓글 내용 가져오기
     const response = await CommentAPI.ReplyCommentWrite(
       commentId,
@@ -426,7 +444,7 @@ const BoardArticle = () => {
                 />
               </BoardDesc>
               <BoardLike>
-                <button className="like-button" onClick={onClickBoardLike}>
+                <button className="like-button" onClick={() =>{onClickBoardLike();}}>
                   이 글이 도움!
                 </button>
                 <div className="board-like-count">
@@ -548,6 +566,7 @@ const BoardArticle = () => {
               </Comment>
             </CommentDesc>
           ))}
+          <Modal open={openModal} type={true} close={closeModal} confirm={confirmBtn}>{modalMsg}</Modal>
       </BodyContainer>
     </Container>
   );

@@ -52,8 +52,7 @@ const Review = () => {
     // 리뷰 작성
     const onClickWriteReview = async() => {
         const festivalId = 1;
-        const memberId = 1;
-        const response = await ReviewAPI.ReviewWrite(festivalId, inputReviewText, memberId);
+        const response = await ReviewAPI.ReviewWrite(festivalId, inputReviewText);
         console.log(response.data);
         setReviewUpdateTrigger(prev => !prev);
         setInputReviewText("");

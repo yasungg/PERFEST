@@ -155,7 +155,6 @@ const WriteBoard = () => {
     };
     // 게시판 작성하기
     const onClickWriteBoard = async() => {
-        const memberId = 1;
         const response = await BoardAPI.BoardWrite(inputBoardTitle,selectedCategory,inputBoardText,uploadedImageUrl);
         console.log(response.data);
         setInputBoardTitle("");
