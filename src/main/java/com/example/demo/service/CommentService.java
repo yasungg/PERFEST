@@ -54,7 +54,8 @@ public class CommentService {
 
         // 커뮤니티 게시글 작성자에게 알림 보내기
         String communityAuthorNickname = myPageService.getMemberNicknameByMemberId(community.getMember().getId());
-        noticeService.createAndSaveNotification(communityAuthorNickname, message);
+        LocalDateTime created = comment.getCommentWrittenTime();
+        noticeService.createAndSaveNotification(communityAuthorNickname, message, created);
 
         return true;
     }

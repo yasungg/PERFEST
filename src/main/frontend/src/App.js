@@ -23,6 +23,7 @@ import FestivalDetail from "./pages/FestivalDetail";
 import SideBar from "./pages/Sidebar";
 import Calendar from "./pages/Calender.js";
 import Admin from "./pages/Admin";
+import Timeline from "./pages/Timeline";
 
 function App() {
   return (
@@ -60,6 +61,7 @@ function App() {
           />
           <Route path="/pages/Calender" element={<Calendar />} />
           <Route path="/pages/Admin" element={<Admin />} />
+          <Route path="/pages/Timeline" element={<Timeline />} />
         </Routes>
       </Router>
     </UserStore>

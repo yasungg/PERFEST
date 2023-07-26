@@ -5,7 +5,6 @@ import MemberAPI from "../api/MemberAPI";
 const Container = styled.div`
   width: 100%;
 
-
   p {
     font-size: 1.3em;
     font-weight: bold;
@@ -13,7 +12,7 @@ const Container = styled.div`
 
   hr {
     background-color: lightgray;
-    border: .3px solid lightgray;
+    border: 0.3px solid lightgray;
     margin-bottom: 20px;
   }
 
@@ -28,7 +27,25 @@ const Container = styled.div`
     border-collapse: collapse;
   }
 
+  th,
+  td {
+    padding: 10px;
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+    font-size: 0.9em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+  }
+
+  td:last-child {
+    text-align: right;
+    padding-right: 10px;
+  }
+
   button {
+    /* 환불 버튼 스타일 */
     font-size: 0.8em;
     font-weight: bold;
     border: none;
@@ -49,36 +66,6 @@ const Container = styled.div`
       transform: translateY(2px);
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     }
-  }
-
-  th, td {
-    padding: 20px;
-    border-top: 1px solid lightgray;
-    border-bottom: 1px solid lightgray;
-    font-size: .9em;
-    &:nth-child(1) {
-      width: 40%;
-    }
-    &:nth-child(2) {
-      width: 20%;
-    }
-    &:nth-child(3) {
-      width: 20%;
-    }
-
-  }
-
-  tbody tr{
-
-    &:hover{
-    background-color: #F1F0F0;
-   }
-  }
-
-  td {
-    text-align: center;
-    font-size: .75em;
-    color: #636363;
   }
 `;
 

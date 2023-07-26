@@ -160,7 +160,7 @@ const MyReview = () => {
           </tr>
         </thead>
         <tbody>
-          {memberReview.map((review) => (
+          {memberReview && memberReview.map((review) => (
             <tr key={review.id}>
               <td>
                 <img src={review.reviewImg} alt="Review" />

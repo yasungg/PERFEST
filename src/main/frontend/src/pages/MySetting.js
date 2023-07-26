@@ -5,80 +5,122 @@ import { UserContext } from "../context/UserStore";
 import { useNavigate } from "react-router";
 import Header from "../components/Header";
 import Modal from "../utils/Modal";
+import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 
 
 const BodyContainer = styled.div`
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #FEFDFD;
 `;
 
 const Container = styled.div`
-  background-color: #FEFDFD;
-  width: 40%;
-  margin: 3px auto;
+  width: 90%;
+  max-width: 400px;
+  margin: 15px auto;
   border: 1px solid gray;
   padding: 30px;
-
+  border-radius: 10px;
+  background-color: white;
 `;
 
 const Section2 = styled.div`
-  width: 80%;
-  margin: 0 auto;
-  p {
-      font-size: .9em;
-      font-weight: bold;
-    }
+  width: 100%;
 
-    input {
-      width: 100%;
-      height: 35px;
-      border: 1px solid lightgray;
-      border-radius: 2px;
+  p {
+    font-size: 0.9em;
+    font-weight: bold;
+  }
+
+  input {
+    width: 100%;
+    height: 35px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 5px;
+    margin-top: 5px;
+  }
+
+  button {
+    width: 100%;
+    height: 35px;
+    font-size: 0.8em;
+    font-weight: bold;
+    background-color: #2f4050;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    &:hover {
+      background-color: #293846;
     }
+  }
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 5px;
+
+  button {
+    /* background-color: transparent; */
+    border: 1px;
+    cursor: pointer;
+    font-size: 1em;
+    color: #2f4050;
+    /* margin-left: 10px; */
+    &:hover {
+      color: skyblue;
+    }
+  }
 `;
 
 const Label = styled.label`
-
   position: relative;
 
   button {
     position: absolute;
-    height: 25px;
-    border: none;
-    background-color: white;
-    top : 53px;
-    right: 0;
+    height: 0%;
+    /* background-color: none; */
+    top: 77px;
     cursor: pointer;
     font-weight: bold;
     &:hover {
-    color: skyblue;
+      color: skyblue;
     }
   }
 `;
 
 const DeleteMem = styled.div`
-  width: 80%;
+  width: 100%;
   margin: 30px auto;
+  text-align: center;
 
   button {
-    width: 100%;
+    width: 80%;
+    max-width: 300px;
     height: 35px;
-    font-size: .8em;
+    font-size: 0.8em;
     font-weight: bold;
     background-color: #2f4050;
     color: white;
     border: none;
-    border-radius: 2px;
+    border-radius: 5px;
     cursor: pointer;
-    margin-bottom: 20px;
-
+    margin-top: 20px;
     &:hover {
-      background-color: skyblue;
+      background-color: #293846;
     }
   }
 
   hr {
     background-color: lightgray;
-    border: .3px solid lightgray;
+    border: 0.5px solid lightgray;
   }
 `;
 
@@ -87,15 +129,20 @@ const ModalStyle = styled.div`
   margin: 0 auto;
 
   input {
-    width: 80%;
+    width: 100%;
     height: 30px;
     border: 1px solid lightgray;
-    border-radius: 2px;
+    border-radius: 5px;
+    padding: 5px;
+    margin-top: 5px;
   }
+
   p {
     font-size: 0.9em;
     font-weight: bold;
+    margin-top: 10px;
   }
+
   div {
     font-size: 0.8em;
     font-weight: bold;
@@ -103,18 +150,16 @@ const ModalStyle = styled.div`
   }
 `;
 
-const Tm = styled.div`
-  display: flex;
-  justify-content: center;
-  font-size: 1.8em;
-
-`;
+// const Tm = styled.div`
+//   font-size: 1.8em;
+//   font-weight: bold;
+//   margin-bottom: 15px;
+// `;
 
 const MySetting = () => {
 
   const navigate = useNavigate();
   const {isLogin, setIsLogin} = useContext(UserContext);
-  // let userEmail = "qhwkal1@naver.com"
 
   // 회원정보 조회 및 닉네임 , 주소 수정
   const [memberInfo, setMemberInfo] = useState("");
@@ -217,7 +262,7 @@ const MySetting = () => {
   return (
     <>
       <BodyContainer>
-        <Tm>내 정보 관리</Tm>
+        {/* <Tm>내 정보</Tm> */}
         <Container>
           <Header />
           {memberInfo && memberInfo.map(member => (
@@ -244,7 +289,12 @@ const MySetting = () => {
                   readOnly
                   placeholder={member.nickName}
                 />
-                <button onClick={updateNicName}>수정</button>
+                {/* <button onClick={updateNicName}>수정</button> */}
+                <ButtonContainer>
+                  <button onClick={updateNicName}>
+                    <FaPencilAlt />
+                  </button>
+                </ButtonContainer>
                 </div>
               </Label>
               <Label>
@@ -256,7 +306,12 @@ const MySetting = () => {
                   readOnly
                   placeholder={member.address}
                 />
-                <button onClick={updateAdd}>수정</button>
+                {/* <button onClick={updateAdd}>수정</button> */}
+                <ButtonContainer>
+                  <button onClick={updateAdd}>
+                    <FaPencilAlt />
+                  </button>
+                </ButtonContainer>
                 </div>
               </Label>
             </Section2>

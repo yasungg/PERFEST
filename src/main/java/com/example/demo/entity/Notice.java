@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity(name = "t_notice")
 @Getter @Setter @ToString
@@ -21,4 +22,7 @@ public class Notice {
 
     @Column(name = "contents")
     private String contents;
+
+    @Column(name = "created")
+    private LocalDateTime created;
 }
