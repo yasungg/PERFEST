@@ -154,7 +154,7 @@ public class MyPageController {
     }
 
     // 회원 큰손 랭킹 조회 API
-    @GetMapping("/ranking/{memberId}")
+    @GetMapping("/ranking")
     public ResponseEntity<Integer> getRankingByTotalPrice() {
         Long memberId = info.getId();
         Member member = new Member();
@@ -167,7 +167,7 @@ public class MyPageController {
     }
 
     // 회원 뱃지 랭킹 조회 API
-    @GetMapping("/ranking/badges/{memberId}")
+    @GetMapping("/ranking/badges")
     public ResponseEntity<Integer> getRankingByBadges() {
         Long memberId = info.getId();
         Member member = new Member();
