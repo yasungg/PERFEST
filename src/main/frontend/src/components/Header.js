@@ -18,6 +18,10 @@ const HeaderContainer = styled.div`
   height: 58px;
   background: white;
   border: none;
+  @media screen and (max-width: 767) {
+    width: 100vw;
+    max-width: 100%;
+  }
   //  position: fixed;
   //  top: 0;
   //  z-index: 99;

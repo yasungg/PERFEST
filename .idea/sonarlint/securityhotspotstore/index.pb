@@ -359,8 +359,6 @@ s
 Csrc/main/java/com/example/demo/controller/AuthMemberController.java,1\9\1968d245a76c902a49db06539bcaafbff1752df8
 n
 >src/main/java/com/example/demo/controller/KakaoController.java,5\5\55a9329635b44710014bfbb9e0d66986c619e128
-<
-build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
 p
 @src/main/java/com/example/demo/dto/memberDTOs/MemberListDTO.java,1\3\13f3f8fb38a7cfbdb465b33423b2e131ad52df38
 l
