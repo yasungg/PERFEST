@@ -7,6 +7,7 @@ const Slider1 = styled.div`
   position: relative;
   width: 100%;
   height: 100vh;
+  min-height: 100vh;
   background: white;
   &:hover .sliderImg1 {
     opacity: 1;

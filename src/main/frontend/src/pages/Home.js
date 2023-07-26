@@ -347,13 +347,7 @@ const Home = () => {
       localStorage.setItem("tokenExpiresIn", JWT.tokenExpiresIn);
       console.log(localStorage.getItem("accessToken"));
     }
-    console.log(isLogin);
-    // console.log(localStorage.getItem("accessToken"));
   }, [getJWT]);
-
-  useEffect(() => {
-    console.log(window.scrollY);
-  });
   return (
     <Container>
       <Header background="transparent" />
