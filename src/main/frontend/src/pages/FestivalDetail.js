@@ -11,6 +11,17 @@ const BodyContainer = styled.div``;
 
 const FestivalDetail = () => {
   const { id } = useParams();
+    const [festivalDetail, setFestivalDetail] = useState([]);
+
+
+    useEffect(() => {
+        const getFestivalDetail = async() => {
+            const response = await FestivalAPI.getFestivalByFestivalId(id);
+            console.log(response.data);
+            setFestivalDetail(response.data);
+        }
+        getFestivalDetail();
+    },[id]);
   return (
     <Container>
       <Header />
