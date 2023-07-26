@@ -48,19 +48,19 @@ public class FestivalController {
         return null;
     }
 
-    @PostMapping("/getSearchFestivalInfo")
-    public ResponseEntity<List<Festival>> getSearchFestivalInfo(@RequestBody Map<String, Object> searchData) {
-        // 프론트엔드에서 받아온 3개의 카테고리의 값 중 하나라도 있는 경우에만 값을 받아오고
-        // 받아오지 않을 경우, NullPointException 을 방지하기 위해 Optional 처리
-        Optional<List<String>> selectedLocations = Optional.ofNullable((List<String>) searchData.get("location"));
-        // 날짜는 searchData 객체에서 period 안에 시작일, 종료일을 함께 받아오기 때문에 Map 으로 받아옴
-        Optional<Map<String, String>> selectedPeriod = (Optional<Map<String, String>>) searchData.get("period");
-        Optional<List<String>> selectedSeasons = Optional.ofNullable((List<String>) searchData.get("seasons"));
-
-        // Service를 호출하여 비즈니스 로직을 수행하고, Festival 리스트를 가져옵니다.
-        List<Festival> festivals = festivalService.searchFestivalInfo(selectedLocations, selectedPeriod, selectedSeasons);
-
-        // festivals를 ResponseEntity에 담아 반환합니다.
-        return ResponseEntity.ok(festivals);
-    }
+//    @PostMapping("/getSearchFestivalInfo")
+//    public ResponseEntity<List<Festival>> getSearchFestivalInfo(@RequestBody Map<String, Object> searchData) {
+//        // 프론트엔드에서 받아온 3개의 카테고리의 값 중 하나라도 있는 경우에만 값을 받아오고
+//        // 받아오지 않을 경우, NullPointException 을 방지하기 위해 Optional 처리
+//        Optional<List<String>> selectedLocations = Optional.ofNullable((List<String>) searchData.get("location"));
+//        // 날짜는 searchData 객체에서 period 안에 시작일, 종료일을 함께 받아오기 때문에 Map 으로 받아옴
+//        Optional<Map<String, String>> selectedPeriod = (Optional<Map<String, String>>) searchData.get("period");
+//        Optional<List<String>> selectedSeasons = Optional.ofNullable((List<String>) searchData.get("seasons"));
+//
+//        // Service를 호출하여 비즈니스 로직을 수행하고, Festival 리스트를 가져옵니다.
+//        List<Festival> festivals = festivalService.searchFestivalInfo(selectedLocations, selectedPeriod, selectedSeasons);
+//
+//        // festivals를 ResponseEntity에 담아 반환합니다.
+//        return ResponseEntity.ok(festivals);
+//    }
 }

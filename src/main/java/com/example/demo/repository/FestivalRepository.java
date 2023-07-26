@@ -28,6 +28,6 @@ public interface FestivalRepository extends JpaRepository<Festival, Long> {
     //Festival 지역 검색 결과 페이지네이션
 //    @Query("SELECT f FROM Festival f WHERE f.festivalLocation LIKE %:keyword% OR ")
 
-    List<Festival> findByFestivalNameAndStartDateBetweenEndDateAndSeasonIn(Optional<List<String>> locations, Optional<Map<String, String>> selectedPeriod, Optional<List<String>> seasons);
+//    List<Festival> findByFestivalNameAndStartDateBetweenEndDateAndSeasonIn(Optional<List<String>> locations, Optional<Map<String, String>> selectedPeriod, Optional<List<String>> seasons);
 
 }

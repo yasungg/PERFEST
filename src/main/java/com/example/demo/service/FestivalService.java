@@ -221,8 +221,8 @@ public class FestivalService {
         return festivalRepository.findbySearchKeyword(keyword, pageRequest);
     }
 
-    public List<Festival> searchFestivalInfo(Optional<List<String>> selectedLocations, Optional<Map<String, String>> selectedPeriod, Optional<List<String>> selectedSeasons) {
-        List<Festival> list = festivalRepository.findByFestivalNameAndStartDateBetweenEndDateAndSeasonIn(selectedLocations, selectedPeriod, selectedSeasons);
-        return list;
-    }
+//    public List<Festival> searchFestivalInfo(Optional<List<String>> selectedLocations, Optional<Map<String, String>> selectedPeriod, Optional<List<String>> selectedSeasons) {
+//        List<Festival> list = festivalRepository.findByFestivalNameAndStartDateBetweenEndDateAndSeasonIn(selectedLocations, selectedPeriod, selectedSeasons);
+//        return list;
+//    }
 }

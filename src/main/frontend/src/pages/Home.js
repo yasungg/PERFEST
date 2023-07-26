@@ -14,6 +14,10 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   overflow: hidden;
+  @media screen and (max-width: 853px) {
+    height: 100vh;
+    overflow: visible;
+  }
 `;
 const VideoContainer = styled.div`
   width: 100%;
@@ -47,6 +51,7 @@ const VideoContainer = styled.div`
 const Video = styled.video`
   width: 100%;
   background-size: cover;
+  min-height: 100vh;
   border: none;
   outline: none;
   z-index: 0;
@@ -148,7 +153,7 @@ const ItemBox = styled.div`
     grid-template-areas:
       "box2"
       "box1";
-    height: 1440px;
+    height: 100vh;
   }
 `;
 const ItemBoxForPic = styled.div`
@@ -157,6 +162,10 @@ const ItemBoxForPic = styled.div`
   height: 100vh;
   min-height: 1024px;
   overflow: hidden;
+  @media screen and (max-width: 853px) {
+    height: 600px;
+    min-height: 600px;
+  }
 `;
 const PictureForItemBox = styled.img`
   width: 40vw;
@@ -199,7 +208,7 @@ const DescBox = styled.div`
   @media screen and (max-width: 853px) {
     width: 90vw;
     height: 40vh;
-    min-height: 400px;
+    min-height: 200px;
   }
   .div1 {
     display: flex;
@@ -212,7 +221,7 @@ const DescBox = styled.div`
     font-weight: 500;
     user-select: none;
     @media screen and (max-width: 853px) {
-      font-size: calc(16px + 4vw);
+      font-size: calc(16px + 2vw);
       font-weight: 800;
     }
   }
@@ -238,7 +247,7 @@ const DescBoxForPicture = styled.div`
   @media screen and (max-width: 853px) {
     width: 90vw;
     height: 40vh;
-    min-height: 400px;
+    min-height: 200px;
     transform: translate(-50%, -50%);
   }
   .div1 {
@@ -252,14 +261,14 @@ const DescBoxForPicture = styled.div`
     font-weight: 500;
     user-select: none;
     @media screen and (max-width: 853px) {
-      font-size: calc(16px + 4vw);
+      font-size: calc(16px + 2vw);
       font-weight: 800;
     }
   }
   .desc2 {
     user-select: none;
     @media screen and (max-width: 853px) {
-      font-size: calc(16px + 1vw);
+      font-size: calc(16px + 0.5vw);
     }
   }
 `;
