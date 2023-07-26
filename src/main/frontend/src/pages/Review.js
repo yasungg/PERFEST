@@ -42,6 +42,32 @@ const ReviewWriteButton = styled.button`
     background-color: #e0e0e0;
   }
 `;
+const ReviewDesc = styled.div`
+  display: flex;
+  gap: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  margin: 10px auto;
+`;
+
+const ReviewContent = styled.div`
+  font-size: 16px;
+  font-weight: 500;
+`;
+
+const ReviewNickName = styled.div`
+  font-size: 14px;
+  color: #555;
+`;
+
+const ReviewWrittenTime = styled.div`
+  font-size: 12px;
+  color: #888;
+`;
 const Review = () => {
     const [inputReviewText, setInputReviewText] = useState("");
     const [reviewData, setReviewData] = useState([]);
@@ -76,6 +102,13 @@ const Review = () => {
                     <textarea className="reviewwrite"  cols="160" rows="3" value={inputReviewText} onChange={onChangeReview}></textarea>
                     <ReviewWriteButton onClick={onClickWriteReview}>리뷰 작성하기</ReviewWriteButton>
                 </ReviewWriting>
+                {reviewData && reviewData.map((review) => (
+                <ReviewDesc key={review.reviewId}>
+                  <ReviewContent>{review.reviewContent}</ReviewContent>
+                  <ReviewNickName>{review.nickname}</ReviewNickName>
+                  <ReviewWrittenTime>{review.reviewWrittenTime}</ReviewWrittenTime>
+                  </ReviewDesc>
+                ))}
             </ReviewContainer>
         </Container>
     )
