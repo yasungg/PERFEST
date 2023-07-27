@@ -50,7 +50,7 @@ const ReviewDesc = styled.div`
   padding: 10px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 80%;
+  width: 100%;
   margin: 10px auto;
 `;
 
@@ -91,8 +91,7 @@ const Review = () => {
             console.log(response.data);
             setReviewData(response.data);
             console.log(reviewData);
-
-        }
+          };
         getFestivalReview();
     },[reviewUpdateTrigger]);
     return(

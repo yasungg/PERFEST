@@ -10,7 +10,7 @@ const ReviewAPI = {
         const Authorization =
         "Bearer " + window.localStorage.getItem("accessToken");
         console.log(Authorization);
-        return await axios.post( `review/writereview`,reviewInsert, {
+        return await axios.post(`/review/writereview`,reviewInsert, {
             headers: {
               "Content-Type": "application/json",
               Authorization: Authorization,

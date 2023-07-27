@@ -25,7 +25,6 @@ const BoardTitle = styled.div`
   font-weight: bold;
   color: #333;
 `;
-
 const UserInfo = styled.div`
   display: flex;
   justify-content: space-between;
@@ -33,13 +32,11 @@ const UserInfo = styled.div`
   margin-top: 20px;
   width: 100%;
 `;
-
 const BoardNickname = styled.div`
   font-weight: bold;
   color: #333;
   font-size: 18px;
 `;
-
 const BoardDate = styled.div`
   color: #666;
   font-size: 14px;
@@ -56,7 +53,6 @@ const BoardDesc = styled.div`
   color: #333;
   overflow: auto;
 `;
-
 const CommentInfo = styled.div`
   display: flex;
   justify-content: space-between;
@@ -68,7 +64,6 @@ const CommentCount = styled.div`
   margin-top: 3px;
   margin-bottom: 3px;
 `;
-
 const CommentWrite = styled.div`
   display: flex;
   justify-content: space-between;
@@ -91,7 +86,6 @@ const CommentWriteButton = styled.button`
   border-radius: 4px;
   font-weight: bold;
   cursor: pointer;
-
   &:hover {
     background-color: #e0e0e0;
   }
@@ -109,19 +103,16 @@ const CommentHead = styled.div`
   justify-content: flex-start;
   align-items: center;
 `;
-
 const CommentNickName = styled.div`
   font-size: 20px;
   font-weight: bold;
   color: #333;
 `;
-
 const CommentWrittenTime = styled.div`
   font-size: 14px;
   color: #666;
   margin-left: 10px;
 `;
-
 const CommentReWrite = styled.div`
   .replycomment {
     border: none;
@@ -138,7 +129,6 @@ const CommentReWrite = styled.div`
     }
   }
 `;
-
 const CommentLike = styled.div`
   margin-left: 3px;
   margin-right: 3px;
@@ -161,12 +151,10 @@ const CommentArr = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
-
 const CommentBody = styled.div`
   font-size: 17px;
   color: #333;
 `;
-
 const CommentLikeCount = styled.div`
   font-size: 14px;
   color: #666;
@@ -188,7 +176,6 @@ const CommentReplyWrite = styled.div`
     outline: none;
   }
 `;
-
 const CommentReplyWriteButton = styled.button`
   width: 10%;
   padding: 8px;
@@ -219,7 +206,6 @@ const BoardLike = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 20px;
-
   .like-button {
     display: flex;
     align-items: center;
@@ -240,7 +226,6 @@ const BoardLike = styled.div`
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
   }
-
   .board-like-count {
     display: flex;
     align-items: center;
@@ -256,7 +241,6 @@ const Heart2 = styled(FaHeart)`
   margin-right: 3px;
   margin-top: 5px;
 `;
-
 const BoardArticle = () => {
   const { communityId } = useParams(); // 게시판 번호 전달 하기 위해서 useparams 사용
   const [inputComment, setInputComment] = useState("");
@@ -269,18 +253,16 @@ const BoardArticle = () => {
   const [commentUpdateTrigger, setCommentUpdateTrigger] = useState(false); // 댓글 업데이트를 트리거하는 상태 추가
   const [openModal, setOpenModal] = useState(false);
   const [modalMsg, setModalMsg] = useState("");
+  const [replyUpdateTrigger, setReplyUpdateTrigger] = useState(false);
   const [boardLikeCount, setBoardLikeCount] = useState("");
-
 
   const confirmBtn = () => {
     setOpenModal(false);
      console.log("확인 버튼이 눌려 졌습니다.");
   }
- const closeModal = () => {
+  const closeModal = () => {
     setOpenModal(false);
   };
-
-
   const onChangeComment = (e) => {
     setInputComment(e.target.value);
   };
@@ -324,7 +306,6 @@ const BoardArticle = () => {
         setModalMsg("이미 공감한 게시글입니다.");
         return;
       }
-
       // 중복 체크를 통과한 경우, 실제로 좋아요를 추가
       const likeResponse = await BoardAPI.AddBoardLike(communityId);
       console.log(likeResponse.data);
@@ -333,7 +314,6 @@ const BoardArticle = () => {
       console.error("좋아요 추가에 실패했습니다.", error);
     }
   };
-
   // 댓글 좋아요 눌렀을 때
   const onClickCommentLike = async (commentId) => {
     try {
@@ -345,7 +325,6 @@ const BoardArticle = () => {
         setModalMsg("이미 공감한 댓글입니다.");
         return;
       }
-
       // 중복 체크를 통과한 경우, 실제로 좋아요를 추가
       const likeResponse = await CommentAPI.AddCommentLike(commentId);
       console.log(likeResponse.data);
@@ -353,7 +332,6 @@ const BoardArticle = () => {
       console.error("댓글 좋아요 추가에 실패했습니다.", error);
     }
   };
-
   // 해당 게시판 댓글 가져오기
   useEffect(() => {
     const getBoardComment = async () => {
@@ -396,6 +374,7 @@ const BoardArticle = () => {
       newMap.delete(commentId); // 대댓글 작성 후 해당 댓글의 대댓글 내용 삭제
       return newMap;
     });
+    setReplyUpdateTrigger(prev => !prev);
   };
   // 게시판 대댓글 작성
   const onChangeReplyComment = (e, commentId) => {
@@ -405,6 +384,7 @@ const BoardArticle = () => {
       newMap.set(commentId, value); // 대댓글 내용 업데이트
       return newMap;
     });
+    setReplyUpdateTrigger(prev => !prev);
   };
   // 해당 댓글의 대댓글 가져오기
   useEffect(() => {
@@ -419,7 +399,7 @@ const BoardArticle = () => {
     commentData.forEach((comment) => {
       getReplyCommentData(comment.commentId);
     });
-  }, [commentData]);
+  }, [commentData, replyUpdateTrigger]);
   return (
     <Container justifyContent="center" alignItems="center">
       <BodyContainer>

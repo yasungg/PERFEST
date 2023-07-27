@@ -14,7 +14,7 @@ import java.util.Map;
 
 @RestController
 @Slf4j
-@RequestMapping("/auth/review")
+@RequestMapping("/review")
 @RequiredArgsConstructor
 public class ReviewController {
     private final ReviewService reviewService;
@@ -23,24 +23,13 @@ public class ReviewController {
     // 리뷰 작성(POST)
     @PostMapping(value = "/writereview")
     public ResponseEntity<Boolean> reviewInsert(@RequestBody Map<String, Object> reviewData) {
-        int festivalId = (Integer)reviewData.get("festivalId");
+        int festivalId = (Integer) reviewData.get("festivalId");
         String reviewContent = (String)reviewData.get("reviewContent");
         Long memberId = info.getId();
 //        String reviewImg = (String)reviewData.get("reviewImg");
         boolean result = reviewService.insertReview((long) festivalId, reviewContent, memberId);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-    // 해당 축제 리뷰 가져오기(GET)
-    @GetMapping(value = "/getreview")
-    public ResponseEntity<List<ReviewDTO>> reviewSelectList(@RequestParam int festivalId) {
-        List<ReviewDTO> list = reviewService.getReviewList((long) festivalId);
-        return new ResponseEntity<>(list, HttpStatus.OK);
-    }
-    // 해당 축제의 리뷰 갯수 가져오기(GET)
-    @GetMapping(value = "/getreviewcount")
-    public ResponseEntity<Long> reviewCount(@RequestParam String festivalId) {
-        long result = reviewService.getReviewCount(Long.parseLong(festivalId));
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
+
 
 }
