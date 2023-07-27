@@ -26,7 +26,6 @@ public class CommentController {
     public ResponseEntity<Boolean> commentInsert(@RequestBody Map<String, Object> commentData) {
         String commentBody = (String) commentData.get("commentBody");
         String communityId = (String) commentData.get("communityId");
-//        int memberId = (Integer) commentData.get("memberId");
         Long memberId = info.getId();
         boolean result = commentService.insertComment(commentBody, Long.parseLong(communityId), memberId);
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -35,7 +34,6 @@ public class CommentController {
     @PostMapping(value = "/writereplycomment")
     public ResponseEntity<Boolean> replycommentInsert(@RequestBody Map<String, Object> replycommentData) {
         int parentId = (Integer)replycommentData.get("commentId");
-//        int memberId = (Integer)replycommentData.get("memberId");
         Long memberId = info.getId();
         String commentBody = (String)replycommentData.get("commentBody");
         boolean result = commentService.insertReplyComment((long) parentId, memberId, commentBody);
