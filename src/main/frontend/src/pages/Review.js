@@ -8,19 +8,30 @@ import { useEffect } from "react";
 const ReviewContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 100px;
+  width: 100%;
+  max-width: 600px;
+  margin-top: 50px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
+
 const ReviewCount = styled.div`
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
 `;
 
 const ReviewWriting = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  width: 100%;
+  margin-bottom: 20px;
 
   textarea.reviewwrite {
-    width: 85%;
+    flex: 1;
+    min-height: 80px;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -31,40 +42,41 @@ const ReviewWriting = styled.div`
 `;
 
 const ReviewWriteButton = styled.button`
-  width: 15%;
+  width: 30%;
   padding: 8px;
-  margin-left: 20px;
-  background-color: #f1f1f1;
+  background-color: #4285F4;
+  color: #fff;
   border: none;
   border-radius: 4px;
+  margin-left: 15px;
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: #e0e0e0;
+    background-color: #3073bf;
   }
 `;
+
 const ReviewDesc = styled.div`
-  display: flex;
-  gap: 10px;
-  background-color: #f9f9f9;
+  background-color: #fff;
   border: 1px solid #ddd;
   padding: 10px;
   border-radius: 5px;
+  margin-bottom: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  margin: 10px auto;
 `;
 
 const ReviewContent = styled.div`
   font-size: 16px;
   font-weight: 500;
+  margin-bottom: 5px;
 `;
 
 const ReviewNickName = styled.div`
   font-size: 14px;
   color: #555;
+  margin-bottom: 5px;
 `;
 
 const ReviewWrittenTime = styled.div`
