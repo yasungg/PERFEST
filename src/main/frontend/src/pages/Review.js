@@ -8,12 +8,12 @@ import { useEffect } from "react";
 const ReviewContainer = styled.div`
   display: flex;
   flex-direction: column;
+  margin-top: 100px;
 `;
 const ReviewCount = styled.div`
 `;
 
 const ReviewWriting = styled.div`
-  margin-top: 100px;
   display: flex;
   justify-content: space-between;
   align-items: center;
