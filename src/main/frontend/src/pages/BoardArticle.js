@@ -254,7 +254,7 @@ const BoardArticle = () => {
   const [openModal, setOpenModal] = useState(false);
   const [modalMsg, setModalMsg] = useState("");
   const [replyUpdateTrigger, setReplyUpdateTrigger] = useState(false);
-  const [boardLikeCount, setBoardLikeCount] = useState("");
+  
 
   const confirmBtn = () => {
     setOpenModal(false);
@@ -266,7 +266,7 @@ const BoardArticle = () => {
   const onChangeComment = (e) => {
     setInputComment(e.target.value);
   };
-  // 게시판 댓글 작성
+
   const onClickWriteComment = async () => {
     if (inputComment.trim() === "") {
       // textarea 내용이 비어 있는 경우
@@ -291,7 +291,6 @@ const BoardArticle = () => {
       const response = await BoardAPI.GetBoardArticle(communityId);
       console.log(response.data);
       setBoardArticle(response.data);
-      // setBoardLikeCount(response.data.likeCount);
     };
     getBoardArticle();
   }, [communityId]);
@@ -309,7 +308,6 @@ const BoardArticle = () => {
       // 중복 체크를 통과한 경우, 실제로 좋아요를 추가
       const likeResponse = await BoardAPI.AddBoardLike(communityId);
       console.log(likeResponse.data);
-      // setBoardLikeCount(likeResponse.data.likeCount);
     } catch (error) {
       console.error("좋아요 추가에 실패했습니다.", error);
     }
