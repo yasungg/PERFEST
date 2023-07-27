@@ -7,7 +7,7 @@ const CategoryContainer = styled.div`
   display: block;
   width: auto;
   height: auto;
-  z-index: 2;
+  z-index: 1;
   @media screen and (max-width: 767px) {
     top: 54px;
   }

@@ -144,8 +144,6 @@ Q.idea/sonarlint/securityhotspotstore/6/d/6d0b098fdf9abf6730db5f40cdf9793eb26956
 Å
 Q.idea/sonarlint/securityhotspotstore/6/e/6e2c25627d6f5c5e0d2660bcef699194dcfb3ea7,c\4\c45030835abf1abc277a25e5d979aaa19cf2ddf2
 Å
-Q.idea/sonarlint/securityhotspotstore/d/8/d83bbef987c353532bc03cde02b3939b888015fb,e\d\ed90cd7c4500cfc098c9d93ea9236b940bc46e7b
-Å
 Q.idea/sonarlint/securityhotspotstore/0/4/0483f2b5ff97a4939d0fd079a60a4c11bab22ac2,5\a\5a23d6bc553f1c29c093cd8428d91173464e9b7e
 Å
 Q.idea/sonarlint/securityhotspotstore/0/2/02f38d17933111cb5a7b89b41de0f98525d7cd81,1\1\113c6eda172e437f563313ce2c028685c96f6324
@@ -186,8 +184,6 @@ Q.idea/sonarlint/securityhotspotstore/f/0/f02195d21d4e77e7a9f8c161fd9eded648ea0d
 w
 G.idea/sonarlint/issuestore/2/a/2a8734374f02d165960c858c95a41df297f4b310,4\b\4bb0a67e215c7034c4ec1a5a14e8b643fe34cdb8
 Å
-Q.idea/sonarlint/securityhotspotstore/9/9/990f7ee22eae531c8e622308d3bcb82491eb20d8,5\a\5a1282f581e25c6fe33bc1ea1f1692316cc5239e
-Å
 Q.idea/sonarlint/securityhotspotstore/1/1/11d19fe6e9c8b605d127bdc00fb89ebe854c5353,1\3\134d74ece499d7e9278d50a747401128bd5bd944
 Å
 Q.idea/sonarlint/securityhotspotstore/1/5/1570eb7f262ba7ce07372c0528d69697ca0f3d51,3\c\3c13c18d4316a687be47cf0ff82d24ee6c62c686
@@ -200,10 +196,6 @@ G.idea/sonarlint/issuestore/4/5/4527a806cfbe93fe9ef192c6d9ef6e35c423664d,c\5\c5
 Å
 Q.idea/sonarlint/securityhotspotstore/1/e/1e5fa68bbc1c060af30ac0c3d1e4549fbff79ab7,e\7\e707e618432eb855048089da79b2a36fbd3e7746
 Å
-Q.idea/sonarlint/securityhotspotstore/9/f/9f54d51c2f61195fb0c4f36ba65667dedbc1d2ac,e\f\ef0ca501cfc082a7f1531f12ee22e764b34b8d4c
-Å
-Q.idea/sonarlint/securityhotspotstore/9/a/9adef664974dfe251ce41d388105ccf4a956fa1c,a\e\aee6407e12ac8433db54f1b7aef5bb163947c188
-Å
 Q.idea/sonarlint/securityhotspotstore/f/1/f16043f109aef8fd3e056744f95042659c4e4b77,a\7\a74ae1b6aba0ed925422a20b1a4ec6268cc85763
 Å
 Q.idea/sonarlint/securityhotspotstore/f/8/f8bc1050c29f7666617beffe5ae0dc7061ef9aff,2\b\2bd7e18a71adc6ac07f1c160bfb40b902a5a35a0
@@ -213,8 +205,6 @@ Q.idea/sonarlint/securityhotspotstore/f/5/f51c78e349c9d198ef55d8a7af7d828cb0df86
 Q.idea/sonarlint/securityhotspotstore/f/5/f5fa88dd32ac5ffb9528090d9e1c8fb1dcbffb2e,2\d\2d512aac1ef5a9c3602768f41547ae524d29f70b
 Å
 Q.idea/sonarlint/securityhotspotstore/f/e/fe4bc679ca548cb82f7aa5e2a2e9aa8f753f70d1,8\4\840eeff70ab34d41237dfb7266cfc9b5cf16bcfe
-Å
-Q.idea/sonarlint/securityhotspotstore/1/f/1fc2a73a9094af358b3e6bcad3183808df547caf,6\6\66a4312daa5452ae05d50f2566d79560847d2dac
 Å
 Q.idea/sonarlint/securityhotspotstore/f/b/fb9578f94cf9a34ec61d44cd3498ef12e1add64a,0\1\01358ba6d8c78701b4e496f2e5442303ee6f6c39
 Å
@@ -251,8 +241,6 @@ Q.idea/sonarlint/securityhotspotstore/a/6/a65202fa9d5866e5634fe9502b6ad6ce0c7b26
 Q.idea/sonarlint/securityhotspotstore/3/6/361e57beebc9647a3fe7b7f5de89d85fa684f5e9,8\2\829ffe0bc2df746c7c645a22373c28efdf9f9a02
 Å
 Q.idea/sonarlint/securityhotspotstore/3/6/36100e1927a5ce0593497b4b01d68f5929b296be,d\b\db71616d364379cd53445a4127d14c55728bb841
-w
-G.idea/sonarlint/issuestore/9/9/990f7ee22eae531c8e622308d3bcb82491eb20d8,2\f\2f546823d8f44be17019b586e9e21d7956b8747e
 Å
 Q.idea/sonarlint/securityhotspotstore/3/9/39553c80e561ef519c23c826ad4478718b99d933,1\4\14e0a1f5b0904b50a811b378becc56a054bbc8a8
 w
@@ -285,8 +273,6 @@ G.idea/sonarlint/issuestore/e/4/e451e25dd619509944fa64f0781cb5ecf3b3004a,6\a\6a
 Q.idea/sonarlint/securityhotspotstore/5/9/593e886710268121f803994ab372eb703fca28cc,b\2\b27297ccf22b5b159510889e07de25648531fef7
 w
 G.idea/sonarlint/issuestore/0/2/02f38d17933111cb5a7b89b41de0f98525d7cd81,f\5\f58ec4b17e26c734fb602ff77f13580d6857edd5
-Å
-Q.idea/sonarlint/securityhotspotstore/b/1/b1799965b7a67cb863031198f0748726c7a92669,8\a\8a7e51e45b5145ed62d89a7e2d82a59784e2e0dc
 w
 G.idea/sonarlint/issuestore/0/8/08e30cb5d0c8fa3c7f3669fb5f2c2970ccee12c7,9\2\92da1e3983022b5ee5840f4d6934f42c9cab0fe0
 Å
@@ -349,8 +335,6 @@ V
 &src/main/frontend/src/api/MemberAPI.js,7\e\7ee377fc12b23b3fd83558970af4cf6d004d1f7e
 h
 8src/main/frontend/src/components/MembershipManagement.js,5\8\5846f92c3a02cd2f633765490adeaec17653bd15
-b
-2src/main/frontend/src/components/StandardStyles.js,f\8\f8212f22942a6e2e368497f87b185499f3c85587
 T
 $src/main/frontend/src/pages/Login.js,d\c\dc3846aa64416d03926d9c6e1e2b3230d296423f
 o

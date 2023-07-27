@@ -7,14 +7,14 @@ import { useEffect } from "react";
 import Pagination from "../components/Pagination.js";
 
 const ReviewContainer = styled.div`
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  max-width: 600px;
-  margin-top: 50px;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
+  width: 96%;
+  margin: 8px auto 16px auto;
+  padding: 8px;
+  background-color: #f1f1f1;
+  /* border: 1px solid #ddd; */
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
@@ -43,9 +43,9 @@ const ReviewWriting = styled.div`
 `;
 
 const ReviewWriteButton = styled.button`
-  width: 30%;
+  width: 15%;
   padding: 8px;
-  background-color: #4285F4;
+  background-color: #222;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -230,7 +230,7 @@ const Review = () => {
       getReviewCount();
     },[reviewUpdateTrigger]);
 
-    
+
     return(
         <Container justifyContent="center" alignItems="center">
             <ReviewContainer>

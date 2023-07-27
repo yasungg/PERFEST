@@ -1,34 +1,408 @@
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../context/UserStore";
 import styled from "styled-components";
-import { Container } from "../components/StandardStyles";
-import Header from "../components/Header";
-import SearchSideBar from "../components/SearchSideBar";
+import { Xbox, Xbtn } from "../components/StandardStyles";
+import CloseIcon from "@mui/icons-material/Close";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import ForumIcon from "@mui/icons-material/Forum";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import FestivalAPI from "../api/FestivalAPI";
 import { useParams } from "react-router";
+import BlackLogo from "../images/PERFEST LOGO BLACK.png";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import Review from "./Review";
+import DetailHome from "../components/DetailHome";
+const DetailContainer = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  bottom: 0;
+  left: ${(props) => props.left};
+  width: 400px;
+  height: calc(100vh - 58px);
+  background: #222;
+  overflow-y: scroll;
+  z-index: 2;
+  box-shadow: 1px 0px 5px 0px #555555;
+  transition: all 0.3s ease-in;
+  overflow-x: hidden;
+  @media screen and (max-width: 767px) {
+    position: absolute;
+    width: 100vw;
+    max-width: 100vw;
+    left: 0;
+    height: calc(100vh - 50px - 40vh);
+    top: ${(props) => props.top};
+    /* bottom: ${(props) => props.bottom}; */
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+  }
+  @media screen and (max-width: 376px) {
+    height: calc(100vh - 6vh);
+    z-index: 99;
+  }
+  .show-scroll {
+    overflow-y: scroll;
+  }
 
-const BodyContainer = styled.div``;
+  /* 스크롤바 커스터마이징 */
+  &::-webkit-scrollbar {
+    width: 8px;
+    background: #fff;
+    border-radius: 2px;
+  }
 
+  &::-webkit-scrollbar-thumb {
+    background: rgba(34, 34, 34, 0.9);
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 1px solid transparent;
+    /* height: 20px; */
+  }
+
+  &::-webkit-scrollbar-track {
+    box-shadow: inset 0px 0px 3px gray;
+  }
+`;
+const FestDetailPictureBox = styled.div`
+  width: 392px;
+  height: 200px;
+  background: white;
+  display: flex;
+  @media screen and (max-width: 1024px) {
+    width: 100%;
+  }
+`;
+const FestDetailMainPicture = styled.div`
+  width: 200px;
+  height: 200px;
+  @media screen and (max-width: 1024px) {
+    width: 100vw;
+  }
+`;
+const FestDetailSubPictureBox = styled.div`
+  display: grid;
+  grid-template-columns: 100px 100px;
+  grid-template-rows: 100px 100px;
+  grid-template-areas:
+    "picture-1 picture-3"
+    "picture-2 picture-4";
+  overflow: hidden;
+  width: 200px;
+  height: 200px;
+  /* .main-picture {
+    grid-area: main-picture;
+  } */
+  .picture-2 {
+    grid-area: picture-2;
+  }
+  .picture-3 {
+    grid-area: picture-3;
+  }
+  .picture-4 {
+    grid-area: picture-4;
+  }
+  .picgture-5 {
+    grid-area: picture-5;
+  }
+  @media screen and (max-width: 767px) {
+    width: 100vw;
+    height: calc(100vw / 2);
+  }
+`;
+const FestDetailPictureDiv = styled.div`
+  overflow: hidden;
+  position: relative;
+`;
+const FestPicture = styled.img`
+  width: 100%;
+  height: 100%;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+const DimmedBackground = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(34, 34, 34, 0.3);
+  z-index: 5;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: all 0.1s ease-in;
+  &:hover {
+    background-color: rgba(34, 34, 34, 0.7);
+    cursor: pointer;
+  }
+`;
+const DetailBodyContainer = styled.div`
+  width: 100%;
+  @media screen and (max-width: 767px) {
+    width: 100vw;
+  }
+`;
+const FestivalNameBox = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100px;
+  background: white;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 8px;
+  .festival-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -140%);
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .festival-desc {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -20%);
+    font-size: 12px;
+  }
+  .festival-like {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 70%;
+    left: 40%;
+    transform: translate(-50%, -20%);
+    font-size: 12px;
+  }
+  .festival-tel {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 70%;
+    left: 60%;
+    transform: translate(-50%, -20%);
+    font-size: 12px;
+  }
+`;
+const FestivalNaviBox = styled.ul`
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  height: 48px;
+  background: white;
+  .festival-navi-radio {
+    display: none;
+  }
+  @media screen and (max-width: 767px) {
+    width: 100vw;
+  }
+`;
+const FestivalNaviBtn = styled.li`
+  width: 25%;
+  height: 100%;
+  background: white;
+  list-style-type: none;
+  .festival-navi-radio:checked + .navi-label {
+    span {
+      border-bottom: 2px solid #222;
+    }
+  }
+`;
+const FestivalDetailLabel = styled.label`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  height: 100%;
+  user-select: none;
+  span {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+  &:hover span {
+    transform: translateY(-2px);
+    transition: all 0.2s linear;
+  }
+`;
+const DetailDescBox = styled.div`
+  width: 100%;
+  background: white;
+  @media screen and (max-width: 767px) {
+    width: 100vw;
+  }
+`;
 const FestivalDetail = () => {
   const { id } = useParams();
-    // const [festivalDetail, setFestivalDetail] = useState([]);
+  const {
+    festDetailBoxMove,
+    setFestDetailBoxMove,
+    festDetailBoxMoveY,
+    setFestDetailBoxMoveY,
+  } = useContext(UserContext);
+  const [festivalDetail, setFestivalDetail] = useState([]);
+  const [navigationValue, setNavigationValue] = useState("");
+  const [mQuery, setMQuery] = useState(window.innerWidth < 769 ? true : false);
 
+  const screenChange = (event) => {
+    const matches = event.matches;
+    setMQuery(matches);
+  };
 
-    // useEffect(() => {
-    //     const getFestivalDetail = async() => {
-    //         const response = await FestivalAPI.getFestivalByFestivalId(id);
-    //         console.log(response.data);
-    //         setFestivalDetail(response.data);
-    //     }
-    //     getFestivalDetail();
-    // },[id]);
+  useEffect(() => {
+    let mql = window.matchMedia("screen and (max-width:769px)");
+    mql.addEventListener("change", screenChange);
+    return () => mql.removeEventListener("change", screenChange);
+  }, []);
+
+  useEffect(() => {
+    const getFestivalDetail = async () => {
+      const response = await FestivalAPI.getFestivalByFestivalId(id);
+      console.log(response.data);
+      setFestivalDetail(response.data);
+    };
+    if (id) {
+      getFestivalDetail();
+    }
+  }, [id]);
+  useEffect(() => {
+    console.log(navigationValue);
+  }, [navigationValue]);
   return (
-    <Container>
-      <Header />
-      <BodyContainer>
-        <SearchSideBar />
-      </BodyContainer>
-    </Container>
+    <DetailContainer left={festDetailBoxMove} top={festDetailBoxMoveY}>
+      <Xbox>
+        <DashboardIcon
+          style={{ color: "white", marginLeft: "8px", fontSize: "28px" }}
+        />
+        {mQuery ? (
+          <Xbtn onClick={() => setFestDetailBoxMoveY("-100vh")}>
+            <KeyboardArrowDownIcon
+              className="xIcon"
+              style={{ color: "white" }}
+            />
+          </Xbtn>
+        ) : (
+          <Xbtn onClick={() => setFestDetailBoxMove("-80px")}>
+            <CloseIcon className="xIcon" style={{ color: "white" }} />
+          </Xbtn>
+        )}
+      </Xbox>
+      <FestDetailPictureBox>
+        <FestDetailMainPicture>
+          <FestPicture src={BlackLogo} />
+        </FestDetailMainPicture>
+        <FestDetailSubPictureBox>
+          <FestDetailPictureDiv className="picture-1" src={BlackLogo} alt="aa">
+            <FestPicture src={BlackLogo} />
+          </FestDetailPictureDiv>
+          <FestDetailPictureDiv className="picture-2" src={BlackLogo} alt="aa">
+            <FestPicture src={BlackLogo} />
+          </FestDetailPictureDiv>
+          <FestDetailPictureDiv className="picture-3" src={BlackLogo} alt="aa">
+            <FestPicture src={BlackLogo} />
+          </FestDetailPictureDiv>
+          <FestDetailPictureDiv className="picture-4" src={BlackLogo} alt="aa">
+            <FestPicture src={BlackLogo} />
+            <DimmedBackground>
+              <AddCircleOutlineIcon
+                style={{ color: "white", fontSize: "36px" }}
+              />
+            </DimmedBackground>
+          </FestDetailPictureDiv>
+        </FestDetailSubPictureBox>
+      </FestDetailPictureBox>
+      <DetailBodyContainer>
+        <FestivalNameBox>
+          <p className="festival-title">서울 벚꽃축제</p>
+          <p className="festival-desc">서울에서 즐기는 벚꽃축제</p>
+          <div className="festival-like">
+            <FavoriteIcon
+              style={{ color: "red", fontSize: "12px", marginRight: "4px" }}
+            />
+            <span style={{ fontSize: "12px" }}>400</span>
+          </div>
+          <div className="festival-tel">
+            <ForumIcon
+              style={{ color: "#222", fontSize: "12px", marginRight: "4px" }}
+            />
+            <span style={{ fontSize: "12px" }}>27</span>
+          </div>
+        </FestivalNameBox>
+        <FestivalNaviBox>
+          <FestivalNaviBtn>
+            <input
+              type="radio"
+              className="festival-navi-radio"
+              id="detail-navi-home"
+              name="detail-navi-group"
+              value="home"
+              defaultChecked="true"
+              onChange={(e) => setNavigationValue(e.target.value)}
+            />
+            <FestivalDetailLabel className="navi-label" for="detail-navi-home">
+              <span>홈</span>
+            </FestivalDetailLabel>
+          </FestivalNaviBtn>
+          <FestivalNaviBtn>
+            <input
+              type="radio"
+              className="festival-navi-radio"
+              id="detail-navi-program"
+              name="detail-navi-group"
+              value="program"
+              onChange={(e) => setNavigationValue(e.target.value)}
+            />
+            <FestivalDetailLabel
+              className="navi-label"
+              for="detail-navi-program"
+            >
+              <span>프로그램</span>
+            </FestivalDetailLabel>
+          </FestivalNaviBtn>
+          <FestivalNaviBtn>
+            <input
+              type="radio"
+              className="festival-navi-radio"
+              id="detail-navi-product"
+              name="detail-navi-group"
+              value="product"
+              onChange={(e) => setNavigationValue(e.target.value)}
+            />
+            <FestivalDetailLabel
+              className="navi-label"
+              for="detail-navi-product"
+            >
+              <span>상품</span>
+            </FestivalDetailLabel>
+          </FestivalNaviBtn>
+          <FestivalNaviBtn>
+            <input
+              type="radio"
+              className="festival-navi-radio"
+              id="detail-navi-review"
+              name="detail-navi-group"
+              value="review"
+              onChange={(e) => setNavigationValue(e.target.value)}
+            />
+            <FestivalDetailLabel
+              className="navi-label"
+              for="detail-navi-review"
+            >
+              <span>리뷰</span>
+            </FestivalDetailLabel>
+          </FestivalNaviBtn>
+        </FestivalNaviBox>
+        <DetailDescBox>
+          {navigationValue === "home" && <DetailHome />}
+          {navigationValue === "review" && <Review />}
+
+          {!navigationValue && <DetailHome />}
+        </DetailDescBox>
+      </DetailBodyContainer>
+    </DetailContainer>
   );
 };
 export default FestivalDetail;

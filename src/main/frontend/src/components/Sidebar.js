@@ -187,6 +187,9 @@ const Sidebar = () => {
         <SidebarNaviBtn onClick={() => navigate("/pages/board")}>
           <span className="sidenavispan">Community</span>
         </SidebarNaviBtn>
+        <SidebarNaviBtn onClick={() => navigate("/pages/Calender")}>
+          <span className="sidenavispan">Calender</span>
+        </SidebarNaviBtn>
         <SidebarNaviBtn>
           <span className="sidenavispan">About</span>
         </SidebarNaviBtn>

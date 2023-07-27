@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { UserContext } from "../context/UserStore";
 import styled from "styled-components";
-import { Container } from "./StandardStyles";
 import FestivalAPI from "../api/FestivalAPI";
 import festivalPoster2 from "../images/2023안양충훈벚꽃축제.jpg";
 import SearchIcon from "@mui/icons-material/Search";
@@ -12,7 +11,6 @@ import BlackLogo from "../images/PERFEST LOGO BLACK.png";
 const SearchContainer = styled.div`
   box-sizing: border-box;
   display: inline-block;
-  width: 400px;
   min-width: 320px;
   height: calc(100vh - 58px);
   background-color: #fff;
@@ -24,6 +22,16 @@ const SearchContainer = styled.div`
     position: absolute;
     width: 100vw;
     max-width: 100vw;
+    height: 40vh;
+    bottom: ${(props) => props.bottom};
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+  }
+  @media screen and (max-width: 375px) {
+    position: absolute;
+    width: 100vw;
+    max-width: 100vw;
+    height: 50vh;
     bottom: ${(props) => props.bottom};
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
@@ -198,7 +206,7 @@ const SortByDateOrDistance = styled.li`
   display: inline-block;
   list-style: none;
 
-  a {
+  span {
     font-size: 12px;
     text-decoration: none;
     color: black;
@@ -329,6 +337,7 @@ const SearchSideBar = () => {
   const [festival, setFestival] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [totalElements, setTotalElements] = useState("");
+  const [mQuery, setMQuery] = useState(window.innerWidth < 769 ? true : false);
   const {
     setContextLongitude,
     setContextLatitude,
@@ -339,9 +348,25 @@ const SearchSideBar = () => {
     searchBoxMove,
     setSearchBoxMove,
     contextFestivalSearch,
+    setFestDetailBoxMove,
+    setFestDetailBoxMoveY,
   } = useContext(UserContext);
+
+  const screenChange = (event) => {
+    const matches = event.matches;
+    setMQuery(matches);
+  };
+
+  useEffect(() => {
+    let mql = window.matchMedia("screen and (max-width:769px)");
+    mql.addEventListener("change", screenChange);
+    return () => mql.removeEventListener("change", screenChange);
+  }, []);
+
+  //마커에 전달할 위도, 경도 값을 저장하기 위한 배열
   const latitudeArr = [];
   const longitudeArr = [];
+
   const searchDefaultByFestivalName = async () => {
     const search = await FestivalAPI.GetSearchResultByFestivalName(
       searchKeyword,
@@ -367,7 +392,7 @@ const SearchSideBar = () => {
   const setCenterMarker = (latitude, longitude) => {
     setCenterLatitude(latitude);
     setCenterLongitude(longitude);
-    setSearchBoxMove("-100vh");
+    // setSearchBoxMove("-100vh");
     console.log(latitude);
     console.log(longitude);
     console.log(centerLatitude, centerLongitude);
@@ -390,7 +415,6 @@ const SearchSideBar = () => {
 
         setFestival(result.data.content);
         setTotalElements(result.data.totalElements);
-
         //마커 찍기 위한 위도 경도 배열을 콘텍스트에 전달
         for (let i = 0; i < result.data.content.length; i++) {
           latitudeArr.push(result.data.content[i].latitude);
@@ -439,10 +463,10 @@ const SearchSideBar = () => {
             <p>검색된 결과 '{totalElements}'개가 있습니다.</p>
             <ResultSort>
               <SortByDateOrDistance>
-                <a href="#none">날짜순</a>
+                <span>날짜순</span>
               </SortByDateOrDistance>
               <SortByDateOrDistance>
-                <a href="#none">거리순</a>
+                <span>거리순</span>
               </SortByDateOrDistance>
             </ResultSort>
           </Result>
@@ -451,10 +475,12 @@ const SearchSideBar = () => {
             <p>검색된 결과가 없습니다.</p>
             <ResultSort>
               <SortByDateOrDistance>
-                <a href="#none">날짜순</a>
+                <span onClick={() => setFestDetailBoxMove("320px")}>
+                  날짜순
+                </span>
               </SortByDateOrDistance>
               <SortByDateOrDistance>
-                <a href="#none">거리순</a>
+                <span>거리순</span>
               </SortByDateOrDistance>
             </ResultSort>
           </Result>
@@ -490,13 +516,23 @@ const SearchSideBar = () => {
                       >
                         위치보기
                       </LocationButton>
-                      <LocationButton
-                        onClick={() =>
-                          navigate(`/pages/festivaldetail/${e.id}`)
-                        }
-                      >
-                        자세히 보기
-                      </LocationButton>
+                      {mQuery ? (
+                        <LocationButton
+                          onClick={() =>
+                            navigate(`/pages/festivaldetail/${e.id}`)
+                          }
+                        >
+                          자세히 보기
+                        </LocationButton>
+                      ) : (
+                        <LocationButton
+                          onClick={() =>
+                            navigate(`/pages/festivaldetail/${e.id}`)
+                          }
+                        >
+                          자세히 보기
+                        </LocationButton>
+                      )}
                     </FestivalCardBtns>
                   </TextArea>
                   <ContentArea>

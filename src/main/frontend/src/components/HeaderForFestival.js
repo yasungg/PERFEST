@@ -282,6 +282,9 @@ const HeaderForFestival = () => {
           <HeaderNaviBtn onClick={() => navigate("/pages/board")}>
             <span>Community</span>
           </HeaderNaviBtn>
+          <HeaderNaviBtn onClick={() => navigate("/pages/Calender")}>
+            <span>Calender</span>
+          </HeaderNaviBtn>
           <HeaderNaviBtn>
             <span>About</span>
           </HeaderNaviBtn>

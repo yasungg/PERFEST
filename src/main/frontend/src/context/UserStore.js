@@ -47,7 +47,10 @@ const UserStore = ({ children }) => {
   const [contextFstvlNm, setContextFstvlNm] = useState("");
   //페스티벌 창, 모바일 모드에서 searchbox의 움직임 제어
   const [searchBoxMove, setSearchBoxMove] = useState("0");
-  //모바일 모드에서 검색창 내용을 searchbox로 전달
+  //페스티벌 창, 데스크톱 모드에서 detailbox의 움직임 제어
+  const [festDetailBoxMove, setFestDetailBoxMove] = useState("400px");
+  const [festDetailBoxMoveY, setFestDetailBoxMoveY] = useState("6vh");
+  //페스티벌 창, 모바일 모드에서 검색창 내용을 searchbox로 전달
   const [contextFestivalSearch, setContextFestivalSearch] = useState("");
   const ContextValue = {
     userEmail,
@@ -126,8 +129,12 @@ const UserStore = ({ children }) => {
     setSearchBoxMove,
     contextFestivalSearch,
     setContextFestivalSearch,
-    contextFstvlNm,
-    setContextFstvlNm
+    festDetailBoxMove,
+    setFestDetailBoxMove,
+    festDetailBoxMoveY,
+    setFestDetailBoxMoveY,
+        contextFstvlNm,
+        setContextFstvlNm
   };
 
   return (

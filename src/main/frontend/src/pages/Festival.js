@@ -8,6 +8,7 @@ import FestivalAPI from "../api/FestivalAPI";
 import SearchSideBar from "../components/SearchSideBar";
 import FestivalSearchCategory from "../components/FestivalSearchCategory";
 import Sidebar from "../components/Sidebar";
+import FestivalDetail from "./FestivalDetail";
 
 const BodyContainer = styled.div`
   width: 100vw;
@@ -38,6 +39,7 @@ const Festival = () => {
       <HeaderForFestival />
       <BodyContainer>
         <SearchSideBar />
+        <FestivalDetail />
         <MapContainer>
           <NaverMap />
           <FestivalSearchCategory />
