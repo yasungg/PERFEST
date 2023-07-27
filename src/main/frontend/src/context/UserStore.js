@@ -44,6 +44,7 @@ const UserStore = ({ children }) => {
   const [contextLongitude, setContextLongitude] = useState([]);
   const [centerLatitude, setCenterLatitude] = useState("");
   const [centerLongitude, setCenterLongitude] = useState("");
+  const [contextFstvlNm, setContextFstvlNm] = useState("");
   //페스티벌 창, 모바일 모드에서 searchbox의 움직임 제어
   const [searchBoxMove, setSearchBoxMove] = useState("0");
   //모바일 모드에서 검색창 내용을 searchbox로 전달
@@ -125,6 +126,8 @@ const UserStore = ({ children }) => {
     setSearchBoxMove,
     contextFestivalSearch,
     setContextFestivalSearch,
+    contextFstvlNm,
+    setContextFstvlNm
   };
 
   return (

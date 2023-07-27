@@ -7,12 +7,19 @@ const { number } = window;
 
 const NaverMap = () => {
   const [map, setMap] = useState(null);
-  const { contextLongitude, contextLatitude, centerLatitude, centerLongitude } =
-    useContext(UserContext);
+  const [marker, setMarker] = useState(null);
+  const [infoWindow, setInfoWindow] = useState(null);
+  const {
+    contextLongitude,
+    contextLatitude,
+    centerLatitude,
+    centerLongitude,
+    contextFstvlNm
+  } = useContext(UserContext);
 
   useEffect(() => {
     const markers = [];
-    const mapElement = document.getElementById("map");
+    const infoWindows = [];
     // 페스티벌 정보가 담긴 카드가 클릭되었을 때 좌표가 넘어와 자동으로 해당 위치 마커로 지도 포커스를 이동
     const options = {
       center: centerLatitude
@@ -20,10 +27,8 @@ const NaverMap = () => {
         : new naver.maps.LatLng(37.497914, 127.027646),
       zoom: 15,
     };
-    const navermap = new naver.maps.Map(mapElement, options);
-    setMap(navermap);
-
-    var HOME_PATH = window.HOME_PATH || ".";
+    const map = new naver.maps.Map('map', options);
+    setMap(map);
 
     //검색 결과가 들어온 만큼 마커를 찍어줌
     for (let i = 0; i < contextLatitude.length; i++) {
@@ -32,7 +37,7 @@ const NaverMap = () => {
           contextLatitude[i],
           contextLongitude[i]
         ),
-        map: navermap,
+        map: map,
         icon: {
           url:
             process.env.PUBLIC_URL +
@@ -46,8 +51,31 @@ const NaverMap = () => {
       const marker = new naver.maps.Marker(markerOptions);
       markers.push(marker);
       console.log("marker에 위치정보 전달 성공!!");
+
+      const contextString = [
+        '<div class="iw_inner">',
+        '   <p>' + contextFstvlNm[i] +'</p>',
+        '</div>'
+      ].join('');
+
+      const infoWindow = new naver.maps.InfoWindow({
+        content: contextString
+      });
+
+      naver.maps.Event.addListener(marker, 'click', function (e) {
+        if(infoWindow.getMap()) {
+          infoWindow.close();
+        } else {
+          infoWindow.open(map, marker)
+        }
+      });
+      infoWindows.push(infoWindow);
+      console.log("infoWindow에 축제이름 전달 성공!!");
     }
-  }, [centerLatitude, contextLatitude, contextLongitude]);
+    setMarker(markers);
+    setInfoWindow(infoWindow);
+
+  }, [centerLatitude, contextLatitude, contextLongitude, contextFstvlNm]);
 
   // 	const [myLocation, setMyLocation] = useState<
   // 		{ latitude: number, longitude: number } | 'string'

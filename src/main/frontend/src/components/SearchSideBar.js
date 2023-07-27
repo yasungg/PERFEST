@@ -244,6 +244,11 @@ const CardInner = styled.div`
   p {
     font-size: 13px;
   }
+
+  &:hover img {
+    transform: scale(1.1);
+    position: relative;
+  }
 `;
 
 const ImageArea = styled.div`
@@ -256,11 +261,6 @@ const ImageArea = styled.div`
     width: 120px;
     margin: 0 10px 0 8px;
     transition: transform 0.3s ease;
-
-    &:hover {
-      transform: scale(1.1);
-      position: relative;
-    }
   }
 `;
 
@@ -372,6 +372,12 @@ const SearchSideBar = () => {
     console.log(longitude);
     console.log(centerLatitude, centerLongitude);
   };
+  // 검색창 Enter 검색
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      searchDefaultByFestivalName();
+    }
+  };
 
   useEffect(() => {
     const searchFromHeader = async () => {
@@ -406,8 +412,10 @@ const SearchSideBar = () => {
             type="text"
             placeholder="찾을 지역이나 축제 이름을 입력하세요."
             onChange={(e) => setSearchKeyword(e.target.value)}
+            onKeyPress={handleKeyPress}
           />
-          <SearchButton type="submit" onClick={searchDefaultByFestivalName}>
+          <SearchButton
+            type="submit" onClick={searchDefaultByFestivalName}>
             <SearchIcon className="searchIcon" />
           </SearchButton>
         </InputBoxArea>
