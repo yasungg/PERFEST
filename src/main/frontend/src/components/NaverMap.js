@@ -30,6 +30,16 @@ const NaverMap = () => {
     const map = new naver.maps.Map('map', options);
     setMap(map);
 
+    // 맵 컨트롤러
+    const mapOptions = {
+      zoomControl: true,
+      zoomControlOptions: {
+        style: naver.maps.ZoomControlStyle.SMALL,
+        position: naver.maps.Position.TOP_RIGHT
+      }
+    };
+    map.setOptions(mapOptions);
+
     //검색 결과가 들어온 만큼 마커를 찍어줌
     for (let i = 0; i < contextLatitude.length; i++) {
       const markerOptions = {

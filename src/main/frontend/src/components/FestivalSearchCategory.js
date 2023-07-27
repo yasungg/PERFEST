@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 const CategoryContainer = styled.div`
   position: absolute;
@@ -32,6 +33,7 @@ const CategoryFilterItem = styled.li`
 `;
 
 const CategoryFilterButton = styled.button`
+  display: flex;
   width: 80px;
   height: 32px;
   font-size: 15px;
@@ -43,6 +45,8 @@ const CategoryFilterButton = styled.button`
   margin-right: 20px;
   cursor: pointer;
   box-shadow: 1px 1px 4px 0px #555555;
+  align-items: center;
+  justify-content: center;
 `;
 
 /* 지역별 검색 */
@@ -266,22 +270,31 @@ const FestivalSearchCategory = () => {
   const [isOpenLocation, setIsOpenLocation] = useState(false);
   const [isOpenPeriod, setIsOpenPeriod] = useState(false);
   const [isOpenSeason, setIsOpenSeason] = useState(false);
+
+  const [locationIconRotation ,setLocationIconRotation] = useState(0);
+  const [periodIconRotation, setPeriodIconRotation] = useState(0);
+  const [seasonIconRotation, setSeasonIconRotation] = useState(0);
+
   const formRef = useRef(null);
 
   // 다른 필터 닫기
-  const handleFilterButtonClick = (filterName, isOpenState, setIsOpenState) => {
+  const handleFilterButtonClick = (filterName, isOpenState, setIsOpenState, setIconRotation) => {
     setIsOpenState(!isOpenState);
+    setIconRotation(isOpenState ? 0 : 180);
 
     if (filterName !== "location") {
       setIsOpenLocation(false);
+      setLocationIconRotation(0);
     }
 
     if (filterName !== "period") {
       setIsOpenPeriod(false);
+      setPeriodIconRotation(0);
     }
 
     if (filterName !== "season") {
       setIsOpenSeason(false);
+            setSeasonIconRotation(0);
     }
   };
 
@@ -363,7 +376,8 @@ const FestivalSearchCategory = () => {
               handleFilterButtonClick(
                 "location",
                 isOpenLocation,
-                setIsOpenLocation
+                setIsOpenLocation,
+                setLocationIconRotation
               )
             }
             onMouseEnter={handleLocationButtonHover}
@@ -372,14 +386,21 @@ const FestivalSearchCategory = () => {
               color: isOpenLocation || isLocationHovered ? "#0475F4" : "black",
             }}
           >
-            # 지역
+            <KeyboardArrowDownIcon
+                style={{ transform: `rotate(${locationIconRotation}deg)` }}
+              />지역
           </CategoryFilterButton>
         </CategoryFilterItem>
 
         <CategoryFilterItem>
           <CategoryFilterButton
             onClick={() =>
-              handleFilterButtonClick("period", isOpenPeriod, setIsOpenPeriod)
+              handleFilterButtonClick(
+                "period",
+                isOpenPeriod,
+                setIsOpenPeriod,
+                setPeriodIconRotation
+              )
             }
             onMouseEnter={handlePeriodButtonHover}
             onMouseLeave={handlePeriodButtonLeave}
@@ -387,14 +408,21 @@ const FestivalSearchCategory = () => {
               color: isOpenPeriod || isPeriodHovered ? "#0475F4" : "black",
             }}
           >
-            # 기간
+            <KeyboardArrowDownIcon
+              style={{ transform: `rotate(${periodIconRotation}deg)` }}
+            />기간
           </CategoryFilterButton>
         </CategoryFilterItem>
 
         <CategoryFilterItem>
           <CategoryFilterButton
             onClick={() =>
-              handleFilterButtonClick("season", isOpenSeason, setIsOpenSeason)
+              handleFilterButtonClick(
+                "season",
+                isOpenSeason, 
+                setIsOpenSeason,
+                setSeasonIconRotation
+              )
             }
             onMouseEnter={handleThemeButtonHover}
             onMouseLeave={handleThemeButtonLeave}
@@ -402,7 +430,9 @@ const FestivalSearchCategory = () => {
               color: isOpenSeason || isThemeHovered ? "#0475F4" : "black",
             }}
           >
-            # 계절
+            <KeyboardArrowDownIcon
+              style={{ transform: `rotate(${seasonIconRotation}deg)` }}
+            />계절
           </CategoryFilterButton>
         </CategoryFilterItem>
       </CategoryFilterList>
