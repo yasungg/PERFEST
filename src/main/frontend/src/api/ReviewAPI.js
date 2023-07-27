@@ -25,11 +25,13 @@ const ReviewAPI = {
                 console.log(error);
               });
     },
+    // 해당 축제 리뷰 가져오기
     GetReview: async(festivalId) => {
         return await axios.get(`/auth/review/getreview?festivalId=${festivalId}`);
     },
+    // 해당 축제 리뷰 개수 가져오기
     GetReviewCount: async(festivalId) => {
-        return await axios.get(`/auth/review/getreviewcount/festivalId=${festivalId}`);
+        return await axios.get(`/auth/review/getreviewcount?festivalId=${festivalId}`);
     }
 
 

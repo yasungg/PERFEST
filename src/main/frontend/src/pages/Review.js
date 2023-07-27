@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Container } from "../components/StandardStyles";
+import { formatDate } from "../components/DateStyle";
 import ReviewAPI from "../api/ReviewAPI";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -7,6 +8,8 @@ import { useEffect } from "react";
 const ReviewContainer = styled.div`
   display: flex;
   flex-direction: column;
+`;
+const ReviewCount = styled.div`
 `;
 
 const ReviewWriting = styled.div`
@@ -71,6 +74,7 @@ const ReviewWrittenTime = styled.div`
 const Review = () => {
     const [inputReviewText, setInputReviewText] = useState("");
     const [reviewData, setReviewData] = useState([]);
+    const [reviewCount, setReviewCount] = useState("");
     const [reviewUpdateTrigger, setReviewUpdateTrigger] = useState(false); // 리뷰 업데이트를 트리거하는 상태 추가
     const onChangeReview = (e) => {
         setInputReviewText(e.target.value);
@@ -94,9 +98,20 @@ const Review = () => {
           };
         getFestivalReview();
     },[reviewUpdateTrigger]);
+    // 해당 축제의 리뷰 개수 가져오기
+    useEffect(() => {
+      const getReviewCount = async() => {
+        const festivalId = 1;
+        const response = await ReviewAPI.GetReviewCount(festivalId);
+        console.log(response.data);
+        setReviewCount(response.data);
+      };
+      getReviewCount();
+    },[reviewUpdateTrigger]);
     return(
         <Container justifyContent="center" alignItems="center">
             <ReviewContainer>
+              <ReviewCount>리뷰{reviewCount}</ReviewCount>
                 <ReviewWriting>
                     <textarea className="reviewwrite"  cols="160" rows="3" value={inputReviewText} onChange={onChangeReview}></textarea>
                     <ReviewWriteButton onClick={onClickWriteReview}>리뷰 작성하기</ReviewWriteButton>
@@ -105,7 +120,7 @@ const Review = () => {
                 <ReviewDesc key={review.reviewId}>
                   <ReviewContent>{review.reviewContent}</ReviewContent>
                   <ReviewNickName>{review.nickname}</ReviewNickName>
-                  <ReviewWrittenTime>{review.reviewWrittenTime}</ReviewWrittenTime>
+                  <ReviewWrittenTime>{formatDate(review.reviewWrittenTime)}</ReviewWrittenTime>
                   </ReviewDesc>
                 ))}
             </ReviewContainer>
