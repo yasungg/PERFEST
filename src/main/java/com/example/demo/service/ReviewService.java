@@ -8,6 +8,8 @@ import com.example.demo.repository.MemberRepository;
 import com.example.demo.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -31,7 +33,6 @@ public class ReviewService {
         festival.setId(festivalId);
         review.setFestival(festival);
         review.setReviewContent(reviewContent);
-//        review.setReviewImg(reviewImg);
         review.setReviewWrittenTime(LocalDateTime.now());
 
         Member member = memberRepository.findById(memberId)
@@ -42,10 +43,11 @@ public class ReviewService {
         return true;
     }
     // 해당 축제 리뷰 가져오기(GET)
-    public List<ReviewDTO> getReviewList(Long festivalId) {
-        List<Review> reviewList = reviewRepository.findByFestivalId(festivalId);
-        List<ReviewDTO> reviewDTOS = new ArrayList<>();
-        for(Review review : reviewList) {
+    public Page<ReviewDTO> getReviewList(Long festivalId, int pageNum, int pageSize) {
+        PageRequest pageRequest = PageRequest.of(pageNum, pageSize);
+        Page<Review> reviewPage = reviewRepository.findByFestivalId(festivalId, pageRequest);
+
+        return reviewPage.map(review -> {
             ReviewDTO reviewDTO = new ReviewDTO();
             reviewDTO.setReviewId(review.getId());
             reviewDTO.setReviewContent(review.getReviewContent());
@@ -57,9 +59,8 @@ public class ReviewService {
                 reviewDTO.setMemberId(member.getId());
                 reviewDTO.setNickname(member.getNickname());
             }
-            reviewDTOS.add(reviewDTO);
-        }
-        return reviewDTOS;
+            return reviewDTO;
+        });
     }
     // 해당 축제의 리뷰 갯수 가져오기(GET)
     public long getReviewCount(Long festivalId) {return reviewRepository.countByFestivalId(festivalId);}

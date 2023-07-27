@@ -26,8 +26,8 @@ const ReviewAPI = {
               });
     },
     // 해당 축제 리뷰 가져오기
-    GetReview: async(festivalId) => {
-        return await axios.get(`/auth/review/getreview?festivalId=${festivalId}`);
+    GetReview: async(festivalId, pageNumber) => {
+        return await axios.get(`/auth/review/getreview?festivalId=${festivalId}&pageSize=5&pageNumber=${pageNumber}`);
     },
     // 해당 축제 리뷰 개수 가져오기
     GetReviewCount: async(festivalId) => {
