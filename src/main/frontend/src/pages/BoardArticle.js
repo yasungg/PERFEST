@@ -10,6 +10,7 @@ import { GoHeart } from "react-icons/go";
 import { FaHeart } from "react-icons/fa";
 import { MdSubdirectoryArrowRight } from "react-icons/md";
 import Modal from "../utils/Modal";
+import Header from "../components/Header";
 const Title = styled.div`
   display: flex;
   justify-content: center;
@@ -400,6 +401,7 @@ const BoardArticle = () => {
   }, [commentData, replyUpdateTrigger]);
   return (
     <Container justifyContent="center" alignItems="center">
+      <Header/>
       <BodyContainer>
         {boardArticle &&
           boardArticle.map((community) => (

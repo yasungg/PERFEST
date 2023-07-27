@@ -7,6 +7,7 @@ import { useNavigate } from "react-router";
 import { formatDate } from "../components/DateStyle";
 import { FaHeart } from 'react-icons/fa';
 import Pagination from "../components/Pagination.js";
+import Header from "../components/Header";
 const Title = styled.div`
   display: flex;
   justify-content: center;
@@ -259,16 +260,21 @@ const NumBtnWrapper = styled.div`
 const Board = () => {
   const navigate = useNavigate();
   // const [selectedBoardInfo, setSelectedBoardInfo] = useState([]);
+  const page = 0;
   const [selectCategory, setSelectCategory] = useState("");
   const [activeButton, setActiveButton] = useState(""); // 버튼의 활성화 여부를 저장하는 상태
   const [search, setSearch] = useState("");
   const [searchType, setSearchType] = useState('title'); // 기본적으로 제목 검색
-  const page = 0;
   const [BoardList, setBoardList] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
 
-
+  const onChangeSearch = (e) => {
+    setSearch(e.target.value);
+  }
+  const onChangeType = (e) => {
+    setSearchType(e.target.value);
+  }
   // -----------------------------------> 페이지네이션 상태관리
   //숫자 버튼을 누르면 숫자에 맞는 페이지 렌더링
   const renderThisPage = async(page) => {
@@ -302,7 +308,6 @@ const Board = () => {
           });
     }
   };
-
   // 다음 버튼을 클릭했을 때 +1 페이지네이션의 결과를 요청
   const onClickNextPage = async () => {
     if (currentPage + 1 < totalPages) {
@@ -319,20 +324,6 @@ const Board = () => {
             console.log(error);
           });
     }
-  };
-  const onClickRefresh = async () => {
-    const getInfo = await BoardAPI.BoardGet(currentPage)
-        .then((result) => {
-          if (result.status === 200) {
-            console.log(result.data);
-            console.log(result.data.content);
-            setBoardList(result.data.content);
-            setTotalPages(result.data.totalPages);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
   };
   const getBoardList = async () => {
     const getInfo = await BoardAPI.BoardGet(currentPage)
@@ -425,17 +416,12 @@ const Board = () => {
       if(rsp2.status === 200) setBoardList(rsp2.data);
     }
   }
-  const onChangeSearch = (e) => {
-    setSearch(e.target.value);
-  }
-  const onChangeType = (e) => {
-    setSearchType(e.target.value);
-  }
   const boardClick = (communityId) => {
     navigate(`/pages/BoardArticle/${communityId}`);
   }
   return (
       <Container justifyContent="center" alignItems="center">
+        <Header/>
         <BodyContainer>
           <Title>커뮤니티</Title>
           <SearchBoard>
