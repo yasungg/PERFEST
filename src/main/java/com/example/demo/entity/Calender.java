@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter @ToString
@@ -22,4 +23,7 @@ public class Calender {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "festival_id")
     private Festival festival;
+
+    @Column(name = "liked_date")
+    private LocalDateTime likedDate; // 좋아요를 누른 시점의 날짜와 시간
 }

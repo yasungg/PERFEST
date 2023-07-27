@@ -4,6 +4,7 @@ import com.example.demo.dto.*;
 import com.example.demo.entity.Community;
 import com.example.demo.entity.Member;
 import com.example.demo.jwt.TokenProvider;
+import com.example.demo.service.CalenderService;
 import com.example.demo.service.MyPageService;
 import com.example.demo.user.ContextGetter;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,7 @@ public class MyPageController {
     private final HttpServletRequest request;
     private final TokenProvider tokenProvider;
     private final HttpServletResponse response;
+    private final CalenderService calenderService;
 
     // 이메일로 회원 조회 API
     @GetMapping(value = "/email")
@@ -211,6 +213,29 @@ public class MyPageController {
         List<ActivityDTO> activityDTOList = myPageService.getReservedActivitiesForMember(memberId);
         tokenProvider.setNewAccessTokenToHeader(response);
         return new ResponseEntity<>(activityDTOList, HttpStatus.OK);
+    }
+
+    // 좋아요한 내 축제 일정 조회
+    @GetMapping("/calender")
+    public ResponseEntity<List<CalenderDTO>> getCalenderByMemberId() {
+        Long memberId = info.getId();
+        List<CalenderDTO> calenderDTOList = calenderService.getCalenderByUserId(memberId);
+        return new ResponseEntity<>(calenderDTOList, HttpStatus.OK);
+    }
+
+    // 좋아요 한 내 축제 일정 개별 삭제
+    @DeleteMapping("/delCalender")
+    public ResponseEntity<Boolean> deleteCalender(@RequestParam("calenderId") Long calenderId) {
+        boolean result = calenderService.deleteSelCalendar(calenderId);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    // 좋아요한 내 축제 일정 전체 삭제
+    @DeleteMapping("delAllCalender")
+    public ResponseEntity<Boolean> deleteAllCalender() {
+        Long memberId = info.getId();
+        boolean result = calenderService.deleteAllCalendar(memberId);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
 

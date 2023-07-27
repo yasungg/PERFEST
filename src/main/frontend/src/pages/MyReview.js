@@ -7,6 +7,7 @@ import Modal from "../utils/Modal";
 const Container = styled.div`
   width: 100%;
 
+
   p {
     font-size: 1.3em;
     font-weight: bold;

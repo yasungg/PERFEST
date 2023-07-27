@@ -57,13 +57,15 @@ const MyRanking = () => {
   useEffect(() => {
     const fetchMemberRichRanking = async () => {
       const rsp = await MemberAPI.myRichRanking();
-      if (rsp.status === 200) setMemberRichRanking(rsp.data);
-      console.log(`리치랭킹은 ${rsp.data}`);
+      if (rsp.status === 200) {
+        setMemberRichRanking(rsp.data);
+        console.log(`리치랭킹은 ${rsp.data}`);
+      }
     };
     fetchMemberRichRanking();
   }, []);
 
-  // // 뱃지랭킹
+  // 뱃지랭킹
   useEffect(() => {
     const fetchMemberBadgeRanking = async () => {
       const rsb = await MemberAPI.myBadgeRanking();
@@ -80,7 +82,7 @@ const MyRanking = () => {
       <RankingCard>
         <RankingNumber>R</RankingNumber>
         <RankingInfo>
-          <RankingTitle>리치 랭킹</RankingTitle>
+          <RankingTitle>큰손 랭킹</RankingTitle>
           <p>현재 내 큰손랭킹은 {memberRichRanking}등 입니다.</p>
         </RankingInfo>
       </RankingCard>

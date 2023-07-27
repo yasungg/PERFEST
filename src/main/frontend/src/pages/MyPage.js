@@ -10,6 +10,7 @@ import MyRanking from "./MyRanking";
 
 
 
+
 // 전체 컨테이너
 const Container = styled.div`
   display: flex;
@@ -25,7 +26,7 @@ const SideBarWrapper = styled.div`
   left: 0;
   height: 100%;
   width: ${(props) => (props.collapsed ? "0" : "20%")};
-  background-color: #2f4050;
+  background-color: black;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -122,7 +123,7 @@ const MyPage = () => {
       { name: "내 랭킹", path: "/MyRanking" }
     ];
 
-    const [selectedMenu, setSelectedMenu] = useState("");
+    const [selectedMenu, setSelectedMenu] = useState("/MySetting");
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
     const [sidebarCollapsed, setSidebarCollapsed] = useState(isMobile);
 

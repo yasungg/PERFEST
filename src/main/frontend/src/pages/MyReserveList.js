@@ -32,10 +32,11 @@ const Container = styled.div`
   }
 
   button {
+    white-space: nowrap;
     font-size: 0.8em;
     font-weight: bold;
     border: none;
-    border-radius: 5px;
+    border-radius: 3px;
     cursor: pointer;
     background-color: #ff4136;
     color: white;
@@ -81,10 +82,31 @@ const Container = styled.div`
     font-size: .8em;
     color: #636363;
   }
+
+  /* 반응형 스타일링 */
+  @media (max-width: 600px) {
+    padding: 5px;
+
+    p {
+      font-size: 1.1em;
+    }
+
+    th, td {
+      padding: 10px;
+      font-size: 0.8em;
+    }
+    /* 확장된 설명 스타일 */
+    .expanded-description {
+      font-size: 0.8em;
+      color: #636363;
+      margin-top: 10px;
+    }
+  }
 `;
 
 const MyReserveList = () => {
   const [memberReserve, setMemberReserve] = useState([]);
+  const [expandedDescriptionId, setExpandedDescriptionId] = useState(null);
 
   useEffect(() => {
     const reservation = async () => {
@@ -100,6 +122,10 @@ const MyReserveList = () => {
     const month = String(date.getMonth() + 1).padStart(2, "0");
     const day = String(date.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
+  };
+
+  const handleExpandDescription = (reserveId) => {
+    setExpandedDescriptionId(reserveId === expandedDescriptionId ? null : reserveId);
   };
 
   return (
