@@ -143,14 +143,70 @@ const MemberAPI = {
   },
 
   // 이미지 수정
-  updateImg: async (email, img) => {
+  updateImg: async (img) => {
     const updateData = {
-      email: email,
-      img: img,
+      img: img
     };
-    return await axios.post("/auth/member/updateImg", updateData);
+    const Authorization =
+    "Bearer " + window.localStorage.getItem("accessToken");
+    console.log(Authorization);
+    return await axios.post("/member/updateImg", updateData,{
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Authorization,
+      }, // 여기까지가 서버로 header를 실은 요청을 던지는 기능
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        return response;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   },
-
+  // 프로필 이미지 가져오기
+  getProfileImg: async () => {
+    const Authorization =
+    "Bearer " + window.localStorage.getItem("accessToken");
+  console.log(Authorization);
+  return await axios
+    .get(`/member/getprofileimage`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Authorization,
+      }, // 여기까지가 서버로 header를 실은 요청을 던지는 기능
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        return response;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+},
+  // 닉네임 가져오기
+  getMemberNickName: async () => {
+    const Authorization =
+    "Bearer " + window.localStorage.getItem("accessToken");
+  console.log(Authorization);
+  return await axios
+  .get(`/member/getnickname`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Authorization,
+    }, // 여기까지가 서버로 header를 실은 요청을 던지는 기능
+  })
+  .then((response) => {
+    if (response.status === 200) {
+      return response;
+    }
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+},
   // 내 게시글 조회
   getMyWrite: async () => {
     const Authorization =

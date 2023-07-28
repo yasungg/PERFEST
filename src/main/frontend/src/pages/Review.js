@@ -5,6 +5,7 @@ import ReviewAPI from "../api/ReviewAPI";
 import { useState, useEffect, useContext } from "react";
 import Pagination from "../components/Pagination.js";
 import { UserContext } from "../context/UserStore";
+import { Navigate, useNavigate } from "react-router";
 
 const ReviewContainer = styled.div`
   box-sizing: border-box;
@@ -123,7 +124,8 @@ const NumBtnWrapper = styled.div`
 `;
 const Review = () => {
   const page = 0;
-  const { detailComponentValue } = useContext(UserContext);
+  const navigate = useNavigate();
+  const { detailComponentValue, isLogin } = useContext(UserContext);
   const [inputReviewText, setInputReviewText] = useState("");
   const [reviewData, setReviewData] = useState([]);
   const [reviewCount, setReviewCount] = useState("");
@@ -250,9 +252,12 @@ const Review = () => {
             value={inputReviewText}
             onChange={onChangeReview}
           ></textarea>
-          <ReviewWriteButton onClick={onClickWriteReview}>
+          {isLogin ?
+          (<ReviewWriteButton onClick={onClickWriteReview}>
             리뷰 작성
-          </ReviewWriteButton>
+          </ReviewWriteButton>) : (<ReviewWriteButton onClick={()=> navigate("/pages/Login")}>
+            리뷰 작성
+          </ReviewWriteButton>)}
         </ReviewWriting>
         {reviewData &&
           reviewData.map((review) => (
