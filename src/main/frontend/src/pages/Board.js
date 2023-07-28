@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import { BodyContainer, Container } from "../components/StandardStyles";
 import BoardAPI from "../api/BoardAPI";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { formatDate } from "../components/DateStyle";
 import { FaHeart } from 'react-icons/fa';
+import { UserContext } from "../context/UserStore";
 import Pagination from "../components/Pagination.js";
 import Header from "../components/Header";
 const Title = styled.div`
@@ -268,6 +269,7 @@ const Board = () => {
   const [BoardList, setBoardList] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
+  const {isLogin} = useContext(UserContext);
 
   const onChangeSearch = (e) => {
     setSearch(e.target.value);
@@ -494,7 +496,10 @@ const Board = () => {
             <ChangeBtn onClick={onClickNextPage}>다음</ChangeBtn>
           </ButtonWrapper>
           <WriteButton>
-            <button className="write" onClick={()=> navigate("/pages/WriteBoard")}>글쓰기</button></WriteButton>
+            {isLogin ? 
+            (<button className="write" onClick={()=> navigate("/pages/WriteBoard")}>글쓰기</button>):
+            (<button className="write" onClick={()=> navigate("/pages/Login")}>글쓰기</button>)}
+            </WriteButton>
         </BodyContainer>
       </Container>
   );

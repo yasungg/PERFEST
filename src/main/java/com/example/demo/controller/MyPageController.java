@@ -238,5 +238,26 @@ public class MyPageController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-
+    // 회원 프로필 이미지 수정
+    @PostMapping("/updateImg")
+    public ResponseEntity<Boolean> insertProfileImage(@RequestBody Map<String, Object> updateImg) {
+        Long memberId = info.getId();
+        String img = (String) updateImg.get("img");
+        Boolean result = myPageService.updateProfileImage(memberId, img);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+    // 회원 프로필 이미지 가져오기
+    @GetMapping("/getprofileimage")
+    public ResponseEntity<String> getProfileImage() {
+        Long memberId = info.getId();
+        String result = myPageService.getProfileImage(memberId);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+    //회원 닉네임 가져오기
+    @GetMapping("/getnickname")
+    public ResponseEntity<String> getNickName() {
+        Long memberId = info.getId();
+        String result = myPageService.getNickName(memberId);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }

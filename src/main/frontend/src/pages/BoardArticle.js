@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import { BodyContainer, Container } from "../components/StandardStyles";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import CommentAPI from "../api/CommentAPI";
 import { useEffect } from "react";
+import { UserContext } from "../context/UserStore";
 import BoardAPI from "../api/BoardAPI";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { formatDate } from "../components/DateStyle";
 import { GoHeart } from "react-icons/go";
 import { FaHeart } from "react-icons/fa";
@@ -244,6 +245,7 @@ const Heart2 = styled(FaHeart)`
 `;
 const BoardArticle = () => {
   const { communityId } = useParams(); // 게시판 번호 전달 하기 위해서 useparams 사용
+  const navigate = useNavigate();
   const [inputComment, setInputComment] = useState("");
   const [replyCommentInput, setReplyCommentInput] = useState(new Map()); // 각 댓글에 맞는 대댓글 작성하는 상태 변수
   const [showReplyInput, setShowReplyInput] = useState(new Map()); // 대댓글 입력창 보여줄지 여부를 관리하는 상태 변수
@@ -255,8 +257,8 @@ const BoardArticle = () => {
   const [openModal, setOpenModal] = useState(false);
   const [modalMsg, setModalMsg] = useState("");
   const [replyUpdateTrigger, setReplyUpdateTrigger] = useState(false);
+  const {isLogin} = useContext(UserContext);
   
-
   const confirmBtn = () => {
     setOpenModal(false);
      console.log("확인 버튼이 눌려 졌습니다.");
@@ -424,9 +426,12 @@ const BoardArticle = () => {
                 />
               </BoardDesc>
               <BoardLike>
-                <button className="like-button" onClick={() =>{onClickBoardLike();}}>
+                {isLogin ?
+                (<button className="like-button" onClick={() =>{onClickBoardLike();}}>
                   이 글이 도움!
-                </button>
+                </button>) : (<button className="like-button" onClick={() =>navigate("/pages/Login")}>
+                  이 글이 도움!
+                </button>)}
                 <div className="board-like-count">
                   <Heart2 />
                   {community.likeCount}
@@ -445,9 +450,12 @@ const BoardArticle = () => {
             value={inputComment}
             onChange={onChangeComment}
           ></textarea>
-          <CommentWriteButton onClick={onClickWriteComment}>
+          {isLogin ?
+          (<CommentWriteButton onClick={onClickWriteComment}>
             댓글 작성하기
-          </CommentWriteButton>
+          </CommentWriteButton>) :  (<CommentWriteButton onClick={()=> navigate("/pages/Login")}>
+            댓글 작성하기
+          </CommentWriteButton>)}
         </CommentWrite>
         {commentData &&
           commentData.map((comment) => (
@@ -459,20 +467,32 @@ const BoardArticle = () => {
                     {formatDate(comment.commentWrittenTime)}
                   </CommentWrittenTime>
                   <CommentReWrite>
-                    <button
+                    {isLogin ?
+                    (<button
                       className="replycomment"
                       onClick={() => onClickShowReplyWrite(comment.commentId)}
                     >
                       대댓글
-                    </button>
+                    </button>): (<button
+                      className="replycomment"
+                      onClick={()=> navigate("/pages/Login")}
+                    >
+                      대댓글
+                    </button>)}
                   </CommentReWrite>
                   <CommentLike>
-                    <button
+                    {isLogin ?
+                    (<button
                       className="like"
                       onClick={() => onClickCommentLike(comment.commentId)}
                     >
                       좋아요
-                    </button>
+                    </button>) : (<button
+                      className="like"
+                      onClick={()=> navigate("/pages/Login")}
+                    >
+                      좋아요
+                    </button>)}
                   </CommentLike>
                 </CommentHead>
                 <CommentArr>
@@ -505,12 +525,18 @@ const BoardArticle = () => {
                           </button>
                         </CommentReWrite>
                         <CommentLike>
-                          <button
+                          {isLogin ?
+                          (<button
                             className="like"
                             onClick={() => onClickCommentLike(reply.commentId)}
                           >
                             좋아요
-                          </button>
+                          </button>) : (<button
+                            className="like"
+                            onClick={()=> navigate("/pages/Login")}
+                          >
+                            좋아요
+                          </button>)}
                         </CommentLike>
                       </CommentHead>
                       <CommentArr>
@@ -533,13 +559,19 @@ const BoardArticle = () => {
                         onChangeReplyComment(e, comment.commentId)
                       }
                     ></textarea>
-                    <CommentReplyWriteButton
+                    {isLogin ?
+                    (<CommentReplyWriteButton
                       onClick={() =>
                         onClickWriteReplyComment(comment.commentId)
                       }
                     >
                       댓댓글 작성하기
-                    </CommentReplyWriteButton>
+                    </CommentReplyWriteButton>) :(<CommentReplyWriteButton
+                      onClick={()=> navigate("/pages/Login")
+                      }
+                    >
+                      댓댓글 작성하기
+                    </CommentReplyWriteButton>)}
                   </CommentReplyWrite>
                 )}
                 <hr></hr>

@@ -18,7 +18,7 @@ const BodyContainer = styled.div`
 `;
 
 const Container = styled.div`
-  width: 90%;
+  width: 100%;
   max-width: 400px;
   margin: 15px auto;
   border: 1px solid gray;
@@ -49,15 +49,12 @@ const Section2 = styled.div`
     height: 35px;
     font-size: 0.8em;
     font-weight: bold;
-    background-color: #2f4050;
+    background-color: white;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     margin-top: 20px;
-    &:hover {
-      background-color: #293846;
-    }
   }
 `;
 
@@ -81,10 +78,8 @@ const ButtonContainer = styled.div`
 `;
 
 const Label = styled.label`
-  position: relative;
 
   button {
-    position: absolute;
     height: 0%;
     /* background-color: none; */
     top: 77px;

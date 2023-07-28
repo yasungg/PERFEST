@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled, { keyframes } from "styled-components";
 import Profile from "../images/47802_35328_56.jpg";
 import MySetting from "./MySetting";
@@ -7,9 +7,9 @@ import MyReserveList from "./MyReserveList";
 import MyPayList from "./MyPayList";
 import MyWrite from "./MyWrite";
 import MyRanking from "./MyRanking";
-
-
-
+import { initializeApp } from 'firebase/app';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import MemberAPI from "../api/MemberAPI";
 
 // 전체 컨테이너
 const Container = styled.div`
@@ -47,8 +47,8 @@ const SideBarWrapper = styled.div`
 
 // 프로필 이미지
 const ProfileImage = styled.img`
-  width: 80px;
-  height: 80px;
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
   margin-bottom: 10px;
 `;
@@ -98,7 +98,8 @@ const HamburgerIcon = styled.div`
   cursor: pointer;
   font-size: 24px;
 `;
-
+const NickNameContainer = styled.div`
+`;
 // 컨텐츠 영역
 const ContentWrapper = styled.div`
   width: calc(100% - 300px);
@@ -111,9 +112,8 @@ const ContentWrapper = styled.div`
     transform: translateX(0);
   }
 `;
-
 const MyPage = () => {
-  const memberNickname = "OO"; // 회원닉 가져올 예정
+  const inputRef = useRef(null);
   const menus = [
       { name: "내 정보", path: "/MySetting" },
       { name: "내 리뷰", path: "/MyReview" },
@@ -126,7 +126,11 @@ const MyPage = () => {
     const [selectedMenu, setSelectedMenu] = useState("/MySetting");
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
     const [sidebarCollapsed, setSidebarCollapsed] = useState(isMobile);
-
+    const storage = getStorage();
+    const [uploadedImage, setUploadedImage] = useState("");
+    const [nickNameInfo, setNickNameInfo] = useState("");
+    const [profile, setProfile] = useState("");
+    const [profileUpdateTrigger, setProfileUpdateTrigger] = useState(false);
     useEffect(() => {
       const handleResize = () => {
         setIsMobile(window.innerWidth <= 1024);
@@ -157,12 +161,82 @@ const MyPage = () => {
         handleMenuClick(menuPath);
       }
     };
+    const firebaseConfig = {
+      apiKey: "AIzaSyBaDK9wBsy7cj-T1IiIiShSICh4N9S2VCw",
+      authDomain: "perfest-e2b99.firebaseapp.com",
+      projectId: "perfest-e2b99",
+      storageBucket: "perfest-e2b99.appspot.com",
+      messagingSenderId: "17333976746",
+      appId: "1:17333976746:web:74e33ff543b275ad5e9ad3",
+      measurementId: "G-MCWXMQSVDT"
+    };
+  initializeApp(firebaseConfig);
 
+  
+  const handleProfileImageClick = () => {
+    // input 요소의 클릭 이벤트를 트리거합니다.
+    inputRef.current.click();
+  };
+    const handleFileInputChange = async (e) => {
+        const file = e.target.files[0];
+
+        if (file) {
+            const storageRef = ref(storage, "Image");
+            const fileRef = ref(storageRef, file.name);
+
+            await uploadBytes(fileRef, file);
+            console.log('File uploaded successfully!');
+
+            const downloadURL = await getDownloadURL(fileRef);
+            console.log("저장경로 확인: " + downloadURL);
+            setTimeout(async () => {
+              const response = await MemberAPI.updateImg(downloadURL);
+              if (response.data === true){
+              setUploadedImage(response.data);
+              setProfileUpdateTrigger(prev => !prev)
+            } else {
+                console.log(response.data);
+              }
+            }, 1000); 
+            }
+            
+      };
+      useEffect(() => {
+      const getProfileImage = async() => {
+        const response = await MemberAPI.getProfileImg();
+        if(response.status === 200) {
+          setProfile(response.data);
+          console.log("이미지 경로 " + profile);
+          console.log("이미지 경로 " + response.data);
+        }
+      }
+      getProfileImage();
+      },[profileUpdateTrigger]);
+       // 회원 조회
+      useEffect(() => {
+      const memberInfo = async() => {
+      const rsp = await MemberAPI.getMemberNickName();
+      if(rsp.status === 200) setNickNameInfo(rsp.data);
+      console.log(rsp.data);
+      };
+      memberInfo();
+      },[]);
     return (
       <Container>
         <SideBarWrapper collapsed={sidebarCollapsed}>
-          <ProfileImage src={Profile} alt="Profile" />
-          <Nickname>{memberNickname} 님</Nickname>
+        <ProfileImage
+          src={profile}
+          alt="Profile"
+          onClick={handleProfileImageClick}
+        />
+        {/* 숨겨진 input 요소 추가 */}
+        <input
+          type="file"
+          ref={inputRef}
+          style={{ display: "none" }}
+          onChange={handleFileInputChange}
+        />
+          <Nickname>{nickNameInfo}님</Nickname>
           <Menu>
             {menus.map((menu, index) => (
               <MenuItem key={index}>
@@ -193,4 +267,4 @@ const MyPage = () => {
     );
   };
 
-export default MyPage;
+  export default MyPage;

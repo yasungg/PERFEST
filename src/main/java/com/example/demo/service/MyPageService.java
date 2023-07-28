@@ -378,5 +378,36 @@ public class MyPageService {
             throw new IllegalArgumentException("회원 없음!" + memberId);
         }
     }
-
+    // 프로필 이미지 수정
+    public Boolean updateProfileImage(Long memberId, String img ) {
+        Optional<Member> optionalMember = myPageRepository.findById(memberId);
+        if(optionalMember.isPresent()) {
+            Member member = optionalMember.get();
+            member.setImg(img);
+            myPageRepository.save(member);
+        }
+        return true;
+    }
+    // 프로필 이미지 가져오기
+    public String getProfileImage(Long memberId) {
+        Optional<Member> optionalMember = myPageRepository.findById(memberId);
+        if (optionalMember.isPresent()) {
+            Member member = optionalMember.get();
+            return member.getImg();
+        } else {
+            // 해당 아이디에 해당하는 회원이 존재하지 않을 경우 처리
+            throw new IllegalArgumentException("회원이 없음" + memberId);
+        }
+    }
+    // 닉네임 가져오기
+    public String getNickName(Long memberId) {
+        Optional<Member> optionalMember = myPageRepository.findById(memberId);
+        if (optionalMember.isPresent()) {
+            Member member = optionalMember.get();
+            return member.getNickname();
+        } else {
+            // 해당 아이디에 해당하는 회원이 존재하지 않을 경우 처리
+            throw new IllegalArgumentException("회원이 없음" + memberId);
+        }
+    }
 }
