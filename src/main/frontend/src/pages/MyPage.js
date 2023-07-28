@@ -193,4 +193,4 @@ const MyPage = () => {
     );
   };
 
-    export default MyPage;
+export default MyPage;
