@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import FestivalAPI from "../api/FestivalAPI";
 import { UserContext } from "../context/UserStore";
+import CustomInfoWindow from "./CustomInfoWindow";
+import ReactDOMServer from "react-dom/server";
 
 const { naver } = window;
 const { number } = window;
@@ -8,7 +10,7 @@ const { number } = window;
 const NaverMap = () => {
   const [map, setMap] = useState(null);
   const [marker, setMarker] = useState(null);
-  const [infoWindow, setInfoWindow] = useState(null);
+  const [infoWindow, setInfoWindow] = useState([]);
   const {
     contextLongitude,
     contextLatitude,
@@ -62,28 +64,24 @@ const NaverMap = () => {
       markers.push(marker);
       console.log("marker에 위치정보 전달 성공!!");
 
-      const contextString = [
-        '<div class="iw_inner">',
-        '   <p>' + contextFstvlNm[i] +'</p>',
-        '</div>'
-      ].join('');
-
+      const contentString = contextFstvlNm[i];
+      const infoWindowContent = ReactDOMServer.renderToString(<CustomInfoWindow/>);
       const infoWindow = new naver.maps.InfoWindow({
-        content: contextString
+        content: infoWindowContent,
       });
 
       naver.maps.Event.addListener(marker, 'click', function (e) {
-        if(infoWindow.getMap()) {
+        if (infoWindow.getMap()) {
           infoWindow.close();
         } else {
-          infoWindow.open(map, marker)
+          infoWindow.open(map, marker);
         }
       });
       infoWindows.push(infoWindow);
       console.log("infoWindow에 축제이름 전달 성공!!");
     }
     setMarker(markers);
-    setInfoWindow(infoWindow);
+    setInfoWindow(infoWindows);
 
   }, [centerLatitude, contextLatitude, contextLongitude, contextFstvlNm]);
 

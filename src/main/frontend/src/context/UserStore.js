@@ -44,7 +44,10 @@ const UserStore = ({ children }) => {
   const [contextLongitude, setContextLongitude] = useState([]);
   const [centerLatitude, setCenterLatitude] = useState("");
   const [centerLongitude, setCenterLongitude] = useState("");
-  const [contextFstvlNm, setContextFstvlNm] = useState("");
+  // Info Window
+  const [contextFstvlNm, setContextFstvlNm] = useState([]);
+  // const [contextFstvlNm, setContextFstvlNm] = useState([]);
+  // const [contextFstvlNm, setContextFstvlNm] = useState([]);
   //페스티벌 창, 모바일 모드에서 searchbox의 움직임 제어
   const [searchBoxMove, setSearchBoxMove] = useState("0");
   //페스티벌 창, 데스크톱 모드에서 detailbox의 움직임 제어

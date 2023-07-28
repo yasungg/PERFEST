@@ -356,6 +356,7 @@ const SearchSideBar = () => {
     setFestDetailBoxMove,
     setFestDetailBoxMoveY,
     setDetailComponentValue,
+    setContextFstvlNm,
   } = useContext(UserContext);
 
   const screenChange = (event) => {
@@ -372,7 +373,7 @@ const SearchSideBar = () => {
   //마커에 전달할 위도, 경도 값을 저장하기 위한 배열
   const latitudeArr = [];
   const longitudeArr = [];
-
+  const fstvlNmArr = [];
   const searchDefaultByFestivalName = async () => {
     const search = await FestivalAPI.GetSearchResultByFestivalName(
       searchKeyword,
@@ -388,8 +389,9 @@ const SearchSideBar = () => {
       for (let i = 0; i < result.data.content.length; i++) {
         latitudeArr.push(result.data.content[i].latitude);
         longitudeArr.push(result.data.content[i].longitude);
+        fstvlNmArr.push(result.data.content[i].fstvlNm);
       }
-
+      setContextFstvlNm(fstvlNmArr);
       setContextLatitude(latitudeArr);
       setContextLongitude(longitudeArr);
     });
