@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import FullCalendar from '@fullcalendar/react';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import '../CalendarStyle.css';
-import styled from 'styled-components';
-import MemberAPI from '../api/MemberAPI';
-import Modal from '../utils/Modal';
+import React, { useEffect, useState } from "react";
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import "../CalendarStyle.css";
+import styled from "styled-components";
+import MemberAPI from "../api/MemberAPI";
+import Modal from "../utils/Modal";
 
 // const CalendarContainer = styled.div`
 //   display: flex;
@@ -47,37 +47,43 @@ const Calendar = () => {
   const [memberCal, setMemberCal] = useState([]);
   const [delModalOpen, setDelModalOpen] = useState(false);
 
-  useEffect(() => {
-    const likeFestival = async () => {
-      const rsp = await MemberAPI.getCalendar();
-      if (rsp.status === 200) setMemberCal(rsp.data);
-    };
-    likeFestival();
-  }, []);
+  // useEffect(() => {
+  //   const likeFestival = async () => {
+  //     const rsp = await MemberAPI.getCalendar();
+  //     if (rsp.status === 200) setMemberCal(rsp.data);
+  //   };
+  //   likeFestival();
+  // }, []);
 
   const delCalender = () => {
     setDelModalOpen(true);
-  }
+  };
 
   const closeModal = () => {
     setDelModalOpen(false);
-  }
+  };
 
   // 임시용
   let calenderId = 1;
 
-  const confirm = async(modalType) => {
-    if(modalType === "delAll") {
+  const confirm = async (modalType) => {
+    if (modalType === "delAll") {
       const rsp = await MemberAPI.deleteAllCalender();
       console.log(rsp.data);
-    } else if(modalType === "delSelec") {
+    } else if (modalType === "delSelec") {
       const response = await MemberAPI.deleteCalender(calenderId);
       console.log(response.data);
     }
-  }
+  };
 
-
-  const predefinedColors = ['#fa5252', '#fd7e14', 'fcc419', '#40c057', '#339af0', '#7950f2'];
+  const predefinedColors = [
+    "#fa5252",
+    "#fd7e14",
+    "fcc419",
+    "#40c057",
+    "#339af0",
+    "#7950f2",
+  ];
 
   const getPredefinedColor = (color) => {
     return predefinedColors[color % predefinedColors.length];
@@ -95,7 +101,6 @@ const Calendar = () => {
           backgroundColor: getPredefinedColor(index),
         }))}
       />
-
     </>
   );
 };

@@ -139,6 +139,45 @@ const LogoutBtn = styled.button`
   font-weight: 300px;
   user-select: none;
 `;
+const SidebarBodyContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: calc(100vh - 40px);
+  background: transparent;
+  border: none;
+  overflow-y: scroll;
+  .show-scroll {
+    overflow-y: scroll;
+  }
+
+  /* 스크롤바 커스터마이징 */
+
+  &::-webkit-scrollbar {
+    position: fixed;
+    right: -4px;
+    width: 6px;
+    background: white;
+    border-radius: 2px;
+    border: none;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    width: 6px;
+    background: rgba(34, 34, 34, 0.7);
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 1px solid transparent;
+    /* height: 20px; */
+  }
+
+  &::-webkit-scrollbar-track {
+    /* box-shadow: inset 0px 0px 3px gray; */
+  }
+  @media screen and (max-width: 767px) {
+    width: 100vw;
+  }
+`;
 const Sidebar = () => {
   const navigate = useNavigate();
   const { isLogin, setIsLogin, isSidebar, setIsSidebar } =
@@ -163,38 +202,40 @@ const Sidebar = () => {
           <CloseIcon className="xIcon" style={{ color: "white" }} />
         </SidebarXbtn>
       </SidebarXbox>
-      <SidebarProfile>
-        <SidebarProfileImg src={PerfestLogoWhite} />
-        <MemberBox>
-          {isLogin ? (
-            <LoginButton onClick={() => navigate("/pages/mypage")}>
-              <span>MYPAGE</span>
-            </LoginButton>
-          ) : (
-            <LoginButton onClick={() => navigate("/pages/login")}>
-              <span>Login / Signup</span>
-            </LoginButton>
-          )}
-        </MemberBox>
-      </SidebarProfile>
-      <SidebarNaviBtns>
-        <SidebarNaviBtn onClick={() => navigate("/pages/festival")}>
-          <span className="sidenavispan">Festivals</span>
-        </SidebarNaviBtn>
-        <SidebarNaviBtn>
-          <span className="sidenavispan">Ranking</span>
-        </SidebarNaviBtn>
-        <SidebarNaviBtn onClick={() => navigate("/pages/board")}>
-          <span className="sidenavispan">Community</span>
-        </SidebarNaviBtn>
-        <SidebarNaviBtn onClick={() => navigate("/pages/Calender")}>
-          <span className="sidenavispan">Calender</span>
-        </SidebarNaviBtn>
-        <SidebarNaviBtn>
-          <span className="sidenavispan">About</span>
-        </SidebarNaviBtn>
-      </SidebarNaviBtns>
-      {isLogin && <LogoutBtn onClick={logout}>LOG OUT</LogoutBtn>}
+      <SidebarBodyContainer>
+        <SidebarProfile>
+          <SidebarProfileImg src={PerfestLogoWhite} />
+          <MemberBox>
+            {isLogin ? (
+              <LoginButton onClick={() => navigate("/pages/mypage")}>
+                <span>MYPAGE</span>
+              </LoginButton>
+            ) : (
+              <LoginButton onClick={() => navigate("/pages/login")}>
+                <span>Login / Signup</span>
+              </LoginButton>
+            )}
+          </MemberBox>
+        </SidebarProfile>
+        <SidebarNaviBtns>
+          <SidebarNaviBtn onClick={() => navigate("/pages/festival")}>
+            <span className="sidenavispan">Festivals</span>
+          </SidebarNaviBtn>
+          <SidebarNaviBtn>
+            <span className="sidenavispan">Ranking</span>
+          </SidebarNaviBtn>
+          <SidebarNaviBtn onClick={() => navigate("/pages/board")}>
+            <span className="sidenavispan">Community</span>
+          </SidebarNaviBtn>
+          <SidebarNaviBtn onClick={() => navigate("/pages/Calender")}>
+            <span className="sidenavispan">Calender</span>
+          </SidebarNaviBtn>
+          <SidebarNaviBtn>
+            <span className="sidenavispan">About</span>
+          </SidebarNaviBtn>
+        </SidebarNaviBtns>
+        {isLogin && <LogoutBtn onClick={logout}>LOG OUT</LogoutBtn>}
+      </SidebarBodyContainer>
     </SidebarContainer>
   );
 };

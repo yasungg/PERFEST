@@ -482,53 +482,12 @@ const MemberAPI = {
   },
 
   // 내가 좋아요한 축제 일정 조회(캘린더용)
-      getCalendar: async() => {
-        const Authorization =
-        "Bearer " + window.localStorage.getItem("accessToken");
-        console.log(Authorization);
-        return await axios.get(KH_DOMAIN + `/member/calender`,{
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: Authorization,
-            }, // 여기까지가 서버로 header를 실은 요청을 던지는 기능
-          })
-          .then((response) => {
-            if (response.status === 200) {
-              return response;
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-    },
-
-    // 좋아요 한 내 축제 일정 개별 삭제
-    deleteCalender: async(calenderId) => {
-      const Authorization =
+  getCalendar: async () => {
+    const Authorization =
       "Bearer " + window.localStorage.getItem("accessToken");
-      console.log(Authorization);
-      return await axios.delete(KH_DOMAIN + `/member/delCalender?calenderId=${calenderId}`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: Authorization,
-        }, // 여기까지가 서버로 header를 실은 요청을 던지는 기능
-      })
-      .then((response) => {
-        if (response.status === 200) {
-          return response;
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    },
-
-    // 좋아요한 내 축제 일정 전체 삭제
-    deleteAllCalender: async() => {
-      const Authorization =
-      "Bearer " + window.localStorage.getItem("accessToken");
-      console.log(Authorization);
-      return await axios.delete(KH_DOMAIN + '/member/delAllCalender',{
+    console.log(Authorization);
+    return await axios
+      .get(`/member/calender`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: Authorization,
@@ -544,5 +503,48 @@ const MemberAPI = {
       });
   },
 
-}
+  // 좋아요 한 내 축제 일정 개별 삭제
+  deleteCalender: async (calenderId) => {
+    const Authorization =
+      "Bearer " + window.localStorage.getItem("accessToken");
+    console.log(Authorization);
+    return await axios
+      .delete(`/member/delCalender?calenderId=${calenderId}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: Authorization,
+        }, // 여기까지가 서버로 header를 실은 요청을 던지는 기능
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          return response;
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
+
+  // 좋아요한 내 축제 일정 전체 삭제
+  deleteAllCalender: async () => {
+    const Authorization =
+      "Bearer " + window.localStorage.getItem("accessToken");
+    console.log(Authorization);
+    return await axios
+      .delete("/member/delAllCalender", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: Authorization,
+        }, // 여기까지가 서버로 header를 실은 요청을 던지는 기능
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          return response;
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
+};
 export default MemberAPI;

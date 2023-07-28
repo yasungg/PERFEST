@@ -12,8 +12,10 @@ const FestivalAPI = {
     );
   },
   // 축제 개별 조회
-  getFestivalByFestivalId: async(festivalId) => {
-    return await axios.get(`/auth/festival/getfestivaldetail/festivalId=${festivalId}`)
-  }
+  getFestivalByFestivalId: async (festivalId) => {
+    return await axios.get(
+      `/auth/festival/getfestivaldetail?festivalId=${festivalId}`
+    );
+  },
 };
 export default FestivalAPI;

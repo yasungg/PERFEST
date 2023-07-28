@@ -1,19 +1,19 @@
 {
   "files": {
     "main.css": "/static/css/main.9beb9942.chunk.css",
-    "main.js": "/static/js/main.6cb6d93a.chunk.js",
-    "main.js.map": "/static/js/main.6cb6d93a.chunk.js.map",
+    "main.js": "/static/js/main.8b35adcf.chunk.js",
+    "main.js.map": "/static/js/main.8b35adcf.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.ad02a5c4.js",
     "runtime-main.js.map": "/static/js/runtime-main.ad02a5c4.js.map",
     "static/css/2.65f8c46c.chunk.css": "/static/css/2.65f8c46c.chunk.css",
-    "static/js/2.edc611dc.chunk.js": "/static/js/2.edc611dc.chunk.js",
-    "static/js/2.edc611dc.chunk.js.map": "/static/js/2.edc611dc.chunk.js.map",
+    "static/js/2.3ae6aaec.chunk.js": "/static/js/2.3ae6aaec.chunk.js",
+    "static/js/2.3ae6aaec.chunk.js.map": "/static/js/2.3ae6aaec.chunk.js.map",
     "static/js/3.dc1ccf81.chunk.js": "/static/js/3.dc1ccf81.chunk.js",
     "static/js/3.dc1ccf81.chunk.js.map": "/static/js/3.dc1ccf81.chunk.js.map",
     "index.html": "/index.html",
     "static/css/2.65f8c46c.chunk.css.map": "/static/css/2.65f8c46c.chunk.css.map",
     "static/css/main.9beb9942.chunk.css.map": "/static/css/main.9beb9942.chunk.css.map",
-    "static/js/2.edc611dc.chunk.js.LICENSE.txt": "/static/js/2.edc611dc.chunk.js.LICENSE.txt",
+    "static/js/2.3ae6aaec.chunk.js.LICENSE.txt": "/static/js/2.3ae6aaec.chunk.js.LICENSE.txt",
     "static/media/2023안양충훈벚꽃축제.6c34e05c.jpg": "/static/media/2023안양충훈벚꽃축제.6c34e05c.jpg",
     "static/media/47802_35328_56.9d434c67.jpg": "/static/media/47802_35328_56.9d434c67.jpg",
     "static/media/PERFEST LOGO WHITE.7c98aa0a.png": "/static/media/PERFEST LOGO WHITE.7c98aa0a.png",
@@ -25,8 +25,8 @@
   "entrypoints": [
     "static/js/runtime-main.ad02a5c4.js",
     "static/css/2.65f8c46c.chunk.css",
-    "static/js/2.edc611dc.chunk.js",
+    "static/js/2.3ae6aaec.chunk.js",
     "static/css/main.9beb9942.chunk.css",
-    "static/js/main.6cb6d93a.chunk.js"
+    "static/js/main.8b35adcf.chunk.js"
   ]
 }

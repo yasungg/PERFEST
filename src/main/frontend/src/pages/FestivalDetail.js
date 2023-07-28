@@ -8,7 +8,6 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ForumIcon from "@mui/icons-material/Forum";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import FestivalAPI from "../api/FestivalAPI";
-import { useParams } from "react-router";
 import BlackLogo from "../images/PERFEST LOGO BLACK.png";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import Review from "./Review";
@@ -23,7 +22,6 @@ const DetailContainer = styled.div`
   width: 400px;
   height: calc(100vh - 58px);
   background: #222;
-  overflow-y: scroll;
   z-index: 2;
   box-shadow: 1px 0px 5px 0px #555555;
   transition: all 0.3s ease-in;
@@ -33,7 +31,7 @@ const DetailContainer = styled.div`
     width: 100vw;
     max-width: 100vw;
     left: 0;
-    height: calc(100vh - 50px - 40vh);
+    height: calc(100vh - 44px - 40vh);
     top: ${(props) => props.top};
     /* bottom: ${(props) => props.bottom}; */
     border-top-right-radius: 10px;
@@ -43,31 +41,9 @@ const DetailContainer = styled.div`
     height: calc(100vh - 6vh);
     z-index: 99;
   }
-  .show-scroll {
-    overflow-y: scroll;
-  }
-
-  /* 스크롤바 커스터마이징 */
-  &::-webkit-scrollbar {
-    width: 8px;
-    background: #fff;
-    border-radius: 2px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: rgba(34, 34, 34, 0.9);
-    border-radius: 10px;
-    background-clip: padding-box;
-    border: 1px solid transparent;
-    /* height: 20px; */
-  }
-
-  &::-webkit-scrollbar-track {
-    box-shadow: inset 0px 0px 3px gray;
-  }
 `;
 const FestDetailPictureBox = styled.div`
-  width: 392px;
+  width: 400px;
   height: 200px;
   background: white;
   display: flex;
@@ -76,13 +52,15 @@ const FestDetailPictureBox = styled.div`
   }
 `;
 const FestDetailMainPicture = styled.div`
-  width: 200px;
+  width: 50%;
+  max-width: 50%;
   height: 200px;
   @media screen and (max-width: 1024px) {
     width: 100vw;
   }
 `;
 const FestDetailSubPictureBox = styled.div`
+  box-sizing: border-box;
   display: grid;
   grid-template-columns: 100px 100px;
   grid-template-rows: 100px 100px;
@@ -95,6 +73,19 @@ const FestDetailSubPictureBox = styled.div`
   /* .main-picture {
     grid-area: main-picture;
   } */
+  @media screen and (max-width: 1024px) {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows:
+      100px
+      100px;
+    grid-template-areas:
+      "picture-1 picture-3"
+      "picture-2 picture-4";
+    width: 100%;
+    height: 200px;
+    min-height: 200px;
+  }
   .picture-2 {
     grid-area: picture-2;
   }
@@ -108,11 +99,12 @@ const FestDetailSubPictureBox = styled.div`
     grid-area: picture-5;
   }
   @media screen and (max-width: 767px) {
-    width: 100vw;
-    height: calc(100vw / 2);
+    width: 100%;
+    height: calc(100% / 2);
   }
 `;
 const FestDetailPictureDiv = styled.div`
+  width: 100%;
   overflow: hidden;
   position: relative;
 `;
@@ -142,6 +134,35 @@ const DimmedBackground = styled.div`
 `;
 const DetailBodyContainer = styled.div`
   width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  .show-scroll {
+    overflow-y: scroll;
+  }
+
+  /* 스크롤바 커스터마이징 */
+
+  &::-webkit-scrollbar {
+    position: fixed;
+    right: -4px;
+    width: 6px;
+    background: white;
+    border-radius: 2px;
+    border: none;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    width: 6px;
+    background: rgba(34, 34, 34, 0.7);
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 1px solid transparent;
+    /* height: 20px; */
+  }
+
+  &::-webkit-scrollbar-track {
+    /* box-shadow: inset 0px 0px 3px gray; */
+  }
   @media screen and (max-width: 767px) {
     width: 100vw;
   }
@@ -236,12 +257,12 @@ const DetailDescBox = styled.div`
   }
 `;
 const FestivalDetail = () => {
-  const { id } = useParams();
   const {
     festDetailBoxMove,
     setFestDetailBoxMove,
     festDetailBoxMoveY,
     setFestDetailBoxMoveY,
+    detailComponentValue,
   } = useContext(UserContext);
   const [festivalDetail, setFestivalDetail] = useState([]);
   const [navigationValue, setNavigationValue] = useState("");
@@ -259,15 +280,27 @@ const FestivalDetail = () => {
   }, []);
 
   useEffect(() => {
+    console.log(festDetailBoxMove);
+    console.log(festDetailBoxMoveY);
+  }, [festDetailBoxMove, festDetailBoxMoveY]);
+  useEffect(() => {
     const getFestivalDetail = async () => {
-      const response = await FestivalAPI.getFestivalByFestivalId(id);
-      console.log(response.data);
-      setFestivalDetail(response.data);
+      const response = await FestivalAPI.getFestivalByFestivalId(
+        detailComponentValue
+      )
+        .then((result) => {
+          console.log(result.data);
+          setFestivalDetail(result.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     };
-    if (id) {
+    if (detailComponentValue) {
       getFestivalDetail();
+      console.log(festivalDetail);
     }
-  }, [id]);
+  }, [detailComponentValue]);
   useEffect(() => {
     console.log(navigationValue);
   }, [navigationValue]);
@@ -290,31 +323,48 @@ const FestivalDetail = () => {
           </Xbtn>
         )}
       </Xbox>
-      <FestDetailPictureBox>
-        <FestDetailMainPicture>
-          <FestPicture src={BlackLogo} />
-        </FestDetailMainPicture>
-        <FestDetailSubPictureBox>
-          <FestDetailPictureDiv className="picture-1" src={BlackLogo} alt="aa">
-            <FestPicture src={BlackLogo} />
-          </FestDetailPictureDiv>
-          <FestDetailPictureDiv className="picture-2" src={BlackLogo} alt="aa">
-            <FestPicture src={BlackLogo} />
-          </FestDetailPictureDiv>
-          <FestDetailPictureDiv className="picture-3" src={BlackLogo} alt="aa">
-            <FestPicture src={BlackLogo} />
-          </FestDetailPictureDiv>
-          <FestDetailPictureDiv className="picture-4" src={BlackLogo} alt="aa">
-            <FestPicture src={BlackLogo} />
-            <DimmedBackground>
-              <AddCircleOutlineIcon
-                style={{ color: "white", fontSize: "36px" }}
-              />
-            </DimmedBackground>
-          </FestDetailPictureDiv>
-        </FestDetailSubPictureBox>
-      </FestDetailPictureBox>
       <DetailBodyContainer>
+        <FestDetailPictureBox>
+          <FestDetailMainPicture>
+            <FestPicture src={BlackLogo} />
+          </FestDetailMainPicture>
+          <FestDetailSubPictureBox>
+            <FestDetailPictureDiv
+              className="picture-1"
+              src={BlackLogo}
+              alt="aa"
+            >
+              <FestPicture src={BlackLogo} />
+            </FestDetailPictureDiv>
+            <FestDetailPictureDiv
+              className="picture-2"
+              src={BlackLogo}
+              alt="aa"
+            >
+              <FestPicture src={BlackLogo} />
+            </FestDetailPictureDiv>
+            <FestDetailPictureDiv
+              className="picture-3"
+              src={BlackLogo}
+              alt="aa"
+            >
+              <FestPicture src={BlackLogo} />
+            </FestDetailPictureDiv>
+            <FestDetailPictureDiv
+              className="picture-4"
+              src={BlackLogo}
+              alt="aa"
+            >
+              <FestPicture src={BlackLogo} />
+              <DimmedBackground>
+                <AddCircleOutlineIcon
+                  style={{ color: "white", fontSize: "36px" }}
+                />
+              </DimmedBackground>
+            </FestDetailPictureDiv>
+          </FestDetailSubPictureBox>
+        </FestDetailPictureBox>
+
         <FestivalNameBox>
           <p className="festival-title">서울 벚꽃축제</p>
           <p className="festival-desc">서울에서 즐기는 벚꽃축제</p>

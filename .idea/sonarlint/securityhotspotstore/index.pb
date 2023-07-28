@@ -333,10 +333,6 @@ o
 ?src/main/java/com/example/demo/controller/LogoutController.java,a\9\a9352ac7688b34d4303eb2427333992ec9b1daa0
 n
 >src/main/java/com/example/demo/security/WebSecurityConfig.java,0\5\0556c52ff9ce77e98caa8b8bf58ff2a71f5ae831
-T
-$src/main/frontend/src/pages/Login.js,d\c\dc3846aa64416d03926d9c6e1e2b3230d296423f
-V
-&src/main/frontend/src/api/MemberAPI.js,7\e\7ee377fc12b23b3fd83558970af4cf6d004d1f7e
 h
 8src/main/frontend/src/components/MembershipManagement.js,5\8\5846f92c3a02cd2f633765490adeaec17653bd15
 s
@@ -355,8 +351,6 @@ o
 ?src/main/java/com/example/demo/controller/MemberController.java,3\0\30f0f6084bb53b20935f868fd476a7ee6e903bd4
 i
 9src/main/java/com/example/demo/service/MemberService.java,1\2\12d9a5619eb12e0c8aee3df2e1fed44a21a94255
-X
-(src/main/frontend/src/api/FestivalAPI.js,7\4\7457a2bc60c6f4e16e892ab3a78d9f6686826593
 L
 src/main/frontend/src/App.js,6\5\65107325a79051577112de2ce586496b00ad83a7
 :
@@ -368,3 +362,15 @@ _
 /src/main/frontend/src/components/AdminHeader.js,3\8\38265e16e8e000258373846abfab2f31bbbc334f
 u
 Esrc/test/java/com/example/demo/repository/FestivalRepositoryTest.java,0\0\004549a827a5f14a15d593b574658a9eaea53f62
+W
+'src/main/frontend/src/pages/Festival.js,1\c\1c68c179811e4c96c27b2be3fbf4445b07937a7a
+e
+5src/main/frontend/src/components/HeaderForFestival.js,3\6\36f02b98b71697a65ec84d4a72e542f1d2973881
+Z
+*src/main/frontend/src/components/Header.js,a\3\a38fb24f994555f8cffe167aaabd5095558edc5c
+b
+2src/main/frontend/src/components/StandardStyles.js,f\8\f8212f22942a6e2e368497f87b185499f3c85587
+j
+:src/main/frontend/src/components/FestivalSearchCategory.js,9\8\98f2e7d388325509e8757b48c190fa4f7e1790e2
+<
+build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35

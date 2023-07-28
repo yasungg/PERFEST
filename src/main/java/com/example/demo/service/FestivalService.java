@@ -22,7 +22,6 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -211,6 +210,9 @@ public class FestivalService {
             festivalDTO.setMainOrg(festival.getMainOrg());
             festivalDTO.setStartDate(festival.getStartDate());
             festivalDTO.setEndDate(festival.getEndDate());
+            festivalDTO.setFestivalDesc(festival.getFestivalDesc());
+            festivalDTO.setKyungdo(festival.getKyungdo());
+            festivalDTO.setWedo(festival.getWedo());
             festivalDTOS.add(festivalDTO);
         }
         return festivalDTOS;

@@ -11,7 +11,8 @@ import BlackLogo from "../images/PERFEST LOGO BLACK.png";
 const SearchContainer = styled.div`
   box-sizing: border-box;
   display: inline-block;
-  min-width: 320px;
+  min-width: 364px;
+  max-width: 364px;
   height: calc(100vh - 58px);
   background-color: #fff;
   overflow-y: hidden;
@@ -24,8 +25,9 @@ const SearchContainer = styled.div`
     max-width: 100vw;
     height: 40vh;
     bottom: ${(props) => props.bottom};
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
+    box-shadow: none;
+    /* border-top-right-radius: 10px;
+    border-top-left-radius: 10px; */
   }
   @media screen and (max-width: 375px) {
     position: absolute;
@@ -156,13 +158,16 @@ const ListContainer = styled.div`
 
   /* 스크롤바 커스터마이징 */
   &::-webkit-scrollbar {
-    width: 10px;
-    background: #fff;
+    position: fixed;
+    right: -4px;
+    width: 6px;
+    background: white;
     border-radius: 2px;
+    border: none;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #222;
+    background: rgba(34, 34, 34, 0.7);
     border-radius: 10px;
     background-clip: padding-box;
     border: 1px solid transparent;
@@ -170,7 +175,7 @@ const ListContainer = styled.div`
   }
 
   &::-webkit-scrollbar-track {
-    box-shadow: inset 0px 0px 3px gray;
+    /* box-shadow: inset 0px 0px 3px gray; */
   }
 `;
 
@@ -350,6 +355,7 @@ const SearchSideBar = () => {
     contextFestivalSearch,
     setFestDetailBoxMove,
     setFestDetailBoxMoveY,
+    setDetailComponentValue,
   } = useContext(UserContext);
 
   const screenChange = (event) => {
@@ -399,9 +405,18 @@ const SearchSideBar = () => {
   };
   // 검색창 Enter 검색
   const handleKeyPress = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       searchDefaultByFestivalName();
     }
+  };
+  // 데스크탑 모드에서 자세히 보기를 누르면 detail 페이지로 festival id를 전달
+  const giveIdToDetail = (id) => {
+    setFestDetailBoxMove("364px");
+    setDetailComponentValue(id);
+  };
+  const giveIdToDetailY = (id) => {
+    setFestDetailBoxMoveY("6vh");
+    setDetailComponentValue(id);
   };
 
   useEffect(() => {
@@ -438,8 +453,7 @@ const SearchSideBar = () => {
             onChange={(e) => setSearchKeyword(e.target.value)}
             onKeyPress={handleKeyPress}
           />
-          <SearchButton
-            type="submit" onClick={searchDefaultByFestivalName}>
+          <SearchButton type="submit" onClick={searchDefaultByFestivalName}>
             <SearchIcon className="searchIcon" />
           </SearchButton>
         </InputBoxArea>
@@ -475,9 +489,7 @@ const SearchSideBar = () => {
             <p>검색된 결과가 없습니다.</p>
             <ResultSort>
               <SortByDateOrDistance>
-                <span onClick={() => setFestDetailBoxMove("320px")}>
-                  날짜순
-                </span>
+                <span>날짜순</span>
               </SortByDateOrDistance>
               <SortByDateOrDistance>
                 <span>거리순</span>
@@ -517,19 +529,11 @@ const SearchSideBar = () => {
                         위치보기
                       </LocationButton>
                       {mQuery ? (
-                        <LocationButton
-                          onClick={() =>
-                            navigate(`/pages/festivaldetail/${e.id}`)
-                          }
-                        >
+                        <LocationButton onClick={() => giveIdToDetailY(e.id)}>
                           자세히 보기
                         </LocationButton>
                       ) : (
-                        <LocationButton
-                          onClick={() =>
-                            navigate(`/pages/festivaldetail/${e.id}`)
-                          }
-                        >
+                        <LocationButton onClick={() => giveIdToDetail(e.id)}>
                           자세히 보기
                         </LocationButton>
                       )}

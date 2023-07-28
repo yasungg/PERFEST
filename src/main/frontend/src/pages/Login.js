@@ -18,7 +18,7 @@ const Container = styled.div`
   justify-content: ${(props) => props.justifyContent};
   align-items: ${(props) => props.alignItems};
   background-image: url(${test});
-  overflow: scroll;
+  overflow: hidden;
 `;
 // linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
 const Box = styled.div`
@@ -33,6 +33,20 @@ const Box = styled.div`
   border: none;
   box-shadow: 3px 5px 10px black;
   overflow: hidden;
+  @media screen and (max-width: 769px) {
+    width: 80%;
+    height: 70vh;
+  }
+  @media screen and (max-width: 415px) {
+    height: 66vh;
+  }
+  @media screen and (max-width: 391px) {
+    height: 70vh;
+  }
+  @media screen and (max-width: 376px) {
+    width: 96%;
+    height: 90vh;
+  }
 `;
 const SignUpBox = styled.div`
   display: flex;
@@ -44,6 +58,10 @@ const SignUpBox = styled.div`
   border-radius: 5px;
   border: none;
   backdrop-filter: blur(20px);
+  @media screen and (max-width: 769px) {
+    width: 100%;
+    height: 100%;
+  }
 `;
 const LoginBox = styled.div`
   display: flex;
@@ -57,6 +75,9 @@ const LoginBox = styled.div`
   z-index: 9;
   transform: translateY(${(props) => props.transForm});
   transition: 0.3s ease-in-out;
+  @media screen and (max-width: 769px) {
+    width: 100%;
+  }
 `;
 
 const LogoBox = styled.div`
@@ -114,7 +135,7 @@ const InputBoxContainer = styled.form`
   flex-flow: column;
   width: 320px;
   height: ${(props) => props.height};
-  @media screen and (max-width: 320px) {
+  @media screen and (max-width: 769px) {
     width: 100%;
   }
 `;
@@ -131,6 +152,10 @@ const LoginInputBox = styled.input`
   &:focus {
     outline: none;
   }
+  @media screen and (max-width: 769px) {
+    width: 90%;
+    align-self: center;
+  }
 `;
 const SignUpInputBox = styled.input`
   box-sizing: border-box;
@@ -144,6 +169,10 @@ const SignUpInputBox = styled.input`
   padding-left: 8px;
   &:focus {
     outline: none;
+  }
+  @media screen and (max-width: 769px) {
+    width: 90%;
+    align-self: center;
   }
 `;
 const RegexResult = styled.div`
@@ -190,6 +219,9 @@ const LoginBtn = styled.button`
   &:hover {
     cursor: pointer;
   }
+  @media screen and (max-width: 769px) {
+    width: 90%;
+  }
 `;
 const SignUpBtn = styled.button`
   display: flex;
@@ -213,12 +245,19 @@ const SignUpBtn = styled.button`
     background: transparent;
     color: black;
   }
+  @media screen and (max-width: 769px) {
+    width: 90%;
+  }
 `;
 const KakaoBtn = styled.button`
   border: none;
   background: none;
+  align-self: center;
   &:hover {
     cursor: pointer;
+  }
+  @media screen and (max-width: 769px) {
+    width: 90%;
   }
 `;
 
@@ -422,7 +461,11 @@ const Login = () => {
           </LoginBtn>
           <KakaoBtn>
             <a href={KAKAO_AUTH_URI}>
-              <img src={kakaoButton} alt="" />
+              <img
+                src={kakaoButton}
+                alt=""
+                style={{ width: "100%", height: "45px" }}
+              />
             </a>
           </KakaoBtn>
           <AdditionalBox />
