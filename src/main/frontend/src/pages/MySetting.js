@@ -263,8 +263,8 @@ const MySetting = () => {
     <>
       <BodyContainer>
         {/* <Tm>내 정보</Tm> */}
+        <Header />
         <Container>
-          <Header />
           {memberInfo && memberInfo.map(member => (
             <Section2 key={member.email}>
               <Label>
