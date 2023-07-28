@@ -13,7 +13,7 @@ import java.util.Date;
 public class Festival {
     @Id
     @Column(name = "festival_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @JsonProperty("fstvlNm")

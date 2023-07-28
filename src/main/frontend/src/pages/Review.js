@@ -228,7 +228,7 @@ const Review = () => {
   //멤버 리스트 1페이지를 자동으로 렌더링
   useEffect(() => {
     getReviewList();
-  }, [currentPage, totalPages, reviewUpdateTrigger]);
+  }, [currentPage, totalPages, reviewUpdateTrigger, detailComponentValue]);
   // 해당 축제의 리뷰 개수 가져오기
   useEffect(() => {
     const getReviewCount = async () => {
@@ -243,7 +243,10 @@ const Review = () => {
   return (
     <Container justifyContent="center" alignItems="center">
       <ReviewContainer>
-        <ReviewCount>리뷰{reviewCount}</ReviewCount>
+        <ReviewCount>
+          <span style={{ marginRight: "8px" }}>리뷰</span>
+          <span>{reviewCount}</span>
+        </ReviewCount>
         <ReviewWriting>
           <textarea
             className="reviewwrite"

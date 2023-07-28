@@ -43,8 +43,6 @@ e
 5src/main/frontend/src/components/AdminFestivalList.js,3\6\36100e1927a5ce0593497b4b01d68f5929b296be
 d
 4src/main/frontend/src/components/AdminFestTelInfo.js,2\1\2170faae0dd0795d0c1999ab42162bdc3c44cccd
-d
-4src/main/java/com/example/demo/entity/Community.java,e\c\ec4ebd7b8ca58688aecd04de56d9ab788f3b14fd
 e
 5src/main/frontend/src/components/ProductRefundList.js,6\d\6d0b098fdf9abf6730db5f40cdf9793eb26956c8
 `
@@ -343,16 +341,12 @@ p
 @src/main/java/com/example/demo/dto/memberDTOs/MemberListDTO.java,1\3\13f3f8fb38a7cfbdb465b33423b2e131ad52df38
 l
 <src/main/java/com/example/demo/controller/WebController.java,b\9\b9bb329768c88e9c8b10c1191c6bd48ddaa49222
-o
-?src/main/java/com/example/demo/repository/MemberRepository.java,a\5\a57fc3e158042d35b8b07bce4e443c05d794f535
 t
 Dsrc/main/java/com/example/demo/controller/AdminMemberController.java,4\1\418a00b06e094dd0cd5e1e80859ac8025127ef47
 o
 ?src/main/java/com/example/demo/controller/MemberController.java,3\0\30f0f6084bb53b20935f868fd476a7ee6e903bd4
 i
 9src/main/java/com/example/demo/service/MemberService.java,1\2\12d9a5619eb12e0c8aee3df2e1fed44a21a94255
-L
-src/main/frontend/src/App.js,6\5\65107325a79051577112de2ce586496b00ad83a7
 :
 
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
@@ -360,12 +354,8 @@ o
 ?src/main/java/com/example/demo/controller/NoticeController.java,f\9\f99f7fe979acd274fff3a025d23f96db16fcc206
 _
 /src/main/frontend/src/components/AdminHeader.js,3\8\38265e16e8e000258373846abfab2f31bbbc334f
-u
-Esrc/test/java/com/example/demo/repository/FestivalRepositoryTest.java,0\0\004549a827a5f14a15d593b574658a9eaea53f62
 W
 'src/main/frontend/src/pages/Festival.js,1\c\1c68c179811e4c96c27b2be3fbf4445b07937a7a
-e
-5src/main/frontend/src/components/HeaderForFestival.js,3\6\36f02b98b71697a65ec84d4a72e542f1d2973881
 Z
 *src/main/frontend/src/components/Header.js,a\3\a38fb24f994555f8cffe167aaabd5095558edc5c
 b

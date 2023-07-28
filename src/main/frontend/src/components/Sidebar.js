@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import MemberAPI from "../api/MemberAPI";
 import LoginAPI from "../api/LoginAPI";
 const SidebarContainer = styled.div`
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   position: fixed;
@@ -140,9 +141,11 @@ const LogoutBtn = styled.button`
   user-select: none;
 `;
 const SidebarBodyContainer = styled.div`
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 300px;
+  max-width: 300px;
   height: calc(100vh - 40px);
   background: transparent;
   border: none;

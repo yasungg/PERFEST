@@ -99,8 +99,6 @@ b
 2src/main/frontend/src/components/RequestProgram.js,f\8\f8772f16faeab765173d5e22eeb0f96fac1107d8
 K
 src/main/frontend/yarn.lock,2\c\2cbcefdf539fc498ca376cf16f7848ca082b3969
-d
-4src/main/java/com/example/demo/entity/Community.java,e\c\ec4ebd7b8ca58688aecd04de56d9ab788f3b14fd
 O
 src/main/frontend/src/index.css,0\2\02f38d17933111cb5a7b89b41de0f98525d7cd81
 Z
@@ -355,27 +353,19 @@ l
 <src/main/java/com/example/demo/controller/WebController.java,b\9\b9bb329768c88e9c8b10c1191c6bd48ddaa49222
 o
 ?src/main/java/com/example/demo/controller/MemberController.java,3\0\30f0f6084bb53b20935f868fd476a7ee6e903bd4
-o
-?src/main/java/com/example/demo/repository/MemberRepository.java,a\5\a57fc3e158042d35b8b07bce4e443c05d794f535
 i
 9src/main/java/com/example/demo/service/MemberService.java,1\2\12d9a5619eb12e0c8aee3df2e1fed44a21a94255
 :
 
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
-L
-src/main/frontend/src/App.js,6\5\65107325a79051577112de2ce586496b00ad83a7
 _
 /src/main/frontend/src/components/AdminHeader.js,3\8\38265e16e8e000258373846abfab2f31bbbc334f
 o
 ?src/main/java/com/example/demo/controller/NoticeController.java,f\9\f99f7fe979acd274fff3a025d23f96db16fcc206
-u
-Esrc/test/java/com/example/demo/repository/FestivalRepositoryTest.java,0\0\004549a827a5f14a15d593b574658a9eaea53f62
 j
 :src/main/frontend/src/components/FestivalSearchCategory.js,9\8\98f2e7d388325509e8757b48c190fa4f7e1790e2
 Z
 *src/main/frontend/src/components/Header.js,a\3\a38fb24f994555f8cffe167aaabd5095558edc5c
-e
-5src/main/frontend/src/components/HeaderForFestival.js,3\6\36f02b98b71697a65ec84d4a72e542f1d2973881
 b
 2src/main/frontend/src/components/StandardStyles.js,f\8\f8212f22942a6e2e368497f87b185499f3c85587
 W

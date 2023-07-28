@@ -5,6 +5,9 @@ import "../CalendarStyle.css";
 import styled from "styled-components";
 import MemberAPI from "../api/MemberAPI";
 import Modal from "../utils/Modal";
+import { Container } from "../components/StandardStyles";
+import Header from "../components/Header";
+import Sidebar from "../components/Sidebar";
 
 // const CalendarContainer = styled.div`
 //   display: flex;
@@ -90,7 +93,8 @@ const Calendar = () => {
   };
 
   return (
-    <>
+    <Container>
+      <Header />
       <StyledFullCalendar
         defaultView="dayGridMonth"
         plugins={[dayGridPlugin]}
@@ -101,7 +105,8 @@ const Calendar = () => {
           backgroundColor: getPredefinedColor(index),
         }))}
       />
-    </>
+      <Sidebar />
+    </Container>
   );
 };
 

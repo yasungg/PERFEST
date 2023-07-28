@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Table(name = "t_member_like")
 public class MemberLike {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "memberlike_id")
     private Long id;
 

@@ -147,7 +147,6 @@ const DetailBodyContainer = styled.div`
     right: -4px;
     width: 6px;
     background: white;
-    border-radius: 2px;
     border: none;
   }
 
@@ -174,21 +173,7 @@ const FestivalNameBox = styled.div`
   background: white;
   border-bottom: 1px solid #eee;
   margin-bottom: 8px;
-  .festival-title {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -140%);
-    font-size: 20px;
-    font-weight: 600;
-  }
-  .festival-desc {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -20%);
-    font-size: 12px;
-  }
+
   .festival-like {
     display: flex;
     align-items: center;
@@ -205,6 +190,28 @@ const FestivalNameBox = styled.div`
     top: 70%;
     left: 60%;
     transform: translate(-50%, -20%);
+    font-size: 12px;
+  }
+`;
+const NameDesc = styled.div`
+  display: flex;
+  width: 100%;
+  height: 40px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -100%);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .festival-title {
+    width: auto;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .festival-desc {
+    width: auto;
     font-size: 12px;
   }
 `;
@@ -264,8 +271,10 @@ const FestivalDetail = () => {
     setFestDetailBoxMoveY,
     detailComponentValue,
   } = useContext(UserContext);
-  const [festivalDetail, setFestivalDetail] = useState([]);
+
   const [navigationValue, setNavigationValue] = useState("");
+  const [festivalNameBox, setFestivalNameBox] = useState({});
+  //max-width가 바뀜에 따라 true/false 반환
   const [mQuery, setMQuery] = useState(window.innerWidth < 769 ? true : false);
 
   const screenChange = (event) => {
@@ -280,25 +289,22 @@ const FestivalDetail = () => {
   }, []);
 
   useEffect(() => {
-    console.log(festDetailBoxMove);
-    console.log(festDetailBoxMoveY);
-  }, [festDetailBoxMove, festDetailBoxMoveY]);
-  useEffect(() => {
-    const getFestivalDetail = async () => {
-      const response = await FestivalAPI.getFestivalByFestivalId(
+    //namebox 정보 불러오기
+    const getFestivalNameBox = async () => {
+      const nameboxResponse = await FestivalAPI.GetNameBoxInfo(
         detailComponentValue
       )
         .then((result) => {
           console.log(result.data);
-          setFestivalDetail(result.data);
+          setFestivalNameBox(result.data);
         })
         .catch((error) => {
           console.error(error);
         });
     };
+
     if (detailComponentValue) {
-      getFestivalDetail();
-      console.log(festivalDetail);
+      getFestivalNameBox();
     }
   }, [detailComponentValue]);
   useEffect(() => {
@@ -366,19 +372,33 @@ const FestivalDetail = () => {
         </FestDetailPictureBox>
 
         <FestivalNameBox>
-          <p className="festival-title">서울 벚꽃축제</p>
-          <p className="festival-desc">서울에서 즐기는 벚꽃축제</p>
+          <NameDesc>
+            <span className="festival-title">
+              {festivalNameBox.festivalName}
+            </span>
+            <span className="festival-desc">
+              {festivalNameBox.festivalDesc}
+            </span>
+          </NameDesc>
           <div className="festival-like">
             <FavoriteIcon
               style={{ color: "red", fontSize: "12px", marginRight: "4px" }}
             />
-            <span style={{ fontSize: "12px" }}>400</span>
+            <span style={{ fontSize: "12px" }}>
+              {festivalNameBox.likeCount}
+            </span>
           </div>
           <div className="festival-tel">
             <ForumIcon
-              style={{ color: "#222", fontSize: "12px", marginRight: "4px" }}
+              style={{
+                color: "#222",
+                fontSize: "12px",
+                marginRight: "4px",
+              }}
             />
-            <span style={{ fontSize: "12px" }}>27</span>
+            <span style={{ fontSize: "12px" }}>
+              {festivalNameBox.reviewCount}
+            </span>
           </div>
         </FestivalNameBox>
         <FestivalNaviBox>

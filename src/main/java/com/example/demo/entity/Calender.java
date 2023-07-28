@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Table(name = "t_calender")
 public class Calender {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "calender_id")
     private Long id;
 

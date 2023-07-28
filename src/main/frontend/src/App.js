@@ -23,7 +23,7 @@ import FestivalDetail from "./pages/FestivalDetail";
 import SideBar from "./pages/Sidebar";
 import Calendar from "./pages/Calender.js";
 import Review from "./pages/Review";
-// import Admin from "./pages/Admin";
+import Admin from "./pages/Admin";
 import Timeline from "./pages/Timeline";
 
 function App() {
@@ -34,8 +34,6 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/pages/login" element={<Login />} />
           <Route path="/pages/mypage" element={<MyPage />} />
-          {/* sidebar 테스트용 수정예정/ */}
-          <Route path="/pages/sidebar" element={<SideBar />} />
           <Route path="/pages/myranking" element={<MyRanking />} />
           <Route path="/pages/setting" element={<MySetting />} />
           <Route path="/pages/myreview" element={<MyReview />} />
@@ -62,7 +60,7 @@ function App() {
           />
           <Route path="/pages/Calender" element={<Calendar />} />
           <Route path="/pages/review" element={<Review />} />
-          {/*<Route path="/pages/Admin" element={<Admin />} />*/}
+          <Route path="/pages/Admin" element={<Admin />} />
           <Route path="/pages/Timeline" element={<Timeline />} />
         </Routes>
       </Router>

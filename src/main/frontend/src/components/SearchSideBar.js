@@ -400,7 +400,6 @@ const SearchSideBar = () => {
   const setCenterMarker = (latitude, longitude) => {
     setCenterLatitude(latitude);
     setCenterLongitude(longitude);
-    // setSearchBoxMove("-100vh");
     console.log(latitude);
     console.log(longitude);
     console.log(centerLatitude, centerLongitude);
@@ -506,17 +505,11 @@ const SearchSideBar = () => {
             festival.map((e, idx) => (
               <CardWrap key={idx}>
                 <CardInner>
-                  <ImageArea
-                    onClick={() => navigate(`/pages/festivaldetail/${e.id}`)}
-                  >
+                  <ImageArea>
                     <img src={festivalPoster2} alt="festival_poster" />
                   </ImageArea>
                   <TextArea>
-                    <h4
-                      onClick={() => navigate(`/pages/festivaldetail/${e.id}`)}
-                    >
-                      {e.fstvlNm}
-                    </h4>
+                    <h4>{e.fstvlNm}</h4>
                     <p>시작일: {formatDateForFestival(e.fstvlStartDate)}</p>
                     <p>종료일: {formatDateForFestival(e.fstvlEndDate)}</p>
                     <p className="address">

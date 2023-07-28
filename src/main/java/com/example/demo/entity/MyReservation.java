@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Table(name = "t_my_reservation")
 public class MyReservation {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "my_reservation_id")
     private Long id;
 

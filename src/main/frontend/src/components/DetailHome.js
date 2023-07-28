@@ -11,6 +11,7 @@ import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import DirectionsIcon from "@mui/icons-material/Directions";
 import AttractionsIcon from "@mui/icons-material/Attractions";
 import BusinessIcon from "@mui/icons-material/Business";
+import FestivalAPI from "../api/FestivalAPI";
 
 const AdvertisementBox = styled.div`
   box-sizing: border-box;
@@ -65,6 +66,15 @@ const MiniButton = styled.button`
     }
   }
 `;
+const InfoBoxContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  border: none;
+`;
 const InfoBox = styled.div`
   width: 100%;
   height: auto;
@@ -91,18 +101,40 @@ const InfoDescBox = styled.div`
       color: royalblue;
     }
   }
+  p {
+    font-size: 15px;
+    transform: translateY(3px);
+  }
 `;
 const DetailHome = () => {
-  const { setCenterLatitude, setCenterLongitude } = useContext(UserContext);
+  const { setCenterLatitude, setCenterLongitude, detailComponentValue } =
+    useContext(UserContext);
+  const [festivalDetail, setFestivalDetail] = useState([]);
 
   //카드를 클릭하면 해당 마커의 위치로 지도 위치를 이동시키기 위한 context 설정
   const setCenterMarker = (latitude, longitude) => {
     setCenterLatitude(latitude);
     setCenterLongitude(longitude);
-    // setSearchBoxMove("-100vh");
     console.log(latitude);
     console.log(longitude);
   };
+
+  useEffect(() => {
+    //상세정보 불러오기
+    const getFestivalDetail = async () => {
+      const response = await FestivalAPI.getFestivalByFestivalId(
+        detailComponentValue
+      )
+        .then((result) => {
+          console.log(result.data);
+          setFestivalDetail(result.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+    detailComponentValue && getFestivalDetail();
+  }, [detailComponentValue]);
   return (
     <Container>
       <AdvertisementBox>
@@ -124,44 +156,59 @@ const DetailHome = () => {
           <span className="bold">캘린더</span>
         </MiniButton>
       </AdvertisementBox>
-      <InfoBox>
-        <InfoIconBox>
-          <PlaceIcon style={{ color: "royalblue" }} />
-        </InfoIconBox>
-        <InfoDescBox>
-          <span>서울 강남구 테헤란로 14길 6</span>
-          <DirectionsIcon className="direction-button" />
-        </InfoDescBox>
-      </InfoBox>
-      <InfoBox>
-        <InfoIconBox>
-          <LocalPhoneIcon style={{ color: "royalblue" }} />
-        </InfoIconBox>
-        <InfoDescBox>042-485-6212</InfoDescBox>
-      </InfoBox>
-      <InfoBox>
-        <InfoIconBox>
-          <AttractionsIcon style={{ color: "royalblue" }} />
-        </InfoIconBox>
-        <InfoDescBox>
-          <p style={{ fontSize: "14px" }}>시작일 : 2023.4.7</p>
-          <p style={{ fontSize: "14px" }}>종료일 : 2023.6.25</p>
-        </InfoDescBox>
-      </InfoBox>
-      <InfoBox>
-        <InfoIconBox>
-          <BusinessIcon style={{ color: "royalblue" }} />
-        </InfoIconBox>
-        <InfoDescBox>
-          <span>서울시청</span>
-        </InfoDescBox>
-      </InfoBox>
-      <InfoBox>
-        <InfoIconBox>
-          <PlaceIcon style={{ color: "royalblue" }} />
-        </InfoIconBox>
-        <InfoDescBox>서울 강남구 테헤란로 14길 6</InfoDescBox>
-      </InfoBox>
+      {festivalDetail.map((data, index) => (
+        <InfoBoxContainer key={index}>
+          <InfoBox>
+            <InfoIconBox>
+              <PlaceIcon style={{ color: "royalblue" }} />
+            </InfoIconBox>
+            <InfoDescBox>
+              <span style={{ fontSize: "15px" }}>{data.festivalDoro}</span>
+              <DirectionsIcon
+                className="direction-button"
+                onClick={() => setCenterMarker(data.wedo, data.kyungdo)}
+              />
+            </InfoDescBox>
+          </InfoBox>
+          <InfoBox>
+            <InfoIconBox>
+              <PlaceIcon style={{ color: "royalblue" }} />
+            </InfoIconBox>
+            <InfoDescBox>
+              <p>{data.festivalLocation}</p>
+            </InfoDescBox>
+          </InfoBox>
+          <InfoBox>
+            <InfoIconBox>
+              <LocalPhoneIcon style={{ color: "royalblue" }} />
+            </InfoIconBox>
+            <InfoDescBox>
+              <p>{data.festivalTel}</p>
+            </InfoDescBox>
+          </InfoBox>
+          <InfoBox>
+            <InfoIconBox>
+              <AttractionsIcon style={{ color: "royalblue" }} />
+            </InfoIconBox>
+            <InfoDescBox>
+              <p style={{ fontSize: "14px" }}>
+                시작일 : {formatDateForFestival(data.startDate)}
+              </p>
+              <p style={{ fontSize: "14px" }}>
+                종료일 : {formatDateForFestival(data.endDate)}
+              </p>
+            </InfoDescBox>
+          </InfoBox>
+          <InfoBox>
+            <InfoIconBox>
+              <BusinessIcon style={{ color: "royalblue" }} />
+            </InfoIconBox>
+            <InfoDescBox>
+              <span style={{ fontSize: "15px" }}>{data.mainOrg}</span>
+            </InfoDescBox>
+          </InfoBox>
+        </InfoBoxContainer>
+      ))}
     </Container>
   );
 };

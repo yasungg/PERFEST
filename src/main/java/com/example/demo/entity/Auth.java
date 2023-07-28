@@ -12,7 +12,7 @@ import java.util.Date;
 public class Auth {
     @Id
     @Column(name = "auth_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)

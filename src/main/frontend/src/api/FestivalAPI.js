@@ -17,5 +17,11 @@ const FestivalAPI = {
       `/auth/festival/getfestivaldetail?festivalId=${festivalId}`
     );
   },
+  //축제 상세정보 네임박스 정보 받아오기
+  GetNameBoxInfo: async (festivalId) => {
+    return await axios.get(
+      `/auth/festival/get-festdetail-namebox?festivalId=${festivalId}`
+    );
+  },
 };
 export default FestivalAPI;

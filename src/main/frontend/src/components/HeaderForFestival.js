@@ -295,6 +295,9 @@ const HeaderForFestival = () => {
               <MypageButton onClick={() => navigate("/pages/mypage")}>
                 MY PAGE
               </MypageButton>
+              <button className="userbox-button notification">
+                <NotificationsIcon style={{ color: "#222" }} />
+              </button>
               <button className="logout-button" onClick={logout}>
                 <LogoutIcon />
               </button>

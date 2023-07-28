@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Table(name = "t_product_payment")
 public class ProductPayment {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_payment_id")
     private Long id;
 

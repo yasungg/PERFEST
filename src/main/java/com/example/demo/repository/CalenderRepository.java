@@ -11,4 +11,6 @@ import java.util.Optional;
 public interface CalenderRepository extends JpaRepository<Calender, Long> {
     List<Calender> findByMemberId(Long memberId);
     Optional<Calender> findById(Long id);
+
+    long countByFestivalId(Long id);
 }

@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.FestivalNameBoxDTO;
 import com.example.demo.entity.Festival;
 import com.example.demo.dto.FestivalDTO;
 import com.example.demo.service.FestivalService;
@@ -36,6 +37,11 @@ public class FestivalController {
     public ResponseEntity<List<FestivalDTO>> festvialDetail(@RequestParam int festivalId) {
         List<FestivalDTO> list = festivalService.getFestivalDetail((long) festivalId);
         return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+    //Festival Name box에 담을 정보 가져오기
+    @GetMapping(value = "/get-festdetail-namebox")
+    public ResponseEntity<FestivalNameBoxDTO> getNameBoxInfo(@RequestParam int festivalId) {
+        return new ResponseEntity<>(festivalService.getNameBoxInfo((long) festivalId), HttpStatus.OK);
     }
 
     //축제 검색 결과 가져오기

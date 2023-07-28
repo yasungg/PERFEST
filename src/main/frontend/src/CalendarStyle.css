@@ -1,9 +1,63 @@
+#root {
+  width: 100%;
+  margin: 0 auto;
+}
+.fc-view-harness {
+  overflow-y: scroll;
+}
+.fc-view-harness .show-scroll {
+  overflow-y: scroll;
+}
+.fc-view-harness::-webkit-scrollbar {
+  position: fixed;
+  right: -4px;
+  width: 6px;
+  background: white;
+  border-radius: 2px;
+  border: none;
+}
+
 /* 일요일 날짜: 빨간색 */
 .fc-day-sun a {
-    color: red;
+  color: red;
 }
-  
+
 /* 토요일 날짜: 파란색 */
 .fc-day-sat a {
-    color: blue;
+  color: blue;
+}
+.fc-header-toolbar {
+  margin: 3vh auto;
+}
+.fc-header-toolbar .fc-today-button {
+  display: none;
+}
+.fc-header-toolbar .fc-button-group {
+  display: flex;
+  justify-content: space-between;
+  width: 50vw;
+  position: absolute;
+  right: 25%;
+  top: 12vh;
+}
+.fc-header-toolbar .fc-button-group .fc-prev-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 24px;
+  height: 24px;
+  background: #222;
+  box-shadow: 1px 3px 5px #222;
+}
+.fc-header-toolbar .fc-button-group .fc-next-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 24px;
+  height: 24px;
+  background: #222;
+  box-shadow: 1px 3px 5px #222;
+}
+.fc-header-toolbar .fc-button-group button .fc-icon {
+  font-size: 16px;
 }

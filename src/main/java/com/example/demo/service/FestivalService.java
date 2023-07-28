@@ -1,8 +1,12 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.FestivalDTO;
+import com.example.demo.dto.FestivalNameBoxDTO;
+import com.example.demo.dto.FestivalTmpDTO;
 import com.example.demo.entity.Festival;
+import com.example.demo.repository.CalenderRepository;
 import com.example.demo.repository.FestivalRepository;
+import com.example.demo.repository.ReviewRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +33,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class FestivalService {
     private final FestivalRepository festivalRepository;
+    private final ReviewRepository reviewRepository;
+    private final CalenderRepository calenderRepository;
     private final ObjectMapper mapper;
 
     public Boolean getFestivalInfo() throws IOException {
@@ -222,7 +228,19 @@ public class FestivalService {
         PageRequest pageRequest = PageRequest.of(pageNum, pageSize);
         return festivalRepository.findbySearchKeyword(keyword, pageRequest);
     }
+    //Festival Detail Name box 정보 불러오기
+    public FestivalNameBoxDTO getNameBoxInfo(long festivalId) {
+        FestivalTmpDTO nameAndDesc = festivalRepository.findFestivalNameAndFestivalDescById(festivalId);
+        long likeCount = calenderRepository.countByFestivalId(festivalId);
+        long reviewCount = reviewRepository.countByFestivalId(festivalId);
 
+        return FestivalNameBoxDTO.builder()
+                .festivalName(nameAndDesc.getFestivalName())
+                .festivalDesc(nameAndDesc.getFestivalDesc())
+                .likeCount(likeCount)
+                .reviewCount(reviewCount)
+                .build();
+    }
 //    public List<Festival> searchFestivalInfo(Optional<List<String>> selectedLocations, Optional<Map<String, String>> selectedPeriod, Optional<List<String>> selectedSeasons) {
 //        List<Festival> list = festivalRepository.findByFestivalNameAndStartDateBetweenEndDateAndSeasonIn(selectedLocations, selectedPeriod, selectedSeasons);
 //        return list;
