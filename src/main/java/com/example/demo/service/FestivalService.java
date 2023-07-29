@@ -7,6 +7,7 @@ import com.example.demo.entity.Festival;
 import com.example.demo.repository.CalenderRepository;
 import com.example.demo.repository.FestivalRepository;
 import com.example.demo.repository.ReviewRepository;
+import com.example.demo.user.FestivalSpecification;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -24,9 +26,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -233,7 +233,6 @@ public class FestivalService {
         FestivalTmpDTO nameAndDesc = festivalRepository.findFestivalNameAndFestivalDescById(festivalId);
         long likeCount = calenderRepository.countByFestivalId(festivalId);
         long reviewCount = reviewRepository.countByFestivalId(festivalId);
-
         return FestivalNameBoxDTO.builder()
                 .festivalName(nameAndDesc.getFestivalName())
                 .festivalDesc(nameAndDesc.getFestivalDesc())
@@ -241,8 +240,37 @@ public class FestivalService {
                 .reviewCount(reviewCount)
                 .build();
     }
-//    public List<Festival> searchFestivalInfo(Optional<List<String>> selectedLocations, Optional<Map<String, String>> selectedPeriod, Optional<List<String>> selectedSeasons) {
-//        List<Festival> list = festivalRepository.findByFestivalNameAndStartDateBetweenEndDateAndSeasonIn(selectedLocations, selectedPeriod, selectedSeasons);
-//        return list;
-//    }
+
+    // festival 페이지 검색 필터
+    public List<FestivalDTO> searchFestivalInfo(List<String> selectedLocations, Map<String, String> selectedPeriod) {
+        // 아무런 필터 설정을 안했을 때 전체 DB를 가져온다.
+        Specification<Festival> spec = Specification.where((root, query, builder) -> builder.isTrue(builder.literal(true)));
+        if(selectedLocations.size() > 0) {
+            spec = spec.and(FestivalSpecification.likeLocation(selectedLocations));
+        }
+        if(!selectedPeriod.isEmpty()) {
+            spec = spec.and(FestivalSpecification.betweenCreatedDatetime(selectedPeriod));
+        }
+
+        // 조건에 맞는 축제 정보를 검색.
+        List<Festival> festivals = festivalRepository.findAll(spec);
+
+        // Festival 객체를 FestivalDTO로 변환하여 반환.
+        List<FestivalDTO> festivalDTOS = new ArrayList<>();
+        for (Festival festival : festivals) {
+            FestivalDTO festivalDTO = new FestivalDTO();
+            festivalDTO.setFestivalName(festival.getFestivalName());
+            festivalDTO.setFestivalImg(festival.getFestivalImg());
+            festivalDTO.setFestivalDoro(festival.getFestivalDoro());
+            festivalDTO.setFestivalLocation(festival.getFestivalLocation());
+            festivalDTO.setFestivalTel(festival.getFestivalTel());
+            festivalDTO.setMainOrg(festival.getMainOrg());
+            festivalDTO.setStartDate(festival.getStartDate());
+            festivalDTO.setEndDate(festival.getEndDate());
+            festivalDTOS.add(festivalDTO);
+        }
+        return festivalDTOS;
+
+    }
+
 }
