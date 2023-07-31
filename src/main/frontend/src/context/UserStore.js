@@ -47,7 +47,6 @@ const UserStore = ({ children }) => {
   // Info Window
   const [contextFstvlNm, setContextFstvlNm] = useState([]);
   const [contextFstvlLike, setContextFstvlLike] = useState([]);
-  const [contextFstvlTel, setContextFstvlTel] = useState([]);
   //페스티벌 창, 모바일 모드에서 searchbox의 움직임 제어
   const [searchBoxMove, setSearchBoxMove] = useState("0");
   //페스티벌 창, 데스크톱 모드에서 detailbox의 움직임 제어
@@ -142,8 +141,6 @@ const UserStore = ({ children }) => {
     setContextFstvlNm,
     contextFstvlLike,
     setContextFstvlLike,
-    contextFstvlTel,
-    setContextFstvlTel,
     detailComponentValue,
     setDetailComponentValue,
   };
