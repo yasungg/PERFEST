@@ -380,16 +380,10 @@ o
 ?src/main/java/com/example/demo/repository/MemberRepository.java,a\5\a57fc3e158042d35b8b07bce4e443c05d794f535
 k
 ;src/main/java/com/example/demo/service/CalenderService.java,e\8\e8130e75da324df7b6dbcc8848819f09a2fe4105
-c
-3src/main/java/com/example/demo/entity/Activity.java,4\4\44e403bc08e7ba21c9cc8fd7204379c7a73187ab
 L
 src/main/frontend/src/App.js,6\5\65107325a79051577112de2ce586496b00ad83a7
-W
-'src/main/frontend/src/CalendarStyle.css,7\9\794f1d47cd87d2ec35a0417517289e20f8027eed
 ^
 .src/main/frontend/src/components/DetailHome.js,b\0\b07d027fd7cde5771ebcd78200f4c3b3c395486c
-Z
-*src/main/frontend/src/context/UserStore.js,b\1\b1799965b7a67cb863031198f0748726c7a92669
 W
 'src/main/frontend/src/pages/Calender.js,3\3\33ffad91ef8ae342c7060ccdbaea4493c303a548
 U
@@ -400,8 +394,6 @@ f
 6src/main/java/com/example/demo/dto/FestivalTmpDTO.java,b\9\b912badf09461680511c1647a2f3e9bd6f3e2a9a
 _
 /src/main/java/com/example/demo/entity/Auth.java,4\5\45df089598301d206d4eccafe3859e5737acf6da
-b
-2src/main/java/com/example/demo/entity/Product.java,6\b\6b20955cba55520c4f8ca383baa69c9a9a3beca4
 o
 ?src/main/java/com/example/demo/repository/ReviewRepository.java,1\b\1b9637e510405a175470e5a64f3203b8b4a3139c
 i

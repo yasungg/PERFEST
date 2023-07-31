@@ -285,6 +285,9 @@ const FestivalDetail = () => {
     festDetailBoxMoveY,
     setFestDetailBoxMoveY,
     detailComponentValue,
+    setContextFstvlNm,
+    setContextFstvlLike,
+    setContextFstvlTel,
   } = useContext(UserContext);
 
   const [navigationValue, setNavigationValue] = useState("");
@@ -306,6 +309,7 @@ const FestivalDetail = () => {
 
   useEffect(() => {
     //namebox 정보 불러오기
+    const likeCountArr = [];
     const getFestivalNameBox = async () => {
       const nameboxResponse = await FestivalAPI.GetNameBoxInfo(
         detailComponentValue
@@ -313,6 +317,10 @@ const FestivalDetail = () => {
         .then((result) => {
           console.log(result.data);
           setFestivalNameBox(result.data);
+          for (let i = 0; i < result.data.length; i++) {
+            likeCountArr.push(result.data.likCount);
+          }
+          setContextFstvlLike(likeCountArr);
         })
         .catch((error) => {
           console.error(error);

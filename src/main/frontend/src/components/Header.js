@@ -138,6 +138,29 @@ const HamburgerBtn = styled.button`
     display: flex;
   }
 `;
+const NotiBtnForMobile = styled.button`
+  display: none;
+  width: 32px;
+  height: 32px;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  border: none;
+  border-radius: 5px;
+  margin: auto 12px auto 0;
+  .menuIcon {
+    transition: all 0.1s ease-in;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+  &:hover .menuIcon {
+    transform: scale(1.2);
+  }
+  @media screen and (max-width: 1025px) {
+    display: flex;
+  }
+`;
 const MypageButton = styled.button`
   display: flex;
   justify-content: center;
@@ -201,7 +224,7 @@ const NotificationBox = styled.div`
   z-index: 5;
   transition: all 0.3s ease-in-out;
   @media screen and (max-width: 767px) {
-    width: calc(100vw- 48px);
+    width: calc(100vw - 32px);
     height: calc(100vh - 88px);
   }
 `;
@@ -320,7 +343,7 @@ const Header = () => {
           <HeaderNaviBtn onClick={() => navigate("/pages/Calender")}>
             <span>Calender</span>
           </HeaderNaviBtn>
-          <HeaderNaviBtn onClick={() => setNotiboxMove("74px")}>
+          <HeaderNaviBtn>
             <span>About</span>
           </HeaderNaviBtn>
         </HeaderNaviButtons>
@@ -330,7 +353,10 @@ const Header = () => {
               <MypageButton onClick={() => navigate("/pages/mypage")}>
                 MY PAGE
               </MypageButton>
-              <button className="userbox-button notification">
+              <button
+                className="userbox-button notification"
+                onClick={() => setNotiboxMove("74px")}
+              >
                 <NotificationsIcon style={{ color: "#222" }} />
               </button>
               <button className="userbox-button" onClick={logout}>
@@ -343,6 +369,9 @@ const Header = () => {
             </LoginButton>
           )}
         </UserBox>
+        <NotiBtnForMobile onClick={() => setNotiboxMoveMobile("74px")}>
+          <NotificationsIcon style={{ color: "#222" }} />
+        </NotiBtnForMobile>
         <HamburgerBtn onClick={() => setIsSidebar("-2px")}>
           <MenuIcon className="menuIcon" style={{ color: "white" }} />
         </HamburgerBtn>

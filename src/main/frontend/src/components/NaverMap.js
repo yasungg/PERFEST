@@ -31,7 +31,7 @@ const NaverMap = () => {
         : new naver.maps.LatLng(37.497914, 127.027646),
       zoom: 15,
     };
-    const map = new naver.maps.Map('map', options);
+    const map = new naver.maps.Map("map", options);
     setMap(map);
 
     // 맵 컨트롤러
@@ -39,8 +39,8 @@ const NaverMap = () => {
       zoomControl: true,
       zoomControlOptions: {
         style: naver.maps.ZoomControlStyle.SMALL,
-        position: naver.maps.Position.TOP_RIGHT
-      }
+        position: naver.maps.Position.TOP_RIGHT,
+      },
     };
     map.setOptions(mapOptions);
 
@@ -64,10 +64,15 @@ const NaverMap = () => {
 
       const marker = new naver.maps.Marker(markerOptions);
       markers.push(marker);
-      console.log("marker에 위치정보 전달 성공!!");
 
       const contentString = contextFstvlNm[i];
-      const infoWindowContent = ReactDOMServer.renderToString(<CustomInfoWindow title={contextFstvlNm[i]} desc={contextFstvlDesc[i]} tel={contextFstvlTel[i]}/>);
+      const infoWindowContent = ReactDOMServer.renderToString(
+        <CustomInfoWindow
+          title={contextFstvlNm[i]}
+          desc={contextFstvlDesc[i]}
+          tel={contextFstvlTel[i]}
+        />
+      );
       const infoWindow = new naver.maps.InfoWindow({
         content: infoWindowContent,
         maxWidth: 140,
@@ -76,10 +81,10 @@ const NaverMap = () => {
         borderWidth: 5,
         anchorSkew: false,
         anchorColor: "transparent",
-        pixelOffset: new naver.maps.Point(26, 20)
+        pixelOffset: new naver.maps.Point(26, 20),
       });
 
-      naver.maps.Event.addListener(marker, 'click', function (e) {
+      naver.maps.Event.addListener(marker, "click", function (e) {
         if (infoWindow.getMap()) {
           infoWindow.close();
         } else {
@@ -87,11 +92,9 @@ const NaverMap = () => {
         }
       });
       infoWindows.push(infoWindow);
-      console.log("infoWindow에 축제이름 전달 성공!!");
     }
     setMarker(markers);
     setInfoWindow(infoWindows);
-
   }, [centerLatitude, contextLatitude, contextLongitude, contextFstvlNm]);
 
   // 	const [myLocation, setMyLocation] = useState<
