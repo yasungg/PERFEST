@@ -5,6 +5,7 @@ import com.example.demo.entity.Community;
 import com.example.demo.entity.Member;
 import com.example.demo.jwt.TokenProvider;
 import com.example.demo.service.CalenderService;
+import com.example.demo.service.FestivalService;
 import com.example.demo.service.MyPageService;
 import com.example.demo.user.ContextGetter;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,7 @@ public class MyPageController {
     private final TokenProvider tokenProvider;
     private final HttpServletResponse response;
     private final CalenderService calenderService;
+    private final FestivalService festivalService;
 
     // 이메일로 회원 조회 API
     @GetMapping(value = "/email")
@@ -258,6 +260,17 @@ public class MyPageController {
     public ResponseEntity<String> getNickName() {
         Long memberId = info.getId();
         String result = myPageService.getNickName(memberId);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    // 해당 축제 내일정 추가
+    @PostMapping("/addCal")
+    public ResponseEntity<Boolean> addCalender(@RequestBody Map<String, Object> updateData) {
+        Long memberId = info.getId();
+        int festivalId = (Integer) updateData.get("festivalId");
+        boolean result = festivalService.addCalender(memberId, (long)festivalId);
+        tokenProvider.setNewAccessTokenToHeader(response);
+        log.info(String.valueOf(festivalId));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
