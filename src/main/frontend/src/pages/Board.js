@@ -391,7 +391,7 @@ const Board = () => {
             </ArrButton>
           </Arrange>
           {boardList.slice(startIndex, endIndex).map((boardItem) => (
-      <BoardText key={boardItem.communityId}>
+        <BoardText key={boardItem.communityId}>
         <BoardContents onClick={() => boardClick(boardItem.communityId)}>
           <BCategory>{getCategoryText(boardItem.communityCategory)}</BCategory>
           <BTitle>{boardItem.communityTitle}</BTitle>
@@ -403,7 +403,7 @@ const Board = () => {
           </BLikeCount>
         </BoardContents>
       </BoardText>
-    ))};
+    ))}
           <Pagination>
             {Array.from({ length: boardTotalPages }, (_, index) => (
               <PaginationButton
