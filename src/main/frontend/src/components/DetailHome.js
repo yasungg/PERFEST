@@ -12,6 +12,7 @@ import DirectionsIcon from "@mui/icons-material/Directions";
 import AttractionsIcon from "@mui/icons-material/Attractions";
 import BusinessIcon from "@mui/icons-material/Business";
 import FestivalAPI from "../api/FestivalAPI";
+import MemberAPI from "../api/MemberAPI";
 
 const AdvertisementBox = styled.div`
   box-sizing: border-box;
@@ -111,6 +112,27 @@ const DetailHome = () => {
     useContext(UserContext);
   const [festivalDetail, setFestivalDetail] = useState([]);
 
+  const handleAddToCalendar = async () => {
+    if (detailComponentValue) {
+      const festivalId = detailComponentValue; // detailComponentValue가 캘린더 ID
+      console.log(`페스티벌 아이디 : ${festivalId}`);
+      try {
+        const response = await MemberAPI.addCal(festivalId);
+        console.log(response.data)
+        if (response.data) {
+          console.log("캘린더에 추가되었습니다!");
+        } else {
+          console.log("추가 중 오류가 발생했습니다.");
+        }
+      } catch (error) {
+        console.error("추가 중 오류가 발생했습니다.", error);
+      }
+    } else {
+      console.log("추가할 축제 정보가 없습니다...");
+    }
+  };
+
+
   //카드를 클릭하면 해당 마커의 위치로 지도 위치를 이동시키기 위한 context 설정
   const setCenterMarker = (latitude, longitude) => {
     setCenterLatitude(latitude);
@@ -123,7 +145,7 @@ const DetailHome = () => {
     //상세정보 불러오기
     const getFestivalDetail = async () => {
       const response = await FestivalAPI.getFestivalByFestivalId(
-        detailComponentValue
+        detailComponentValue // festivalId
       )
         .then((result) => {
           console.log(result.data);
@@ -142,7 +164,7 @@ const DetailHome = () => {
           <span className="bold">캘린더</span>
           <span>를 활용해 편리하게 축제일정을 관리하세요!</span>
         </div>
-        <MiniButton className="advertisement-button">
+        <MiniButton className="advertisement-button" onClick={handleAddToCalendar}>
           <div className="icon-change">
             <CalendarMonthIcon
               className="calendar-icon"
