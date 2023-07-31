@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import MemberAPI from "../api/MemberAPI";
+import Header from "../components/Header";
 
 const Container = styled.div`
   width: 100%;
@@ -102,6 +103,7 @@ const MyPayList = () => {
 
     return(
         <>
+        <Header />
         <Container>
             <p>결제 내역</p>
             <hr />

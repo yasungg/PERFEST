@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import MemberAPI from "../api/MemberAPI";
+import Header from "../components/Header";
 
 const Container = styled.div`
   display: flex;
@@ -76,6 +77,8 @@ const MyRanking = () => {
   }, []);
 
   return (
+  <>
+  <Header />
     <Container>
       {console.log(memberRichRanking)}
       <Title>내 랭킹</Title>
@@ -94,6 +97,7 @@ const MyRanking = () => {
         </RankingInfo>
       </RankingCard>
     </Container>
+    < />
   );
 };
 

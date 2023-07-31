@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import MemberAPI from '../api/MemberAPI';
+import Header from "../components/Header";
 
 const Container = styled.div`
   display: flex;
@@ -125,6 +126,8 @@ function MyWrite() {
 
 
   return (
+  <>
+  <Header />
     <Container>
       <ColumnContainer>
         <BoxContainer>
@@ -173,6 +176,7 @@ function MyWrite() {
         </BoxContainer>
       </ColumnContainer>
     </Container>
+    < />
   );
 }
 export default MyWrite;

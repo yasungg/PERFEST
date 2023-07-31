@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import MemberAPI from "../api/MemberAPI";
+import Header from "../components/Header";
 
 const Container = styled.div`
   width: 100%;
@@ -129,6 +130,8 @@ const MyReserveList = () => {
   };
 
   return (
+  <>
+  <Header />
     <Container>
       <p>예매 내역</p>
       <hr />
@@ -160,6 +163,7 @@ const MyReserveList = () => {
         </tbody>
       </table>
     </Container>
+    < />
   );
 };
 

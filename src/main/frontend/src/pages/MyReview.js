@@ -3,6 +3,7 @@ import styled from "styled-components";
 import MemberAPI from "../api/MemberAPI";
 import { UserContext } from "../context/UserStore";
 import Modal from "../utils/Modal";
+import Header from "../components/Header";
 
 const Container = styled.div`
   width: 100%;
@@ -146,6 +147,8 @@ const MyReview = () => {
   };
 
   return (
+  <>
+  <Header />
     <Container>
       <p>내 리뷰</p>
       <hr />
@@ -186,6 +189,7 @@ const MyReview = () => {
         정말 삭제하시겠습니까?
       </Modal>
     </Container>
+    < />
   );
 };
 
