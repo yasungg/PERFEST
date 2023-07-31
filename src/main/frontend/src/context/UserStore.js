@@ -51,7 +51,7 @@ const UserStore = ({ children }) => {
   const [searchBoxMove, setSearchBoxMove] = useState("0");
   //페스티벌 창, 데스크톱 모드에서 detailbox의 움직임 제어
   const [festDetailBoxMove, setFestDetailBoxMove] = useState("-80px");
-  const [festDetailBoxMoveY, setFestDetailBoxMoveY] = useState("-100vh");
+  const [festDetailBoxMoveY, setFestDetailBoxMoveY] = useState("200vh");
   //페스티벌 창, 모바일 모드에서 검색창 내용을 searchbox로 전달
   const [contextFestivalSearch, setContextFestivalSearch] = useState("");
   //페스티벌 창에서 자세히 보기를 누르면 festival_id를 detailbox로 전달

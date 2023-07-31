@@ -17,7 +17,7 @@ const NaverMap = () => {
     centerLatitude,
     centerLongitude,
     contextFstvlNm,
-    contextFstvlLike
+    contextFstvlLike,
   } = useContext(UserContext);
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const NaverMap = () => {
         : new naver.maps.LatLng(37.497914, 127.027646),
       zoom: 15,
     };
-    const map = new naver.maps.Map('map', options);
+    const map = new naver.maps.Map("map", options);
     setMap(map);
 
     // 맵 컨트롤러
@@ -38,16 +38,16 @@ const NaverMap = () => {
       zoomControl: true,
       zoomControlOptions: {
         style: naver.maps.ZoomControlStyle.SMALL,
-        position: naver.maps.Position.RIGHT_CENTER
-      }
+        position: naver.maps.Position.RIGHT_CENTER,
+      },
     };
-    if(window.matchMedia("(max-width: 1024px)").matches) {
+    if (window.matchMedia("(max-width: 1024px)").matches) {
       mapOptions.zoomControl = false;
     }
     map.setOptions(mapOptions);
 
     const handleResize = () => {
-      if(window.matchMedia("(max-width: 1024px)").matches) {
+      if (window.matchMedia("(max-width: 1024px)").matches) {
         mapOptions.zoomControl = false;
       } else {
         mapOptions.zoomControl = true;
@@ -56,7 +56,6 @@ const NaverMap = () => {
     };
 
     window.addEventListener("resize", handleResize);
-
 
     //검색 결과가 들어온 만큼 마커를 찍어줌
     for (let i = 0; i < contextLatitude.length; i++) {
@@ -80,7 +79,12 @@ const NaverMap = () => {
       markers.push(marker);
 
       const contentString = contextFstvlNm[i];
-      const infoWindowContent = ReactDOMServer.renderToString(<CustomInfoWindow title={contextFstvlNm[i]} likeCount={contextFstvlLike[i]}/>);
+      const infoWindowContent = ReactDOMServer.renderToString(
+        <CustomInfoWindow
+          title={contextFstvlNm[i]}
+          likeCount={contextFstvlLike[i]}
+        />
+      );
       const infoWindow = new naver.maps.InfoWindow({
         content: infoWindowContent,
         maxWidth: 140,
@@ -89,10 +93,10 @@ const NaverMap = () => {
         borderWidth: 5,
         anchorSkew: false,
         anchorColor: "transparent",
-        pixelOffset: new naver.maps.Point(32, 24)
+        pixelOffset: new naver.maps.Point(32, 24),
       });
 
-      naver.maps.Event.addListener(marker, 'click', function (e) {
+      naver.maps.Event.addListener(marker, "click", function (e) {
         if (infoWindow.getMap()) {
           infoWindow.close();
         } else {
@@ -103,11 +107,10 @@ const NaverMap = () => {
     }
     setMarker(markers);
     setInfoWindow(infoWindows);
-
-    return() => {
+    console.log(contextFstvlNm, contextFstvlLike);
+    return () => {
       window.removeEventListener("resize", handleResize);
     };
-
   }, [centerLatitude, contextLatitude, contextLongitude, contextFstvlNm]);
 
   // 	const [myLocation, setMyLocation] = useState<

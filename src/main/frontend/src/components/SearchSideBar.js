@@ -604,11 +604,6 @@ const SearchSideBar = () => {
     };
     searchFromHeader();
   }, [contextFestivalSearch, currentPage]);
-
-  //임시
-  useEffect(() => {
-    console.log(currentPage);
-  }, [currentPage]);
   return (
     <SearchContainer bottom={searchBoxMove}>
       <SearchArea>

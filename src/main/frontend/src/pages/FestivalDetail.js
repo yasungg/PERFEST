@@ -11,6 +11,7 @@ import FestivalAPI from "../api/FestivalAPI";
 import BlackLogo from "../images/PERFEST LOGO BLACK.png";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import Review from "./Review";
+import Product from "../components/Product";
 import DetailHome from "../components/DetailHome";
 const DetailContainer = styled.div`
   box-sizing: border-box;
@@ -24,7 +25,7 @@ const DetailContainer = styled.div`
   background: #222;
   z-index: 2;
   box-shadow: 1px 0px 5px 0px #555555;
-  transition: all 0.3s ease-in;
+  transition: all 0.5s ease-in-out;
   overflow-x: hidden;
   @media screen and (max-width: 767px) {
     position: absolute;
@@ -317,16 +318,12 @@ const FestivalDetail = () => {
         .then((result) => {
           console.log(result.data);
           setFestivalNameBox(result.data);
-          for (let i = 0; i < result.data.length; i++) {
-            likeCountArr.push(result.data.likCount);
-          }
-          setContextFstvlLike(likeCountArr);
         })
         .catch((error) => {
           console.error(error);
         });
     };
-    //페스티벌별로 이미지 불러오기
+    // 페스티벌별로 이미지 불러오기
     const getImagesForDetail = async () => {
       const imagelinkResponse = await FestivalAPI.GetImagesForDetail(
         detailComponentValue
@@ -351,7 +348,7 @@ const FestivalDetail = () => {
           style={{ color: "white", marginLeft: "8px", fontSize: "28px" }}
         />
         {mQuery ? (
-          <Xbtn onClick={() => setFestDetailBoxMoveY("-100vh")}>
+          <Xbtn onClick={() => setFestDetailBoxMoveY("200vh")}>
             <KeyboardArrowDownIcon
               className="xIcon"
               style={{ color: "white" }}
@@ -489,7 +486,7 @@ const FestivalDetail = () => {
         <DetailDescBox>
           {navigationValue === "home" && <DetailHome />}
           {navigationValue === "review" && <Review />}
-
+          {navigationValue === "product" && <Product />}
           {!navigationValue && <DetailHome />}
         </DetailDescBox>
       </DetailBodyContainer>

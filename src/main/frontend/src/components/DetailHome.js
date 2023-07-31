@@ -29,6 +29,11 @@ const AdvertisementBox = styled.div`
   .bold {
     font-weight: 600;
   }
+  @media screen and (max-width: 376px) {
+    span {
+      font-size: 13px;
+    }
+  }
 `;
 const MiniButton = styled.button`
   display: flex;
@@ -64,6 +69,11 @@ const MiniButton = styled.button`
     .add-icon {
       transition: all 0.1s linear;
       left: 0;
+    }
+  }
+  @media screen and (max-width: 376px) {
+    .bold {
+      font-size: 13px;
     }
   }
 `;
