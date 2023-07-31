@@ -23,5 +23,10 @@ const FestivalAPI = {
       `/auth/festival/get-festdetail-namebox?festivalId=${festivalId}`
     );
   },
+  GetImagesForDetail: async (festivalId) => {
+    return await axios.get(
+      `/auth/festival/get-image-links?festivalId=${festivalId}`
+    );
+  },
 };
 export default FestivalAPI;

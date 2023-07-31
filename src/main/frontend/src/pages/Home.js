@@ -15,7 +15,8 @@ const Container = styled.div`
   height: 100%;
   overflow: hidden;
   @media screen and (max-width: 853px) {
-    height: 100vh;
+    width: 100vw;
+    height: 100%;
     overflow: visible;
   }
 `;
@@ -55,6 +56,7 @@ const Video = styled.video`
   border: none;
   outline: none;
   z-index: 0;
+  overflow: hidden;
   @media screen and (max-width: 1441px) {
     width: 1440px;
   }

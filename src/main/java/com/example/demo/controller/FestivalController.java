@@ -73,6 +73,10 @@ public class FestivalController {
         // festivals를 ResponseEntity에 담아 반환.
         return new ResponseEntity<>(festivals, HttpStatus.OK);
     }
+    @GetMapping("/get-image-links")
+    public ResponseEntity<List<String>> getImageLinksForDetail(@RequestParam int festivalId) {
+        return new ResponseEntity<>(festivalService.festivalImageLinks((long) festivalId), HttpStatus.OK);
+    }
 
     // 해당 축제 내일정 추가
     @PostMapping("/addCal")

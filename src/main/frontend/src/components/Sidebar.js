@@ -4,7 +4,6 @@ import { UserContext } from "../context/UserStore";
 import styled from "@emotion/styled";
 import PerfestLogoWhite from "../images/PERFEST LOGO WHITE.png";
 import { useNavigate } from "react-router-dom";
-import MemberAPI from "../api/MemberAPI";
 import LoginAPI from "../api/LoginAPI";
 const SidebarContainer = styled.div`
   box-sizing: border-box;
@@ -24,6 +23,9 @@ const SidebarContainer = styled.div`
   transition: all 0.5s ease-out;
   @media screen and (min-width: 1025px) {
     display: none;
+  }
+  @media screen and (max-width: 767px) {
+    position: fixed;
   }
 `;
 const SidebarXbox = styled.div`

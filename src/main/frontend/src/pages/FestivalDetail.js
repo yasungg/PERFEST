@@ -104,6 +104,7 @@ const FestDetailSubPictureBox = styled.div`
   }
 `;
 const FestDetailPictureDiv = styled.div`
+  box-sizing: border-box;
   width: 100%;
   overflow: hidden;
   position: relative;
@@ -111,8 +112,10 @@ const FestDetailPictureDiv = styled.div`
 const FestPicture = styled.img`
   width: 100%;
   height: 100%;
+  transition: all 0.1s ease-in;
   &:hover {
     cursor: pointer;
+    transform: scale(1.1);
   }
 `;
 const DimmedBackground = styled.div`
@@ -127,9 +130,15 @@ const DimmedBackground = styled.div`
   top: 0;
   left: 0;
   transition: all 0.1s ease-in;
+  .plus-icon {
+    transition: all 0.1s ease-in;
+  }
   &:hover {
     background-color: rgba(34, 34, 34, 0.7);
     cursor: pointer;
+  }
+  &:hover .plus-icon {
+    transform: scale(1.2);
   }
 `;
 const DetailBodyContainer = styled.div`
@@ -173,7 +182,7 @@ const FestivalNameBox = styled.div`
   background: white;
   border-bottom: 1px solid #eee;
   margin-bottom: 8px;
-
+  user-select: none;
   .festival-like {
     display: flex;
     align-items: center;
@@ -204,15 +213,18 @@ const NameDesc = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  user-select: none;
   .festival-title {
     width: auto;
     font-size: 18px;
     font-weight: 600;
     margin-bottom: 8px;
+    user-select: none;
   }
   .festival-desc {
     width: auto;
     font-size: 12px;
+    user-select: none;
   }
 `;
 const FestivalNaviBox = styled.ul`
@@ -233,6 +245,7 @@ const FestivalNaviBtn = styled.li`
   height: 100%;
   background: white;
   list-style-type: none;
+  user-select: none;
   .festival-navi-radio:checked + .navi-label {
     span {
       border-bottom: 2px solid #222;
@@ -250,6 +263,7 @@ const FestivalDetailLabel = styled.label`
     display: flex;
     align-items: center;
     height: 100%;
+    user-select: none;
   }
   &:hover span {
     transform: translateY(-2px);
@@ -259,6 +273,7 @@ const FestivalDetailLabel = styled.label`
 const DetailDescBox = styled.div`
   width: 100%;
   background: white;
+  user-select: none;
   @media screen and (max-width: 767px) {
     width: 100vw;
   }
@@ -274,6 +289,7 @@ const FestivalDetail = () => {
 
   const [navigationValue, setNavigationValue] = useState("");
   const [festivalNameBox, setFestivalNameBox] = useState({});
+  const [festivalImages, setFestivalImages] = useState([]);
   //max-width가 바뀜에 따라 true/false 반환
   const [mQuery, setMQuery] = useState(window.innerWidth < 769 ? true : false);
 
@@ -302,14 +318,24 @@ const FestivalDetail = () => {
           console.error(error);
         });
     };
-
+    //페스티벌별로 이미지 불러오기
+    const getImagesForDetail = async () => {
+      const imagelinkResponse = await FestivalAPI.GetImagesForDetail(
+        detailComponentValue
+      )
+        .then((result) => {
+          console.log(result.data);
+          setFestivalImages(result.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
     if (detailComponentValue) {
       getFestivalNameBox();
+      getImagesForDetail();
     }
   }, [detailComponentValue]);
-  useEffect(() => {
-    console.log(navigationValue);
-  }, [navigationValue]);
   return (
     <DetailContainer left={festDetailBoxMove} top={festDetailBoxMoveY}>
       <Xbox>
@@ -330,46 +356,33 @@ const FestivalDetail = () => {
         )}
       </Xbox>
       <DetailBodyContainer>
-        <FestDetailPictureBox>
-          <FestDetailMainPicture>
-            <FestPicture src={BlackLogo} />
-          </FestDetailMainPicture>
-          <FestDetailSubPictureBox>
-            <FestDetailPictureDiv
-              className="picture-1"
-              src={BlackLogo}
-              alt="aa"
-            >
-              <FestPicture src={BlackLogo} />
-            </FestDetailPictureDiv>
-            <FestDetailPictureDiv
-              className="picture-2"
-              src={BlackLogo}
-              alt="aa"
-            >
-              <FestPicture src={BlackLogo} />
-            </FestDetailPictureDiv>
-            <FestDetailPictureDiv
-              className="picture-3"
-              src={BlackLogo}
-              alt="aa"
-            >
-              <FestPicture src={BlackLogo} />
-            </FestDetailPictureDiv>
-            <FestDetailPictureDiv
-              className="picture-4"
-              src={BlackLogo}
-              alt="aa"
-            >
-              <FestPicture src={BlackLogo} />
-              <DimmedBackground>
-                <AddCircleOutlineIcon
-                  style={{ color: "white", fontSize: "36px" }}
-                />
-              </DimmedBackground>
-            </FestDetailPictureDiv>
-          </FestDetailSubPictureBox>
-        </FestDetailPictureBox>
+        {festivalImages && (
+          <FestDetailPictureBox>
+            <FestDetailMainPicture>
+              <FestPicture src={festivalImages[0]} alt={BlackLogo} />
+            </FestDetailMainPicture>
+            <FestDetailSubPictureBox>
+              <FestDetailPictureDiv className="picture-1">
+                <FestPicture src={festivalImages[1]} alt={BlackLogo} />
+              </FestDetailPictureDiv>
+              <FestDetailPictureDiv className="picture-2">
+                <FestPicture src={festivalImages[2]} alt={BlackLogo} />
+              </FestDetailPictureDiv>
+              <FestDetailPictureDiv className="picture-3">
+                <FestPicture src={festivalImages[3]} alt={BlackLogo} />
+              </FestDetailPictureDiv>
+              <FestDetailPictureDiv className="picture-4">
+                <FestPicture src={festivalImages[4]} alt={BlackLogo} />
+                <DimmedBackground>
+                  <AddCircleOutlineIcon
+                    className="plus-icon"
+                    style={{ color: "white", fontSize: "36px" }}
+                  />
+                </DimmedBackground>
+              </FestDetailPictureDiv>
+            </FestDetailSubPictureBox>
+          </FestDetailPictureBox>
+        )}
 
         <FestivalNameBox>
           <NameDesc>

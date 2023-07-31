@@ -23,6 +23,6 @@ public class FestivalImage {
     @JoinColumn(name = "festival_id")
     private Festival festival;
 
-    @Column(name = "festival_img_link")
+    @Column(name = "festival_img_link", length = 500)
     private String festivalImgLink;
 }

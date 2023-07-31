@@ -5,9 +5,12 @@ import FestivalAPI from "../api/FestivalAPI";
 import festivalPoster2 from "../images/2023안양충훈벚꽃축제.jpg";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
+import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
+import SkipNextIcon from "@mui/icons-material/SkipNext";
 import { formatDateForFestival } from "./DateStyle";
 import { useNavigate } from "react-router";
 import BlackLogo from "../images/PERFEST LOGO BLACK.png";
+import Pagination from "./Pagination";
 const SearchContainer = styled.div`
   box-sizing: border-box;
   display: inline-block;
@@ -337,11 +340,53 @@ const LocationButton = styled.button`
     text-decoration: underline;
   }
 `;
+const ChangeBtn = styled.button`
+  display: flex;
+  width: 40px;
+  height: 24px;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  outline: none;
+  background: white;
+  font-weight: 600;
+  color: #222;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+const ButtonWrapper = styled.div`
+  display: flex;
+  width: auto;
+  height: 48px;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  border: none;
+  outline: none;
+  background: white;
+  margin-bottom: 8px;
+`;
+const NumBtnWrapper = styled.div`
+  display: flex;
+  width: auto;
+  height: 24px;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  outline: none;
+  background: white;
+`;
 const SearchSideBar = () => {
   const navigate = useNavigate();
   const [festival, setFestival] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState("");
+
+  //페이지네이션에 필요한 useState
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
   const [totalElements, setTotalElements] = useState("");
+  const [intForPaginationCtrl, setIntForPaginationCtrl] = useState(0);
   const [mQuery, setMQuery] = useState(window.innerWidth < 769 ? true : false);
   const {
     setContextLongitude,
@@ -353,12 +398,14 @@ const SearchSideBar = () => {
     searchBoxMove,
     setSearchBoxMove,
     contextFestivalSearch,
+    setContextFestivalSearch,
     setFestDetailBoxMove,
     setFestDetailBoxMoveY,
     setDetailComponentValue,
     setContextFstvlNm,
   } = useContext(UserContext);
 
+  //미디어 쿼리에 따른 컴포넌트 상태변화
   const screenChange = (event) => {
     const matches = event.matches;
     setMQuery(matches);
@@ -374,27 +421,32 @@ const SearchSideBar = () => {
   const latitudeArr = [];
   const longitudeArr = [];
   const fstvlNmArr = [];
-  const searchDefaultByFestivalName = async () => {
-    const search = await FestivalAPI.GetSearchResultByFestivalName(
-      searchKeyword,
-      0
-    ).then((result) => {
-      console.log(result);
-      console.log(result.data.content);
 
-      setFestival(result.data.content);
-      setTotalElements(result.data.totalElements);
+  //검색창 검색
+  const searchDefaultByFestivalName = () => {
+    setCurrentPage(0);
+    setContextFestivalSearch(searchKeyword);
+    // const search = await FestivalAPI.GetSearchResultByFestivalName(
+    //   contextFestivalSearch,
+    //   currentPage
+    // ).then((result) => {
+    //   console.log(result);
+    //   console.log(result.data.content);
 
-      //마커 찍기 위한 위도 경도 배열을 콘텍스트에 전달
-      for (let i = 0; i < result.data.content.length; i++) {
-        latitudeArr.push(result.data.content[i].latitude);
-        longitudeArr.push(result.data.content[i].longitude);
-        fstvlNmArr.push(result.data.content[i].fstvlNm);
-      }
-      setContextFstvlNm(fstvlNmArr);
-      setContextLatitude(latitudeArr);
-      setContextLongitude(longitudeArr);
-    });
+    //   setFestival(result.data.content);
+    //   setTotalElements(result.data.totalElements);
+    //   setTotalPages(result.data.totalPages);
+    //   result.data.totalPages > 10 && setIsMoreThanTen(true);
+    //   //마커 찍기 위한 위도 경도 배열을 콘텍스트에 전달
+    //   for (let i = 0; i < result.data.content.length; i++) {
+    //     latitudeArr.push(result.data.content[i].latitude);
+    //     longitudeArr.push(result.data.content[i].longitude);
+    //     fstvlNmArr.push(result.data.content[i].fstvlNm);
+    //   }
+    //   setContextFstvlNm(fstvlNmArr);
+    //   setContextLatitude(latitudeArr);
+    //   setContextLongitude(longitudeArr);
+    // });
   };
   //카드를 클릭하면 해당 마커의 위치로 지도 위치를 이동시키기 위한 context 설정
   const setCenterMarker = (latitude, longitude) => {
@@ -415,34 +467,148 @@ const SearchSideBar = () => {
     setFestDetailBoxMove("364px");
     setDetailComponentValue(id);
   };
+  // 모바일 모드에서 자세히 보기를 누르면 detail 페이지로 festival id를 전달
   const giveIdToDetailY = (id) => {
     setFestDetailBoxMoveY("6vh");
     setDetailComponentValue(id);
   };
+  // --------------------------------> 페이지네이션 상태관리
+  //숫자 버튼을 누르면 숫자에 맞는 페이지 렌더링
+  const renderThisPage = async (page) => {
+    const getInfo = await FestivalAPI.GetSearchResultByFestivalName(
+      contextFestivalSearch,
+      page - 1
+    )
+      .then((result) => {
+        if (result.status === 200) {
+          console.log(result.data);
+          setFestival(result.data.content);
+          setTotalElements(result.data.totalElements);
+          setCurrentPage(result.data.number);
+          //마커 찍기 위한 위도 경도 배열을 콘텍스트에 전달
+          for (let i = 0; i < result.data.content.length; i++) {
+            latitudeArr.push(result.data.content[i].latitude);
+            longitudeArr.push(result.data.content[i].longitude);
+            fstvlNmArr.push(result.data.content[i].fstvlNm);
+          }
+          setContextFstvlNm(fstvlNmArr);
+          setContextLatitude(latitudeArr);
+          setContextLongitude(longitudeArr);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  // 이전 버튼을 클릭했을 때 -1 페이지네이션의 결과를 요청
+  const onClickPreviousPage = async () => {
+    if (currentPage % 10 === 0 && currentPage > 9) {
+      setIntForPaginationCtrl(intForPaginationCtrl - 1);
+    }
+    if (currentPage > 0) {
+      const getPreviousPage = await FestivalAPI.GetSearchResultByFestivalName(
+        contextFestivalSearch,
+        currentPage - 1
+      )
+        .then((result) => {
+          if (result.status === 200) {
+            console.log(result.data);
+            console.log(result.data.content);
+            setFestival(result.data.content);
+            setTotalElements(result.data.totalElements);
+            setCurrentPage(result.data.number);
 
+            //마커 찍기 위한 위도 경도 배열을 콘텍스트에 전달
+            for (let i = 0; i < result.data.content.length; i++) {
+              latitudeArr.push(result.data.content[i].latitude);
+              longitudeArr.push(result.data.content[i].longitude);
+              fstvlNmArr.push(result.data.content[i].fstvlNm);
+            }
+            setContextFstvlNm(fstvlNmArr);
+            setContextLatitude(latitudeArr);
+            setContextLongitude(longitudeArr);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
+  // 다음 버튼을 클릭했을 때 +1 페이지네이션의 결과를 요청
+  const onClickNextPage = async () => {
+    if ((currentPage + 1) % 10 === 0 && currentPage + 1 < totalPages) {
+      console.log("진입!!");
+      setIntForPaginationCtrl(intForPaginationCtrl + 1);
+    }
+    if (currentPage + 1 < totalPages) {
+      const getNextPage = await FestivalAPI.GetSearchResultByFestivalName(
+        contextFestivalSearch,
+        currentPage + 1
+      )
+        .then((result) => {
+          if (result.status === 200) {
+            console.log(result.data);
+            console.log(result.data.content);
+            setFestival(result.data.content);
+            setTotalElements(result.data.totalElements);
+            setCurrentPage(result.data.number);
+
+            //마커 찍기 위한 위도 경도 배열을 콘텍스트에 전달
+            for (let i = 0; i < result.data.content.length; i++) {
+              latitudeArr.push(result.data.content[i].latitude);
+              longitudeArr.push(result.data.content[i].longitude);
+              fstvlNmArr.push(result.data.content[i].fstvlNm);
+            }
+            setContextFstvlNm(fstvlNmArr);
+            setContextLatitude(latitudeArr);
+            setContextLongitude(longitudeArr);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
+  const onClickNextPagination = () => {
+    intForPaginationCtrl < totalPages / 10 &&
+      setIntForPaginationCtrl(intForPaginationCtrl + 1);
+    console.log(intForPaginationCtrl);
+  };
+  const onClickPrevPagination = () => {
+    currentPage > 10 && setIntForPaginationCtrl(intForPaginationCtrl - 1);
+    console.log(intForPaginationCtrl);
+  };
   useEffect(() => {
     const searchFromHeader = async () => {
       const search = await FestivalAPI.GetSearchResultByFestivalName(
         contextFestivalSearch,
-        0
+        currentPage
       ).then((result) => {
         console.log(result);
         console.log(result.data.content);
 
         setFestival(result.data.content);
         setTotalElements(result.data.totalElements);
+        setTotalPages(result.data.totalPages);
+        setCurrentPage(result.data.number);
         //마커 찍기 위한 위도 경도 배열을 콘텍스트에 전달
         for (let i = 0; i < result.data.content.length; i++) {
           latitudeArr.push(result.data.content[i].latitude);
           longitudeArr.push(result.data.content[i].longitude);
+          fstvlNmArr.push(result.data.content[i].fstvlNm);
         }
-
+        setContextFstvlNm(fstvlNmArr);
         setContextLatitude(latitudeArr);
         setContextLongitude(longitudeArr);
       });
     };
     searchFromHeader();
-  }, [contextFestivalSearch]);
+  }, [contextFestivalSearch, currentPage]);
+
+  //임시
+  useEffect(() => {
+    console.log(currentPage);
+  }, [currentPage]);
   return (
     <SearchContainer bottom={searchBoxMove}>
       <SearchArea>
@@ -506,7 +672,7 @@ const SearchSideBar = () => {
               <CardWrap key={idx}>
                 <CardInner>
                   <ImageArea>
-                    <img src={festivalPoster2} alt="festival_poster" />
+                    <img src={e.festivalImg} alt="festival_poster" />
                   </ImageArea>
                   <TextArea>
                     <h4>{e.fstvlNm}</h4>
@@ -541,6 +707,26 @@ const SearchSideBar = () => {
               </CardWrap>
             ))}
         </CardList>
+        <ButtonWrapper>
+          <ChangeBtn onClick={onClickPrevPagination}>
+            <SkipPreviousIcon />
+          </ChangeBtn>
+
+          <ChangeBtn onClick={onClickPreviousPage}>이전</ChangeBtn>
+          <NumBtnWrapper>
+            <Pagination
+              totalPages={totalPages}
+              currentPage={currentPage}
+              onPageChange={renderThisPage}
+              plusTen={intForPaginationCtrl}
+            />
+          </NumBtnWrapper>
+          <ChangeBtn onClick={onClickNextPage}>다음</ChangeBtn>
+
+          <ChangeBtn onClick={onClickNextPagination}>
+            <SkipNextIcon />
+          </ChangeBtn>
+        </ButtonWrapper>
       </ListContainer>
     </SearchContainer>
   );

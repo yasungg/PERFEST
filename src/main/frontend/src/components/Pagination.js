@@ -21,10 +21,12 @@ const NumberBtn = styled.button`
   }
 `;
 
-const Pagination = ({ totalPages, currentPage, onPageChange }) => {
+const Pagination = ({ totalPages, currentPage, onPageChange, plusTen }) => {
   const renderPageBtns = () => {
     const pageButtons = [];
-    for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+    const startPage = Math.max(1, 10 * plusTen + 1);
+    const endPage = Math.min(10 * plusTen + 10, totalPages);
+    for (let pageNum = startPage; pageNum <= endPage; pageNum++) {
       pageButtons.push(
         <NumberBtn
           key={pageNum}

@@ -5,8 +5,10 @@ import com.example.demo.dto.FestivalNameBoxDTO;
 import com.example.demo.dto.FestivalTmpDTO;
 import com.example.demo.entity.Calender;
 import com.example.demo.entity.Festival;
+import com.example.demo.entity.FestivalImage;
 import com.example.demo.entity.Member;
 import com.example.demo.repository.CalenderRepository;
+import com.example.demo.repository.FestivalImageRepository;
 import com.example.demo.repository.FestivalRepository;
 import com.example.demo.repository.MemberRepository;
 import com.example.demo.repository.ReviewRepository;
@@ -39,6 +41,7 @@ public class FestivalService {
     private final FestivalRepository festivalRepository;
     private final ReviewRepository reviewRepository;
     private final CalenderRepository calenderRepository;
+    private final FestivalImageRepository festivalImageRepository;
     private final ObjectMapper mapper;
     private final MemberRepository memberRepository;
 
@@ -275,7 +278,14 @@ public class FestivalService {
             festivalDTOS.add(festivalDTO);
         }
         return festivalDTOS;
-
+    }
+    public List<String> festivalImageLinks(Long festivalId) {
+        List<FestivalImage> repoResult = festivalImageRepository.findByFestivalId(festivalId);
+        List<String> imageLinks = new ArrayList<>();
+        for(FestivalImage result : repoResult) {
+            imageLinks.add(result.getFestivalImgLink());
+        }
+        return imageLinks;
     }
 
     // 해당축제 내 일정 추가

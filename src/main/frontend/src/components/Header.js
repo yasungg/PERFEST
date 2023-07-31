@@ -1,23 +1,24 @@
 import styled from "styled-components";
 import BlackLogo from "../images/PERFEST LOGO BLACK.png";
-import WhiteLogo from "../images/PERFEST LOGO WHITE.png";
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import SearchIcon from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
 import LogoutIcon from "@mui/icons-material/Logout";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import CloseIcon from "@mui/icons-material/Close";
+import FiberNewIcon from "@mui/icons-material/FiberNew";
 import { UserContext } from "../context/UserStore";
-import MemberAPI from "../api/MemberAPI";
 import LoginAPI from "../api/LoginAPI";
 
 const HeaderContainer = styled.div`
   box-sizing: border-box;
+  position: relative;
   display: flex;
   width: 100%;
   height: 58px;
   background: white;
   border: none;
+  z-index: 6;
   @media screen and (max-width: 767) {
     width: 100vw;
     max-width: 100%;
@@ -182,10 +183,106 @@ const MypageButton = styled.button`
 //     outline: none;
 //   }
 // `;
+
+const NotificationBox = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  width: 400px;
+  height: 60vh;
+  top: ${(props) => props.top};
+  right: 16px;
+  background: white;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 1px 3px 5px #222;
+  padding: 8px;
+  z-index: 5;
+  transition: all 0.3s ease-in-out;
+  @media screen and (max-width: 767px) {
+    width: calc(100vw- 48px);
+    height: calc(100vh - 88px);
+  }
+`;
+const Xbox = styled.div`
+  width: 100%;
+  height: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: transparent;
+`;
+const Xbtn = styled.button`
+  display: flex;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  border: none;
+  outline: none;
+  justify-content: center;
+  background: transparent;
+
+  &:hover {
+    cursor: pointer;
+  }
+  &:hover .xIcon {
+    transform: scale(1.2);
+    transition: all 0.2s linear;
+  }
+`;
+const NotificationBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: calc(100%-16px);
+  height: calc(100% - 56px);
+  overflow-y: scroll;
+  .show-scroll {
+    overflow-y: scroll;
+  }
+
+  /* 스크롤바 커스터마이징 */
+
+  &::-webkit-scrollbar {
+    position: fixed;
+    right: -4px;
+    width: 6px;
+    background: white;
+    border-radius: 2px;
+    border: none;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    width: 6px;
+    background: rgba(34, 34, 34, 0.7);
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 1px solid transparent;
+    /* height: 20px; */
+  }
+
+  &::-webkit-scrollbar-track {
+    /* box-shadow: inset 0px 0px 3px gray; */
+  }
+`;
 const Header = () => {
   const navigate = useNavigate();
   const { isLogin, setIsLogin, setIsSidebar } = useContext(UserContext);
-  const [headerName, setHeaderName] = useState("");
+  const [notiboxMove, setNotiboxMove] = useState("-62vh");
+  const [notiboxMoveMobile, setNotiboxMoveMobile] = useState("-100vh");
+  const [mQuery, setMQuery] = useState(window.innerWidth < 769 ? true : false);
+
+  //미디어 쿼리에 따른 컴포넌트 상태변화
+  const screenChange = (event) => {
+    const matches = event.matches;
+    setMQuery(matches);
+  };
+
+  useEffect(() => {
+    let mql = window.matchMedia("screen and (max-width:769px)");
+    mql.addEventListener("change", screenChange);
+    return () => mql.removeEventListener("change", screenChange);
+  }, []);
 
   const logout = () => {
     const Logout = LoginAPI.Logout()
@@ -223,7 +320,7 @@ const Header = () => {
           <HeaderNaviBtn onClick={() => navigate("/pages/Calender")}>
             <span>Calender</span>
           </HeaderNaviBtn>
-          <HeaderNaviBtn>
+          <HeaderNaviBtn onClick={() => setNotiboxMove("74px")}>
             <span>About</span>
           </HeaderNaviBtn>
         </HeaderNaviButtons>
@@ -250,6 +347,29 @@ const Header = () => {
           <MenuIcon className="menuIcon" style={{ color: "white" }} />
         </HamburgerBtn>
       </HeaderBody>
+      {mQuery ? (
+        <NotificationBox top={notiboxMoveMobile}>
+          <Xbox>
+            <FiberNewIcon style={{ fontSize: "24px" }} />
+            <Xbtn onClick={() => setNotiboxMoveMobile("-100vh")}>
+              <CloseIcon className="xIcon" style={{ fontSize: "16px" }} />
+            </Xbtn>
+          </Xbox>
+
+          <NotificationBody>aa</NotificationBody>
+        </NotificationBox>
+      ) : (
+        <NotificationBox top={notiboxMove}>
+          <Xbox>
+            <FiberNewIcon style={{ fontSize: "24px" }} />
+            <Xbtn onClick={() => setNotiboxMove("-62vh")}>
+              <CloseIcon className="xIcon" style={{ fontSize: "16px" }} />
+            </Xbtn>
+          </Xbox>
+
+          <NotificationBody>aa</NotificationBody>
+        </NotificationBox>
+      )}
     </HeaderContainer>
   );
 };
