@@ -79,7 +79,6 @@ const NaverMap = () => {
       const marker = new naver.maps.Marker(markerOptions);
       markers.push(marker);
 
-      const contentString = contextFstvlNm[i];
       const infoWindowContent = ReactDOMServer.renderToString(<CustomInfoWindow title={contextFstvlNm[i]} likeCount={contextFstvlLike[i]}/>);
       const infoWindow = new naver.maps.InfoWindow({
         content: infoWindowContent,
