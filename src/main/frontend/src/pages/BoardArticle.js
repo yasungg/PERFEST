@@ -257,6 +257,8 @@ const BoardArticle = () => {
   const [openModal, setOpenModal] = useState(false);
   const [modalMsg, setModalMsg] = useState("");
   const [replyUpdateTrigger, setReplyUpdateTrigger] = useState(false);
+  const [likeCount, setLikeCount] = useState("");
+  const [likeCountTrigger, setLikeCountTrigger] = useState(false);
   const {isLogin} = useContext(UserContext);
   
   const confirmBtn = () => {
@@ -294,9 +296,10 @@ const BoardArticle = () => {
       const response = await BoardAPI.GetBoardArticle(communityId);
       console.log(response.data);
       setBoardArticle(response.data);
+      setLikeCount(response.data[0].likeCount)
     };
     getBoardArticle();
-  }, [communityId]);
+  }, [communityId,likeCountTrigger]);
   // 게시판 공감하기 눌렀을 때
   const onClickBoardLike = async () => {
     try {
@@ -311,6 +314,7 @@ const BoardArticle = () => {
       // 중복 체크를 통과한 경우, 실제로 좋아요를 추가
       const likeResponse = await BoardAPI.AddBoardLike(communityId);
       console.log(likeResponse.data);
+      setLikeCountTrigger((prev) => !prev);
     } catch (error) {
       console.error("좋아요 추가에 실패했습니다.", error);
     }
@@ -434,7 +438,7 @@ const BoardArticle = () => {
                 </button>)}
                 <div className="board-like-count">
                   <Heart2 />
-                  {community.likeCount}
+                  {likeCount}
                 </div>
               </BoardLike>
             </BoardInfo>
