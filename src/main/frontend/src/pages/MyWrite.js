@@ -126,9 +126,8 @@ function MyWrite() {
 
 
   return (
-  <>
-  <Header />
-    <Container>
+  <Container>
+    <Header />
       <ColumnContainer>
         <BoxContainer>
           <Title>내 게시글</Title>
@@ -176,7 +175,6 @@ function MyWrite() {
         </BoxContainer>
       </ColumnContainer>
     </Container>
-    < />
   );
 }
 export default MyWrite;
