@@ -16,7 +16,9 @@ const NaverMap = () => {
     contextLatitude,
     centerLatitude,
     centerLongitude,
-    contextFstvlNm
+    contextFstvlNm,
+    contextFstvlDesc,
+    contextFstvlTel,
   } = useContext(UserContext);
 
   useEffect(() => {
@@ -65,9 +67,16 @@ const NaverMap = () => {
       console.log("marker에 위치정보 전달 성공!!");
 
       const contentString = contextFstvlNm[i];
-      const infoWindowContent = ReactDOMServer.renderToString(<CustomInfoWindow/>);
+      const infoWindowContent = ReactDOMServer.renderToString(<CustomInfoWindow title={contextFstvlNm[i]} desc={contextFstvlDesc[i]} tel={contextFstvlTel[i]}/>);
       const infoWindow = new naver.maps.InfoWindow({
         content: infoWindowContent,
+        maxWidth: 140,
+        backgroundColor: "transparent",
+        borderColor: "transparent",
+        borderWidth: 5,
+        anchorSkew: false,
+        anchorColor: "transparent",
+        pixelOffset: new naver.maps.Point(26, 20)
       });
 
       naver.maps.Event.addListener(marker, 'click', function (e) {

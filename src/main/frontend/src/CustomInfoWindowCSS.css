@@ -1,0 +1,58 @@
+.custominfo-container {
+  box-sizing: border-box;
+  width: auto;
+  height: auto;
+  display: flex;
+  border: none;
+
+}
+
+.custominfo-inner {
+  position: relative;
+  background: #fff;
+  width: auto;
+  min-width: 120px;
+  height: auto;
+  border-radius: 5px;
+  padding: 8px;
+  margin: 5px;
+  box-shadow: 1px 3px 3px #666;
+  z-index: 2;
+}
+
+.custominfo-inner::after {
+  content: '';
+  position: absolute;
+  border-style: solid;
+  border-width: 15px 11px 0 12.5px;
+  border-color: #FFF transparent transparent transparent; /* 수정된 부분 */
+  display: block;
+  width: 0;
+  z-index: 2;
+  bottom: -14px;
+  left: 24px;
+}
+.custominfo-inner::before {
+  content: '';
+  position: absolute;
+  border-style: solid;
+  border-width: 15px 11px 0 13.5px;
+  border-color: #666 transparent transparent transparent; /* 수정된 부분 */
+  display: block;
+  width: 0;
+  z-index: 2;
+  bottom: -16.3px;
+  left: 24px;
+}
+.title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.desc {
+  font-size: 11px;
+}
+.tel {
+  font-size: 11px;
+  color: #aaa;
+}
