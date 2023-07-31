@@ -7,7 +7,6 @@ import { useNavigate } from "react-router";
 import { formatDate } from "../components/DateStyle";
 import { FaHeart } from 'react-icons/fa';
 import { UserContext } from "../context/UserStore";
-import Pagination from "../components/Pagination.js";
 import Header from "../components/Header";
 const Title = styled.div`
   display: flex;
@@ -221,141 +220,59 @@ const Heart = styled(FaHeart)`
   color: red;
   padding-right: 2px;
 `;
-const ChangeBtn = styled.button`
+const Pagination = styled.div`
   display: flex;
-  width: 40px;
-  height: 24px;
   justify-content: center;
-  align-items: center;
-  border: none;
-  outline: none;
-  background: white;
-  font-weight: 600;
-  color: #222;
-  &:hover {
-    cursor: pointer;
-  }
+  margin-top: 10px;
 `;
-const ButtonWrapper = styled.div`
-  display: flex;
-  width: auto;
-  height: 24px;
-  justify-content: center;
-  align-items: center;
-  align-self: center;
+
+const PaginationButton = styled.button`
+  font-size: 14px;
+  padding: 5px 10px;
   border: none;
-  outline: none;
-  background: white;
-  margin-bottom: 8px;
-`;
-const NumBtnWrapper = styled.div`
-  display: flex;
-  width: auto;
-  height: 24px;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  outline: none;
-  background: white;
+  background-color: ${(props) => (props.active ? '#ff4136' : '#f6f6f6')};
+  color: ${(props) => (props.active ? 'white' : '#666')};
+  cursor: ${(props) => (props.active ? 'default' : 'pointer')};
+  border-radius: 5px;
+  margin: 0 5px;
 `;
 const Board = () => {
   const navigate = useNavigate();
   // const [selectedBoardInfo, setSelectedBoardInfo] = useState([]);
-  const page = 0;
   const [selectCategory, setSelectCategory] = useState("");
   const [activeButton, setActiveButton] = useState(""); // 버튼의 활성화 여부를 저장하는 상태
   const [search, setSearch] = useState("");
   const [searchType, setSearchType] = useState('title'); // 기본적으로 제목 검색
-  const [BoardList, setBoardList] = useState([]);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [totalPages, setTotalPages] = useState(0);
+  const [boardList, setBoardList] = useState([]);
+  const [boardPage, setBoardPage] = useState(1);
+  const ITEMS_PER_PAGE = 10;
   const {isLogin} = useContext(UserContext);
 
+  const boardTotalPages = (boardList.length/10)+1;
+   // 현재 페이지에 해당하는 시작 인덱스와 끝 인덱스를 계산합니다.
+   const startIndex = (boardPage - 1) * ITEMS_PER_PAGE;
+   const endIndex = startIndex + ITEMS_PER_PAGE;
+
+  const handleBoardPageChange = (page) => {
+    setBoardPage(page);
+  }
   const onChangeSearch = (e) => {
     setSearch(e.target.value);
   }
   const onChangeType = (e) => {
     setSearchType(e.target.value);
   }
-  // -----------------------------------> 페이지네이션 상태관리
-  //숫자 버튼을 누르면 숫자에 맞는 페이지 렌더링
-  const renderThisPage = async(page) => {
-    const getInfo = await BoardAPI.BoardGet(page)
-        .then((result) => {
-          if (result.status === 200) {
-            console.log(result.data);
-            console.log(result.data.content);
-            setCurrentPage(page - 1);
-            setBoardList(result.data.content);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-  };
-  // 이전 버튼을 클릭했을 때 -1 페이지네이션의 결과를 요청
-  const onClickPreviousPage = async () => {
-    if (currentPage > 0) {
-      const getPreviousPage = await BoardAPI.BoardGet(currentPage - 1)
-          .then((result) => {
-            if (result.status === 200) {
-              console.log(result.data);
-              console.log(result.data.content);
-              setBoardList(result.data.content);
-              setCurrentPage(currentPage - 1);
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-    }
-  };
-  // 다음 버튼을 클릭했을 때 +1 페이지네이션의 결과를 요청
-  const onClickNextPage = async () => {
-    if (currentPage + 1 < totalPages) {
-      const getNextPage = await BoardAPI.BoardGet(currentPage + 1)
-          .then((result) => {
-            if (result.status === 200) {
-              console.log(result.data);
-              console.log(result.data.content);
-              setBoardList(result.data.content);
-              setCurrentPage(currentPage + 1);
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-    }
-  };
-  const getBoardList = async () => {
-    const getInfo = await BoardAPI.BoardGet(currentPage)
-        .then((result) => {
-          if (result.status === 200) {
-            console.log(result.data);
-            console.log(result.data.content);
-            setBoardList(result.data.content);
-            setTotalPages(result.data.totalPages);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-  };
-  //멤버 리스트 1페이지를 자동으로 렌더링
-  useEffect(() => {
-    getBoardList();
-  }, [currentPage, totalPages]);
 
   // 게시판 전체 글 목록 가져오기
-  // const BoardGetAll = async () => {
-  //   const rsp = await BoardAPI.BoardGet();
-  //   if (rsp.status === 200) setSelectedBoardInfo(rsp.data);
-  //   console.log(rsp.data);
-  // };
-  //
-  // useEffect(() => {
-  //   BoardGetAll();
-  // }, []);
+  const BoardGetAll = async () => {
+    const rsp = await BoardAPI.BoardGet();
+    if (rsp.status === 200) setBoardList(rsp.data);
+    console.log(rsp.data);
+  };
+  
+  useEffect(() => {
+    BoardGetAll();
+  }, []);
 
   // 게시판 카테고리별 가져오기
   useEffect(() => {
@@ -438,7 +355,7 @@ const Board = () => {
             <CatButton
                 isActive={activeButton === ""}
                 onClick={() => {
-                  getBoardList();
+                  BoardGetAll();
                   handleCategoryClick("");
                 }}
             >
@@ -473,28 +390,31 @@ const Board = () => {
               <Label htmlFor="likest">인기순</Label>
             </ArrButton>
           </Arrange>
-          {BoardList.map((community) => (
-              <BoardText key={community.communityId}>
-                <BoardContents onClick={() => boardClick(community.communityId)}>
-                  <BCategory>{getCategoryText(community.communityCategory)}</BCategory>
-                  <BTitle>{community.communityTitle}</BTitle>
-                  <BNickName>{community.nickname}</BNickName>
-                  <BTime>{formatDate(community.writtenTime)}</BTime>
-                  <BLikeCount><Heart />{community.likeCount}</BLikeCount>
-                </BoardContents>
-              </BoardText>
-          ))}
-          <ButtonWrapper>
-            <ChangeBtn onClick={onClickPreviousPage}>이전</ChangeBtn>
-            <NumBtnWrapper>
-              <Pagination
-                  totalPages={totalPages}
-                  currentPage={currentPage}
-                  onPageChange={renderThisPage}
-              />
-            </NumBtnWrapper>
-            <ChangeBtn onClick={onClickNextPage}>다음</ChangeBtn>
-          </ButtonWrapper>
+          {boardList.slice(startIndex, endIndex).map((boardItem) => (
+      <BoardText key={boardItem.communityId}>
+        <BoardContents onClick={() => boardClick(boardItem.communityId)}>
+          <BCategory>{getCategoryText(boardItem.communityCategory)}</BCategory>
+          <BTitle>{boardItem.communityTitle}</BTitle>
+          <BNickName>{boardItem.nickname}</BNickName>
+          <BTime>{formatDate(boardItem.writtenTime)}</BTime>
+          <BLikeCount>
+            <Heart />
+            {boardItem.likeCount}
+          </BLikeCount>
+        </BoardContents>
+      </BoardText>
+    ))};
+          <Pagination>
+            {Array.from({ length: boardTotalPages }, (_, index) => (
+              <PaginationButton
+                key={index}
+                active={boardPage === index + 1}
+                onClick={() => handleBoardPageChange(index + 1)}
+              >
+                {index + 1}
+              </PaginationButton>
+            ))}
+          </Pagination>
           <WriteButton>
             {isLogin ? 
             (<button className="write" onClick={()=> navigate("/pages/WriteBoard")}>글쓰기</button>):

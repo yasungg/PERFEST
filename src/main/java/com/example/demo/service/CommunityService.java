@@ -30,33 +30,27 @@ public class CommunityService {
     private final MemberRepository memberRepository;
 
     // 커뮤니티 게시글 전체 조회(GET)
-    public Page<CommunityDTO> getCommunityList(int pageNum, int pageSize) {
-        PageRequest pageRequest = PageRequest.of(pageNum, pageSize);
-        Page<Community> communityPage = communityRepository.findAll(pageRequest);
+    public List<CommunityDTO> getCommunityList() {
+        List<Community> communitys = communityRepository.findAll();
+        List<CommunityDTO> communityDTOS = new ArrayList<>();
 
-        List<CommunityDTO> communityDTOS = communityPage.getContent().stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
+        for(Community community : communitys) {
+            CommunityDTO communityDTO = new CommunityDTO();
+            communityDTO.setCommunityCategory(String.valueOf(community.getCommunityCategory()));
+            communityDTO.setCommunityId(community.getId());
+            communityDTO.setCommunityTitle(community.getCommunityTitle());
+            communityDTO.setCommunityDesc(community.getCommunityDesc());
+            communityDTO.setCommunityImgLink(community.getCommunityImgLink());
+            communityDTO.setLikeCount(community.getLikeCount());
+            communityDTO.setWrittenTime(community.getWrittenTime());
 
-        return new PageImpl<>(communityDTOS, pageRequest, communityPage.getTotalElements());
-    }
-
-    private CommunityDTO convertToDTO(Community community) {
-        CommunityDTO communityDTO = new CommunityDTO();
-        communityDTO.setCommunityCategory(String.valueOf(community.getCommunityCategory()));
-        communityDTO.setCommunityId(community.getId());
-        communityDTO.setCommunityTitle(community.getCommunityTitle());
-        communityDTO.setCommunityDesc(community.getCommunityDesc());
-        communityDTO.setCommunityImgLink(community.getCommunityImgLink());
-        communityDTO.setLikeCount(community.getLikeCount());
-        communityDTO.setWrittenTime(community.getWrittenTime());
-
-        Member member = community.getMember();
-        if (member != null) {
-            communityDTO.setNickname(member.getNickname());
+            Member member = community.getMember();
+            if (member != null) {
+                communityDTO.setNickname(member.getNickname());
+            }
+            communityDTOS.add(communityDTO);
         }
-
-        return communityDTO;
+        return communityDTOS;
     }
 
     // 커뮤니티 게시글 카테고리별 조회(GET)
