@@ -13,6 +13,7 @@ import AttractionsIcon from "@mui/icons-material/Attractions";
 import BusinessIcon from "@mui/icons-material/Business";
 import FestivalAPI from "../api/FestivalAPI";
 import MemberAPI from "../api/MemberAPI";
+import Modal from "../utils/Modal";
 
 const AdvertisementBox = styled.div`
   box-sizing: border-box;
@@ -122,6 +123,10 @@ const DetailHome = () => {
     useContext(UserContext);
   const [festivalDetail, setFestivalDetail] = useState([]);
 
+  const [showModal, setShowModal] = useState(false);
+
+
+
   const handleAddToCalendar = async () => {
     if (detailComponentValue) {
       const festivalId = detailComponentValue; // detailComponentValue가 캘린더 ID
@@ -131,6 +136,7 @@ const DetailHome = () => {
         console.log(response.data)
         if (response.data) {
           console.log("캘린더에 추가되었습니다!");
+          setShowModal(true);
         } else {
           console.log("추가 중 오류가 발생했습니다.");
         }
@@ -241,6 +247,9 @@ const DetailHome = () => {
           </InfoBox>
         </InfoBoxContainer>
       ))}
+        <Modal open={showModal} close={() => setShowModal(false)} confirm={() => {}}>
+           캘린더에 추가되었습니다!
+        </Modal>
     </Container>
   );
 };

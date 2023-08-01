@@ -50,13 +50,13 @@ const Calendar = () => {
   const [memberCal, setMemberCal] = useState([]);
   const [delModalOpen, setDelModalOpen] = useState(false);
 
-  // useEffect(() => {
-  //   const likeFestival = async () => {
-  //     const rsp = await MemberAPI.getCalendar();
-  //     if (rsp.status === 200) setMemberCal(rsp.data);
-  //   };
-  //   likeFestival();
-  // }, []);
+  useEffect(() => {
+    const likeFestival = async () => {
+      const rsp = await MemberAPI.getCalendar();
+      if (rsp.status === 200) setMemberCal(rsp.data);
+    };
+    likeFestival();
+  }, []);
 
   const delCalender = () => {
     setDelModalOpen(true);
@@ -66,18 +66,6 @@ const Calendar = () => {
     setDelModalOpen(false);
   };
 
-  // 임시용
-  let calenderId = 1;
-
-  const confirm = async (modalType) => {
-    if (modalType === "delAll") {
-      const rsp = await MemberAPI.deleteAllCalender();
-      console.log(rsp.data);
-    } else if (modalType === "delSelec") {
-      const response = await MemberAPI.deleteCalender(calenderId);
-      console.log(response.data);
-    }
-  };
 
   const predefinedColors = [
     "#fa5252",
@@ -98,7 +86,7 @@ const Calendar = () => {
       <StyledFullCalendar
         defaultView="dayGridMonth"
         plugins={[dayGridPlugin]}
-        events={memberCal.map((calEvent, index) => ({
+        events={memberCal && memberCal.map((calEvent, index) => ({
           title: calEvent.festivalName,
           start: calEvent.startDate,
           end: calEvent.endDate,
