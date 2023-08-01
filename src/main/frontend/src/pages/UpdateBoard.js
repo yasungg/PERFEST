@@ -99,7 +99,7 @@ const WriteText = styled.div`
     border: 1px solid #d9d9d9;
     border-radius: 5px;
     outline: none;
-    resize: vertical;
+    resize: none;
     font-family: Arial, sans-serif;
     font-size: 16px;
   }
@@ -154,21 +154,18 @@ const UpdateBoard = () => {
     const onChangeCategory = (e) => {
         setSelectedCategory(e.target.value);
     };
-    // 게시판 작성하기
-    const onClickWriteBoard = async() => {
+    // 게시판 수정하기
+    const onClickUpdateBoard = async() => {
         const response = await BoardAPI.BoardUpdate(communityId, inputBoardTitle,selectedCategory,inputBoardText,uploadedImageUrl);
-        console.log(response.data);
-        console.log(communityId);
         setInputBoardTitle("");
         setSelectedCategory("");
         setInputBoardText("");
 
         if(response.data === true) {
-            console.log(response.data);
-            navigate("/pages/Board")
+            navigate("/pages/MyPage")
         }
         else {
-            console.log(response.data);
+            
         };
     };
     return(
@@ -204,8 +201,8 @@ const UpdateBoard = () => {
                     <ImageUploader onImageUpload={handleImageUpload}/>
                 </WriteImage>
                 <WriteButton>
-                    <Button onClick={onClickWriteBoard}>수정</Button>
-                    <Button onClick={() =>navigate("/pages/Board")}>취소</Button>
+                    <Button onClick={onClickUpdateBoard}>수정</Button>
+                    <Button onClick={() =>navigate("/pages/MyPage")}>취소</Button>
                 </WriteButton>
             </BodyContainer>
         </Container>
