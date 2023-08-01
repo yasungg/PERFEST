@@ -29,6 +29,9 @@ const NaverMap = () => {
         ? new naver.maps.LatLng(centerLatitude, centerLongitude)
         : new naver.maps.LatLng(37.497914, 127.027646),
       zoom: 15,
+      scaleControl: false,
+      logoControl: false,
+      mapDataControl: false,
     };
     const map = new naver.maps.Map("map", options);
     setMap(map);
@@ -71,14 +74,14 @@ const NaverMap = () => {
             "/images/perfesta-marker_preview_rev_1.png",
           size: new naver.maps.Size(39, 45),
           origin: new naver.maps.Point(0, 0),
-          anchor: new naver.maps.Point(25, 50),
+          anchor: new naver.maps.Point(23, 50),
         },
       };
 
       const marker = new naver.maps.Marker(markerOptions);
       markers.push(marker);
 
-      const contentString = contextFstvlNm[i];
+      // 마커 클릭 시 정보창 펼침
       const infoWindowContent = ReactDOMServer.renderToString(
         <CustomInfoWindow
           title={contextFstvlNm[i]}
@@ -111,7 +114,9 @@ const NaverMap = () => {
     return() => {
       window.removeEventListener("resize", handleResize);
     };
+    
   }, [centerLatitude, contextLatitude, contextLongitude, contextFstvlNm]);
+
 
   // 	const [myLocation, setMyLocation] = useState<
   // 		{ latitude: number, longitude: number } | 'string'
