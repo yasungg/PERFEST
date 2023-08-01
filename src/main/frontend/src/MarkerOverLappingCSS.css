@@ -1,0 +1,39 @@
+.markerOverLappingContainer {
+  box-sizing: border-box;
+  width: auto;
+  height: auto;
+  display: flex;
+  border: none;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.markerOverLappingInner {
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  height: 96px;
+  background-color: #e2f6ff;
+  border: 1px solid black;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.overLappingTitle {
+  display: flex;
+  width: auto;
+  height: 30px;
+  border: 1px solid #222;
+  align-items: center;
+  padding: 0 10px;
+  cursor: pointer;
+}
+
+.overLappingTitle:hover {
+  background-color: #C8E8FF;
+}
+.title {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+}
