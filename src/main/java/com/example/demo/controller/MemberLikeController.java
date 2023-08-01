@@ -39,11 +39,11 @@ public class MemberLikeController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
     // 리뷰 좋아요 한번 누르기
-    @PostMapping(value = "/likereview")
-    public ResponseEntity<Boolean> likeReviewInsert(@RequestBody Map<String, Object> likeReviewData) {
-        int reviewId = (Integer)likeReviewData.get("reviewId");
-        Long memberId = info.getId();
-        boolean result = memberLikeService.insertReviewLike((long)reviewId, memberId);
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
+//    @PostMapping(value = "/likereview")
+//    public ResponseEntity<Boolean> likeReviewInsert(@RequestBody Map<String, Object> likeReviewData) {
+//        int reviewId = (Integer)likeReviewData.get("reviewId");
+//        Long memberId = info.getId();
+//        boolean result = memberLikeService.insertReviewLike((long)reviewId, memberId);
+//        return new ResponseEntity<>(result, HttpStatus.OK);
+//    }
 }

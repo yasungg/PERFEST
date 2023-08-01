@@ -55,23 +55,23 @@ public class MemberLikeService {
             return true;
         }
     }
-    public boolean insertReviewLike(Long reviewId, Long memberId) {
-        boolean isAlreadyLiked = memberLikeRepository.existsByReviewIdAndMemberId(reviewId, memberId);
-
-        if (isAlreadyLiked) {
-            return false;
-        } else {
-            MemberLike memberLike = new MemberLike();
-            Member member = new Member();
-            member.setId(memberId);
-            memberLike.setMember(member);
-
-            Review review = new Review();
-            review.setId(reviewId);
-            memberLike.setReview(review);
-
-            memberLikeRepository.save(memberLike);
-            return true;
-        }
-    }
+//    public boolean insertReviewLike(Long reviewId, Long memberId) {
+//        boolean isAlreadyLiked = memberLikeRepository.existsByReviewIdAndMemberId(reviewId, memberId);
+//
+//        if (isAlreadyLiked) {
+//            return false;
+//        } else {
+//            MemberLike memberLike = new MemberLike();
+//            Member member = new Member();
+//            member.setId(memberId);
+//            memberLike.setMember(member);
+//
+//            Review review = new Review();
+//            review.setId(reviewId);
+//            memberLike.setReview(review);
+//
+//            memberLikeRepository.save(memberLike);
+//            return true;
+//        }
+//    }
 }

@@ -40,6 +40,9 @@ public class Comment {
     @OneToMany(mappedBy = "parent", orphanRemoval = true)
     private List<Comment> children = new ArrayList<>();
 
+    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MemberLike> memberLikes = new ArrayList<>();
+
     @Column(name = "comment_like_count")
     @ColumnDefault("0")
     private int commentLikeCount;
