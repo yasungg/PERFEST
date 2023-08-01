@@ -9,6 +9,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import FiberNewIcon from "@mui/icons-material/FiberNew";
 import { UserContext } from "../context/UserStore";
 import LoginAPI from "../api/LoginAPI";
+import Timeline from "../pages/Timeline";
 
 const HeaderContainer = styled.div`
   box-sizing: border-box;
@@ -222,6 +223,8 @@ const NotificationBox = styled.div`
   box-shadow: 1px 3px 5px #222;
   padding: 8px;
   z-index: 5;
+  overflow-x: hidden;
+  overflow-y: hidden;
   transition: all 0.3s ease-in-out;
   @media screen and (max-width: 767px) {
     width: calc(100vw - 32px);
@@ -257,9 +260,11 @@ const Xbtn = styled.button`
 const NotificationBody = styled.div`
   display: flex;
   flex-direction: column;
-  width: calc(100%-16px);
+  align-items: center;
+  width: 100%;
   height: calc(100% - 56px);
   overflow-y: scroll;
+  
   .show-scroll {
     overflow-y: scroll;
   }
@@ -384,8 +389,9 @@ const Header = () => {
               <CloseIcon className="xIcon" style={{ fontSize: "16px" }} />
             </Xbtn>
           </Xbox>
-
-          <NotificationBody>aa</NotificationBody>
+          <NotificationBody>
+            <Timeline />
+          </NotificationBody>
         </NotificationBox>
       ) : (
         <NotificationBox top={notiboxMove}>
@@ -395,8 +401,9 @@ const Header = () => {
               <CloseIcon className="xIcon" style={{ fontSize: "16px" }} />
             </Xbtn>
           </Xbox>
-
-          <NotificationBody>aa</NotificationBody>
+          <NotificationBody>
+            <Timeline />
+          </NotificationBody>
         </NotificationBox>
       )}
     </HeaderContainer>

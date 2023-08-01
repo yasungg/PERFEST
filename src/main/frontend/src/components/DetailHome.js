@@ -129,21 +129,19 @@ const DetailHome = () => {
   const handleAddToCalendar = async () => {
     if (detailComponentValue) {
       const festivalId = detailComponentValue; // detailComponentValue가 캘린더 ID
-      console.log(`페스티벌 아이디 : ${festivalId}`);
       try {
         const response = await MemberAPI.addCal(festivalId);
-        console.log(response.data);
         if (response.data) {
-          console.log("캘린더에 추가되었습니다!");
+          // console.log("캘린더에 추가되었습니다!");
           setShowModal(true);
         } else {
-          console.log("추가 중 오류가 발생했습니다.");
+          // console.log("추가 중 오류가 발생했습니다.");
         }
       } catch (error) {
-        console.error("추가 중 오류가 발생했습니다.", error);
+        // console.error("추가 중 오류가 발생했습니다.", error);
       }
     } else {
-      console.log("추가할 축제 정보가 없습니다...");
+      // console.log("추가할 축제 정보가 없습니다...");
     }
   };
 
@@ -162,7 +160,6 @@ const DetailHome = () => {
         detailComponentValue // festivalId
       )
         .then((result) => {
-          console.log(result.data);
           setFestivalDetail(result.data);
         })
         .catch((error) => {
