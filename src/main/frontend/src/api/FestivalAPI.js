@@ -28,5 +28,10 @@ const FestivalAPI = {
       `/auth/festival/get-image-links?festivalId=${festivalId}`
     );
   },
+  GetProductListForDetail: async (festivalId) => {
+    return await axios.get(
+      `/auth/product/get-product-list?festivalId=${festivalId}`
+    );
+  },
 };
 export default FestivalAPI;

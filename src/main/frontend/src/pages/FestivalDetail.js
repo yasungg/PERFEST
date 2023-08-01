@@ -34,7 +34,6 @@ const DetailContainer = styled.div`
     left: 0;
     height: calc(100vh - 44px - 40vh);
     top: ${(props) => props.top};
-    /* bottom: ${(props) => props.bottom}; */
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
   }
