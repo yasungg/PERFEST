@@ -440,5 +440,3 @@ W
 'src/main/frontend/src/CalendarStyle.css,7\9\794f1d47cd87d2ec35a0417517289e20f8027eed
 Z
 *src/main/frontend/src/components/Header.js,a\3\a38fb24f994555f8cffe167aaabd5095558edc5c
-d
-4src/main/frontend/src/components/CustomInfoWindow.js,9\c\9c9a0f0d45e4a8ad32aaee8baec81a37f2549036

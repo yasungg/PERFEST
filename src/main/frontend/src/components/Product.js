@@ -92,6 +92,9 @@ const ProductBox = styled.div`
   @media screen and (max-width: 767px) {
     width: 100vw;
   }
+  &:hover {
+    cursor: pointer;
+  }
 `;
 const ProductLeftBox = styled.div`
   display: flex;
@@ -166,7 +169,6 @@ const Product = () => {
         detailComponentValue
       )
         .then((result) => {
-          console.log(result.data);
           setProduct(result.data);
         })
         .catch((error) => {

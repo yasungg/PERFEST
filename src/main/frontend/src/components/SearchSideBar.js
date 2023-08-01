@@ -273,6 +273,7 @@ const ImageArea = styled.div`
 
   img {
     width: 120px;
+    height: 200px;
     margin: 0 10px 0 8px;
     transition: transform 0.3s ease;
   }

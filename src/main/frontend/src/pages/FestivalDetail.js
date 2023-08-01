@@ -13,6 +13,8 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import Review from "./Review";
 import Product from "../components/Product";
 import DetailHome from "../components/DetailHome";
+import Activity from "../components/Activity";
+
 const DetailContainer = styled.div`
   box-sizing: border-box;
   display: flex;
@@ -484,8 +486,9 @@ const FestivalDetail = () => {
         </FestivalNaviBox>
         <DetailDescBox>
           {navigationValue === "home" && <DetailHome />}
-          {navigationValue === "review" && <Review />}
+          {navigationValue === "program" && <Activity />}
           {navigationValue === "product" && <Product />}
+          {navigationValue === "review" && <Review />}
           {!navigationValue && <DetailHome />}
         </DetailDescBox>
       </DetailBodyContainer>

@@ -448,5 +448,3 @@ Z
 *src/main/frontend/src/components/Header.js,a\3\a38fb24f994555f8cffe167aaabd5095558edc5c
 S
 #src/main/frontend/src/pages/Home.js,e\2\e2e45f5fef3101c3da62ef3b175bad6887fd1609
-d
-4src/main/frontend/src/components/CustomInfoWindow.js,9\c\9c9a0f0d45e4a8ad32aaee8baec81a37f2549036
