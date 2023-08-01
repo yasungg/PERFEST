@@ -64,8 +64,8 @@ const NaverMap = () => {
     for (let i = 0; i < contextLatitude.length; i++) {
       const markerOptions = {
         position: new naver.maps.LatLng(
-          contextLatitude[i],
-          contextLongitude[i]
+          parseFloat(contextLatitude[i]),
+          parseFloat(contextLongitude[i])
         ),
         map: map,
         icon: {
@@ -110,7 +110,6 @@ const NaverMap = () => {
     }
     setMarker(markers);
     setInfoWindow(infoWindows);
-
     return() => {
       window.removeEventListener("resize", handleResize);
     };

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled, { keyframes } from "styled-components";
-import Profile from "../images/47802_35328_56.jpg";
+import profileImage from "../images/profileImage.jpg";
 import MySetting from "./MySetting";
 import MyReview from "./MyReview";
 import MyReserveList from "./MyReserveList";
@@ -43,14 +43,30 @@ const SideBarWrapper = styled.div`
   }
 `;
 
-
+const Profilebox = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+width: 160px;
+height: 160px;
+border-radius: 50%;
+margin-bottom: 10px;
+overflow: hidden;
+`
 
 // 프로필 이미지
 const ProfileImage = styled.img`
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  margin-bottom: 10px;
+  width: 160px;
+  height: 160px;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all .1s ease-in;
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+  }
 `;
 
 // 닉네임
@@ -97,8 +113,6 @@ const MenuLink = styled.div`
 const HamburgerIcon = styled.div`
   cursor: pointer;
   font-size: 24px;
-`;
-const NickNameContainer = styled.div`
 `;
 // 컨텐츠 영역
 const ContentWrapper = styled.div`
@@ -224,11 +238,17 @@ const MyPage = () => {
     return (
       <Container>
         <SideBarWrapper collapsed={sidebarCollapsed}>
-        <ProfileImage
+          <Profilebox>
+        {profile ? 
+        (<ProfileImage
           src={profile}
-          alt="Profile"
           onClick={handleProfileImageClick}
-        />
+        />)
+        :
+        (<ProfileImage
+          src={profileImage}
+          onClick={handleProfileImageClick}
+        />)}
         {/* 숨겨진 input 요소 추가 */}
         <input
           type="file"
@@ -236,6 +256,7 @@ const MyPage = () => {
           style={{ display: "none" }}
           onChange={handleFileInputChange}
         />
+        </Profilebox>
           <Nickname>{nickNameInfo}님</Nickname>
           <Menu>
             {menus.map((menu, index) => (

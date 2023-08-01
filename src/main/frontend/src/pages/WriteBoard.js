@@ -99,7 +99,7 @@ const WriteText = styled.div`
     border: 1px solid #d9d9d9;
     border-radius: 5px;
     outline: none;
-    resize: vertical;
+    resize: none;
     font-family: Arial, sans-serif;
     font-size: 16px;
   }

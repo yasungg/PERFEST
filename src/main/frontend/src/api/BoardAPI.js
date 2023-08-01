@@ -99,15 +99,31 @@ const BoardAPI = {
         });
   },
   // 게시판 수정
-  BoardUpdate: async (title, category, text) => {
+  BoardUpdate: async (communityId, title, category, text, uploadedImageUrl) => {
     const updateBoard = {
+      communityId: communityId,
       communityTitle: title,
       communityCategory: category,
       communityDesc: text,
+      uploadedImageUrl: uploadedImageUrl
     };
-    return await axios.post(`/auth/community/updateboard`,
-      updateBoard
-    );
+    const Authorization =
+        "Bearer " + window.localStorage.getItem("accessToken");
+    console.log(Authorization);
+    return await axios.post(`/community/updateboard`,updateBoard, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Authorization,
+      }, // 여기까지가 서버로 header를 실은 요청을 던지는 기능
+    })
+        .then((response) => {
+          if (response.status === 200) {
+            return response;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
   },
 };
 export default BoardAPI;

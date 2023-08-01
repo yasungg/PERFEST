@@ -305,7 +305,7 @@ const ContentArea = styled.div`
   cursor: pointer;
 
   &:hover {
-    background-color: #e2f6ff;
+    background-color: #C8E8FF;
   }
 
   p,
