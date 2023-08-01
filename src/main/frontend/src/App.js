@@ -47,7 +47,7 @@ function App() {
           <Route path="/pages/resultsuccess" element={<ResultSuccess />} />
           <Route path="/pages/board" element={<Board />} />
           <Route path="/pages/writeboard" element={<WriteBoard />} />
-          <Route path="/pages/updateboard" element={<UpdateBoard />} />
+          <Route path="/pages/updateboard/:communityId" element={<UpdateBoard />} />
           <Route path="/pages/ranking" element={<Ranking />} />
           <Route
             path="/pages/boardarticle/:communityId"

@@ -39,7 +39,7 @@ const UserStore = ({ children }) => {
   const [programReview, setProgramReview] = useState("none");
   const [badgeOpacity, setBadgeOpacity] = useState("none");
   const [approveBadge, setApproveBadge] = useState("none");
-  // 마커
+  // marker
   const [contextLatitude, setContextLatitude] = useState([]);
   const [contextLongitude, setContextLongitude] = useState([]);
   const [centerLatitude, setCenterLatitude] = useState("");

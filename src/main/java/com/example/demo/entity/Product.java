@@ -1,8 +1,6 @@
 package com.example.demo.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.jetbrains.annotations.NotNull;
 
@@ -30,6 +28,9 @@ public class Product {
     @NotNull
     private String productDesc;
 
+    @Column(name = "product_img", length= 500)
+    private String productImg;
+
     @Column(name = "product_price")
     @NotNull
     @ColumnDefault("0")
@@ -39,4 +40,12 @@ public class Product {
     @NotNull
     @ColumnDefault("0")
     private String productQuantity;
+
+//        public Product(Long id, String productName, String productDesc, String productImg, BigDecimal productPrice) {
+//        this.id = id;
+//        this.productName = productName;
+//        this.productDesc = productDesc;
+//        this.productImg = productImg;
+//        this.productPrice = productPrice;
+//    }
 }

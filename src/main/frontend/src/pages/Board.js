@@ -238,7 +238,6 @@ const PaginationButton = styled.button`
 `;
 const Board = () => {
   const navigate = useNavigate();
-  // const [selectedBoardInfo, setSelectedBoardInfo] = useState([]);
   const [selectCategory, setSelectCategory] = useState("");
   const [activeButton, setActiveButton] = useState(""); // 버튼의 활성화 여부를 저장하는 상태
   const [search, setSearch] = useState("");

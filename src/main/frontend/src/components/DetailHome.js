@@ -3,7 +3,6 @@ import styled from "@emotion/styled";
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../context/UserStore";
 import { formatDateForFestival } from "./DateStyle";
-import { useNavigate } from "react-router";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AddIcon from "@mui/icons-material/Add";
 import PlaceIcon from "@mui/icons-material/Place";
@@ -133,7 +132,7 @@ const DetailHome = () => {
       console.log(`페스티벌 아이디 : ${festivalId}`);
       try {
         const response = await MemberAPI.addCal(festivalId);
-        console.log(response.data)
+        console.log(response.data);
         if (response.data) {
           console.log("캘린더에 추가되었습니다!");
           setShowModal(true);
@@ -147,7 +146,6 @@ const DetailHome = () => {
       console.log("추가할 축제 정보가 없습니다...");
     }
   };
-
 
   //카드를 클릭하면 해당 마커의 위치로 지도 위치를 이동시키기 위한 context 설정
   const setCenterMarker = (latitude, longitude) => {
@@ -180,7 +178,10 @@ const DetailHome = () => {
           <span className="bold">캘린더</span>
           <span>를 활용해 편리하게 축제일정을 관리하세요!</span>
         </div>
-        <MiniButton className="advertisement-button" onClick={handleAddToCalendar}>
+        <MiniButton
+          className="advertisement-button"
+          onClick={handleAddToCalendar}
+        >
           <div className="icon-change">
             <CalendarMonthIcon
               className="calendar-icon"
@@ -202,10 +203,12 @@ const DetailHome = () => {
             </InfoIconBox>
             <InfoDescBox>
               <span style={{ fontSize: "15px" }}>{data.festivalDoro}</span>
-              <DirectionsIcon
-                className="direction-button"
-                onClick={() => setCenterMarker(data.wedo, data.kyungdo)}
-              />
+              {data.festivalDoro && (
+                <DirectionsIcon
+                  className="direction-button"
+                  onClick={() => setCenterMarker(data.wedo, data.kyungdo)}
+                />
+              )}
             </InfoDescBox>
           </InfoBox>
           <InfoBox>
@@ -213,7 +216,13 @@ const DetailHome = () => {
               <PlaceIcon style={{ color: "royalblue" }} />
             </InfoIconBox>
             <InfoDescBox>
-              <p>{data.festivalLocation}</p>
+              <span style={{ fontSize: "15px" }}>{data.festivalLocation}</span>
+              {data.festivalLocation && (
+                <DirectionsIcon
+                  className="direction-button"
+                  onClick={() => setCenterMarker(data.wedo, data.kyungdo)}
+                />
+              )}
             </InfoDescBox>
           </InfoBox>
           <InfoBox>

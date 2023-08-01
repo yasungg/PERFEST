@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { BodyContainer, Container } from "../components/StandardStyles";
 import { useState } from "react";
 import BoardAPI from "../api/BoardAPI";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import ImageUploader from "../components/ImageUploader.js";
 const Title = styled.div`
   display: flex;
@@ -136,6 +136,7 @@ const Button = styled.button`
 `;
 const UpdateBoard = () => {
     const navigate = useNavigate();
+    const { communityId } = useParams();
     const [inputBoardTitle, setInputBoardTitle] = useState("");
     const [inputBoardText, setInputBoardText] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("");
@@ -155,8 +156,9 @@ const UpdateBoard = () => {
     };
     // 게시판 작성하기
     const onClickWriteBoard = async() => {
-        const response = await BoardAPI.BoardUpdate(inputBoardTitle,selectedCategory,inputBoardText,uploadedImageUrl);
+        const response = await BoardAPI.BoardUpdate(communityId, inputBoardTitle,selectedCategory,inputBoardText,uploadedImageUrl);
         console.log(response.data);
+        console.log(communityId);
         setInputBoardTitle("");
         setSelectedCategory("");
         setInputBoardText("");

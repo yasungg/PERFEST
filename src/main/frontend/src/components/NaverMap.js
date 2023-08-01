@@ -29,6 +29,9 @@ const NaverMap = () => {
         ? new naver.maps.LatLng(centerLatitude, centerLongitude)
         : new naver.maps.LatLng(37.497914, 127.027646),
       zoom: 15,
+      scaleControl: false,
+      logoControl: false,
+      mapDataControl: false,
     };
     const map = new naver.maps.Map("map", options);
     setMap(map);
@@ -71,14 +74,14 @@ const NaverMap = () => {
             "/images/perfesta-marker_preview_rev_1.png",
           size: new naver.maps.Size(39, 45),
           origin: new naver.maps.Point(0, 0),
-          anchor: new naver.maps.Point(25, 50),
+          anchor: new naver.maps.Point(23, 50),
         },
       };
 
       const marker = new naver.maps.Marker(markerOptions);
       markers.push(marker);
 
-      const contentString = contextFstvlNm[i];
+      // 마커 클릭 시 정보창 펼침
       const infoWindowContent = ReactDOMServer.renderToString(
         <CustomInfoWindow
           title={contextFstvlNm[i]}
@@ -107,63 +110,12 @@ const NaverMap = () => {
     }
     setMarker(markers);
     setInfoWindow(infoWindows);
-    console.log(contextFstvlNm, contextFstvlLike);
-    return () => {
+
+    return() => {
       window.removeEventListener("resize", handleResize);
     };
+    
   }, [centerLatitude, contextLatitude, contextLongitude, contextFstvlNm]);
-
-  // 	const [myLocation, setMyLocation] = useState<
-  // 		{ latitude: number, longitude: number } | 'string'
-  // 	>("");
-
-  // 	// 현재 위치 받아오기
-  // 	useEffect(() => {
-  // 		if(navigator.geolocation) {
-  // 			navigator.geolocation.getCurrentPosition((position) => {
-  // 				setMyLocation({
-  // 					latitude: position.coords.latitude,
-  // 					longitude: position.coords.longitude
-  // 				});
-  // 			});
-  // 		} else {
-  // 			window.alert("현재 위치를 알 수 없습니다.")
-  // 		}
-  // 	}, []);
-
-  // 	useEffect(() => {
-  // 		if(typeof myLocation !== "string") {
-  // 			const currentPosition = [myLocation.latitude, myLocation.longitude];
-
-  // 			const map = new naver.maps.Map("map", {
-  // 				center: new naver.maps.LatLng(currentPosition[0], currentPosition[1]),
-  // 				zoomControl: true
-  // 			});
-  // 		}
-  // 	}, [myLocation]);
-
-  // // 내 위치 마커 표시하기
-  // useEffect(() => {
-  // 	if (typeof myLocation !== "string") {
-  // 		const currentPosition = [myLocation.latitude, myLocation.longitude];
-
-  // 		const map = new naver.maps.Map("map", {
-  // 				center: new naver.maps.LatLng(currentPosition[0], currentPosition[1]),
-  // 				zoomControl: true,
-  // 		});
-  // 			const currentMarker = new naver.maps.Marker({
-  // 				position: new naver.maps.LatLng(currentPosition[0], currentPosition[1]),
-  // 				map,
-  // 				// 원하는 이미지로 마커 커스텀
-  // 				// icon: {
-  // 				//     url: pinImage,
-  // 				//     size: new naver.maps.Size(50, 52),
-  // 				//     origin: new naver.maps.Point(0, 0),
-  // 				//     anchor: new naver.maps.Point(25, 26),
-  // 				//   },
-  // 			});
-  // 		}
-  // 	}, [myLocation]);
 
   return (
     <div

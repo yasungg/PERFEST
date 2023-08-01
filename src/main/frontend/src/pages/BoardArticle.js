@@ -32,6 +32,7 @@ const UserInfo = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-top: 20px;
+  margin-bottom: 20px;
   width: 100%;
 `;
 const BoardNickname = styled.div`
@@ -45,6 +46,7 @@ const BoardDate = styled.div`
 `;
 const BoardDesc = styled.div`
   display: flex;
+  flex-direction: column;
   margin-top: 20px;
   height: 300px;
   width: 97%;
@@ -54,6 +56,20 @@ const BoardDesc = styled.div`
   font-size: 16px;
   color: #333;
   overflow: auto;
+`;
+
+const BoardImg = styled.div`
+  display: flex;
+  margin-top: 10px;
+`;
+
+const Image = styled.img`
+  max-height: 200px;
+  max-width: 100%;
+`;
+
+const Text = styled.p`
+  margin: 10px 0;
 `;
 const CommentInfo = styled.div`
   display: flex;
@@ -71,6 +87,7 @@ const CommentWrite = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  margin-bottom: 10px;
   .commentwrite {
     width: 85%;
     padding: 8px;
@@ -95,6 +112,7 @@ const CommentWriteButton = styled.button`
 const CommentDesc = styled.div`
   display: flex;
   flex-direction: column;
+  margin-bottom: 5px;
 `;
 const Comment = styled.div`
   margin-top: 5px;
@@ -166,7 +184,7 @@ const CommentReplyWrite = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  margin-top: 10px;
+  margin-top: 5px;
 
   .commentreply {
     width: 85%;
@@ -194,7 +212,7 @@ const CommentReplyWriteButton = styled.button`
   }
 `;
 const ReplyCommentDesc = styled.div`
-  margin-top: 5px;
+  margin-top: 10px;
   margin-left: 10px;
 `;
 const ReplyCommentIcon = styled.div``;
@@ -422,12 +440,14 @@ const BoardArticle = () => {
               </UserInfo>
               <hr></hr>
               <BoardDesc>
-                {community.communityDesc}
-                <img
-                  className="community-img"
-                  src={community.communityImgLink}
-                  alt=""
-                />
+                <Text>{community.communityDesc}</Text>
+                <BoardImg>
+                  <Image
+                    className="community-img"
+                    src={community.communityImgLink}
+                    alt=""
+                  />
+                </BoardImg>
               </BoardDesc>
               <BoardLike>
                 {isLogin ?
@@ -578,6 +598,7 @@ const BoardArticle = () => {
                     </CommentReplyWriteButton>)}
                   </CommentReplyWrite>
                 )}
+                <br></br>
                 <hr></hr>
               </Comment>
             </CommentDesc>
