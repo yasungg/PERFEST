@@ -76,7 +76,7 @@ const Buttons = styled.div`
   align-items: center;
   margin-top : 10px;
 
-  .button {
+  .button1 {
     padding: 5px 10px;
     border: none;
     border-radius: 4px;
@@ -84,18 +84,23 @@ const Buttons = styled.div`
     color: #fff;
     cursor: pointer;
     transition: background-color 0.3s ease;
-  }
-
-  .button:nth-child(1) {
     background-color: #3498db; /* Blue color for the first button */
   }
-
-  .button:nth-child(2) {
+  .button2 {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
     background-color: #e74c3c; /* Red color for the second button */
   }
-
-  .button:hover {
+  .button1:hover {
     opacity: 0.8; /* Reduced opacity on hover */
+  }
+  .button2:hover {
+    opacity: 0.8;
   }
 `;
 function MyWrite() {
@@ -104,9 +109,6 @@ function MyWrite() {
   const [memberComment, setMemberComment] = useState([]);
   const [writePage, setWritePage] = useState(1);
   const [commentPage, setCommentPage] = useState(1);
-  const [memberWriteTrigger, setMemberWriteTrigger] = useState(false);
-  const [memberCommentTrigger, setMemberCommentTrigger] = useState(false);
-
 
   useEffect(() => {
     const fetchMemberComment = async () => {
@@ -120,7 +122,7 @@ function MyWrite() {
       }
     };
     fetchMemberComment();
-  }, [memberCommentTrigger]);
+  }, []);
 
   useEffect(() => {
     const fetchMemberWrite = async () => {
@@ -134,7 +136,7 @@ function MyWrite() {
       }
     };
     fetchMemberWrite();
-  }, [memberWriteTrigger]);
+  }, []);
 
   const writeTotalPages = memberWrite.length;
   const commentTotalPages = memberComment.length;
@@ -151,7 +153,6 @@ function MyWrite() {
     const response = await MemberAPI.deleteCommunitySelection(communityId);
     if(response.data === true) {
       console.log(response.data);
-      setMemberWriteTrigger(prev => !prev);
     }
   }
   // 댓글 선택 삭제
@@ -159,7 +160,6 @@ function MyWrite() {
     const response = await MemberAPI.deleteCommentSelection(commentId);
     if(response.data === true) {
       console.log(response.data);
-      setMemberCommentTrigger(prev => !prev);
     }
   }
   const formatTime = (timeString) => {
@@ -169,7 +169,18 @@ function MyWrite() {
     const day = String(date.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
   };
-
+  const getCategoryText = (category) => {
+    switch (category) {
+      case 'FIND_PARTY':
+        return '파티원 찾기';
+      case 'FREE_BOARD':
+        return '자유게시판';
+      case 'Q_A':
+        return 'Q&A';
+      default:
+        return '';
+    }
+  };
 
   return (
   <Container>
@@ -181,10 +192,13 @@ function MyWrite() {
             <Item key={memberWrite[writePage - 1]?.communityId}>
               <strong>{memberWrite[writePage - 1].communityTitle}</strong>
               <Content>{memberWrite[writePage - 1].communityDesc}</Content>
-              <Content>카테고리: {memberWrite[writePage - 1].communityCategory}</Content>
+              <Content>카테고리: {getCategoryText(memberWrite[writePage - 1].communityCategory)}</Content>
               <Content>좋아요: {memberWrite[writePage - 1].likeCount}</Content>
               <Content>작성시간: {formatTime(memberWrite[writePage - 1].writtenTime)}</Content>
-              <Buttons><button className='button' onClick={() => navigate("/pages/UpdateBoard")}>수정</button><button className='button' onClick={() => deleteSelectBoard(memberWrite[writePage - 1].communityId)}>삭제</button></Buttons>
+              <Buttons>
+                <button className='button1' onClick={() => navigate(`/pages/UpdateBoard/${memberWrite[writePage - 1].communityId}`)}>수정</button>
+                <button className='button2' onClick={() => deleteSelectBoard(memberWrite[writePage - 1].communityId)}>삭제</button>
+              </Buttons>
             </Item>
           )}
           <Pagination>
@@ -206,7 +220,10 @@ function MyWrite() {
               <strong>{memberComment[commentPage - 1].commentBody}</strong>
               <Content>좋아요: {memberComment[commentPage - 1].commentLikeCount}</Content>
               <Content>작성시간: {formatTime(memberComment[commentPage - 1].commentWrittenTime)}</Content>
-              <Buttons><button className='button'>수정</button><button className='button' onClick={() => deleteSelectComment(memberComment[commentPage - 1].commentId)}>삭제</button></Buttons>
+              <Buttons>
+                <button className='button1'>수정</button>
+                <button className='button2' onClick={() => deleteSelectComment(memberComment[commentPage - 1].commentId)}>삭제</button>
+                </Buttons>
             </Item>
           )}
           <Pagination>
