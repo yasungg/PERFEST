@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import cancel from '../images/cancel.png'
 
 const ModalStyle = styled.div`
     .modal {
@@ -63,7 +64,7 @@ const ModalStyle = styled.div`
         border-radius: 5px;
         font-size: 13px;
     }
-    
+
     .modal.openModal {
         display: flex;
         align-items: center;
@@ -97,6 +98,7 @@ function ResultFalse () {
                 <section>
                 <main>
                 <div>
+                    <img src={cancel} alt="cancel" width={"10%"} />
                     <h2>결제 실패 하였습니다.</h2>
                     <Link to='/'>메인으로 돌아가기</Link>
                 </div>

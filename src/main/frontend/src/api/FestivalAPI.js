@@ -33,5 +33,17 @@ const FestivalAPI = {
       `/auth/product/get-product-list?festivalId=${festivalId}`
     );
   },
+
+  // 카테고리 검색
+  searchFestival: async(selectedLocations,selectedStartDate,selectedEndDate) => {
+		const info = {
+			location: selectedLocations,
+			period : {
+				startDate : selectedStartDate,
+				endDate : selectedEndDate
+			}
+    }
+    return await axios.post(`/auth/festival/getSearchFestivalInfo `, info)
+  },
 };
 export default FestivalAPI;

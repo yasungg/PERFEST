@@ -1,8 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.constant.CommunityCategory;
-import com.example.demo.dto.CommunityDTO;
-import com.example.demo.service.CommentService;
 import com.example.demo.service.CommunityService;
 import com.example.demo.user.ContextGetter;
 import lombok.RequiredArgsConstructor;
