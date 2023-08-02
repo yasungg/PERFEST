@@ -71,9 +71,11 @@ const MemberAPI = {
   deleteMem: async () => {
     const Authorization =
       "Bearer " + window.localStorage.getItem("accessToken");
-    const deleteMem = {};
+    const updateData = {
+      // username: username;
+    };
     return await axios
-      .post("/member/del", deleteMem, {
+      .post("/member/del", {
         headers: {
           "Content-Type": "application/json",
           Authorization: Authorization,

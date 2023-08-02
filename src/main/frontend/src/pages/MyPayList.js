@@ -119,7 +119,7 @@ const MyPayList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {memberPayInfo.map((payment) => (
+                    {memberPayInfo && memberPayInfo.map((payment) => (
                      <tr key={payment.paymentId}>
                         <td>{payment.productName}</td>
                         <td>{payment.price}</td>
