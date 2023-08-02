@@ -125,7 +125,6 @@ const MyReview = () => {
   const confirm = async (modalType) => {
     if (modalType === "deleteReview") {
       const response = await MemberAPI.deleteReviewSelection(reviewToDelete);
-      console.log(response.data);
 
       const updatedReviewList = memberReview.filter(
         (review) => review.reviewId !== reviewToDelete

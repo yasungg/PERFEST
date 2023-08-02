@@ -60,7 +60,6 @@ const MyRanking = () => {
       const rsp = await MemberAPI.myRichRanking();
       if (rsp.status === 200) {
         setMemberRichRanking(rsp.data);
-        console.log(`리치랭킹은 ${rsp.data}`);
       }
     };
     fetchMemberRichRanking();
@@ -71,7 +70,6 @@ const MyRanking = () => {
     const fetchMemberBadgeRanking = async () => {
       const rsb = await MemberAPI.myBadgeRanking();
       if (rsb.status === 200) setMemberBadgeRanking(rsb.data);
-      console.log(`뱃지랭킹은 ${rsb.data}`);
     };
     fetchMemberBadgeRanking();
   }, []);

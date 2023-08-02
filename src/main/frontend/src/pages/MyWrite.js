@@ -152,14 +152,12 @@ function MyWrite() {
   const deleteSelectBoard = async(communityId) => {
     const response = await MemberAPI.deleteCommunitySelection(communityId);
     if(response.data === true) {
-      console.log(response.data);
     }
   }
   // 댓글 선택 삭제
   const deleteSelectComment = async(commentId) => {
     const response = await MemberAPI.deleteCommentSelection(commentId);
     if(response.data === true) {
-      console.log(response.data);
     }
   }
   const formatTime = (timeString) => {

@@ -199,17 +199,14 @@ const MyPage = () => {
             const fileRef = ref(storageRef, file.name);
 
             await uploadBytes(fileRef, file);
-            console.log('File uploaded successfully!');
 
             const downloadURL = await getDownloadURL(fileRef);
-            console.log("저장경로 확인: " + downloadURL);
             setTimeout(async () => {
               const response = await MemberAPI.updateImg(downloadURL);
               if (response.data === true){
               setUploadedImage(response.data);
               setProfileUpdateTrigger(prev => !prev)
             } else {
-                console.log(response.data);
               }
             }, 1000); 
             }
@@ -220,8 +217,6 @@ const MyPage = () => {
         const response = await MemberAPI.getProfileImg();
         if(response.status === 200) {
           setProfile(response.data);
-          console.log("이미지 경로 " + profile);
-          console.log("이미지 경로 " + response.data);
         }
       }
       getProfileImage();
@@ -231,7 +226,6 @@ const MyPage = () => {
       const memberInfo = async() => {
       const rsp = await MemberAPI.getMemberNickName();
       if(rsp.status === 200) setNickNameInfo(rsp.data);
-      console.log(rsp.data);
       };
       memberInfo();
       },[]);
