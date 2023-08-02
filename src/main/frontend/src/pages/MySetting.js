@@ -204,30 +204,21 @@ const MySetting = () => {
       .catch((error) => {
         console.error(error);
       });
-
-        // localStorage.setItem("accessToken", "");
-        // localStorage.setItem("tokenExpiresIn", "");
-      
     } else if(modalType === "updateAdd") {
-
         const response = await MemberAPI.updateAdd(inputAdd);
-        console.log(response.data);
         if(response.data === true) {
           const updateInfo = await MemberAPI.getMemberInfo();
           if(updateInfo.status === 200) {
             setMemberInfo(updateInfo.data);
             setAddModalOpen(false);
             setInputAdd("");
-
           }
         }
 
     } else if(modalType === "upNicname") {
       const nicNameCheck = await MemberAPI.nickNameRegCheck(inputNicName);
-      console.log(nicNameCheck.data);
       if(nicNameCheck.data === true) {
         const response = await MemberAPI.updateNickName(inputNicName);
-        console.log(response.data);
         if(response.data === true) {
           const updatedInfo = await MemberAPI.getMemberInfo();
           if(updatedInfo.status === 200) {
@@ -243,12 +234,10 @@ const MySetting = () => {
   }
 
   const onChangeAdd = (e) => {
-    console.log(e.target.value);
     setInputAdd(e.target.value);
   }
 
   const onChangeNicName = (e) => {
-    console.log(e.target.value);
     setInputNicName(e.target.value);
   }
 
@@ -288,7 +277,6 @@ const MySetting = () => {
                   readOnly
                   placeholder={member.nickName}
                 />
-                {/* <button onClick={updateNicName}>수정</button> */}
                 <ButtonContainer>
                   <button onClick={updateNicName}>
                     <FaPencilAlt />
@@ -305,7 +293,6 @@ const MySetting = () => {
                   readOnly
                   placeholder={member.address}
                 />
-                {/* <button onClick={updateAdd}>수정</button> */}
                 <ButtonContainer>
                   <button onClick={updateAdd}>
                     <FaPencilAlt />

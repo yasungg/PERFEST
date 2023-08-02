@@ -67,7 +67,7 @@ public class MyPageController {
 
     // 회원 탈퇴 API
     @PostMapping(value = "/del")
-    public ResponseEntity<Boolean> deleteMember(@RequestBody Map<String, Object> updateData) {
+    public ResponseEntity<Boolean> deleteMember() {
         String username = info.getUsername();
         boolean result = myPageService.deleteMember(username);
         SecurityContextHolder.clearContext();
