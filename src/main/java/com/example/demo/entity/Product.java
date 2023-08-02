@@ -16,7 +16,7 @@ public class Product {
     @Column(name = "product_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "festival_id")
     private Festival festival;
 

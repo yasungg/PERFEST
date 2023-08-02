@@ -23,7 +23,6 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/auth/festival")
-//@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 public class FestivalController {
     private final FestivalService festivalService;
     private final ContextGetter info;
