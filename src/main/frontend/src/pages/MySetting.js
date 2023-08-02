@@ -196,14 +196,18 @@ const MySetting = () => {
 
   const confirm = async(modalType) => {
     if(modalType === "del") {
-      const response = await MemberAPI.deleteMem();
-      console.log(response.data);
-      if(response.data === true) {
-        navigate("/Login"); // 탈퇴시 로그인 화면
+      const response = await MemberAPI.deleteMem()
+      .then((rst) => {
+        navigate("/pages/Login"); // 탈퇴시 로그인 화면
         setIsLogin(false);
-        localStorage.setItem("accessToken", "");
-        localStorage.setItem("tokenExpiresIn", "");
-      }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+        // localStorage.setItem("accessToken", "");
+        // localStorage.setItem("tokenExpiresIn", "");
+      
     } else if(modalType === "updateAdd") {
 
         const response = await MemberAPI.updateAdd(inputAdd);

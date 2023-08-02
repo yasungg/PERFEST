@@ -62,13 +62,13 @@ public class MyPageController {
         boolean isAvailable = myPageService.isNicknameAvailable(nickname);
         tokenProvider.setNewAccessTokenToHeader(response);
         return ResponseEntity.ok(isAvailable);
+
     }
 
     // 회원 탈퇴 API
     @PostMapping(value = "/del")
     public ResponseEntity<Boolean> deleteMember(@RequestBody Map<String, Object> updateData) {
         String username = info.getUsername();
-//        String email = (String) updateData.get("username");
         boolean result = myPageService.deleteMember(username);
         SecurityContextHolder.clearContext();
         request.getSession().invalidate();
