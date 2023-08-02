@@ -123,6 +123,7 @@ public class PaymentService {
             paymentResponseDTO.setTotalPrice(member.getTotalPrice());
             paymentResponseDTO.setProductPrice(product.getProductPrice());
             paymentResponseDTO.setQuantity(payment.getQuantity());
+            paymentResponseDTO.setProductImg(product.getProductImg());
 
             paymentDTOList.add(paymentResponseDTO);
             return paymentDTOList;

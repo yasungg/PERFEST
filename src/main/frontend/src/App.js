@@ -43,8 +43,8 @@ function App() {
           <Route path="/pages/payready" element={<PayReady />} />
           <Route path="/pages/payresult" element={<PayResult />} />
           <Route path="/pages/paycancel" element={<PayCancel />} />
-          <Route path="/pages/resultfail" element={<ResultFalse />} />
-          <Route path="/pages/resultsuccess" element={<ResultSuccess />} />
+          <Route path="/pages/resultFail" element={<ResultFalse />} />
+          <Route path="/pages/resultSuccess" element={<ResultSuccess />} />
           <Route path="/pages/board" element={<Board />} />
           <Route path="/pages/writeboard" element={<WriteBoard />} />
           <Route path="/pages/updateboard/:communityId" element={<UpdateBoard />} />
