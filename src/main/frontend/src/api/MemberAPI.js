@@ -602,5 +602,32 @@ const MemberAPI = {
         console.log(error);
       });
   },
+
+  // 해당 축제 내 일정 추가
+  addCal: async(festivalId) => {
+    const Authorization =
+      "Bearer " + window.localStorage.getItem("accessToken");
+    console.log(Authorization);
+    const updateData = {
+      festivalId: festivalId,
+    };
+    return await axios
+    .post(`/member/addCal`, updateData, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Authorization,
+      }, // 여기까지가 서버로 header를 실은 요청을 던지는 기능
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        return response;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  },
+
+  
 };
 export default MemberAPI;

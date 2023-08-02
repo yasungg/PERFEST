@@ -2,31 +2,30 @@ import styled from "styled-components";
 import { BodyContainer, Container } from "../components/StandardStyles";
 import RankingAPI from "../api/RankingAPI";
 import { useState } from "react";
+import Header from "../components/Header";
 
 const RankContainer = styled.div`
-display: flex;
-flex-direction: column;
-justify-content: center;
-height: 800px;
-align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 50px; 
+  height: 100%; 
 `;
+
 const RankingCategory = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 50px;
+  margin-top: 20px;
 `;
 
 const RankButton = styled.div`
   margin: 0 10px;
   cursor: pointer;
 
-  input[type="radio"] {
-    display: none;
-  }
-
   label {
     display: inline-block;
-    padding: 10px;
+    padding: 10px 20px; 
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: #f0f0f0;
@@ -35,11 +34,16 @@ const RankButton = styled.div`
     transition: background-color 0.3s ease;
   }
 
+  input[type="radio"] {
+    display: none;
+  }
+
   input[type="radio"]:checked + label {
     background-color: #333;
     color: #fff;
   }
 `;
+
 const RankingDesc = styled.div`
   display: flex;
   flex-direction: column;
@@ -84,7 +88,6 @@ const RankingNum = styled.div`
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
-
 const Ranking = () => {
   const [richRanking, setRichRanking] = useState([]);
   const [badgeRanking, setBadgeRanking] = useState([]);
@@ -92,20 +95,19 @@ const Ranking = () => {
 
   const getRichRanking = async () => {
     const response = await RankingAPI.GetRichRanking();
-    console.log(response.data);
     setRichRanking(response.data);
     setGetBadgeRankingClicked(false);
   };
 
   const getBadgeRanking = async () => {
     const response = await RankingAPI.GetBadgeRanking();
-    console.log(response.data);
     setBadgeRanking(response.data);
     setGetBadgeRankingClicked(true);
   };
 
   return (
       <Container justifyContent="center" alignItems="center">
+        <Header/>
         <BodyContainer>
           <RankContainer>
             <RankingCategory>

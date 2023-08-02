@@ -7,6 +7,7 @@ import com.example.demo.repository.MyPageRepository;
 import com.example.demo.repository.NoticeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -20,6 +21,7 @@ import java.util.List;
 @Transactional
 @Slf4j
 @RequiredArgsConstructor
+@EnableScheduling
 public class NoticeService {
 
     private final NoticeRepository noticeRepository;
@@ -61,23 +63,18 @@ public class NoticeService {
     }
 
     // 한달이 지난 알림 삭제 (스케줄러)
-    // (cron = "0 1 1 10 * *") 매월 10일 오전 11시
-    // (cron = "0 15 10 L * ?") 매월 말일 오전 10:15
-    // (cron = "0 0 0 * * *") 매일 자정에 실행
-    // (cron = "0 0/5 * * * ?") 5초마다 실행 // 테스트용
-    // 단위테스트 통과 완료
     @Scheduled(cron = "0 0 0 * * *") // 매일 자정에 실행 순서대로 초/분/시/일/월/요일(0-7, 0과7은 일요일이며 1부터 월요일 6이 토요일)
     public void deleteOldNotices() {
         LocalDateTime oneMonthAgo = LocalDateTime.now().minusMonths(1);
-        LocalDateTime testTimeSec = LocalDateTime.now().minusSeconds(20); // 테스트용 20초
-        log.info("dddddddddddd");
-        deleteOldNoticesBefore(testTimeSec);
+//        LocalDateTime testTimeSec = LocalDateTime.now().minusSeconds(20); // 테스트용 20초
+        log.info("한달지난 알림 삭제 완료");
+        deleteOldNoticesBefore(oneMonthAgo);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     private void deleteOldNoticesBefore(LocalDateTime cutoffTime) {
         List<Notice> oldNotices = noticeRepository.findByCreatedBefore(cutoffTime);
-        log.info("d");
+        log.info("알람삭제");
         noticeRepository.deleteAll(oldNotices);
 
     }

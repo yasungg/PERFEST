@@ -3,7 +3,9 @@ package com.example.demo.controller;
 import com.example.demo.dto.FestivalNameBoxDTO;
 import com.example.demo.entity.Festival;
 import com.example.demo.dto.FestivalDTO;
+import com.example.demo.jwt.TokenProvider;
 import com.example.demo.service.FestivalService;
+import com.example.demo.user.ContextGetter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -11,6 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +26,9 @@ import java.util.Map;
 //@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 public class FestivalController {
     private final FestivalService festivalService;
+    private final ContextGetter info;
+    private final TokenProvider tokenProvider;
+    private final HttpServletResponse response;
 
     // 관리자 전용 : 축제 전체 공공 데이터 받아와서 파싱 후 DB에 저장
     @GetMapping("/get-festival-info")
@@ -65,6 +72,19 @@ public class FestivalController {
 
         // festivals를 ResponseEntity에 담아 반환.
         return new ResponseEntity<>(festivals, HttpStatus.OK);
+    }
+    @GetMapping("/get-image-links")
+    public ResponseEntity<List<String>> getImageLinksForDetail(@RequestParam int festivalId) {
+        return new ResponseEntity<>(festivalService.festivalImageLinks((long) festivalId), HttpStatus.OK);
+    }
+
+    // 해당 축제 내일정 추가
+    @PostMapping("/addCal")
+    public ResponseEntity<Boolean> addCalender(@RequestParam Long festivalId) {
+        Long memberId = info.getId();
+        boolean result = festivalService.addCalender(memberId, festivalId);
+        tokenProvider.setNewAccessTokenToHeader(response);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
 }

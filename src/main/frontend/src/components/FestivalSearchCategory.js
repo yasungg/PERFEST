@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 const CategoryContainer = styled.div`
   position: absolute;
@@ -271,14 +271,19 @@ const FestivalSearchCategory = () => {
   const [isOpenPeriod, setIsOpenPeriod] = useState(false);
   const [isOpenSeason, setIsOpenSeason] = useState(false);
 
-  const [locationIconRotation ,setLocationIconRotation] = useState(0);
+  const [locationIconRotation, setLocationIconRotation] = useState(0);
   const [periodIconRotation, setPeriodIconRotation] = useState(0);
   const [seasonIconRotation, setSeasonIconRotation] = useState(0);
 
   const formRef = useRef(null);
 
   // 다른 필터 닫기
-  const handleFilterButtonClick = (filterName, isOpenState, setIsOpenState, setIconRotation) => {
+  const handleFilterButtonClick = (
+    filterName,
+    isOpenState,
+    setIsOpenState,
+    setIconRotation
+  ) => {
     setIsOpenState(!isOpenState);
     setIconRotation(isOpenState ? 0 : 180);
 
@@ -294,7 +299,7 @@ const FestivalSearchCategory = () => {
 
     if (filterName !== "season") {
       setIsOpenSeason(false);
-            setSeasonIconRotation(0);
+      setSeasonIconRotation(0);
     }
   };
 
@@ -387,8 +392,9 @@ const FestivalSearchCategory = () => {
             }}
           >
             <KeyboardArrowDownIcon
-                style={{ transform: `rotate(${locationIconRotation}deg)` }}
-              />지역
+              style={{ transform: `rotate(${locationIconRotation}deg)` }}
+            />
+            지역
           </CategoryFilterButton>
         </CategoryFilterItem>
 
@@ -410,7 +416,8 @@ const FestivalSearchCategory = () => {
           >
             <KeyboardArrowDownIcon
               style={{ transform: `rotate(${periodIconRotation}deg)` }}
-            />기간
+            />
+            기간
           </CategoryFilterButton>
         </CategoryFilterItem>
 
@@ -419,7 +426,7 @@ const FestivalSearchCategory = () => {
             onClick={() =>
               handleFilterButtonClick(
                 "season",
-                isOpenSeason, 
+                isOpenSeason,
                 setIsOpenSeason,
                 setSeasonIconRotation
               )
@@ -432,7 +439,8 @@ const FestivalSearchCategory = () => {
           >
             <KeyboardArrowDownIcon
               style={{ transform: `rotate(${seasonIconRotation}deg)` }}
-            />계절
+            />
+            계절
           </CategoryFilterButton>
         </CategoryFilterItem>
       </CategoryFilterList>

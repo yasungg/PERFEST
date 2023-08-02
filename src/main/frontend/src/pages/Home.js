@@ -15,8 +15,9 @@ const Container = styled.div`
   height: 100%;
   overflow: hidden;
   @media screen and (max-width: 853px) {
-    height: 100vh;
-    overflow: visible;
+    width: 100vw;
+    height: 100%;
+    overflow-y: visible;
   }
 `;
 const VideoContainer = styled.div`
@@ -55,6 +56,7 @@ const Video = styled.video`
   border: none;
   outline: none;
   z-index: 0;
+  overflow: hidden;
   @media screen and (max-width: 1441px) {
     width: 1440px;
   }
@@ -272,12 +274,33 @@ const DescBoxForPicture = styled.div`
     }
   }
 `;
+const ResponsiveBtnBox = styled.div`
+  position: relative;
+  width: 24vw;
+  height: 6vh;
+  overflow-x: hidden;
+  .cover-btn {
+    position: absolute;
+    top: 0;
+    left: -24vw;
+    transition: all 0.3s ease-in-out;
+  }
+  &:hover .cover-btn {
+    left: 0;
+  }
+  @media screen and (max-width: 853px) {
+    width: 300px;
+    .cover-btn {
+      left: -300px;
+    }
+  }
+`;
 const DescButtons = styled.button`
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: white;
+  background: ${(props) => props.background};
   border: 1px solid black;
   width: 24vw;
   height: 6vh;
@@ -321,6 +344,12 @@ const UpBtn = styled.button`
   &:hover {
     cursor: pointer;
   }
+  @media screen and (max-width: 767px) {
+    width: 32px;
+    height: 32px;
+    bottom: 32px;
+    right: 32px;
+  }
 `;
 const SidebarContainer = styled.div`
   display: flex;
@@ -340,9 +369,7 @@ const SidebarContainer = styled.div`
 const Home = () => {
   const location = useLocation();
   const getJWT = new URLSearchParams(location.search);
-  // console.log(getJWT.get("jwt"));
   const navigate = useNavigate();
-  const { isSidebar, setIsSidebar, isLogin } = useContext(UserContext);
 
   const scrollTo = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -350,7 +377,6 @@ const Home = () => {
 
   useEffect(() => {
     const JWT = JSON.parse(getJWT.get("jwt"));
-    // console.log(JWT);
     if (JWT != null) {
       localStorage.setItem("accessToken", JWT.accessToken);
       localStorage.setItem("tokenExpiresIn", JWT.tokenExpiresIn);
@@ -393,12 +419,16 @@ const Home = () => {
             </span>
             <span className="desc2">모든 정보들에 간편하게 접근하세요.</span>
           </div>
-          <div>
-            <DescButtons>
+          <ResponsiveBtnBox>
+            <DescButtons className="cover-btn" background="#222">
+              <span style={{ color: "white" }}>need more information?</span>
+              <NavigateNextIcon style={{ color: "white" }} />
+            </DescButtons>
+            <DescButtons background="white">
               <span>need more information?</span>
               <NavigateNextIcon />
             </DescButtons>
-          </div>
+          </ResponsiveBtnBox>
         </DescBoxForPicture>
         <PictureForItemBox src={Picture} />
       </ItemBoxForPic>
@@ -417,12 +447,16 @@ const Home = () => {
                 활성화된 커뮤니티에서 색다른 재미를 찾아보세요!
               </span>
             </div>
-            <div>
-              <DescButtons onClick={() => navigate("/pages/board")}>
+            <ResponsiveBtnBox>
+              <DescButtons className="cover-btn" background="#222">
+                <span style={{ color: "white" }}>need more information?</span>
+                <NavigateNextIcon style={{ color: "white" }} />
+              </DescButtons>
+              <DescButtons background="white">
                 <span>need more information?</span>
                 <NavigateNextIcon />
               </DescButtons>
-            </div>
+            </ResponsiveBtnBox>
           </DescBox>
         </GridBox1>
         <GridBox2 id="box2">

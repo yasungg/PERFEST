@@ -28,7 +28,6 @@ public class CommunityController {
         String communityTitle = (String)communityData.get("communityTitle");
         String communityCategory = (String)communityData.get("communityCategory");
         String communityDesc = (String)communityData.get("communityDesc");
-//      int memberId = (Integer)communityData.get("memberId");
         Long memberId = info.getId();
         String communityImg = (String)communityData.get("communityImg");
         boolean result = communityService.insertCommunity(communityTitle, CommunityCategory.valueOf(communityCategory), communityDesc, memberId, communityImg);
@@ -37,11 +36,13 @@ public class CommunityController {
     // 커뮤니티 게시글 수정(POST)
     @PostMapping(value="/updateboard")
     public ResponseEntity<Boolean> boardUpdate(@RequestBody Map<String, Object> updateCommunityData) {
-        int communityId = (Integer) updateCommunityData.get("communityId");
+        String communityId = (String)updateCommunityData.get("communityId");
         String communityTitle = (String)updateCommunityData.get("communityTitle");
         String communityCategory = (String)updateCommunityData.get("communityCategory");
         String communityDesc = (String)updateCommunityData.get("communityDesc");
-        boolean result = communityService.updateCommunity((long) communityId, communityTitle, CommunityCategory.valueOf(communityCategory), communityDesc);
+        String uploadedImageUrl = (String)updateCommunityData.get("uploadedImageUrl");
+        Long memberId = info.getId();
+        boolean result = communityService.updateCommunity(Long.parseLong(communityId), communityTitle, CommunityCategory.valueOf(communityCategory), communityDesc, uploadedImageUrl,memberId);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

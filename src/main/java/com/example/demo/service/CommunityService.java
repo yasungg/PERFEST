@@ -30,33 +30,27 @@ public class CommunityService {
     private final MemberRepository memberRepository;
 
     // 커뮤니티 게시글 전체 조회(GET)
-    public Page<CommunityDTO> getCommunityList(int pageNum, int pageSize) {
-        PageRequest pageRequest = PageRequest.of(pageNum, pageSize);
-        Page<Community> communityPage = communityRepository.findAll(pageRequest);
+    public List<CommunityDTO> getCommunityList() {
+        List<Community> communitys = communityRepository.findAll();
+        List<CommunityDTO> communityDTOS = new ArrayList<>();
 
-        List<CommunityDTO> communityDTOS = communityPage.getContent().stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
+        for(Community community : communitys) {
+            CommunityDTO communityDTO = new CommunityDTO();
+            communityDTO.setCommunityCategory(String.valueOf(community.getCommunityCategory()));
+            communityDTO.setCommunityId(community.getId());
+            communityDTO.setCommunityTitle(community.getCommunityTitle());
+            communityDTO.setCommunityDesc(community.getCommunityDesc());
+            communityDTO.setCommunityImgLink(community.getCommunityImgLink());
+            communityDTO.setLikeCount(community.getLikeCount());
+            communityDTO.setWrittenTime(community.getWrittenTime());
 
-        return new PageImpl<>(communityDTOS, pageRequest, communityPage.getTotalElements());
-    }
-
-    private CommunityDTO convertToDTO(Community community) {
-        CommunityDTO communityDTO = new CommunityDTO();
-        communityDTO.setCommunityCategory(String.valueOf(community.getCommunityCategory()));
-        communityDTO.setCommunityId(community.getId());
-        communityDTO.setCommunityTitle(community.getCommunityTitle());
-        communityDTO.setCommunityDesc(community.getCommunityDesc());
-        communityDTO.setCommunityImgLink(community.getCommunityImgLink());
-        communityDTO.setLikeCount(community.getLikeCount());
-        communityDTO.setWrittenTime(community.getWrittenTime());
-
-        Member member = community.getMember();
-        if (member != null) {
-            communityDTO.setNickname(member.getNickname());
+            Member member = community.getMember();
+            if (member != null) {
+                communityDTO.setNickname(member.getNickname());
+            }
+            communityDTOS.add(communityDTO);
         }
-
-        return communityDTO;
+        return communityDTOS;
     }
 
     // 커뮤니티 게시글 카테고리별 조회(GET)
@@ -217,13 +211,16 @@ public class CommunityService {
         return true;
     }
     // 커뮤니티 게시글 수정(POST)
-    public boolean updateCommunity(Long id, String communityTitle, CommunityCategory communityCategory, String communityDesc) {
+    public boolean updateCommunity(Long id, String communityTitle, CommunityCategory communityCategory, String communityDesc, String uploadedImageUrl,Long memberId) {
         Optional<Community> optionalCommunity = communityRepository.findById(id);
-        if (optionalCommunity.isPresent()) {
+        Optional<Member> optionalMember = memberRepository.findById(memberId);
+        if (optionalCommunity.isPresent() && optionalMember.isPresent()) {
             Community community = optionalCommunity.get();
+            Member member = optionalMember.get();
             community.setCommunityTitle(communityTitle);
             community.setCommunityCategory(communityCategory);
             community.setCommunityDesc(communityDesc);
+            community.setCommunityImgLink(uploadedImageUrl);
             community.setWrittenTime(LocalDateTime.now());
             communityRepository.save(community);
             return true;
@@ -273,21 +270,6 @@ public class CommunityService {
         }
         return communityDTOs;
     }
-
-//    // insert Dummy Data service for Community
-//    public Community createPost(CommunityDTO request){
-//        Member member = memberRepository.findById(request.getMemberId())
-//                .orElseThrow(() -> new IllegalArgumentException("해당 유저 없음"));
-//        CommunityDTO communityDTO = new CommunityDTO();
-//        communityDTO.setCommunityTitle(request.getCommunityTitle());
-//        communityDTO.setCommunityCategory(request.getCommunityCategory());
-//        communityDTO.setCommunityDesc(request.getCommunityDesc());
-//        communityDTO.setLikeCount(request.getLikeCount());
-//        communityDTO.setCommunityImgLink(request.getCommunityImgLink());
-//
-//        Community community = communityDTO.toEn
-//
-//    }
 }
 
 

@@ -22,10 +22,9 @@ public class AuthCommunityController {
 
     // 커뮤니티 게시글 전체 조회(GET)
     @GetMapping(value = "/getallboard")
-    public ResponseEntity<Page<CommunityDTO>> communityList(@RequestParam(defaultValue = "0") int pageNumber,
-                                                            @RequestParam(defaultValue = "10") int pageSize) {
-        Page<CommunityDTO> communityDTOPage = communityService.getCommunityList(pageNumber, pageSize);
-        return new ResponseEntity<>(communityDTOPage, HttpStatus.OK);
+    public ResponseEntity<List<CommunityDTO>> communityList() {
+        List<CommunityDTO> list = communityService.getCommunityList();
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
     // 커뮤니티 게시글 카테고리별 조회(GET)
     @GetMapping(value = "/getselectboard")

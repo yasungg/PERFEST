@@ -3,7 +3,6 @@ import styled from "@emotion/styled";
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../context/UserStore";
 import { formatDateForFestival } from "./DateStyle";
-import { useNavigate } from "react-router";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AddIcon from "@mui/icons-material/Add";
 import PlaceIcon from "@mui/icons-material/Place";
@@ -12,6 +11,8 @@ import DirectionsIcon from "@mui/icons-material/Directions";
 import AttractionsIcon from "@mui/icons-material/Attractions";
 import BusinessIcon from "@mui/icons-material/Business";
 import FestivalAPI from "../api/FestivalAPI";
+import MemberAPI from "../api/MemberAPI";
+import Modal from "../utils/Modal";
 
 const AdvertisementBox = styled.div`
   box-sizing: border-box;
@@ -27,6 +28,11 @@ const AdvertisementBox = styled.div`
   }
   .bold {
     font-weight: 600;
+  }
+  @media screen and (max-width: 376px) {
+    span {
+      font-size: 13px;
+    }
   }
 `;
 const MiniButton = styled.button`
@@ -63,6 +69,11 @@ const MiniButton = styled.button`
     .add-icon {
       transition: all 0.1s linear;
       left: 0;
+    }
+  }
+  @media screen and (max-width: 376px) {
+    .bold {
+      font-size: 13px;
     }
   }
 `;
@@ -111,6 +122,29 @@ const DetailHome = () => {
     useContext(UserContext);
   const [festivalDetail, setFestivalDetail] = useState([]);
 
+  const [showModal, setShowModal] = useState(false);
+
+
+
+  const handleAddToCalendar = async () => {
+    if (detailComponentValue) {
+      const festivalId = detailComponentValue; // detailComponentValue가 캘린더 ID
+      try {
+        const response = await MemberAPI.addCal(festivalId);
+        if (response.data) {
+          // console.log("캘린더에 추가되었습니다!");
+          setShowModal(true);
+        } else {
+          // console.log("추가 중 오류가 발생했습니다.");
+        }
+      } catch (error) {
+        // console.error("추가 중 오류가 발생했습니다.", error);
+      }
+    } else {
+      // console.log("추가할 축제 정보가 없습니다...");
+    }
+  };
+
   //카드를 클릭하면 해당 마커의 위치로 지도 위치를 이동시키기 위한 context 설정
   const setCenterMarker = (latitude, longitude) => {
     setCenterLatitude(latitude);
@@ -123,10 +157,9 @@ const DetailHome = () => {
     //상세정보 불러오기
     const getFestivalDetail = async () => {
       const response = await FestivalAPI.getFestivalByFestivalId(
-        detailComponentValue
+        detailComponentValue // festivalId
       )
         .then((result) => {
-          console.log(result.data);
           setFestivalDetail(result.data);
         })
         .catch((error) => {
@@ -142,7 +175,10 @@ const DetailHome = () => {
           <span className="bold">캘린더</span>
           <span>를 활용해 편리하게 축제일정을 관리하세요!</span>
         </div>
-        <MiniButton className="advertisement-button">
+        <MiniButton
+          className="advertisement-button"
+          onClick={handleAddToCalendar}
+        >
           <div className="icon-change">
             <CalendarMonthIcon
               className="calendar-icon"
@@ -164,10 +200,12 @@ const DetailHome = () => {
             </InfoIconBox>
             <InfoDescBox>
               <span style={{ fontSize: "15px" }}>{data.festivalDoro}</span>
-              <DirectionsIcon
-                className="direction-button"
-                onClick={() => setCenterMarker(data.wedo, data.kyungdo)}
-              />
+              {data.festivalDoro && (
+                <DirectionsIcon
+                  className="direction-button"
+                  onClick={() => setCenterMarker(data.wedo, data.kyungdo)}
+                />
+              )}
             </InfoDescBox>
           </InfoBox>
           <InfoBox>
@@ -175,7 +213,13 @@ const DetailHome = () => {
               <PlaceIcon style={{ color: "royalblue" }} />
             </InfoIconBox>
             <InfoDescBox>
-              <p>{data.festivalLocation}</p>
+              <span style={{ fontSize: "15px" }}>{data.festivalLocation}</span>
+              {data.festivalLocation && (
+                <DirectionsIcon
+                  className="direction-button"
+                  onClick={() => setCenterMarker(data.wedo, data.kyungdo)}
+                />
+              )}
             </InfoDescBox>
           </InfoBox>
           <InfoBox>
@@ -209,6 +253,9 @@ const DetailHome = () => {
           </InfoBox>
         </InfoBoxContainer>
       ))}
+        <Modal open={showModal} close={() => setShowModal(false)} confirm={() => {}}>
+           캘린더에 추가되었습니다!
+        </Modal>
     </Container>
   );
 };

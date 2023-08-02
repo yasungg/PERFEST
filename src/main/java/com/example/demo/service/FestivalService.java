@@ -3,9 +3,14 @@ package com.example.demo.service;
 import com.example.demo.dto.FestivalDTO;
 import com.example.demo.dto.FestivalNameBoxDTO;
 import com.example.demo.dto.FestivalTmpDTO;
+import com.example.demo.entity.Calender;
 import com.example.demo.entity.Festival;
+import com.example.demo.entity.FestivalImage;
+import com.example.demo.entity.Member;
 import com.example.demo.repository.CalenderRepository;
+import com.example.demo.repository.FestivalImageRepository;
 import com.example.demo.repository.FestivalRepository;
+import com.example.demo.repository.MemberRepository;
 import com.example.demo.repository.ReviewRepository;
 import com.example.demo.user.FestivalSpecification;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -26,6 +31,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -35,7 +41,9 @@ public class FestivalService {
     private final FestivalRepository festivalRepository;
     private final ReviewRepository reviewRepository;
     private final CalenderRepository calenderRepository;
+    private final FestivalImageRepository festivalImageRepository;
     private final ObjectMapper mapper;
+    private final MemberRepository memberRepository;
 
     public Boolean getFestivalInfo() throws IOException {
         StringBuilder urlBuilder = new StringBuilder("http://api.data.go.kr/openapi/tn_pubr_public_cltur_fstvl_api"); /*URL*/
@@ -270,7 +278,41 @@ public class FestivalService {
             festivalDTOS.add(festivalDTO);
         }
         return festivalDTOS;
-
+    }
+    public List<String> festivalImageLinks(Long festivalId) {
+        List<FestivalImage> repoResult = festivalImageRepository.findByFestivalId(festivalId);
+        List<String> imageLinks = new ArrayList<>();
+        for(FestivalImage result : repoResult) {
+            imageLinks.add(result.getFestivalImgLink());
+        }
+        return imageLinks;
     }
 
+    // 해당축제 내 일정 추가
+    public boolean addCalender(Long memberId, Long festivalId) {
+        // 사용자와 축제 정보 찾기
+        Optional<Member> memberOptional = memberRepository.findById(memberId);
+        Optional<Festival> festivalOptional = festivalRepository.findById(festivalId);
+
+        // 사용자 또는 축제가 없으면 false 반환
+        if (memberOptional.isEmpty() || festivalOptional.isEmpty()) {
+            return false;
+        }
+
+        // 사용자와 축제 정보를 가져옴
+        Member member = memberOptional.get();
+        Festival festival = festivalOptional.get();
+
+        // 캘린더 생성
+        Calender calender = new Calender();
+        calender.setMember(member);
+        calender.setFestival(festival);
+        calender.setLikedDate(LocalDateTime.now());
+
+        // 캘린더 정보를 DB에 저장
+        calenderRepository.save(calender);
+
+        // 캘린더 추가 성공 시 true 반환
+        return true;
+    }
 }

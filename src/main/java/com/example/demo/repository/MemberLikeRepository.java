@@ -8,5 +8,4 @@ import java.util.List;
 public interface MemberLikeRepository extends JpaRepository<MemberLike, Long> {
     Boolean existsByCommunityIdAndMemberId(Long communityId, Long memberId);
     Boolean existsByCommentIdAndMemberId(Long commentId, Long memberId);
-    Boolean existsByReviewIdAndMemberId(Long reviewId, Long memberId);
 }

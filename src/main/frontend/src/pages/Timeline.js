@@ -5,16 +5,12 @@ import HistoryItem from "./HistoryItem";
 import TimelineLoader from "./TimelineLoader";
 
 const TimelineWrap = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 500px;
-  height: 600px;
+  width: 100%;
+  height: 100%;
+  overflow-x: visible;
   overflow-y: scroll;
-  border: 1px solid #bbbbbb;
-  border-radius: 30px;
-  padding-top: 20px;
+  /* border: 1px solid #bbbbbb; */
+  /* border-radius: 30px; */
   background-color: #edf1f5;
 `;
 
@@ -31,9 +27,9 @@ const Button = styled.button`
 
 const Timelines = styled.ul`
   list-style: none;
-  width: 400px;
+  width: calc(100% - 16px);
   height: fit-content;
-  margin: 0 auto;
+  /* margin: 0 auto; */
   padding: 0;
   overflow-y: hidden;
 `;

@@ -18,6 +18,7 @@ const HeaderContainer = styled.div`
   height: 58px;
   background: white;
   border: none;
+  z-index: 6;
   @media screen and (max-width: 767px) {
     justify-content: flex-start;
     position: fixed;

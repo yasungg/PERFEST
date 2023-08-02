@@ -56,7 +56,7 @@ public class Festival {
     @Column(name = "festival_tel")
     private String festivalTel;
 
-    @Column(name = "festival_img")
+    @Column(name = "festival_img", length = 500)
     private String festivalImg;
 
     @Builder

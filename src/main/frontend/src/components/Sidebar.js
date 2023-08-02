@@ -4,7 +4,6 @@ import { UserContext } from "../context/UserStore";
 import styled from "@emotion/styled";
 import PerfestLogoWhite from "../images/PERFEST LOGO WHITE.png";
 import { useNavigate } from "react-router-dom";
-import MemberAPI from "../api/MemberAPI";
 import LoginAPI from "../api/LoginAPI";
 const SidebarContainer = styled.div`
   box-sizing: border-box;
@@ -12,7 +11,7 @@ const SidebarContainer = styled.div`
   flex-direction: column;
   position: fixed;
   width: 300px;
-  height: 100vh;
+  height: 100%;
   top: 0;
   right: ${(props) => props.right};
   background: #222;
@@ -24,6 +23,9 @@ const SidebarContainer = styled.div`
   transition: all 0.5s ease-out;
   @media screen and (min-width: 1025px) {
     display: none;
+  }
+  @media screen and (max-width: 767px) {
+    position: fixed;
   }
 `;
 const SidebarXbox = styled.div`
@@ -129,16 +131,24 @@ const LogoutBtn = styled.button`
   justify-content: center;
   align-items: center;
   align-self: flex-end;
-  width: 200px;
-  height: 80%;
-  border-radius: 5px;
+  width: 100%;
+  min-height: 40px;
   outline: none;
   border: none;
   margin: 0 auto;
   background: #222;
   color: white;
-  font-weight: 300px;
+  font-weight: 600;
   user-select: none;
+  &:hover {
+    cursor: pointer;
+    color: #222;
+    background: white;
+  }
+  &:hover .sidenavispan {
+    transform: translateX(-5px);
+    transition: 0.2s ease-in-out;
+  }
 `;
 const SidebarBodyContainer = styled.div`
   box-sizing: border-box;

@@ -3,8 +3,10 @@ import styled from "styled-components";
 import MemberAPI from "../api/MemberAPI";
 
 const History = styled.li`
+  box-sizing: border-box;
   display: flex;
-  flex-direction: row;
+  width: 100%;
+  flex-direction: column;
   margin: 5px 0;
   padding: 15px;
   background-color: ${(props) => (props.clicked ? "#fff" : "#f6f6f6")};
@@ -14,9 +16,11 @@ const History = styled.li`
   .content_box {
     padding-left: 10px;
     display: inline-block;
+    width: 100%;
   }
   .title {
     display: block;
+    width: 100%;
   }
   .time {
     font-size: 12px;

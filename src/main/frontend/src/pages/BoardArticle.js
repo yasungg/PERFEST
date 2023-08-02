@@ -32,6 +32,7 @@ const UserInfo = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-top: 20px;
+  margin-bottom: 20px;
   width: 100%;
 `;
 const BoardNickname = styled.div`
@@ -45,6 +46,7 @@ const BoardDate = styled.div`
 `;
 const BoardDesc = styled.div`
   display: flex;
+  flex-direction: column;
   margin-top: 20px;
   height: 300px;
   width: 97%;
@@ -54,6 +56,20 @@ const BoardDesc = styled.div`
   font-size: 16px;
   color: #333;
   overflow: auto;
+`;
+
+const BoardImg = styled.div`
+  display: flex;
+  margin-top: 10px;
+`;
+
+const Image = styled.img`
+  max-height: 200px;
+  max-width: 100%;
+`;
+
+const Text = styled.p`
+  margin: 10px 0;
 `;
 const CommentInfo = styled.div`
   display: flex;
@@ -71,6 +87,7 @@ const CommentWrite = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  margin-bottom: 10px;
   .commentwrite {
     width: 85%;
     padding: 8px;
@@ -95,6 +112,7 @@ const CommentWriteButton = styled.button`
 const CommentDesc = styled.div`
   display: flex;
   flex-direction: column;
+  margin-bottom: 5px;
 `;
 const Comment = styled.div`
   margin-top: 5px;
@@ -166,7 +184,7 @@ const CommentReplyWrite = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  margin-top: 10px;
+  margin-top: 5px;
 
   .commentreply {
     width: 85%;
@@ -194,7 +212,7 @@ const CommentReplyWriteButton = styled.button`
   }
 `;
 const ReplyCommentDesc = styled.div`
-  margin-top: 5px;
+  margin-top: 10px;
   margin-left: 10px;
 `;
 const ReplyCommentIcon = styled.div``;
@@ -257,6 +275,8 @@ const BoardArticle = () => {
   const [openModal, setOpenModal] = useState(false);
   const [modalMsg, setModalMsg] = useState("");
   const [replyUpdateTrigger, setReplyUpdateTrigger] = useState(false);
+  const [likeCount, setLikeCount] = useState("");
+  const [likeCountTrigger, setLikeCountTrigger] = useState(false);
   const {isLogin} = useContext(UserContext);
   
   const confirmBtn = () => {
@@ -276,7 +296,6 @@ const BoardArticle = () => {
       return;
     }
     const response = await CommentAPI.CommentWrite(inputComment, communityId);
-    console.log(response.data);
     setCommentUpdateTrigger((prev) => !prev);
     setInputComment(""); // 댓글 작성 후 inputComment 상태를 초기화하여 textarea의 내용을 지움
   };
@@ -292,25 +311,24 @@ const BoardArticle = () => {
   useEffect(() => {
     const getBoardArticle = async () => {
       const response = await BoardAPI.GetBoardArticle(communityId);
-      console.log(response.data);
       setBoardArticle(response.data);
+      setLikeCount(response.data[0].likeCount)
     };
     getBoardArticle();
-  }, [communityId]);
+  }, [communityId,likeCountTrigger]);
   // 게시판 공감하기 눌렀을 때
   const onClickBoardLike = async () => {
     try {
       const response = await BoardAPI.checkBoardLike(communityId);
       if (response.data === false) {
         // 중복 좋아요 방지 실패 시
-        console.log("이미 공감한 게시글입니다.");
         setOpenModal(true);
         setModalMsg("이미 공감한 게시글입니다.");
         return;
       }
       // 중복 체크를 통과한 경우, 실제로 좋아요를 추가
       const likeResponse = await BoardAPI.AddBoardLike(communityId);
-      console.log(likeResponse.data);
+      setLikeCountTrigger((prev) => !prev);
     } catch (error) {
       console.error("좋아요 추가에 실패했습니다.", error);
     }
@@ -321,14 +339,12 @@ const BoardArticle = () => {
       const response = await CommentAPI.checkCommentLike(commentId);
       if (response.data === false) {
         // 중복 좋아요 방지 실패 시
-        console.log("이미 공감한 댓글입니다.");
         setOpenModal(true);
         setModalMsg("이미 공감한 댓글입니다.");
         return;
       }
       // 중복 체크를 통과한 경우, 실제로 좋아요를 추가
       const likeResponse = await CommentAPI.AddCommentLike(commentId);
-      console.log(likeResponse.data);
     } catch (error) {
       console.error("댓글 좋아요 추가에 실패했습니다.", error);
     }
@@ -337,7 +353,6 @@ const BoardArticle = () => {
   useEffect(() => {
     const getBoardComment = async () => {
       const response = await CommentAPI.GetComment(communityId);
-      console.log(response.data);
       setCommentData(response.data);
     };
     getBoardComment();
@@ -369,7 +384,6 @@ const BoardArticle = () => {
       commentId,
       replyComment
     );
-    console.log(response.data);
     setReplyCommentInput((prevMap) => {
       const newMap = new Map(prevMap);
       newMap.delete(commentId); // 대댓글 작성 후 해당 댓글의 대댓글 내용 삭제
@@ -391,7 +405,6 @@ const BoardArticle = () => {
   useEffect(() => {
     const getReplyCommentData = async (commentId) => {
       const response = await CommentAPI.GetReplyComment(commentId);
-      console.log(response.data);
       setReplyCommentData((prevData) => ({
         ...prevData,
         [commentId]: response.data,
@@ -418,12 +431,14 @@ const BoardArticle = () => {
               </UserInfo>
               <hr></hr>
               <BoardDesc>
-                {community.communityDesc}
-                <img
-                  className="community-img"
-                  src={community.communityImgLink}
-                  alt=""
-                />
+                <Text>{community.communityDesc}</Text>
+                <BoardImg>
+                  <Image
+                    className="community-img"
+                    src={community.communityImgLink}
+                    alt=""
+                  />
+                </BoardImg>
               </BoardDesc>
               <BoardLike>
                 {isLogin ?
@@ -434,7 +449,7 @@ const BoardArticle = () => {
                 </button>)}
                 <div className="board-like-count">
                   <Heart2 />
-                  {community.likeCount}
+                  {likeCount}
                 </div>
               </BoardLike>
             </BoardInfo>
@@ -574,6 +589,7 @@ const BoardArticle = () => {
                     </CommentReplyWriteButton>)}
                   </CommentReplyWrite>
                 )}
+                <br></br>
                 <hr></hr>
               </Comment>
             </CommentDesc>
