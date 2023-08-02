@@ -204,7 +204,7 @@ const FestivalSearchCategory = ({setPropsData}) => {
         prevSelected.filter((location) => location !== id)
       );
     }
-	}
+  }
 
 	const setStartDateEvent = (e) => {
 		setSelectedStartDate(e.target.value);
