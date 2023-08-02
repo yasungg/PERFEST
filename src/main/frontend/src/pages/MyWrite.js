@@ -221,7 +221,6 @@ function MyWrite() {
               <Content>좋아요: {memberComment[commentPage - 1].commentLikeCount}</Content>
               <Content>작성시간: {formatTime(memberComment[commentPage - 1].commentWrittenTime)}</Content>
               <Buttons>
-                <button className='button1'>수정</button>
                 <button className='button2' onClick={() => deleteSelectComment(memberComment[commentPage - 1].commentId)}>삭제</button>
                 </Buttons>
             </Item>

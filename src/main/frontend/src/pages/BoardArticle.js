@@ -296,7 +296,6 @@ const BoardArticle = () => {
       return;
     }
     const response = await CommentAPI.CommentWrite(inputComment, communityId);
-    console.log(response.data);
     setCommentUpdateTrigger((prev) => !prev);
     setInputComment(""); // 댓글 작성 후 inputComment 상태를 초기화하여 textarea의 내용을 지움
   };
@@ -312,7 +311,6 @@ const BoardArticle = () => {
   useEffect(() => {
     const getBoardArticle = async () => {
       const response = await BoardAPI.GetBoardArticle(communityId);
-      console.log(response.data);
       setBoardArticle(response.data);
       setLikeCount(response.data[0].likeCount)
     };
@@ -324,14 +322,12 @@ const BoardArticle = () => {
       const response = await BoardAPI.checkBoardLike(communityId);
       if (response.data === false) {
         // 중복 좋아요 방지 실패 시
-        console.log("이미 공감한 게시글입니다.");
         setOpenModal(true);
         setModalMsg("이미 공감한 게시글입니다.");
         return;
       }
       // 중복 체크를 통과한 경우, 실제로 좋아요를 추가
       const likeResponse = await BoardAPI.AddBoardLike(communityId);
-      console.log(likeResponse.data);
       setLikeCountTrigger((prev) => !prev);
     } catch (error) {
       console.error("좋아요 추가에 실패했습니다.", error);
@@ -343,14 +339,12 @@ const BoardArticle = () => {
       const response = await CommentAPI.checkCommentLike(commentId);
       if (response.data === false) {
         // 중복 좋아요 방지 실패 시
-        console.log("이미 공감한 댓글입니다.");
         setOpenModal(true);
         setModalMsg("이미 공감한 댓글입니다.");
         return;
       }
       // 중복 체크를 통과한 경우, 실제로 좋아요를 추가
       const likeResponse = await CommentAPI.AddCommentLike(commentId);
-      console.log(likeResponse.data);
     } catch (error) {
       console.error("댓글 좋아요 추가에 실패했습니다.", error);
     }
@@ -359,7 +353,6 @@ const BoardArticle = () => {
   useEffect(() => {
     const getBoardComment = async () => {
       const response = await CommentAPI.GetComment(communityId);
-      console.log(response.data);
       setCommentData(response.data);
     };
     getBoardComment();
@@ -391,7 +384,6 @@ const BoardArticle = () => {
       commentId,
       replyComment
     );
-    console.log(response.data);
     setReplyCommentInput((prevMap) => {
       const newMap = new Map(prevMap);
       newMap.delete(commentId); // 대댓글 작성 후 해당 댓글의 대댓글 내용 삭제
@@ -413,7 +405,6 @@ const BoardArticle = () => {
   useEffect(() => {
     const getReplyCommentData = async (commentId) => {
       const response = await CommentAPI.GetReplyComment(commentId);
-      console.log(response.data);
       setReplyCommentData((prevData) => ({
         ...prevData,
         [commentId]: response.data,

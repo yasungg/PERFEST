@@ -266,7 +266,6 @@ const Board = () => {
   const BoardGetAll = async () => {
     const rsp = await BoardAPI.BoardGet();
     if (rsp.status === 200) setBoardList(rsp.data);
-    console.log(rsp.data);
   };
   
   useEffect(() => {
@@ -278,9 +277,7 @@ const Board = () => {
     const onClickCategory = async() => {
       if (selectCategory) {
         const rsp = await BoardAPI.BoardGetByCategory(selectCategory);
-        console.log(selectCategory);
         if (rsp.status === 200) setBoardList(rsp.data);
-        console.log(rsp.data);
       }
     };
     onClickCategory();
@@ -306,8 +303,6 @@ const Board = () => {
     if(selectCategory) {
       const rsp = await BoardAPI.BoardGetByNewest(selectCategory);
       if (rsp.status === 200) setBoardList(rsp.data);
-      console.log(selectCategory);
-      console.log(rsp.data);
     } else {
       const rsp = await BoardAPI.BoardGetAllByNewest();
       setBoardList(rsp.data);
@@ -318,7 +313,6 @@ const Board = () => {
     if(selectCategory) {
       const rsp = await BoardAPI.BoardGetByLikest(selectCategory);
       if (rsp.status === 200) setBoardList(rsp.data);
-      console.log(rsp.data);
     } else {
       const rsp = await BoardAPI.BoardGetAllByLikest();
       setBoardList(rsp.data);
