@@ -500,7 +500,7 @@ const MemberAPI = {
       "Bearer " + window.localStorage.getItem("accessToken");
     console.log(Authorization);
     return await axios
-      .get(`/member/noticeList`, {
+      .get(`/notice/noticeList`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: Authorization,

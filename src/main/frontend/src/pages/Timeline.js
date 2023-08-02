@@ -49,7 +49,7 @@ const Timeline = () => {
           }
         })
         .catch((error) => {
-          console.error("", error);
+          console.error("에러", error);
         });
     };
     fetchNoticeInfo();
@@ -65,7 +65,7 @@ const Timeline = () => {
             <li className="date_block">
               <span className="date"> 알람  </span>
             </li>
-            {noticeInfo.map((notice, key) => (
+            {noticeInfo && noticeInfo.map((notice, key) => (
               <HistoryItem key={key} data={notice} />
             ))}
           </Timelines>
