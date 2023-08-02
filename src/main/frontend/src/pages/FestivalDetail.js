@@ -223,6 +223,11 @@ const NameDesc = styled.div`
     margin-bottom: 8px;
     user-select: none;
   }
+  .festival-desc-box {
+    display: flex;
+    width: 90%;
+    justify-content: center;
+  }
   .festival-desc {
     width: auto;
     font-size: 12px;
@@ -395,9 +400,11 @@ const FestivalDetail = () => {
             <span className="festival-title">
               {festivalNameBox.festivalName}
             </span>
-            <span className="festival-desc">
-              {festivalNameBox.festivalDesc}
-            </span>
+            <div className="festival-desc-box">
+              <span className="festival-desc">
+                {festivalNameBox.festivalDesc}
+              </span>
+            </div>
           </NameDesc>
           <div className="festival-like">
             <FavoriteIcon

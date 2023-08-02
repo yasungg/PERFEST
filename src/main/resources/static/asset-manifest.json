@@ -1,21 +1,20 @@
 {
   "files": {
-    "main.css": "/static/css/main.630c4030.chunk.css",
-    "main.js": "/static/js/main.2fc3263c.chunk.js",
-    "main.js.map": "/static/js/main.2fc3263c.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.bbafc8c6.js",
-    "runtime-main.js.map": "/static/js/runtime-main.bbafc8c6.js.map",
+    "main.css": "/static/css/main.cac91446.chunk.css",
+    "main.js": "/static/js/main.a07da331.chunk.js",
+    "main.js.map": "/static/js/main.a07da331.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.42ae31f2.js",
+    "runtime-main.js.map": "/static/js/runtime-main.42ae31f2.js.map",
     "static/css/2.65f8c46c.chunk.css": "/static/css/2.65f8c46c.chunk.css",
-    "static/js/2.44ff2537.chunk.js": "/static/js/2.44ff2537.chunk.js",
-    "static/js/2.44ff2537.chunk.js.map": "/static/js/2.44ff2537.chunk.js.map",
-    "static/js/3.07d0f176.chunk.js": "/static/js/3.07d0f176.chunk.js",
-    "static/js/3.07d0f176.chunk.js.map": "/static/js/3.07d0f176.chunk.js.map",
+    "static/js/2.8d27d08e.chunk.js": "/static/js/2.8d27d08e.chunk.js",
+    "static/js/2.8d27d08e.chunk.js.map": "/static/js/2.8d27d08e.chunk.js.map",
+    "static/js/3.15bed112.chunk.js": "/static/js/3.15bed112.chunk.js",
+    "static/js/3.15bed112.chunk.js.map": "/static/js/3.15bed112.chunk.js.map",
     "index.html": "/index.html",
     "static/css/2.65f8c46c.chunk.css.map": "/static/css/2.65f8c46c.chunk.css.map",
-    "static/css/main.630c4030.chunk.css.map": "/static/css/main.630c4030.chunk.css.map",
-    "static/js/2.44ff2537.chunk.js.LICENSE.txt": "/static/js/2.44ff2537.chunk.js.LICENSE.txt",
+    "static/css/main.cac91446.chunk.css.map": "/static/css/main.cac91446.chunk.css.map",
+    "static/js/2.8d27d08e.chunk.js.LICENSE.txt": "/static/js/2.8d27d08e.chunk.js.LICENSE.txt",
     "static/media/PERFEST LOGO WHITE.7c98aa0a.png": "/static/media/PERFEST LOGO WHITE.7c98aa0a.png",
-    "static/media/PerfestLoading.9f51f845.gif": "/static/media/PerfestLoading.9f51f845.gif",
     "static/media/cancel.7e065d07.png": "/static/media/cancel.7e065d07.png",
     "static/media/check.37060433.png": "/static/media/check.37060433.png",
     "static/media/loginBackground.7af03c69.jpg": "/static/media/loginBackground.7af03c69.jpg",
@@ -25,10 +24,10 @@
     "static/media/test.3a1119a4.jpg": "/static/media/test.3a1119a4.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.bbafc8c6.js",
+    "static/js/runtime-main.42ae31f2.js",
     "static/css/2.65f8c46c.chunk.css",
-    "static/js/2.44ff2537.chunk.js",
-    "static/css/main.630c4030.chunk.css",
-    "static/js/main.2fc3263c.chunk.js"
+    "static/js/2.8d27d08e.chunk.js",
+    "static/css/main.cac91446.chunk.css",
+    "static/js/main.a07da331.chunk.js"
   ]
 }

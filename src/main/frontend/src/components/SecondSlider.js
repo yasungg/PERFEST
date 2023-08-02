@@ -3,26 +3,29 @@ import styled from "styled-components";
 import React, { useState, useEffect } from "react";
 
 const Slider2 = styled.div`
+  box-sizing: border-box;
   display: flex;
   position: relative;
   width: 100%;
   height: 100vh;
-  min-height: 100vh;
   background: transparent;
   overflow: hidden;
+  border: none;
 `;
 const Video = styled.video`
   position: absolute;
-  width: auto;
+  width: 100%;
   height: 100vh;
-  min-height: 100vh;
   border: none;
   outline: none;
-  overflow: hidden;
   z-index: 0;
-  @media screen and (min-width: 1441px) {
+  @media screen and (min-width: 1440px) {
     width: auto;
-    height: 100vh;
+    min-height: 100vh;
+    height: 120vh;
+  }
+  @media screen and (max-width: 1439px) {
+    width: auto;
   }
 `;
 const SpanBox = styled.div`

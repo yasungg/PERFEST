@@ -48,6 +48,10 @@ const VideoContainer = styled.div`
       width: 240px;
     }
   }
+  @media screen and (min-width: 1441px) {
+    width: auto;
+    height: auto;
+  }
 `;
 const Video = styled.video`
   width: 100%;
@@ -56,10 +60,12 @@ const Video = styled.video`
   border: none;
   outline: none;
   z-index: 0;
-  overflow: hidden;
-  @media screen and (max-width: 1441px) {
-    width: auto;
+  @media screen and (min-width: 1441px) {
+    width: 100vw;
     height: 100vh;
+  }
+  @media screen and (max-width: 1440px) {
+    width: auto;
   }
 `;
 const TMPbox = styled.div`
@@ -421,11 +427,18 @@ const Home = () => {
             <span className="desc2">모든 정보들에 간편하게 접근하세요.</span>
           </div>
           <ResponsiveBtnBox>
-            <DescButtons className="cover-btn" background="#222">
+            <DescButtons
+              className="cover-btn"
+              background="#222"
+              onClick={() => navigate("/pages/festival")}
+            >
               <span style={{ color: "white" }}>need more information?</span>
               <NavigateNextIcon style={{ color: "white" }} />
             </DescButtons>
-            <DescButtons background="white">
+            <DescButtons
+              background="white"
+              onClick={() => navigate("/pages/festival")}
+            >
               <span>need more information?</span>
               <NavigateNextIcon />
             </DescButtons>
@@ -449,11 +462,18 @@ const Home = () => {
               </span>
             </div>
             <ResponsiveBtnBox>
-              <DescButtons className="cover-btn" background="#222">
+              <DescButtons
+                className="cover-btn"
+                background="#222"
+                onClick={() => navigate("/pages/board")}
+              >
                 <span style={{ color: "white" }}>need more information?</span>
                 <NavigateNextIcon style={{ color: "white" }} />
               </DescButtons>
-              <DescButtons background="white">
+              <DescButtons
+                background="white"
+                onClick={() => navigate("/pages/board")}
+              >
                 <span>need more information?</span>
                 <NavigateNextIcon />
               </DescButtons>
