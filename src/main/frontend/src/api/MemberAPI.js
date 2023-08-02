@@ -5,7 +5,6 @@ const MemberAPI = {
   getMemberInfo: async () => {
     const Authorization =
       "Bearer " + window.localStorage.getItem("accessToken");
-    console.log(Authorization);
     return await axios
       .get(`/member/email`, {
         headers: {
@@ -27,7 +26,6 @@ const MemberAPI = {
   updateNickName: async (nickname) => {
     const Authorization =
       "Bearer " + window.localStorage.getItem("accessToken");
-    console.log(Authorization);
     const updateData = {
       nickname: nickname,
     };
@@ -52,7 +50,6 @@ const MemberAPI = {
   nickNameRegCheck: async (nicknameCheck) => {
     const Authorization =
       "Bearer " + window.localStorage.getItem("accessToken");
-    console.log(Authorization);
     return await axios
       .get(`/member/nicknameCheck?nickname=${nicknameCheck}`, {
         headers: {
@@ -74,7 +71,6 @@ const MemberAPI = {
   deleteMem: async () => {
     const Authorization =
       "Bearer " + window.localStorage.getItem("accessToken");
-    console.log(Authorization);
     const deleteMem = {};
     return await axios
       .post("/member/del", deleteMem, {
@@ -99,7 +95,6 @@ const MemberAPI = {
   updateAdd: async (address) => {
     const Authorization =
       "Bearer " + window.localStorage.getItem("accessToken");
-    console.log(Authorization);
     const updateData = {
       address: address,
     };
@@ -124,7 +119,6 @@ const MemberAPI = {
   addRegCheck: async (address) => {
     const Authorization =
       "Bearer " + window.localStorage.getItem("accessToken");
-    console.log(Authorization);
     return await axios
       .get(`/member/addressCheck?address=${address}`, {
         headers: {
@@ -149,7 +143,6 @@ const MemberAPI = {
     };
     const Authorization =
     "Bearer " + window.localStorage.getItem("accessToken");
-    console.log(Authorization);
     return await axios.post("/member/updateImg", updateData,{
       headers: {
         "Content-Type": "application/json",
@@ -169,7 +162,6 @@ const MemberAPI = {
   getProfileImg: async () => {
     const Authorization =
     "Bearer " + window.localStorage.getItem("accessToken");
-  console.log(Authorization);
   return await axios
     .get(`/member/getprofileimage`, {
       headers: {
@@ -190,7 +182,6 @@ const MemberAPI = {
   getMemberNickName: async () => {
     const Authorization =
     "Bearer " + window.localStorage.getItem("accessToken");
-  console.log(Authorization);
   return await axios
   .get(`/member/getnickname`, {
     headers: {
@@ -211,7 +202,6 @@ const MemberAPI = {
   getMyWrite: async () => {
     const Authorization =
       "Bearer " + window.localStorage.getItem("accessToken");
-    console.log(Authorization);
     return await axios
       .get(`/member/communities`, {
         headers: {
@@ -233,7 +223,6 @@ const MemberAPI = {
   delMyWrite: async () => {
     const Authorization =
       "Bearer " + window.localStorage.getItem("accessToken");
-    console.log(Authorization);
     return await axios
       .delete(`/member/deleteMyCommunities`, {
         headers: {
@@ -255,7 +244,6 @@ const MemberAPI = {
   deleteCommunitySelection: async (communityId) => {
     const Authorization =
       "Bearer " + window.localStorage.getItem("accessToken");
-    console.log(Authorization);
     return await axios
       .delete(`/member/delCommunity?communityId=${communityId}`, {
         headers: {
@@ -277,7 +265,6 @@ const MemberAPI = {
   getComment: async () => {
     const Authorization =
       "Bearer " + window.localStorage.getItem("accessToken");
-    console.log(Authorization);
     return await axios
       .get(`/member/comments`, {
         headers: {
@@ -299,7 +286,6 @@ const MemberAPI = {
   delComment: async () => {
     const Authorization =
       "Bearer " + window.localStorage.getItem("accessToken");
-    console.log(Authorization);
     return await axios
       .delete(`/member/deleteMyComments`, {
         headers: {
@@ -321,7 +307,6 @@ const MemberAPI = {
   deleteCommentSelection: async (commentId) => {
     const Authorization =
       "Bearer " + window.localStorage.getItem("accessToken");
-    console.log(Authorization);
     return await axios
       .delete(`/member/delComment?commentId=${commentId}`, {
         headers: {
@@ -343,7 +328,6 @@ const MemberAPI = {
   getPayment: async () => {
     const Authorization =
       "Bearer " + window.localStorage.getItem("accessToken");
-    console.log(Authorization);
     return await axios
       .get(`/member/payments`, {
         headers: {
@@ -365,7 +349,6 @@ const MemberAPI = {
   myRichRanking: async () => {
     const Authorization =
       "Bearer " + window.localStorage.getItem("accessToken");
-    console.log(Authorization);
     return await axios
       .get(`/member/ranking`, {
         headers: {
@@ -386,7 +369,6 @@ const MemberAPI = {
   myBadgeRanking: async () => {
     const Authorization =
       "Bearer " + window.localStorage.getItem("accessToken");
-    console.log(Authorization);
     return await axios
       .get(`/member/ranking/badges`, {
         headers: {
@@ -408,7 +390,6 @@ const MemberAPI = {
   getReview: async () => {
     const Authorization =
       "Bearer " + window.localStorage.getItem("accessToken");
-    console.log(Authorization);
     return await axios
       .get(`/member/reviews`, {
         headers: {
@@ -430,7 +411,6 @@ const MemberAPI = {
   delReview: async () => {
     const Authorization =
       "Bearer " + window.localStorage.getItem("accessToken");
-    console.log(Authorization);
     return await axios
       .delete(`/member/deleteMyReview`, {
         headers: {
@@ -452,7 +432,6 @@ const MemberAPI = {
   deleteReviewSelection: async (reviewId) => {
     const Authorization =
       "Bearer " + window.localStorage.getItem("accessToken");
-    console.log(Authorization);
     return await axios
       .delete(`/member/delReview?reviewId=${reviewId}`, {
         headers: {
@@ -474,7 +453,6 @@ const MemberAPI = {
   getReservation: async () => {
     const Authorization =
       "Bearer " + window.localStorage.getItem("accessToken");
-    console.log(Authorization);
     return await axios
       .get(`/member/activities`, {
         headers: {
@@ -498,7 +476,6 @@ const MemberAPI = {
   getNotice: async () => {
     const Authorization =
       "Bearer " + window.localStorage.getItem("accessToken");
-    console.log(Authorization);
     return await axios
       .get(`/notice/noticeList`, {
         headers: {
@@ -518,7 +495,6 @@ const MemberAPI = {
   Name: async () => {
     const Authorization =
       "Bearer " + window.localStorage.getItem("accessToken");
-    console.log(Authorization);
 
     return await axios
       .get(`/member/get-name`, {
@@ -541,7 +517,6 @@ const MemberAPI = {
   getCalendar: async () => {
     const Authorization =
       "Bearer " + window.localStorage.getItem("accessToken");
-    console.log(Authorization);
     return await axios
       .get(`/member/calender`, {
         headers: {
@@ -563,7 +538,6 @@ const MemberAPI = {
   deleteCalender: async (calenderId) => {
     const Authorization =
       "Bearer " + window.localStorage.getItem("accessToken");
-    console.log(Authorization);
     return await axios
       .delete(`/member/delCalender?calenderId=${calenderId}`, {
         headers: {
@@ -585,7 +559,6 @@ const MemberAPI = {
   deleteAllCalender: async () => {
     const Authorization =
       "Bearer " + window.localStorage.getItem("accessToken");
-    console.log(Authorization);
     return await axios
       .delete("/member/delAllCalender", {
         headers: {
@@ -607,7 +580,6 @@ const MemberAPI = {
   addCal: async(festivalId) => {
     const Authorization =
       "Bearer " + window.localStorage.getItem("accessToken");
-    console.log(Authorization);
     const updateData = {
       festivalId: festivalId,
     };
