@@ -95,14 +95,12 @@ const Ranking = () => {
 
   const getRichRanking = async () => {
     const response = await RankingAPI.GetRichRanking();
-    console.log(response.data);
     setRichRanking(response.data);
     setGetBadgeRankingClicked(false);
   };
 
   const getBadgeRanking = async () => {
     const response = await RankingAPI.GetBadgeRanking();
-    console.log(response.data);
     setBadgeRanking(response.data);
     setGetBadgeRankingClicked(true);
   };
