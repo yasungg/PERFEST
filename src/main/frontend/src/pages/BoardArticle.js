@@ -10,13 +10,22 @@ import { formatDate } from "../components/DateStyle";
 import { GoHeart } from "react-icons/go";
 import { FaHeart } from "react-icons/fa";
 import { MdSubdirectoryArrowRight } from "react-icons/md";
+import Sidebar from "../components/Sidebar";
 import Modal from "../utils/Modal";
 import Header from "../components/Header";
+import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
+
 const Title = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 50px;
+  margin: 48px 0 48px 0;
+  @media screen and (max-width: 769px) {
+    h1 {
+      font-size: 24px;
+    }
+    margin: 24px 0 24px 0;
+  }
 `;
 const BoardInfo = styled.div``;
 const BoardTitle = styled.div`
@@ -26,6 +35,9 @@ const BoardTitle = styled.div`
   font-size: 24px;
   font-weight: bold;
   color: #333;
+  @media screen and (max-width: 769px) {
+    font-size: 18px;
+  }
 `;
 const UserInfo = styled.div`
   display: flex;
@@ -39,23 +51,34 @@ const BoardNickname = styled.div`
   font-weight: bold;
   color: #333;
   font-size: 18px;
+  @media screen and (max-width: 769px) {
+    font-size: 14px;
+  }
 `;
 const BoardDate = styled.div`
   color: #666;
   font-size: 14px;
+  @media screen and (max-width: 769px) {
+    font-size: 12px;
+  }
 `;
 const BoardDesc = styled.div`
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   margin-top: 20px;
-  height: 300px;
-  width: 97%;
+  height: auto;
+  min-height: 300px;
+  width: 100%;
   border: 1px solid #ccc;
   border-radius: 4px;
   padding: 16px;
   font-size: 16px;
   color: #333;
   overflow: auto;
+  @media screen and (max-width: 769px) {
+    width: 100%;
+  }
 `;
 
 const BoardImg = styled.div`
@@ -64,7 +87,8 @@ const BoardImg = styled.div`
 `;
 
 const Image = styled.img`
-  max-height: 200px;
+  width: 100%;
+  max-height: 100%;
   max-width: 100%;
 `;
 
@@ -78,41 +102,73 @@ const CommentInfo = styled.div`
   width: 100%;
 `;
 const CommentCount = styled.div`
-  font-size: 16px;
-  margin-top: 3px;
-  margin-bottom: 3px;
+  font-size: 14px;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  @media screen and (max-width: 769px) {
+    font-size: 12px;
+    margin-top: 8px;
+    margin-bottom: 4px;
+  }
 `;
 const CommentWrite = styled.div`
+  box-sizing: border-box;
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
   margin-bottom: 10px;
+  border: none;
+  border-radius: 10px;
+  padding: 8px;
+  background: #f1f1f1;
   .commentwrite {
-    width: 85%;
+    box-sizing: border-box;
+    width: 90%;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 14px;
     resize: none;
+    &:focus {
+      outline: none;
+    }
+  }
+  @media screen and (max-width: 769px) {
+    flex-direction: column;
+    justify-content: flex-start;
+    background: none;
+    padding: 0;
+    .commentwrite {
+      width: 100%;
+      padding: 4px;
+    }
   }
 `;
 const CommentWriteButton = styled.button`
-  width: 10%;
+  width: 48px;
   padding: 8px;
   background-color: #f1f1f1;
   border: none;
   border-radius: 4px;
   font-weight: bold;
-  cursor: pointer;
-  &:hover {
-    background-color: #e0e0e0;
+  margin-right: 36px;
+  .comment-button-span {
+    transition: all 0.1s ease-in;
+  }
+  &:hover .comment-button-span {
+    transform: translateY(-8px);
+    cursor: pointer;
+  }
+  @media screen and (max-width: 769px) {
+    align-self: flex-end;
+    margin: 8px 0 0 0;
   }
 `;
 const CommentDesc = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 5px;
+  margin: 4px 0 4px 0;
 `;
 const Comment = styled.div`
   margin-top: 5px;
@@ -124,12 +180,12 @@ const CommentHead = styled.div`
   align-items: center;
 `;
 const CommentNickName = styled.div`
-  font-size: 20px;
+  font-size: 16px;
   font-weight: bold;
   color: #333;
 `;
 const CommentWrittenTime = styled.div`
-  font-size: 14px;
+  font-size: 12px;
   color: #666;
   margin-left: 10px;
 `;
@@ -172,7 +228,8 @@ const CommentArr = styled.div`
   align-items: center;
 `;
 const CommentBody = styled.div`
-  font-size: 17px;
+  margin-top: 8px;
+  font-size: 14px;
   color: #333;
 `;
 const CommentLikeCount = styled.div`
@@ -225,25 +282,28 @@ const BoardLike = styled.div`
   width: 100%;
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 16px;
   .like-button {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 12px 24px;
-    background-color: #f1f1f1;
+    padding: 6px 12px;
     border: none;
-    border-radius: 999px;
-    font-weight: bold;
+    border-radius: 3px;
+    background: transparent;
     font-size: 16px;
-    color: #333;
+    color: #222;
     cursor: pointer;
     transition: background-color 0.3s ease;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
     &:hover {
-      background-color: #e0e0e0;
+      background-color: royalblue;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      color: white;
+    }
+    &:focus {
+      outline: none;
     }
   }
   .board-like-count {
@@ -263,6 +323,7 @@ const Heart2 = styled(FaHeart)`
 `;
 const BoardArticle = () => {
   const { communityId } = useParams(); // 게시판 번호 전달 하기 위해서 useparams 사용
+  const { isLogin } = useContext(UserContext);
   const navigate = useNavigate();
   const [inputComment, setInputComment] = useState("");
   const [replyCommentInput, setReplyCommentInput] = useState(new Map()); // 각 댓글에 맞는 대댓글 작성하는 상태 변수
@@ -277,12 +338,11 @@ const BoardArticle = () => {
   const [replyUpdateTrigger, setReplyUpdateTrigger] = useState(false);
   const [likeCount, setLikeCount] = useState("");
   const [likeCountTrigger, setLikeCountTrigger] = useState(false);
-  const {isLogin} = useContext(UserContext);
-  
+
   const confirmBtn = () => {
     setOpenModal(false);
-     console.log("확인 버튼이 눌려 졌습니다.");
-  }
+    console.log("확인 버튼이 눌려 졌습니다.");
+  };
   const closeModal = () => {
     setOpenModal(false);
   };
@@ -312,10 +372,10 @@ const BoardArticle = () => {
     const getBoardArticle = async () => {
       const response = await BoardAPI.GetBoardArticle(communityId);
       setBoardArticle(response.data);
-      setLikeCount(response.data[0].likeCount)
+      setLikeCount(response.data[0].likeCount);
     };
     getBoardArticle();
-  }, [communityId,likeCountTrigger]);
+  }, [communityId, likeCountTrigger]);
   // 게시판 공감하기 눌렀을 때
   const onClickBoardLike = async () => {
     try {
@@ -389,7 +449,7 @@ const BoardArticle = () => {
       newMap.delete(commentId); // 대댓글 작성 후 해당 댓글의 대댓글 내용 삭제
       return newMap;
     });
-    setReplyUpdateTrigger(prev => !prev);
+    setReplyUpdateTrigger((prev) => !prev);
   };
   // 게시판 대댓글 작성
   const onChangeReplyComment = (e, commentId) => {
@@ -399,7 +459,7 @@ const BoardArticle = () => {
       newMap.set(commentId, value); // 대댓글 내용 업데이트
       return newMap;
     });
-    setReplyUpdateTrigger(prev => !prev);
+    setReplyUpdateTrigger((prev) => !prev);
   };
   // 해당 댓글의 대댓글 가져오기
   useEffect(() => {
@@ -416,7 +476,7 @@ const BoardArticle = () => {
   }, [commentData, replyUpdateTrigger]);
   return (
     <Container justifyContent="center" alignItems="center">
-      <Header/>
+      <Header />
       <BodyContainer>
         {boardArticle &&
           boardArticle.map((community) => (
@@ -431,31 +491,52 @@ const BoardArticle = () => {
               </UserInfo>
               <hr></hr>
               <BoardDesc>
+                {community.communityImgLink && (
+                  <BoardImg>
+                    <Image
+                      className="community-img"
+                      src={community.communityImgLink}
+                      alt=""
+                    />
+                  </BoardImg>
+                )}
                 <Text>{community.communityDesc}</Text>
-                <BoardImg>
-                  <Image
-                    className="community-img"
-                    src={community.communityImgLink}
-                    alt=""
-                  />
-                </BoardImg>
               </BoardDesc>
               <BoardLike>
-                {isLogin ?
-                (<button className="like-button" onClick={() =>{onClickBoardLike();}}>
-                  이 글이 도움!
-                </button>) : (<button className="like-button" onClick={() =>navigate("/pages/Login")}>
-                  이 글이 도움!
-                </button>)}
+                {isLogin ? (
+                  <button
+                    className="like-button"
+                    onClick={() => {
+                      onClickBoardLike();
+                    }}
+                  >
+                    <ThumbUpOffAltIcon
+                      className="like-icon"
+                      style={{ fontSize: "18px", marginRight: "8px" }}
+                    />{" "}
+                    <span>좋아요!</span>
+                  </button>
+                ) : (
+                  <button
+                    className="like-button"
+                    onClick={() => navigate("/pages/Login")}
+                  >
+                    <ThumbUpOffAltIcon /> <span>좋아요!</span>
+                  </button>
+                )}
                 <div className="board-like-count">
-                  <Heart2 />
-                  {likeCount}
+                  <Heart2 style={{ fontSize: "14px" }} />
+                  <span
+                    style={{ fontSize: "14px", transform: "translateY(2px)" }}
+                  >
+                    {likeCount}
+                  </span>
                 </div>
               </BoardLike>
             </BoardInfo>
           ))}
         <CommentInfo>
-          <CommentCount>댓글{commentCount}</CommentCount>
+          <CommentCount>댓글 {commentCount}</CommentCount>
         </CommentInfo>
         <CommentWrite>
           <textarea
@@ -465,12 +546,15 @@ const BoardArticle = () => {
             value={inputComment}
             onChange={onChangeComment}
           ></textarea>
-          {isLogin ?
-          (<CommentWriteButton onClick={onClickWriteComment}>
-            댓글 작성하기
-          </CommentWriteButton>) :  (<CommentWriteButton onClick={()=> navigate("/pages/Login")}>
-            댓글 작성하기
-          </CommentWriteButton>)}
+          {isLogin ? (
+            <CommentWriteButton onClick={onClickWriteComment}>
+              <span className="comment-button-span">등록</span>
+            </CommentWriteButton>
+          ) : (
+            <CommentWriteButton onClick={() => navigate("/pages/Login")}>
+              <span className="comment-button-span">등록</span>
+            </CommentWriteButton>
+          )}
         </CommentWrite>
         {commentData &&
           commentData.map((comment) => (
@@ -482,32 +566,38 @@ const BoardArticle = () => {
                     {formatDate(comment.commentWrittenTime)}
                   </CommentWrittenTime>
                   <CommentReWrite>
-                    {isLogin ?
-                    (<button
-                      className="replycomment"
-                      onClick={() => onClickShowReplyWrite(comment.commentId)}
-                    >
-                      대댓글
-                    </button>): (<button
-                      className="replycomment"
-                      onClick={()=> navigate("/pages/Login")}
-                    >
-                      대댓글
-                    </button>)}
+                    {isLogin ? (
+                      <button
+                        className="replycomment"
+                        onClick={() => onClickShowReplyWrite(comment.commentId)}
+                      >
+                        대댓글
+                      </button>
+                    ) : (
+                      <button
+                        className="replycomment"
+                        onClick={() => navigate("/pages/Login")}
+                      >
+                        대댓글
+                      </button>
+                    )}
                   </CommentReWrite>
                   <CommentLike>
-                    {isLogin ?
-                    (<button
-                      className="like"
-                      onClick={() => onClickCommentLike(comment.commentId)}
-                    >
-                      좋아요
-                    </button>) : (<button
-                      className="like"
-                      onClick={()=> navigate("/pages/Login")}
-                    >
-                      좋아요
-                    </button>)}
+                    {isLogin ? (
+                      <button
+                        className="like"
+                        onClick={() => onClickCommentLike(comment.commentId)}
+                      >
+                        좋아요
+                      </button>
+                    ) : (
+                      <button
+                        className="like"
+                        onClick={() => navigate("/pages/Login")}
+                      >
+                        좋아요
+                      </button>
+                    )}
                   </CommentLike>
                 </CommentHead>
                 <CommentArr>
@@ -540,18 +630,23 @@ const BoardArticle = () => {
                           </button>
                         </CommentReWrite>
                         <CommentLike>
-                          {isLogin ?
-                          (<button
-                            className="like"
-                            onClick={() => onClickCommentLike(reply.commentId)}
-                          >
-                            좋아요
-                          </button>) : (<button
-                            className="like"
-                            onClick={()=> navigate("/pages/Login")}
-                          >
-                            좋아요
-                          </button>)}
+                          {isLogin ? (
+                            <button
+                              className="like"
+                              onClick={() =>
+                                onClickCommentLike(reply.commentId)
+                              }
+                            >
+                              좋아요
+                            </button>
+                          ) : (
+                            <button
+                              className="like"
+                              onClick={() => navigate("/pages/Login")}
+                            >
+                              좋아요
+                            </button>
+                          )}
                         </CommentLike>
                       </CommentHead>
                       <CommentArr>
@@ -574,19 +669,21 @@ const BoardArticle = () => {
                         onChangeReplyComment(e, comment.commentId)
                       }
                     ></textarea>
-                    {isLogin ?
-                    (<CommentReplyWriteButton
-                      onClick={() =>
-                        onClickWriteReplyComment(comment.commentId)
-                      }
-                    >
-                      댓댓글 작성하기
-                    </CommentReplyWriteButton>) :(<CommentReplyWriteButton
-                      onClick={()=> navigate("/pages/Login")
-                      }
-                    >
-                      댓댓글 작성하기
-                    </CommentReplyWriteButton>)}
+                    {isLogin ? (
+                      <CommentReplyWriteButton
+                        onClick={() =>
+                          onClickWriteReplyComment(comment.commentId)
+                        }
+                      >
+                        댓댓글 작성하기
+                      </CommentReplyWriteButton>
+                    ) : (
+                      <CommentReplyWriteButton
+                        onClick={() => navigate("/pages/Login")}
+                      >
+                        댓댓글 작성하기
+                      </CommentReplyWriteButton>
+                    )}
                   </CommentReplyWrite>
                 )}
                 <br></br>
@@ -594,8 +691,16 @@ const BoardArticle = () => {
               </Comment>
             </CommentDesc>
           ))}
-          <Modal open={openModal} type={true} close={closeModal} confirm={confirmBtn}>{modalMsg}</Modal>
+        <Modal
+          open={openModal}
+          type={true}
+          close={closeModal}
+          confirm={confirmBtn}
+        >
+          {modalMsg}
+        </Modal>
       </BodyContainer>
+      <Sidebar />
     </Container>
   );
 };

@@ -24,9 +24,6 @@ const HeaderContainer = styled.div`
     width: 100vw;
     max-width: 100%;
   }
-  //  position: fixed;
-  //  top: 0;
-  //  z-index: 99;
 `;
 const PerfestLogo = styled.img`
   height: 100%;
@@ -149,6 +146,7 @@ const NotiBtnForMobile = styled.button`
   border: none;
   border-radius: 5px;
   margin: auto 12px auto 0;
+  outline: none;
   .menuIcon {
     transition: all 0.1s ease-in;
   }
@@ -181,32 +179,6 @@ const MypageButton = styled.button`
     transform: translateX(-5px);
   }
 `;
-// const SearchBoxContainer = styled.div` 임시!!
-//   display: flex;
-//   box-sizing: border-box;
-//   width: 320px;
-//   height: 80%;
-//   border-radius: 10px;
-//   border: none;
-//   background: transparent;
-//   align-items: center;
-//   align-self: center;
-// `;
-// const SearchBox = styled.input`
-//   box-sizing: border-box;
-//   width: 80%;
-//   height: 80%;
-//   margin: 0 10px;
-//   padding: 10px;
-//   border-radius: 10px;
-//   background: transparent;
-//   border: 1px solid white;
-//   color: white;
-//   font-size: 16px;
-//   &:focus {
-//     outline: none;
-//   }
-// `;
 
 const NotificationBox = styled.div`
   box-sizing: border-box;
@@ -260,17 +232,16 @@ const Xbtn = styled.button`
 const NotificationBody = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
   height: calc(100% - 56px);
-  overflow-y: scroll;
-  
+  overflow: hidden;
   .show-scroll {
     overflow-y: scroll;
   }
 
   /* 스크롤바 커스터마이징 */
-
   &::-webkit-scrollbar {
     position: fixed;
     right: -4px;
@@ -281,7 +252,6 @@ const NotificationBody = styled.div`
   }
 
   &::-webkit-scrollbar-thumb {
-    width: 6px;
     background: rgba(34, 34, 34, 0.7);
     border-radius: 10px;
     background-clip: padding-box;
@@ -296,7 +266,7 @@ const NotificationBody = styled.div`
 const Header = () => {
   const navigate = useNavigate();
   const { isLogin, setIsLogin, setIsSidebar } = useContext(UserContext);
-  const [notiboxMove, setNotiboxMove] = useState("-62vh");
+  const [notiboxMove, setNotiboxMove] = useState("-64vh");
   const [notiboxMoveMobile, setNotiboxMoveMobile] = useState("-100vh");
   const [mQuery, setMQuery] = useState(window.innerWidth < 769 ? true : false);
 
@@ -307,7 +277,7 @@ const Header = () => {
   };
 
   useEffect(() => {
-    let mql = window.matchMedia("screen and (max-width:769px)");
+    const mql = window.matchMedia("screen and (max-width: 769px)");
     mql.addEventListener("change", screenChange);
     return () => mql.removeEventListener("change", screenChange);
   }, []);
@@ -358,12 +328,21 @@ const Header = () => {
               <MypageButton onClick={() => navigate("/pages/mypage")}>
                 MY PAGE
               </MypageButton>
-              <button
-                className="userbox-button notification"
-                onClick={() => setNotiboxMove("74px")}
-              >
-                <NotificationsIcon style={{ color: "#222" }} />
-              </button>
+              {mQuery ? (
+                <button
+                  className="userbox-button notification"
+                  onClick={() => setNotiboxMoveMobile("6vh")}
+                >
+                  <NotificationsIcon style={{ color: "#222" }} />
+                </button>
+              ) : (
+                <button
+                  className="userbox-button notification"
+                  onClick={() => setNotiboxMove("74px")}
+                >
+                  <NotificationsIcon style={{ color: "#222" }} />
+                </button>
+              )}
               <button className="userbox-button" onClick={logout}>
                 <LogoutIcon />
               </button>
@@ -374,9 +353,11 @@ const Header = () => {
             </LoginButton>
           )}
         </UserBox>
-        <NotiBtnForMobile onClick={() => setNotiboxMoveMobile("74px")}>
-          <NotificationsIcon style={{ color: "#222" }} />
-        </NotiBtnForMobile>
+        {isLogin && mQuery && (
+          <NotiBtnForMobile onClick={() => setNotiboxMoveMobile("6vh")}>
+            <NotificationsIcon style={{ color: "#222" }} />
+          </NotiBtnForMobile>
+        )}
         <HamburgerBtn onClick={() => setIsSidebar("-2px")}>
           <MenuIcon className="menuIcon" style={{ color: "white" }} />
         </HamburgerBtn>

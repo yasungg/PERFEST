@@ -37,15 +37,7 @@ public class Product {
     private BigDecimal productPrice;
 
     @Column(name = "product_quantity")
-    @NotNull
-    @ColumnDefault("0")
-    private String productQuantity;
+    @ColumnDefault(value = "0")
+    private int productQuantity;
 
-//        public Product(Long id, String productName, String productDesc, String productImg, BigDecimal productPrice) {
-//        this.id = id;
-//        this.productName = productName;
-//        this.productDesc = productDesc;
-//        this.productImg = productImg;
-//        this.productPrice = productPrice;
-//    }
 }

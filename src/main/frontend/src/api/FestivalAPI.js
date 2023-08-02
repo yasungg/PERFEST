@@ -45,5 +45,10 @@ const FestivalAPI = {
     }
     return await axios.post(`/auth/festival/getSearchFestivalInfo `, info)
   },
+  GetActivityListForDetail: async (festivalId) => {
+    return await axios.get(
+      `/auth/activity/get-activity-list?festivalId=${festivalId}`
+    );
+  },
 };
 export default FestivalAPI;

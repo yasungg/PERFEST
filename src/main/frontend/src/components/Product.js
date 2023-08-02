@@ -158,6 +158,11 @@ const ProductDescBox = styled.div`
     font-size: 15px;
     color: royalblue;
   }
+  .sold-out {
+    font-weight: 600;
+    font-size: 15px;
+    color: red;
+  }
 `;
 const Product = () => {
   const [product, setProduct] = useState([]);
@@ -169,6 +174,7 @@ const Product = () => {
         detailComponentValue
       )
         .then((result) => {
+          console.log(result.data);
           setProduct(result.data);
         })
         .catch((error) => {
@@ -200,7 +206,7 @@ const Product = () => {
       </AdvertisementBox>
       {product &&
         product.map((data) => (
-          <ProductBox>
+          <ProductBox onClick={() => console.log("여기입니다.")}>
             <ProductLeftBox>
               <ProductPictureBox>
                 <ProductPicture src={data.productImg} alt="product-picture" />
@@ -210,7 +216,11 @@ const Product = () => {
               <ProductDescBox>
                 <span className="title">{data.productName}</span>
                 <span className="desc">{data.productDesc}</span>
-                <span className="price">{data.productPrice} 원</span>
+                {data.productQuantity === "0" ? (
+                  <span className="sold-out">품절</span>
+                ) : (
+                  <span className="price">{data.productPrice} 원</span>
+                )}
               </ProductDescBox>
             </ProductRightBox>
           </ProductBox>

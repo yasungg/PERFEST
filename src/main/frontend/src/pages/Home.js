@@ -58,7 +58,8 @@ const Video = styled.video`
   z-index: 0;
   overflow: hidden;
   @media screen and (max-width: 1441px) {
-    width: 1440px;
+    width: auto;
+    height: 100vh;
   }
 `;
 const TMPbox = styled.div`

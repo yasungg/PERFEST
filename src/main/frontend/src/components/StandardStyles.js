@@ -12,11 +12,12 @@ export const Container = styled.div`
   align-items: ${(props) => props.alignItems};
 `;
 export const BodyContainer = styled.div`
-  width: 1280px;
+  width: 90%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  @media screen and (max-width: 1280px) {
-    width: 100%;
+  @media screen and (max-width: 769px) {
+    width: 80%;
   }
 `;
 export const MaxBodyContainer = styled.div`

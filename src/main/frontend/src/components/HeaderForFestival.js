@@ -1,15 +1,16 @@
 import styled from "styled-components";
 import BlackLogo from "../images/PERFEST LOGO BLACK.png";
-import WhiteLogo from "../images/PERFEST LOGO WHITE.png";
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
 import LogoutIcon from "@mui/icons-material/Logout";
+import CloseIcon from "@mui/icons-material/Close";
+import FiberNewIcon from "@mui/icons-material/FiberNew";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { UserContext } from "../context/UserStore";
-import MemberAPI from "../api/MemberAPI";
 import LoginAPI from "../api/LoginAPI";
+import Timeline from "../pages/Timeline";
 
 const HeaderContainer = styled.div`
   box-sizing: border-box;
@@ -208,6 +209,30 @@ const SearchBox = styled.input`
     outline: none;
   }
 `;
+const NotiBtn = styled.button`
+  display: flex;
+  width: 32px;
+  height: 32px;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  border: none;
+  border-radius: 5px;
+  margin: auto 12px auto 0;
+  outline: none;
+  .menuIcon {
+    transition: all 0.1s ease-in;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+  &:hover .menuIcon {
+    transform: scale(1.2);
+  }
+  @media screen and (max-width: 1025px) {
+    display: flex;
+  }
+`;
 const SearchButton = styled.button`
   display: flex;
   justify-content: center;
@@ -227,6 +252,66 @@ const SearchButton = styled.button`
     transition: all 0.1s ease-in;
   }
 `;
+
+const NotificationBox = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  width: 400px;
+  height: 60vh;
+  top: ${(props) => props.top};
+  right: 16px;
+  background: white;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 1px 3px 5px #222;
+  padding: 8px;
+  z-index: 5;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  transition: all 0.3s ease-in-out;
+  @media screen and (max-width: 767px) {
+    width: calc(100vw - 32px);
+    height: calc(100vh - 88px);
+  }
+`;
+const Xbox = styled.div`
+  width: 100%;
+  height: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: transparent;
+`;
+const Xbtn = styled.button`
+  display: flex;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  border: none;
+  outline: none;
+  justify-content: center;
+  background: transparent;
+
+  &:hover {
+    cursor: pointer;
+  }
+  &:hover .xIcon {
+    transform: scale(1.2);
+    transition: all 0.2s linear;
+  }
+`;
+const NotificationBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: calc(100% - 56px);
+  overflow: hidden;
+`;
+
 const HeaderForFestival = () => {
   const navigate = useNavigate();
   const {
@@ -236,8 +321,8 @@ const HeaderForFestival = () => {
     setSearchBoxMove,
     setContextFestivalSearch,
   } = useContext(UserContext);
-  const [headerName, setHeaderName] = useState("");
   const [keyword, setKeyword] = useState("");
+  const [notiboxMove, setNotiboxMove] = useState("-100vh");
   const logout = () => {
     const Logout = LoginAPI.Logout()
       .then((result) => {
@@ -296,9 +381,9 @@ const HeaderForFestival = () => {
               <MypageButton onClick={() => navigate("/pages/mypage")}>
                 MY PAGE
               </MypageButton>
-              <button className="userbox-button notification">
+              <NotiBtn onClick={() => setNotiboxMove("74px")}>
                 <NotificationsIcon style={{ color: "#222" }} />
-              </button>
+              </NotiBtn>
               <button className="logout-button" onClick={logout}>
                 <LogoutIcon />
               </button>
@@ -313,6 +398,17 @@ const HeaderForFestival = () => {
           <MenuIcon className="menuIcon" style={{ color: "white" }} />
         </HamburgerBtn>
       </HeaderBody>
+      <NotificationBox top={notiboxMove}>
+        <Xbox>
+          <FiberNewIcon style={{ fontSize: "24px" }} />
+          <Xbtn onClick={() => setNotiboxMove("-100vh")}>
+            <CloseIcon className="xIcon" style={{ fontSize: "16px" }} />
+          </Xbtn>
+        </Xbox>
+        <NotificationBody>
+          <Timeline />
+        </NotificationBody>
+      </NotificationBox>
     </HeaderContainer>
   );
 };

@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
-@Entity(name = "t_activity")
+@Entity
 @Getter @Setter @ToString
 @Table(name = "t_activity")
 public class Activity {
@@ -41,4 +41,11 @@ public class Activity {
     @Column(name = "activity_quantity")
     @ColumnDefault("0")
     private int activityQuantity;
+
+    public Activity(String activityName, String activityDesc, BigDecimal activityPrice, int activityQuantity) {
+        this.activityName = activityName;
+        this.activityDesc = activityDesc;
+        this.activityPrice = activityPrice;
+        this.activityQuantity = activityQuantity;
+    }
 }

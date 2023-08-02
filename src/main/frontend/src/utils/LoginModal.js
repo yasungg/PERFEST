@@ -38,7 +38,7 @@ const ModalStyle = styled.div`
   section > header {
     position: relative;
     padding: 16px 64px 16px 16px;
-    background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+    background: linear-gradient(to bo ttom, #0f0c29, #302b63, #24243e);
     color: white;
     font-weight: 700;
   }

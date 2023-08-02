@@ -273,7 +273,7 @@ const ImageArea = styled.div`
 
   img {
     width: 120px;
-    height: 200px;
+    height: 180px;
     margin: 0 10px 0 8px;
     transition: transform 0.3s ease;
   }
@@ -306,7 +306,7 @@ const ContentArea = styled.div`
   cursor: pointer;
 
   &:hover {
-    background-color: #C8E8FF;
+    background-color: #c8e8ff;
   }
 
   p,
@@ -376,7 +376,7 @@ const NumBtnWrapper = styled.div`
   outline: none;
   background: white;
 `;
-const SearchSideBar = () => {
+const SearchSideBar = (festivalData) => {
   const [festival, setFestival] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState("");
 
@@ -582,7 +582,8 @@ const SearchSideBar = () => {
       });
     };
     searchFromHeader();
-  }, [contextFestivalSearch, currentPage]);
+    setFestival(festivalData.data);
+  }, [contextFestivalSearch, currentPage, festivalData]);
 
   return (
     <SearchContainer bottom={searchBoxMove}>
@@ -616,10 +617,10 @@ const SearchSideBar = () => {
             <p>검색된 결과 '{totalElements}'개가 있습니다.</p>
             <ResultSort>
               <SortByDateOrDistance>
-                <span>날짜순</span>
+                <span>이름순</span>
               </SortByDateOrDistance>
               <SortByDateOrDistance>
-                <span>거리순</span>
+                <span>날짜순</span>
               </SortByDateOrDistance>
             </ResultSort>
           </Result>

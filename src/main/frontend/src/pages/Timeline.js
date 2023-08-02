@@ -9,9 +9,32 @@ const TimelineWrap = styled.div`
   height: 100%;
   overflow-x: visible;
   overflow-y: scroll;
-  /* border: 1px solid #bbbbbb; */
-  /* border-radius: 30px; */
   background-color: #edf1f5;
+  .show-scroll {
+    overflow-y: scroll;
+  }
+
+  /* 스크롤바 커스터마이징 */
+  &::-webkit-scrollbar {
+    position: fixed;
+    right: -4px;
+    width: 6px;
+    background: white;
+    border-radius: 2px;
+    border: none;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(34, 34, 34, 0.7);
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 1px solid transparent;
+    /* height: 20px; */
+  }
+
+  &::-webkit-scrollbar-track {
+    /* box-shadow: inset 0px 0px 3px gray; */
+  }
 `;
 
 const Button = styled.button`
@@ -29,7 +52,6 @@ const Timelines = styled.ul`
   list-style: none;
   width: calc(100% - 16px);
   height: fit-content;
-  /* margin: 0 auto; */
   padding: 0;
   overflow-y: hidden;
 `;
@@ -63,11 +85,12 @@ const Timeline = () => {
         ) : (
           <Timelines>
             <li className="date_block">
-              <span className="date"> 알람  </span>
+              <span className="date"> 알람 </span>
             </li>
-            {noticeInfo && noticeInfo.map((notice, key) => (
-              <HistoryItem key={key} data={notice} />
-            ))}
+            {noticeInfo &&
+              noticeInfo.map((notice, key) => (
+                <HistoryItem key={key} data={notice} />
+              ))}
           </Timelines>
         )}
       </TimelineWrap>

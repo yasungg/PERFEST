@@ -14,6 +14,6 @@ import java.util.Optional;
 public interface ProductRepository extends JpaRepository<Product, Long> {
     Optional<Product> findById(Long id);
 
-    @Query("SELECT new com.example.demo.dto.ProductDTO (p.id, p.productName, p.productDesc, p.productImg, p.productPrice) from Product p WHERE p.festival.id = :festivalId")
+    @Query("SELECT new com.example.demo.dto.ProductDTO (p.id, p.productName, p.productDesc, p.productImg, p.productPrice, p.productQuantity) from Product p WHERE p.festival.id = :festivalId")
     List<ProductDTO> findByFestivalId(@Param("festivalId") Long id);
 }

@@ -13,13 +13,16 @@ const Slider2 = styled.div`
 `;
 const Video = styled.video`
   position: absolute;
-  width: 100%;
+  width: auto;
+  height: 100vh;
+  min-height: 100vh;
   border: none;
   outline: none;
   overflow: hidden;
   z-index: 0;
-  @media screen and (max-width: 1441px) {
-    width: 1440px;
+  @media screen and (min-width: 1441px) {
+    width: auto;
+    height: 100vh;
   }
 `;
 const SpanBox = styled.div`
