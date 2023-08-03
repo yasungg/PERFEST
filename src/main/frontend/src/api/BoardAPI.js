@@ -56,7 +56,6 @@ const BoardAPI = {
     };
      const Authorization =
         "Bearer " + window.localStorage.getItem("accessToken");
-    console.log(Authorization);
     return await axios.post( `/memberlike/likeboard`, checkLike, {
       headers: {
         "Content-Type": "application/json",
@@ -69,7 +68,6 @@ const BoardAPI = {
           }
         })
         .catch((error) => {
-          console.log(error);
         });
   },
   // 게시판 작성
@@ -82,7 +80,6 @@ const BoardAPI = {
     };
     const Authorization =
         "Bearer " + window.localStorage.getItem("accessToken");
-    console.log(Authorization);
     return await axios.post( `/community/writeboard`, writeBoard, {
       headers: {
         "Content-Type": "application/json",
@@ -95,7 +92,6 @@ const BoardAPI = {
           }
         })
         .catch((error) => {
-          console.log(error);
         });
   },
   // 게시판 수정
@@ -109,7 +105,6 @@ const BoardAPI = {
     };
     const Authorization =
         "Bearer " + window.localStorage.getItem("accessToken");
-    console.log(Authorization);
     return await axios.post(`/community/updateboard`,updateBoard, {
       headers: {
         "Content-Type": "application/json",
@@ -122,7 +117,6 @@ const BoardAPI = {
           }
         })
         .catch((error) => {
-          console.log(error);
         });
   },
 };

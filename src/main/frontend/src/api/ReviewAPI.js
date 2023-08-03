@@ -9,7 +9,6 @@ const ReviewAPI = {
         };
         const Authorization =
         "Bearer " + window.localStorage.getItem("accessToken");
-        console.log(Authorization);
         return await axios.post(`/review/writereview`,reviewInsert, {
             headers: {
               "Content-Type": "application/json",
@@ -22,7 +21,6 @@ const ReviewAPI = {
                 }
               })
               .catch((error) => {
-                console.log(error);
               });
     },
     // 해당 축제 리뷰 가져오기

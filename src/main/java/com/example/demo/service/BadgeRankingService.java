@@ -26,7 +26,6 @@ public class BadgeRankingService {
         int previousBadges = memberList.get(0).getBadges(); // 첫 번째 멤버의 뱃지 수로 초기화
         int previousRank = 1; // 이전 순위 초기화
 
-        // Process only the top 10 members or until the end of the list if it has less than 10 members.
         int maxEntries = Math.min(10, memberList.size());
         for (int i = 0; i < maxEntries; i++) {
             Member member = memberList.get(i);
