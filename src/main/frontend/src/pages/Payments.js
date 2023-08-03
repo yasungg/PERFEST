@@ -29,10 +29,7 @@ const PayReady = () => {
   // 카카오페이로 보내려는 데이터 작성
   setQuantity(state.state.productQuantity);
   setPrice(state.state.productPrice);
-  setProductId(state.state.Id);
-  console.log(state.state);
-  console.log(state.state.productQuantity);
-  console.log(state.state.productPrice);
+  setProductId(state.state.id);
 
   let [data, setData] = useState({
     next_redirect_pc_url: "",
