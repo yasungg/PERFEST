@@ -102,7 +102,7 @@ const PayReady = () => {
 // pg_token은 결제 승인 API 호출 시 사용
 const PayResult = () => {
   const context = useContext(UserContext);
-  const {price, quantity, productId } = context;
+  const {price, quantity } = context;
   // 초기값 셋팅, 결제준비에서 받아온 tid 셋팅
   const [payment, setPayment] = useState({
     // 가격
@@ -180,8 +180,9 @@ const PayResult = () => {
   useEffect(() => {
     const PaymentResult = async() => {
       const memberId = 1;
+      const productId = 1;
       console.log(memberId, productId, payment.price, payment.quantity, payment.tid, payment.kakaoTaxFreeAmount);
-      const response = await PaymentAPI.PaymentSubmit(1, 1, payment.price, payment.quantity, payment.tid, payment.kakaoTaxFreeAmount)
+      const response = await PaymentAPI.PaymentSubmit(memberId, productId, payment.price, payment.quantity, payment.tid, payment.kakaoTaxFreeAmount)
       if(response.status === 200) {
         // 카카오페이와 DB전송까지 완료
         navigate("/pages/resultSuccess", {state: response.data});
