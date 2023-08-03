@@ -208,6 +208,7 @@ const Product = () => {
       </AdvertisementBox>
       {product &&
         product.map((data) => (
+        // 결제시 넘기기
           <ProductBox onClick={() => navigate("/pages/payready", {state : data})}>
             <ProductLeftBox>
               <ProductPictureBox>
