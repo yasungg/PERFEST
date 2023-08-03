@@ -22,10 +22,10 @@ public class Activity {
     @JoinColumn(name = "festival_id")
     private Festival festival;
 
-    @Column(name = "activity_name", unique = true)
+    @Column(name = "activity_name")
     private String activityName;
 
-    @Column(name = "activity_desc", unique = true)
+    @Column(name = "activity_desc")
     private String activityDesc;
 
     @Column(name = "activity_price")

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import CloseIcon from "@mui/icons-material/Close";
 
 const ModalStyle = styled.div`
   .modal {
@@ -22,37 +22,49 @@ const ModalStyle = styled.div`
   button {
     outline: none;
     cursor: pointer;
-    margin-right: 10px;
     border: 0;
   }
   section {
     width: 90%;
     max-width: 450px;
     margin: 0 auto;
-    border-radius: 0.3rem;
+    border-radius: 3px;
     background-color: #fff;
     /* 팝업이 열릴때 스르륵 열리는 효과 */
     animation: modal-show 0.3s;
     overflow: hidden;
   }
   section > header {
-    position: relative;
-    padding: 16px 64px 16px 16px;
-    background: linear-gradient(to bo ttom, #0f0c29, #302b63, #24243e);
+    width: 100%;
+    height: 32px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #222;
+    padding: 0 8px 0 8px;
     color: white;
-    font-weight: 700;
+    font-size: 14px;
+    font-weight: 600;
   }
 
   section > header button {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    width: 30px;
-    font-size: 21px;
-    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
     text-align: center;
-    color: #999;
+    color: white;
     background-color: transparent;
+    .x-icon {
+      font-size: 18px;
+      transition: all 0.1s ease-in;
+    }
+    &:hover .x-icon {
+      transform: scale(1.1);
+    }
   }
   section > main {
     display: flex;
@@ -63,20 +75,20 @@ const ModalStyle = styled.div`
     align-items: center;
   }
   section > footer {
-    padding: 12px 16px;
+    box-sizing: border-box;
+    padding: 8px 8px;
     text-align: right;
   }
   section > footer button {
     padding: 6px 12px;
     color: #fff;
-    background-color: #6c757d;
-    border-radius: 5px;
+    background-color: #222;
+    border-radius: 3px;
     font-size: 13px;
-
+    transition: 0.1s ease-in-out;
     cursor: pointer;
     &:hover {
-      background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
-      transition: 0.8s ease-in-out;
+      background: royalblue;
     }
   }
   @keyframes modal-show {
@@ -109,7 +121,9 @@ const LoginModal = (props) => {
           <section>
             <header>
               {header}
-              <button onClick={close}>&times;</button>
+              <button onClick={close}>
+                <CloseIcon className="x-icon" />
+              </button>
             </header>
             <main>{children}</main>
             <footer>

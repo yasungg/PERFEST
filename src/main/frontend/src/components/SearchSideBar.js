@@ -186,7 +186,7 @@ const Result = styled.div`
   width: 100%;
   height: 24px;
   /* min-height: 40px; */
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   padding: 0 8px 0 8px;
   font-size: 14px;
@@ -582,8 +582,10 @@ const SearchSideBar = (festivalData) => {
       });
     };
     searchFromHeader();
-    setFestival(festivalData.data);
   }, [contextFestivalSearch, currentPage, festivalData]);
+  useEffect(() => {
+    setFestival(festivalData.data);
+  }, [festivalData]);
 
   return (
     <SearchContainer bottom={searchBoxMove}>
@@ -615,14 +617,6 @@ const SearchSideBar = (festivalData) => {
         {totalElements ? (
           <Result>
             <p>검색된 결과 '{totalElements}'개가 있습니다.</p>
-            <ResultSort>
-              <SortByDateOrDistance>
-                <span>이름순</span>
-              </SortByDateOrDistance>
-              <SortByDateOrDistance>
-                <span>날짜순</span>
-              </SortByDateOrDistance>
-            </ResultSort>
           </Result>
         ) : (
           <Result>

@@ -11,6 +11,7 @@ import Header from "../components/Header";
 import ImageIcon from "@mui/icons-material/Image";
 import BlackLogo from "../images/PERFEST LOGO BLACK.png";
 import Sidebar from "../components/Sidebar";
+import Footer from "../components/Footer";
 const Title = styled.div`
   display: flex;
   justify-content: center;
@@ -333,6 +334,7 @@ const WriteButton = styled.div`
   justify-content: flex-end;
   height: 100%;
   margin-top: 20px;
+  margin-bottom: 32px;
   .write {
     border-style: none;
     border-radius: 5px;
@@ -645,6 +647,7 @@ const Board = () => {
           )}
         </WriteButton>
       </BodyContainer>
+      <Footer />
       <Sidebar />
     </Container>
   );

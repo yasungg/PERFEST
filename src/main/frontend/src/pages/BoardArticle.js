@@ -238,13 +238,13 @@ const CommentLikeCount = styled.div`
 `;
 const CommentReplyWrite = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
-  margin-top: 5px;
+  margin: 4px 0 0 24px;
 
   .commentreply {
-    width: 85%;
+    width: 86%;
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -252,20 +252,32 @@ const CommentReplyWrite = styled.div`
     resize: none;
     outline: none;
   }
+  @media screen and (max-width: 769px) {
+    margin: 4px 0 0 0;
+    flex-direction: column;
+    .commentreply {
+      width: 92%;
+    }
+  }
 `;
 const CommentReplyWriteButton = styled.button`
   width: 10%;
   padding: 8px;
-  background-color: #f5f5f5;
   border: none;
   border-radius: 4px;
   font-weight: bold;
-  cursor: pointer;
-  color: #333;
-  transition: background-color 0.3s;
+  color: #222;
+  transition: all 0.1s ease-in;
+  margin-left: 4px;
+  background: none;
 
   &:hover {
-    background-color: #e0e0e0;
+    transform: translateY(-4px);
+    cursor: pointer;
+  }
+  @media screen and (max-width: 769px) {
+    width: 50px;
+    align-self: flex-end;
   }
 `;
 const ReplyCommentDesc = styled.div`
@@ -675,13 +687,13 @@ const BoardArticle = () => {
                           onClickWriteReplyComment(comment.commentId)
                         }
                       >
-                        댓댓글 작성하기
+                        등록
                       </CommentReplyWriteButton>
                     ) : (
                       <CommentReplyWriteButton
                         onClick={() => navigate("/pages/Login")}
                       >
-                        댓댓글 작성하기
+                        등록
                       </CommentReplyWriteButton>
                     )}
                   </CommentReplyWrite>

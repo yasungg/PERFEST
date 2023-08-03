@@ -1,13 +1,20 @@
-import React, { useState, useEffect, useMemo, useContext } from "react";
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useRef,
+  useCallback,
+} from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserStore";
 import styled from "styled-components";
 import kakaoButton from "../images/kakaoButton.png";
-import loginBackgroundImg from "../images/loginBackground.jpg";
 import test from "../images/test.jpg";
 import LoginAPI from "../api/LoginAPI";
 import SignupAPI from "../api/SignupAPI";
 import LoginModal from "../utils/LoginModal";
+import CancelIcon from "@mui/icons-material/Cancel";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 const Container = styled.div`
   width: 100%;
@@ -139,7 +146,10 @@ const InputBoxContainer = styled.form`
     width: 100%;
   }
 `;
-const LoginInputBox = styled.input`
+const LoginInputDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   box-sizing: border-box;
   width: 320px;
   height: ${(props) => props.height};
@@ -147,11 +157,45 @@ const LoginInputBox = styled.input`
   border-radius: 5px;
   border: none;
   background: #ddd;
+  margin-bottom: 16px;
+  @media screen and (max-width: 769px) {
+    width: 90%;
+    align-self: center;
+  }
+`;
+const LoginInputBox = styled.input`
+  box-sizing: border-box;
+  width: 300px;
+  height: ${(props) => props.height};
+  background: #ddd;
+  border-radius: 5px;
+  border: none;
+  background: transparent;
   font-size: 16px;
   padding-left: 8px;
   &:focus {
     outline: none;
   }
+  &:active {
+    background: transparent;
+  }
+  @media screen and (max-width: 769px) {
+    width: 90%;
+    align-self: center;
+  }
+`;
+const SignUpInputDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  width: 320px;
+  height: ${(props) => props.height};
+  background-color: white;
+  box-shadow: 2px 5px 10px black;
+  border-radius: 5px;
+  border: none;
+  font-size: 16px;
+  margin-bottom: 16px;
   @media screen and (max-width: 769px) {
     width: 90%;
     align-self: center;
@@ -159,10 +203,9 @@ const LoginInputBox = styled.input`
 `;
 const SignUpInputBox = styled.input`
   box-sizing: border-box;
-  width: 320px;
+  width: 300px;
   height: ${(props) => props.height};
   background-color: white;
-  box-shadow: 2px 5px 10px black;
   border-radius: 5px;
   border: none;
   font-size: 16px;
@@ -176,16 +219,16 @@ const SignUpInputBox = styled.input`
   }
 `;
 const RegexResult = styled.div`
-  display: flex;
-  justify-content: flex-end;
+  display: ${(props) => props.display};
+  justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 16px;
+  width: 20px;
+  height: 100%;
   .regex {
-    display: none;
-    font-size: 14px;
+    display: block;
+    font-size: 16px;
+    margin-right: 8px;
     color: ${(props) => props.fontColor};
-    margin: 0 8px 0 0;
     padding: 0;
   }
 `;
@@ -212,12 +255,15 @@ const LoginBtn = styled.button`
   border-radius: 5px;
   color: white;
   font-weight: bold;
-  background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+  background: #222;
+  box-shadow: 1px 2px 5px #222;
+  transition: all 0.1s ease-in;
   &:active {
     outline: none;
   }
   &:hover {
     cursor: pointer;
+    background: royalblue;
   }
   @media screen and (max-width: 769px) {
     width: 90%;
@@ -267,7 +313,7 @@ const Login = () => {
   const navigate = useNavigate();
   const { setIsLogin } = useContext(UserContext);
   const REST_API_KEY = "86c9013e77a6aad5b8b2c49eddca45b7";
-  const REDIRECT_URI = "http://localhost:8111/koauth/login/kakao";
+  const REDIRECT_URI = "http://13.125.132.119:8111/koauth/login/kakao";
   const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code&prompt=login`;
 
   // 로그인 페이지 상태 결정을 위해 서버로부터 함께 전송된 파라미터
@@ -290,6 +336,25 @@ const Login = () => {
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
 
+  //regex 컨트롤용 useState
+  const [siugnupEmailRegexOpen, setSiugnupEmailRegexOpen] = useState("none");
+  const [signupEmailRegex, setSignupEmailRegex] = useState(false);
+  const [signupPasswordRegex, setSignupPasswordRegex] = useState(false);
+  const [siugnupPasswordRegexOpen, setSiugnupPasswordRegexOpen] =
+    useState("none");
+
+  const [loginPasswordRegex, setLoginPasswordRegex] = useState(false);
+  const [loginEmailRegexOpen, setLoginEmailRegexOpen] = useState("none");
+  const [loginEmailRegex, setLoginEmailRegex] = useState(false);
+  const [loginPasswordRegexOpen, setLoginPasswordRegexOpen] = useState("none");
+
+  //regex 유효성 검사를 자동으로 해주기 위한 useRef
+  const inputRefs = {
+    signupEmail: useRef(),
+    signupPassword: useRef(),
+    loginEmail: useRef(),
+    loginPassword: useRef(),
+  };
   const changeLoginForm = () => {
     setLoginBoxTransformY("-340px");
     setLoginLogoSize("64px");
@@ -322,6 +387,46 @@ const Login = () => {
     changeLoginForm();
   };
 
+  // 회원가입 이메일 유효성 검사
+  const emailCheck = useCallback(() => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    const isValidEmail = emailRegex.test(email);
+
+    setSiugnupEmailRegexOpen("flex");
+    setSignupEmailRegex(isValidEmail);
+  }, [email]);
+
+  // 회원가입 비밀번호 유효성 검사
+  const passwordCheck = useCallback(() => {
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{10,}$/;
+
+    const isValidPwd = passwordRegex.test(password);
+
+    setSiugnupPasswordRegexOpen("flex");
+    setSignupPasswordRegex(isValidPwd);
+  }, [password]);
+  // 로그인 이메일 유효성 검사
+  const loginEmailCheck = useCallback(() => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    const isValidEmail = emailRegex.test(loginEmail);
+
+    setLoginEmailRegexOpen("flex");
+    setLoginEmailRegex(isValidEmail);
+  });
+  // 로그인 비밀번호 유효성 검사
+  const loginPasswordCheck = useCallback(() => {
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{10,}$/;
+
+    const isValidPassword = passwordRegex.test(loginPassword);
+
+    setLoginPasswordRegexOpen("flex");
+    setLoginPasswordRegex(isValidPassword);
+  });
+
   const onClickLogin = () => {
     // 로그인 함수
 
@@ -330,10 +435,6 @@ const Login = () => {
         console.log(result);
         localStorage.setItem("accessToken", result.accessToken);
         localStorage.setItem("tokenExpiresIn", result.tokenExpiresIn);
-
-        console.log(result.accessToken);
-        console.log(result.tokenExpiresIn);
-        console.log(localStorage.getItem("accessToken"));
         setIsLogin(true);
         navigate("/");
       })
@@ -346,15 +447,12 @@ const Login = () => {
         }
       });
   };
-  const onClickLogout = () => {
-    const Logout = LoginAPI.Logout();
-  };
 
   const closeModal = () => {
     setOpen(false);
   };
 
-  useMemo(() => {
+  useEffect(() => {
     // 전달받은 값에 따라 Login 페이지를 띄워줄지, Signup 페이지를 띄워줄지 결정함.
     needSignup ? changeSignUpForm() : changeLoginForm();
     setOpen(false);
@@ -375,48 +473,71 @@ const Login = () => {
             </SignUpLogo>
           </LogoBox>
           <InputBoxContainer height="184px">
-            <SignUpInputBox
-              type="text"
-              name="signUpMail"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              placeholder="example@example.com"
-              height="32px"
-            />
-            <RegexResult fontColor="red">
-              <span className="regex">aa</span>
-            </RegexResult>
-            <SignUpInputBox
-              type="password"
-              name="signUpPassword"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              placeholder="비밀번호를 입력하세요."
-              height="32px"
-            />
-            <RegexResult fontColor="red">
-              <span className="regex">aa</span>
-            </RegexResult>
-            <SignUpInputBox
-              type="text"
-              name="name"
-              value={memberName}
-              onChange={(event) => setMemberName(event.target.value)}
-              placeholder="이름을 입력하세요."
-              height="32px"
-            />
-            <RegexResult />
-            <SignUpInputBox
-              type="text"
-              name="nickname"
-              value={nickname}
-              onChange={(event) => setNickname(event.target.value)}
-              placeholder="닉네임을 입력하세요."
-              height="32px"
-            />
-            <RegexResult fontColor="red">
-              <span className="regex">aa</span>
-            </RegexResult>
+            <SignUpInputDiv>
+              <SignUpInputBox
+                type="text"
+                name="signUpMail"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                placeholder="example@example.com"
+                height="32px"
+                ref={inputRefs.signupEmail}
+                onBlur={emailCheck}
+              />
+              {signupEmailRegex ? (
+                <RegexResult fontColor="green" display={siugnupEmailRegexOpen}>
+                  <CheckCircleIcon className="regex" />
+                </RegexResult>
+              ) : (
+                <RegexResult fontColor="red" display={siugnupEmailRegexOpen}>
+                  <CancelIcon className="regex" />
+                </RegexResult>
+              )}
+            </SignUpInputDiv>
+            <SignUpInputDiv>
+              <SignUpInputBox
+                type="password"
+                name="signUpPassword"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                placeholder="영문 대소문자 숫자 특수문자 포함 10자리 이상"
+                height="32px"
+                ref={inputRefs.signupPassword}
+                onBlur={passwordCheck}
+              />
+              {signupPasswordRegex ? (
+                <RegexResult
+                  fontColor="green"
+                  display={siugnupPasswordRegexOpen}
+                >
+                  <CheckCircleIcon className="regex" />
+                </RegexResult>
+              ) : (
+                <RegexResult fontColor="red" display={siugnupPasswordRegexOpen}>
+                  <CancelIcon className="regex" />
+                </RegexResult>
+              )}
+            </SignUpInputDiv>
+            <SignUpInputDiv>
+              <SignUpInputBox
+                type="text"
+                name="name"
+                value={memberName}
+                onChange={(event) => setMemberName(event.target.value)}
+                placeholder="이름을 입력하세요."
+                height="32px"
+              />
+            </SignUpInputDiv>
+            <SignUpInputDiv>
+              <SignUpInputBox
+                type="text"
+                name="nickname"
+                value={nickname}
+                onChange={(event) => setNickname(event.target.value)}
+                placeholder="닉네임을 입력하세요."
+                height="32px"
+              />
+            </SignUpInputDiv>
           </InputBoxContainer>
           <SignUpBtn onClick={onClickSignup}>Sign up</SignUpBtn>
         </SignUpBox>
@@ -427,34 +548,54 @@ const Login = () => {
               onClick={changeLoginForm}
               scale={loginLogoSize}
               Ylocation={logoYLocation}
-              color="#302b63"
+              color="#222"
             >
               Log in
             </Logo>
           </LogoBox>
           <InputBoxContainer height="128px">
-            <LoginInputBox
-              type="email"
-              name="mail"
-              value={loginEmail}
-              onChange={(event) => setLoginEmail(event.target.value)}
-              placeholder="이메일을 입력하세요."
-              height="32px"
-            />
-            <RegexResult fontColor="red">
-              <span className="regex">aa</span>
-            </RegexResult>
-            <LoginInputBox
-              type="password"
-              name="password"
-              value={loginPassword}
-              onChange={(event) => setLoginPassword(event.target.value)}
-              placeholder="비밀번호를 입력하세요."
-              height="32px"
-            />
-            <RegexResult fontColor="red">
-              <span className="regex">aa</span>
-            </RegexResult>
+            <LoginInputDiv>
+              <LoginInputBox
+                type="email"
+                name="mail"
+                value={loginEmail}
+                onChange={(event) => setLoginEmail(event.target.value)}
+                placeholder="이메일을 입력하세요."
+                height="32px"
+                ref={inputRefs.loginEmail}
+                onBlur={loginEmailCheck}
+              />
+              {loginEmailRegex ? (
+                <RegexResult fontColor="green" display={loginEmailRegexOpen}>
+                  <CheckCircleIcon className="regex" />
+                </RegexResult>
+              ) : (
+                <RegexResult fontColor="red" display={loginEmailRegexOpen}>
+                  <CancelIcon className="regex" />
+                </RegexResult>
+              )}
+            </LoginInputDiv>
+            <LoginInputDiv>
+              <LoginInputBox
+                type="password"
+                name="password"
+                value={loginPassword}
+                onChange={(event) => setLoginPassword(event.target.value)}
+                placeholder="영문 대소문자 숫자 특수문자 포함 10자리 이상"
+                height="32px"
+                ref={inputRefs.loginPassword}
+                onBlur={loginPasswordCheck}
+              />
+              {loginPasswordRegex ? (
+                <RegexResult fontColor="green" display={loginPasswordRegexOpen}>
+                  <CheckCircleIcon className="regex" />
+                </RegexResult>
+              ) : (
+                <RegexResult fontColor="red" display={loginPasswordRegexOpen}>
+                  <CancelIcon className="regex" />
+                </RegexResult>
+              )}
+            </LoginInputDiv>
           </InputBoxContainer>
           <LoginBtn onClick={onClickLogin}>
             <span>로그인</span>

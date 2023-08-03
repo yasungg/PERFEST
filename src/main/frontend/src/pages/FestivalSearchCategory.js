@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
 import FestivalAPI from "../api/FestivalAPI";
@@ -12,38 +12,27 @@ const BodyContainer = styled.div`
   .category_container {
     position: absolute;
     display: block;
-    z-index: 2;
+    z-index: 1;
     left: 10px;
   }
 
   /* 지역별 검색 */
-  .location_checkbox_area {
-    display: flex;
-    flex-wrap: wrap;
-    width: 550px;
-    height: 150px;
-    justify-content: center;
-    align-items: center;
-    background-color: #fff;
-    margin: -10px 0 0 5px;
-    border-radius: 5px;
-    box-shadow: 1px 1px 5px -1px #555555;
-  }
-
   .location_checkbox {
     display: flex;
-    width: 95px;
+    width: 40px;
     height: 40px;
-    border: 0.5px solid lightgray;
-    border-radius: 4px;
-    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    justify-content: center;
     align-items: center;
-    box-shadow: 1px 1px 5px 0px #e2e2e2;
+    box-shadow: 1px 1px 5px 0px #222;
+    transition: all 0.1s ease-in;
+
     cursor: pointer;
   }
 
-  .location_checkbox:hover {
-    background-color: #fff5fb;
+  .location_checkbox:hover .checkbox-span {
+    transform: translateY(-2px);
   }
 
   .location_search_area input {
@@ -98,13 +87,19 @@ const BodyContainer = styled.div`
   .period_search_button {
     width: 50px;
     height: 30px;
-    margin: 10px 15px;
-    background-color: #fff;
-    border: 0.5px solid lightgray;
+    margin: 16px 0;
+    background-color: #222;
+    border: none;
     border-radius: 5px;
+    color: white;
     align-self: flex-end;
     cursor: pointer;
-    box-shadow: 1px 1px 5px 0px #e2e2e2;
+    box-shadow: 1px 1px 5px 0px #222;
+    transition: all 0.1s ease-in;
+    &:hover {
+      background: royalblue;
+      box-shadow: 1px 1px 5px 0px #222;
+    }
   }
 
   /* 계절별 검색 */
@@ -162,6 +157,9 @@ const CategoryList = styled.ul`
   justify-content: center;
   padding: 5px;
   margin: 7px 0;
+  @media screen and (max-width: 769px) {
+    top: 6vh;
+  }
 `;
 const CategoryItem = styled.li`
   display: list-item;
@@ -183,9 +181,53 @@ const SearchItem = styled.button`
   align-items: center;
   cursor: pointer;
   box-shadow: 1px 1px 4px 0px #555555;
-  :hover {
+  &:hover {
     color: #0475f4;
   }
+  &:focus {
+    color: #0475f4;
+    outline: none;
+  }
+`;
+const CategoryBox = styled.div`
+  box-sizing: border-box;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 60px;
+  left: 4px;
+  width: 184px;
+  height: 360px;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px -1px #222;
+  .checkbox {
+    display: none;
+  }
+  .checkbox-span {
+    transition: all 0.1s ease-in;
+  }
+  .checkbox:checked + .checkbox-span {
+    color: #0475f4;
+  }
+  @media screen and (max-width: 769px) {
+    left: 52px;
+    top: 7vh;
+  }
+`;
+const RegionBox = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 64px);
+  grid-template-rows: repeat(3, 64px);
+  width: calc(100% - 16px);
+  height: 100px;
+  padding: 8px;
+`;
+const TimeBox = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 const ButtonBox = styled.div`
   width: 30px;
@@ -266,121 +308,135 @@ const FestivalSearchCategory = ({ setPropsData }) => {
         {/* 지역별 검색 */}
         {isOpenLocation && (
           <div>
-            <div className="location_checkbox_area">
-              <label htmlFor="서울">
-                <div className="location_checkbox">
-                  <input
-                    type="checkbox"
-                    id="서울"
-                    onChange={locationCheckboxChange}
-                    checked={selectedLocations.includes("서울")}
-                  />
-                  <span>서울</span>
-                </div>
-              </label>
-              <label htmlFor="경기도">
-                <div className="location_checkbox">
-                  <input
-                    type="checkbox"
-                    id="경기도"
-                    onChange={locationCheckboxChange}
-                    checked={selectedLocations.includes("경기도")}
-                  />
-                  <span>경기</span>
-                </div>
-              </label>
-              <label htmlFor="강원도">
-                <div className="location_checkbox">
-                  <input
-                    type="checkbox"
-                    id="강원도"
-                    onChange={locationCheckboxChange}
-                    checked={selectedLocations.includes("강원도")}
-                  />
-                  <span>강원</span>
-                </div>
-              </label>
-              <label htmlFor="충청북도">
-                <div className="location_checkbox">
-                  <input
-                    type="checkbox"
-                    id="충청북도"
-                    onChange={locationCheckboxChange}
-                    checked={selectedLocations.includes("충청북도")}
-                  />
-                  <span>충북</span>
-                </div>
-              </label>
-              <label htmlFor="충청남도">
-                <div className="location_checkbox">
-                  <input
-                    type="checkbox"
-                    id="충청남도"
-                    onChange={locationCheckboxChange}
-                    checked={selectedLocations.includes("충청남도")}
-                  />
-                  <span>충남</span>
-                </div>
-              </label>
-              <label htmlFor="경상북도">
-                <div className="location_checkbox">
-                  <input
-                    type="checkbox"
-                    id="경상북도"
-                    onChange={locationCheckboxChange}
-                    checked={selectedLocations.includes("경상북도")}
-                  />
-                  <span>경북</span>
-                </div>
-              </label>
-              <label htmlFor="경상남도">
-                <div className="location_checkbox">
-                  <input
-                    type="checkbox"
-                    id="경상남도"
-                    onChange={locationCheckboxChange}
-                    checked={selectedLocations.includes("경상남도")}
-                  />
-                  <span>경남</span>
-                </div>
-              </label>
-              <label htmlFor="전라북도">
-                <div className="location_checkbox">
-                  <input
-                    type="checkbox"
-                    id="전라북도"
-                    onChange={locationCheckboxChange}
-                    checked={selectedLocations.includes("전라북도")}
-                  />
-                  <span>전북</span>
-                </div>
-              </label>
-              <label htmlFor="전라남도">
-                <div className="location_checkbox">
-                  <input
-                    type="checkbox"
-                    id="전라남도"
-                    onChange={locationCheckboxChange}
-                    checked={selectedLocations.includes("전라남도")}
-                  />
-                  <span>전남</span>
-                </div>
-              </label>
-              <label htmlFor="제주도">
-                <div className="location_checkbox">
-                  <input
-                    type="checkbox"
-                    id="제주도"
-                    onChange={locationCheckboxChange}
-                    checked={selectedLocations.includes("제주도")}
-                  />
-                  <span>제주</span>
-                </div>
-              </label>
+            <CategoryBox className="location_checkbox_area">
+              <RegionBox>
+                <label htmlFor="서울">
+                  <div className="location_checkbox">
+                    <input
+                      className="checkbox"
+                      type="checkbox"
+                      id="서울"
+                      onChange={locationCheckboxChange}
+                      checked={selectedLocations.includes("서울")}
+                    />
+                    <span className="checkbox-span">서울</span>
+                  </div>
+                </label>
+                <label htmlFor="경기도">
+                  <div className="location_checkbox">
+                    <input
+                      className="checkbox"
+                      type="checkbox"
+                      id="경기도"
+                      onChange={locationCheckboxChange}
+                      checked={selectedLocations.includes("경기도")}
+                    />
+                    <span className="checkbox-span">경기</span>
+                  </div>
+                </label>
+                <label htmlFor="강원도">
+                  <div className="location_checkbox">
+                    <input
+                      className="checkbox"
+                      type="checkbox"
+                      id="강원도"
+                      onChange={locationCheckboxChange}
+                      checked={selectedLocations.includes("강원도")}
+                    />
+                    <span className="checkbox-span">강원</span>
+                  </div>
+                </label>
+                <label htmlFor="충청북도">
+                  <div className="location_checkbox">
+                    <input
+                      className="checkbox"
+                      type="checkbox"
+                      id="충청북도"
+                      onChange={locationCheckboxChange}
+                      checked={selectedLocations.includes("충청북도")}
+                    />
+                    <span className="checkbox-span">충북</span>
+                  </div>
+                </label>
+                <label htmlFor="충청남도">
+                  <div className="location_checkbox">
+                    <input
+                      className="checkbox"
+                      type="checkbox"
+                      id="충청남도"
+                      onChange={locationCheckboxChange}
+                      checked={selectedLocations.includes("충청남도")}
+                    />
+                    <span className="checkbox-span">충남</span>
+                  </div>
+                </label>
+                <label htmlFor="경상북도">
+                  <div className="location_checkbox">
+                    <input
+                      className="checkbox"
+                      type="checkbox"
+                      id="경상북도"
+                      onChange={locationCheckboxChange}
+                      checked={selectedLocations.includes("경상북도")}
+                    />
+                    <span className="checkbox-span">경북</span>
+                  </div>
+                </label>
+                <label htmlFor="경상남도">
+                  <div className="location_checkbox">
+                    <input
+                      className="checkbox"
+                      type="checkbox"
+                      id="경상남도"
+                      onChange={locationCheckboxChange}
+                      checked={selectedLocations.includes("경상남도")}
+                    />
+                    <span className="checkbox-span">경남</span>
+                  </div>
+                </label>
+                <label htmlFor="전라북도">
+                  <div className="location_checkbox">
+                    <input
+                      className="checkbox"
+                      type="checkbox"
+                      id="전라북도"
+                      onChange={locationCheckboxChange}
+                      checked={selectedLocations.includes("전라북도")}
+                    />
+                    <span className="checkbox-span">전북</span>
+                  </div>
+                </label>
+                <label htmlFor="전라남도">
+                  <div className="location_checkbox">
+                    <input
+                      className="checkbox"
+                      type="checkbox"
+                      id="전라남도"
+                      onChange={locationCheckboxChange}
+                      checked={selectedLocations.includes("전라남도")}
+                    />
+                    <span className="checkbox-span">전남</span>
+                  </div>
+                </label>
+                <label htmlFor="제주도">
+                  <div className="location_checkbox">
+                    <input
+                      className="checkbox"
+                      type="checkbox"
+                      id="제주도"
+                      onChange={locationCheckboxChange}
+                      checked={selectedLocations.includes("제주도")}
+                    />
+                    <span className="checkbox-span">제주</span>
+                  </div>
+                </label>
+              </RegionBox>
 
-              <div>
-                <div>
-                  <label>축제 시작일</label>
+              <TimeBox>
+                <div style={{ marginBottom: "4px" }}>
+                  <label style={{ fontSize: "14px", marginRight: "4px" }}>
+                    시작일
+                  </label>
                   <input
                     type="date"
                     onChange={(e) => {
@@ -389,7 +445,9 @@ const FestivalSearchCategory = ({ setPropsData }) => {
                   ></input>
                 </div>
                 <div>
-                  <label>축제 종료일</label>
+                  <label style={{ fontSize: "14px", marginRight: "4px" }}>
+                    종료일
+                  </label>
                   <input
                     type="date"
                     onChange={(e) => {
@@ -403,8 +461,8 @@ const FestivalSearchCategory = ({ setPropsData }) => {
                 >
                   검색
                 </button>
-              </div>
-            </div>
+              </TimeBox>
+            </CategoryBox>
           </div>
         )}
       </div>

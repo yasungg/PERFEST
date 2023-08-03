@@ -37,28 +37,28 @@ const NaverMap = () => {
     setMap(map);
 
     // 맵 컨트롤러
-    const mapOptions = {
-      zoomControl: true,
-      zoomControlOptions: {
-        style: naver.maps.ZoomControlStyle.SMALL,
-        position: naver.maps.Position.RIGHT_CENTER,
-      },
-    };
-    if (window.matchMedia("(max-width: 1024px)").matches) {
-      mapOptions.zoomControl = false;
-    }
-    map.setOptions(mapOptions);
+    // const mapOptions = {
+    //   zoomControl: true,
+    //   zoomControlOptions: {
+    //     style: naver.maps.ZoomControlStyle.SMALL,
+    //     position: naver.maps.Position.RIGHT_CENTER,
+    //   },
+    // };
+    // if (window.matchMedia("(max-width: 1024px)").matches) {
+    //   mapOptions.zoomControl = false;
+    // }
+    // map.setOptions(mapOptions);
 
-    const handleResize = () => {
-      if (window.matchMedia("(max-width: 1024px)").matches) {
-        mapOptions.zoomControl = false;
-      } else {
-        mapOptions.zoomControl = true;
-      }
-      map.setOptions(mapOptions);
-    };
+    // const handleResize = () => {
+    //   if (window.matchMedia("(max-width: 1024px)").matches) {
+    //     mapOptions.zoomControl = false;
+    //   } else {
+    //     mapOptions.zoomControl = true;
+    //   }
+    //   map.setOptions(mapOptions);
+    // };
 
-    window.addEventListener("resize", handleResize);
+    // window.addEventListener("resize", handleResize);
 
     //검색 결과가 들어온 만큼 마커를 찍어줌
     for (let i = 0; i < contextLatitude.length; i++) {
@@ -110,10 +110,9 @@ const NaverMap = () => {
     }
     setMarker(markers);
     setInfoWindow(infoWindows);
-    return() => {
-      window.removeEventListener("resize", handleResize);
+    return () => {
+      // window.removeEventListener("resize", handleResize);
     };
-    
   }, [centerLatitude, contextLatitude, contextLongitude, contextFstvlNm]);
 
   return (

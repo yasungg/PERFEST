@@ -28,7 +28,7 @@ public class Community {
     @OneToMany(mappedBy = "community", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MemberLike> memberLikes = new ArrayList<>();
 
-    @Column(name = "community_img")
+    @Column(name = "community_img", length = 500)
     private String communityImgLink;
 
     @Column(name = "community_category")

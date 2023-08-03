@@ -4,7 +4,6 @@ const AdminAPI = {
   GetMemberList: async (pageNumber) => {
     const Authorization =
       "Bearer " + window.localStorage.getItem("accessToken");
-    console.log(Authorization);
 
     return await axios.get(
       `/admin-member/get-member-all?pageNumber=${pageNumber}&pageSize=25`,
@@ -19,7 +18,6 @@ const AdminAPI = {
   SearchMember: async (keyword) => {
     const Authorization =
       "Bearer " + window.localStorage.getItem("accessToken");
-    console.log(Authorization);
 
     return await axios.get(
       `/admin-member/get-member-searchresult?keyword=${keyword}`,
@@ -34,7 +32,6 @@ const AdminAPI = {
   GetOut: async (memberIds, isEnabled) => {
     const Authorization =
       "Bearer " + window.localStorage.getItem("accessToken");
-    console.log(Authorization);
 
     const changeSet = {
       memberIds: memberIds,
@@ -51,7 +48,6 @@ const AdminAPI = {
   GetResultForGetOut: async (memberIds) => {
     const Authorization =
       "Bearer " + window.localStorage.getItem("accessToken");
-    console.log(Authorization);
 
     const data = {
       memberIds: memberIds,

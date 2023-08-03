@@ -1,6 +1,6 @@
 import Logo from "../images/PERFEST LOGO BLACK.png";
 import styled from "styled-components";
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 const Slider1 = styled.div`
   display: flex;

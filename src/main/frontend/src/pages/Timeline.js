@@ -5,6 +5,9 @@ import HistoryItem from "./HistoryItem";
 import TimelineLoader from "./TimelineLoader";
 
 const TimelineWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
   height: 100%;
   overflow-x: visible;
@@ -84,9 +87,6 @@ const Timeline = () => {
           <TimelineLoader noticeInfo={noticeInfo} />
         ) : (
           <Timelines>
-            <li className="date_block">
-              <span className="date"> 알람 </span>
-            </li>
             {noticeInfo &&
               noticeInfo.map((notice, key) => (
                 <HistoryItem key={key} data={notice} />

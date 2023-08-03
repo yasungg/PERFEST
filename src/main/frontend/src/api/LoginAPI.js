@@ -11,9 +11,6 @@ const LoginAPI = {
 
     const Authorization =
       "Bearer " + window.localStorage.getItem("accessToken");
-    console.log(Authorization);
-    console.log(stringified);
-    console.log(requestBody);
 
     return await axios
       .post(`/auth/member/login`, stringified, {
@@ -31,6 +28,7 @@ const LoginAPI = {
   Logout: async () => {
     const Authorization =
       "Bearer " + window.localStorage.getItem("accessToken");
+
     return await axios
       .get(`/logout/bye`, {
         headers: {

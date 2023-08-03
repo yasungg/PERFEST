@@ -4,14 +4,14 @@ import RankingAPI from "../api/RankingAPI";
 import { useState } from "react";
 import { useEffect } from "react";
 import Header from "../components/Header";
-
+import Footer from "../components/Footer";
 const RankContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 50px; 
-  height: 100%; 
+  padding: 50px;
+  height: 100%;
 `;
 
 const RankingCategory = styled.div`
@@ -26,7 +26,7 @@ const RankButton = styled.div`
 
   label {
     display: inline-block;
-    padding: 10px 20px; 
+    padding: 10px 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: #f0f0f0;
@@ -108,40 +108,41 @@ const Ranking = () => {
     getBadgeRanking();
   }, []);
   return (
-      <Container justifyContent="center" alignItems="center">
-        <Header/>
-        <BodyContainer>
-          <RankContainer>
-            <RankingCategory>
-              <RankButton onClick={getBadgeRanking}>
-                <input type="radio" name="rankingCategory" id="badge" />
-                <label htmlFor="badge">뱃지 랭킹</label>
-              </RankButton>
-              <RankButton onClick={getRichRanking}>
-                <input type="radio" name="rankingCategory" id="rich" />
-                <label htmlFor="rich">큰손 랭킹</label>
-              </RankButton>
-            </RankingCategory>
-            <RankingDesc>
-              {isGetBadgeRankingClicked
-                  ? badgeRanking.map((badgeRank) => (
-                      <BadgeRankInfo key={`badge-${badgeRank.memberId}`}>
-                        <RankingRank>{badgeRank.rank}</RankingRank>
-                        <RankingNickName>{badgeRank.nickname}</RankingNickName>
-                        <RankingNum>{badgeRank.badges}</RankingNum>
-                      </BadgeRankInfo>
-                  ))
-                  : richRanking.map((richRank) => (
-                      <BadgeRankInfo key={`rich-${richRank.memberId}`}>
-                        <RankingRank>{richRank.rank}</RankingRank>
-                        <RankingNickName>{richRank.nickname}</RankingNickName>
-                        <RankingNum>{richRank.totalPrice}</RankingNum>
-                      </BadgeRankInfo>
-                  ))}
-            </RankingDesc>
-          </RankContainer>
-        </BodyContainer>
-      </Container>
+    <Container justifyContent="center" alignItems="center">
+      <Header />
+      <BodyContainer>
+        <RankContainer>
+          <RankingCategory>
+            <RankButton onClick={getBadgeRanking}>
+              <input type="radio" name="rankingCategory" id="badge" />
+              <label htmlFor="badge">뱃지 랭킹</label>
+            </RankButton>
+            <RankButton onClick={getRichRanking}>
+              <input type="radio" name="rankingCategory" id="rich" />
+              <label htmlFor="rich">큰손 랭킹</label>
+            </RankButton>
+          </RankingCategory>
+          <RankingDesc>
+            {isGetBadgeRankingClicked
+              ? badgeRanking.map((badgeRank) => (
+                  <BadgeRankInfo key={`badge-${badgeRank.memberId}`}>
+                    <RankingRank>{badgeRank.rank}</RankingRank>
+                    <RankingNickName>{badgeRank.nickname}</RankingNickName>
+                    <RankingNum>{badgeRank.badges}</RankingNum>
+                  </BadgeRankInfo>
+                ))
+              : richRanking.map((richRank) => (
+                  <BadgeRankInfo key={`rich-${richRank.memberId}`}>
+                    <RankingRank>{richRank.rank}</RankingRank>
+                    <RankingNickName>{richRank.nickname}</RankingNickName>
+                    <RankingNum>{richRank.totalPrice}</RankingNum>
+                  </BadgeRankInfo>
+                ))}
+          </RankingDesc>
+        </RankContainer>
+      </BodyContainer>
+      <Footer />
+    </Container>
   );
 };
 
