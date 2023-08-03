@@ -42,7 +42,7 @@ const PayReady = () => {
         // 상품 수량
         quantity: state.productQuantity,
         // 총 가격
-        total_amount: (state.productPrice).toString(),
+        total_amount: state.productPrice,
         // 상품 비과세
         tax_free_amount: 0,
         // 결제 성공시 URL
