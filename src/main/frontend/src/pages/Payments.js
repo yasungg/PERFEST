@@ -46,11 +46,11 @@ const PayReady = () => {
         // 상품 비과세
         tax_free_amount: 0,
         // 결제 성공시 URL
-        approval_url: "http://localhost:3000/page/payresult",
+        approval_url: "http://localhost:8111/pages/payresult",
         // 결제 실패시 URL
-        fail_url: "http://localhost:3000/page/resultfail",
+        fail_url: "http://localhost:8111/pages/resultfail",
         // 결제 취소시 URL
-        cancel_url: "http://localhost:3000/page/resultfail"
+        cancel_url: "http://localhost:8111/pages/resultfail"
     }
   });
   setQuantity(state.productQuantity);
@@ -88,7 +88,7 @@ const PayReady = () => {
       window.localStorage.removeItem("tid");
       window.localStorage.removeItem("url");
       // 결제 준비 통신 실패할 경우 이동할 페이지 정해줘야 함
-      navigate("/page/resultFail");
+      navigate("/pages/resultFail");
     });
   }, []);
 }
@@ -180,7 +180,7 @@ const PayResult = () => {
       const response = await PaymentAPI.PaymentSubmit(memberId, productId, payment.price, payment.quantity, payment.tid, payment.kakaoTaxFreeAmount)
       if(response.status === 200) {
         // 카카오페이와 DB전송까지 완료
-        navigate("/resultSuccess", {state: response.data});
+        navigate("/pages/resultSuccess", {state: response.data});
         window.localStorage.removeItem("tid");
       }
     };
