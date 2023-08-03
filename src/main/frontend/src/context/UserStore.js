@@ -10,6 +10,10 @@ const UserStore = ({ children }) => {
   const [userEmail, setUserEmail] = useState("qhwkal1@naver.com");
   const [isSidebar, setIsSidebar] = useState("-400px");
   const [isLogin, setIsLogin] = useState(false);
+  const [productId, setProductId] = useState("");
+  const [memberId, setMemberId] = useState("");
+  const [price, setPrice] = useState("");
+  const [quantity, setQuantity] = useState("");
 
   //관리자 페이지 상태관리용 useState
   const [isAdminBadgeSidebar, setIsAdminBadgeSidebar] = useState("-400px");
@@ -143,6 +147,14 @@ const UserStore = ({ children }) => {
     setContextFstvlLike,
     detailComponentValue,
     setDetailComponentValue,
+    productId,
+    setProductId,
+    memberId,
+    setMemberId,
+    price,
+    setPrice,
+    quantity,
+    setQuantity
   };
 
   return (

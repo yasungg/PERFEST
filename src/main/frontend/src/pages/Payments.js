@@ -8,9 +8,23 @@ import PayModal from "./PaycancelModal"
 import check from '../images/check.png'
 import cancel from '../images/cancel.png'
 
+const modalChildren = {
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center"
+}
+const fontStyle = {
+  fontSize: "1.3rem",
+  margin: "5px"
+}
+
 const PayReady = () => {
   const context = useContext(UserContext);
+  const {setPrice, setQuantity, setProductId } = context;
   const navigate = useNavigate();
+  const location = useLocation();
+  const state = location;
   // 카카오페이로 보내려는 데이터 작성
   let [data, setData] = useState({
     next_redirect_pc_url: "",
@@ -24,21 +38,24 @@ const PayReady = () => {
         // 가맹점 회원 id
         partner_user_id: "partner_user_id",
         // 상품 이름
-        item_name: "test",
+        item_name: state.productName,
         // 상품 수량
-        quantity: 1,
+        quantity: state.productQuantity,
         // 총 가격
-        total_amount: (2000).toString(),
+        total_amount: (state.productPrice).toString(),
         // 상품 비과세
         tax_free_amount: 0,
         // 결제 성공시 URL
-        approval_url: "http://localhost:3000/payresult",
+        approval_url: "http://localhost:3000/page/payresult",
         // 결제 실패시 URL
-        fail_url: "http://localhost:3000/resultfail",
+        fail_url: "http://localhost:3000/page/resultfail",
         // 결제 취소시 URL
-        cancel_url: "http://localhost:3000/resultfail"
+        cancel_url: "http://localhost:3000/page/resultfail"
     }
   });
+  setQuantity(state.productQuantity);
+  setPrice(state.productPrice);
+  setProductId(state.Id);
   // 결제 준비 API를 통해 상세 정보를 카카오페이 서버에 전달하고 결제 고유 번호(TID)를 받는 단계.
   // 어드민 키를 헤더에 담아 파라미터 값들과 함께 POST로 요청.
   useEffect(() => {
@@ -71,7 +88,7 @@ const PayReady = () => {
       window.localStorage.removeItem("tid");
       window.localStorage.removeItem("url");
       // 결제 준비 통신 실패할 경우 이동할 페이지 정해줘야 함
-      navigate("/resultFail");
+      navigate("/page/resultFail");
     });
   }, []);
 }
@@ -81,12 +98,14 @@ const PayReady = () => {
 // 결제 대기 화면은 결제 준비 API 요청 시 전달 받은 approval_url에 pg_token 파라미터를 붙여 리다이렉트.
 // pg_token은 결제 승인 API 호출 시 사용
 const PayResult = () => {
+  const context = useContext(UserContext);
+  const {price, quantity, productId } = context;
   // 초기값 셋팅, 결제준비에서 받아온 tid 셋팅
   const [payment, setPayment] = useState({
     // 가격
-    price : 0,
+    price : price,
     // 수량
-    quantity : 0,
+    quantity : quantity,
     // 카카오 비과세 취소할 때 필요해서 결제할 때 백에다 정보를 넘겨주고 취소할 때 필요하면 다시 받아서 취소
     kakaoTaxFreeAmount : 0,
     // 위에서 받아옴
@@ -142,12 +161,14 @@ const PayResult = () => {
         kakaoTaxFreeAmount : responseData.amount.tax_free
       });
       // url을 이용하여 해당 결제로 돌아올 수 없도록 삭제
-      window.localStorage.removeItem('url')
+      window.localStorage.removeItem('url');
       // 성공할 경우
       setIsTrue(true);
     }).catch(error => {
       // 실패하면 결제 고유번호와 url을 지워줌
+      window.localStorage.removeItem('url');
       window.localStorage.removeItem("tid");
+
     });
   },[]);
 
@@ -156,7 +177,6 @@ const PayResult = () => {
   useEffect(() => {
     const PaymentResult = async() => {
       const memberId = 1;
-      const productId = 1;
       const response = await PaymentAPI.PaymentSubmit(memberId, productId, payment.price, payment.quantity, payment.tid, payment.kakaoTaxFreeAmount)
       if(response.status === 200) {
         // 카카오페이와 DB전송까지 완료
@@ -175,8 +195,7 @@ const PayResult = () => {
 const PayCancel = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const {memberId, productId, paymentId} = location.state;
-
+  const state = location;
   // DB에 상품 결제 내역이 있는 지 먼저 통신 한 뒤, 결제 내역이 있는 경우에
   // 카카오페이 결제 취소 api를 실행하기 위한 useState
   const [isCancel, setIsCancel] = useState(false);
@@ -193,13 +212,15 @@ const PayCancel = () => {
     params : {
       cid : "",
       tid : "",
-      quantity : 0,
-      cancel_amount : 0,
+      quantity : state.quantity,
+      cancel_amount : state.price,
       cancel_tax_free_amount : 0
     }
   });
+  const {memberId, productId, paymentId} = state;
 
   useEffect(() => {
+    openModal(true);
     const getData = async() => {
       const response = await PaymentAPI.CheckPaymentData(memberId, productId, paymentId);
       // const cancelStatus = response.data[0].paymentStatus;
@@ -220,7 +241,7 @@ const PayCancel = () => {
         });
         setIsCancel(true);
       } else {
-        openModal();
+        openModal(true);
       }
     }
     getData();
@@ -240,7 +261,7 @@ const PayCancel = () => {
       }).then(() => {
         setIsKakao(true);
       }).catch(() => {
-        openModal();
+        openModal(true);
       });
     },[isCancel]
   )
@@ -269,20 +290,20 @@ const PayCancel = () => {
 
   const success = () => {
     return(
-      <div>
+      <div style={modalChildren}>
         <img src={check} alt="check" width={"10%"} />
-        <h1>환불이 완료 됐습니다.</h1>
-        <h1 onClick={()=>{navigate("/")}}>확인을 누르면 홈화면으로 이동합니다.</h1>
+        <h1 style={fontStyle}>환불이 완료 됐습니다.</h1>
+        <h1 style={fontStyle} onClick={()=>{navigate("/")}}>확인을 누르면 홈화면으로 이동합니다.</h1>
       </div>
     )
   }
 
   const fail = () => {
     return(
-      <div>
-        <img src={cancel} alt="cancel" width={"10%"} />
-        <h1>환불요청이 취소 됐습니다.</h1>
-        <h1 onClick={()=>{navigate("/")}}>확인을 누르면 홈화면으로 이동합니다.</h1>
+      <div style={modalChildren}>
+        <img src={cancel} alt="cancel" width={"20%"} />
+        <h1 style={fontStyle}>환불요청이 취소 됐습니다.</h1>
+        <h1 style={fontStyle} onClick={()=>{navigate("/")}}>확인을 누르면 홈화면으로 이동합니다.</h1>
       </div>
     )
   }

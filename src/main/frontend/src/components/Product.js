@@ -206,12 +206,12 @@ const Product = () => {
       </AdvertisementBox>
       {product &&
         product.map((data) => (
-          <ProductBox onClick={() => console.log("여기입니다.")}>
+          <ProductBox onClick={() => navigate("/page/payready", {state : data})}>
             <ProductLeftBox>
               <ProductPictureBox>
                 <ProductPicture src={data.productImg} alt="product-picture" />
               </ProductPictureBox>
-            </ProductLeftBox>
+            </ProductLeftBox>``
             <ProductRightBox>
               <ProductDescBox>
                 <span className="title">{data.productName}</span>
