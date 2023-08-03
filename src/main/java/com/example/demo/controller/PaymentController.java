@@ -28,7 +28,6 @@ import java.util.Optional;
 @Slf4j
 @RequestMapping("/auth/payment")
 @RequiredArgsConstructor
-@CrossOrigin(value = "http://localhost:3000")
 public class PaymentController {
     private final PaymentService paymentService;
     private final MemberService memberService;
