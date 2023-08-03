@@ -21,15 +21,15 @@ const fontStyle = {
 
 const PayReady = () => {
   const context = useContext(UserContext);
-  const {setPrice, setQuantity, setProductId, productId } = context;
+  const {setPrice, setQuantity, setProductId } = context;
   const navigate = useNavigate();
   const location = useLocation();
   const state = location;
-
+  console.log(state);
   // 카카오페이로 보내려는 데이터 작성
   setQuantity(state.state.productQuantity);
   setPrice(state.state.productPrice);
-  setProductId(state.state.id);
+  setProductId(1);
 
   let [data, setData] = useState({
     next_redirect_pc_url: "",
@@ -226,7 +226,8 @@ const PayCancel = () => {
   useEffect(() => {
     openModal(true);
     const getData = async() => {
-      const response = await PaymentAPI.CheckPaymentData(memberId, productId, paymentId);
+    const productId = 1;
+      const response = await PaymentAPI.CheckPaymentData(1, 1, paymentId);
       // const cancelStatus = response.data[0].paymentStatus;
       // 취소 완료 된 결제는 다음 로직을 실행하지 않도록 하기 위해
       if(response.status === 200 ) {
@@ -281,7 +282,7 @@ const PayCancel = () => {
   // DB에 있는 결제 내역의 상태를 CANCELED로 바꾸고
   useEffect(() => {
     const deleteData = async() => {
-      const response = await PaymentAPI.DeletePaymentData(memberId, productId, paymentId)
+      const response = await PaymentAPI.DeletePaymentData(1, 1, paymentId)
       if(response.status === 200) {
         setIsChangeDB(true);
         setModalOpen(true);
