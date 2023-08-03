@@ -25,7 +25,15 @@ const PayReady = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const state = location;
+
   // 카카오페이로 보내려는 데이터 작성
+  setQuantity(state.state.productQuantity);
+  setPrice(state.state.productPrice);
+  setProductId(state.state.Id);
+  console.log(state.state);
+  console.log(state.state.productQuantity);
+  console.log(state.state.productPrice);
+
   let [data, setData] = useState({
     next_redirect_pc_url: "",
     // 결제 한 건에 대한 고유번호, 결제 준비 API가 성공적으로 호출되면 발급
@@ -38,11 +46,11 @@ const PayReady = () => {
         // 가맹점 회원 id
         partner_user_id: "partner_user_id",
         // 상품 이름
-        item_name: state.productName,
+        item_name: state.state.productName,
         // 상품 수량
-        quantity: state.productQuantity,
+        quantity: state.state.productQuantity,
         // 총 가격
-        total_amount: state.productPrice,
+        total_amount: state.state.productPrice,
         // 상품 비과세
         tax_free_amount: 0,
         // 결제 성공시 URL
@@ -53,9 +61,7 @@ const PayReady = () => {
         cancel_url: "http://localhost:8111/pages/resultfail"
     }
   });
-  setQuantity(state.productQuantity);
-  setPrice(state.productPrice);
-  setProductId(state.Id);
+
   // 결제 준비 API를 통해 상세 정보를 카카오페이 서버에 전달하고 결제 고유 번호(TID)를 받는 단계.
   // 어드민 키를 헤더에 담아 파라미터 값들과 함께 POST로 요청.
   useEffect(() => {

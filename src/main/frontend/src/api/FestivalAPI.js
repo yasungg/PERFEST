@@ -50,5 +50,16 @@ const FestivalAPI = {
       `/auth/activity/get-activity-list?festivalId=${festivalId}`
     );
   },
+  activityReservation: async(data, index) => {
+    const info = {
+      activityId : index,
+      activityPrice: data.activityPrice,
+      activityQuantity: data.activityQuantity,
+      activityName: data.activityName
+    }
+    return await axios.post(
+    `/activity/registActivityInfo`, info
+    )
+  }
 };
 export default FestivalAPI;
