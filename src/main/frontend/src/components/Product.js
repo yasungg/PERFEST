@@ -208,7 +208,7 @@ const Product = () => {
       </AdvertisementBox>
       {product &&
         product.map((data) => (
-          <ProductBox onClick={() => navigate("/page/payready", {state : data})}>
+          <ProductBox onClick={() => navigate("/pages/payready", {state : data})}>
             <ProductLeftBox>
               <ProductPictureBox>
                 <ProductPicture src={data.productImg} alt="product-picture" />
