@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { BodyContainer, Container } from "../components/StandardStyles";
 import RankingAPI from "../api/RankingAPI";
 import { useState } from "react";
+import { useEffect } from "react";
 import Header from "../components/Header";
 
 const RankContainer = styled.div`
@@ -98,13 +99,14 @@ const Ranking = () => {
     setRichRanking(response.data);
     setGetBadgeRankingClicked(false);
   };
-
   const getBadgeRanking = async () => {
     const response = await RankingAPI.GetBadgeRanking();
     setBadgeRanking(response.data);
     setGetBadgeRankingClicked(true);
   };
-
+  useEffect(() => {
+    getBadgeRanking();
+  }, []);
   return (
       <Container justifyContent="center" alignItems="center">
         <Header/>

@@ -28,7 +28,9 @@ public class RichRankingService {
         BigDecimal previousTotalPrice = memberList.get(0).getTotalPrice(); // 첫 번째 멤버의 총 가격으로 초기화
         int previousRank = 1; // 이전 순위 초기화
 
-        for (int i = 0; i < memberList.size(); i++) {
+        // Process only the top 10 members or until the end of the list if it has less than 10 members.
+        int maxEntries = Math.min(10, memberList.size());
+        for (int i = 0; i < maxEntries; i++) {
             Member member = memberList.get(i);
             RichRankingDTO richRankingDTO = new RichRankingDTO();
             richRankingDTO.setMemberId(member.getId());
