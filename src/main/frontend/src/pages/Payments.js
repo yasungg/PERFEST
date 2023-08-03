@@ -181,7 +181,7 @@ const PayResult = () => {
     const PaymentResult = async() => {
       const memberId = 1;
       console.log(memberId, productId, payment.price, payment.quantity, payment.tid, payment.kakaoTaxFreeAmount);
-      const response = await PaymentAPI.PaymentSubmit(memberId, productId, payment.price, payment.quantity, payment.tid, payment.kakaoTaxFreeAmount)
+      const response = await PaymentAPI.PaymentSubmit(1, 1, payment.price, payment.quantity, payment.tid, payment.kakaoTaxFreeAmount)
       if(response.status === 200) {
         // 카카오페이와 DB전송까지 완료
         navigate("/pages/resultSuccess", {state: response.data});
