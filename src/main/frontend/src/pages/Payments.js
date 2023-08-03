@@ -51,11 +51,11 @@ const PayReady = () => {
         // 상품 비과세
         tax_free_amount: 0,
         // 결제 성공시 URL
-        approval_url: "/pages/payresult",
+        approval_url: "http://13.125.132.119:8111/pages/payresult",
         // 결제 실패시 URL
-        fail_url: "/pages/resultfail",
+        fail_url: "http://13.125.132.119:8111/pages/resultfail",
         // 결제 취소시 URL
-        cancel_url: "/pages/resultfail"
+        cancel_url: "http://13.125.132.119:8111/pages/resultfail"
     }
   });
 
