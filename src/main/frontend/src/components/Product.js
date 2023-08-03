@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 import { Container } from "./StandardStyles";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import FestivalAPI from "../api/FestivalAPI";
+import { useNavigate } from "react-router";
 
 const AdvertisementBox = styled.div`
   box-sizing: border-box;
@@ -165,6 +166,7 @@ const ProductDescBox = styled.div`
   }
 `;
 const Product = () => {
+  const navigate = useNavigate();
   const [product, setProduct] = useState([]);
   const { detailComponentValue } = useContext(UserContext);
 
@@ -211,7 +213,7 @@ const Product = () => {
               <ProductPictureBox>
                 <ProductPicture src={data.productImg} alt="product-picture" />
               </ProductPictureBox>
-            </ProductLeftBox>``
+            </ProductLeftBox>
             <ProductRightBox>
               <ProductDescBox>
                 <span className="title">{data.productName}</span>
