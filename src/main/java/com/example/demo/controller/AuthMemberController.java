@@ -13,24 +13,25 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/auth/member")
 public class AuthMemberController {
     private final MemberService memberService;
-    private final MemberRepository memberRepository;
-    private final ContextGetter info;
+
     @PostMapping("/signup")
-    ResponseEntity<MemberResponseDTO> signup(@RequestBody MemberRequestDTO memberRequestDTO) {
+    ResponseEntity<MemberResponseDTO> signup(@Valid @RequestBody MemberRequestDTO memberRequestDTO) {
         return ResponseEntity.ok(memberService.signup(memberRequestDTO));
     }
     @PostMapping("/kakaosignup")
-    ResponseEntity<MemberResponseDTO> kakaosignup(@RequestBody MemberRequestDTO memberRequestDTO) {
+    ResponseEntity<MemberResponseDTO> kakaosignup(@Valid @RequestBody MemberRequestDTO memberRequestDTO) {
         return ResponseEntity.ok(memberService.kakaoSignup(memberRequestDTO));
     }
     @PostMapping("/login")
-    public ResponseEntity<TokenDTO> login(@RequestBody MemberRequestDTO requestDto) {
+    public ResponseEntity<TokenDTO> login(@Valid @RequestBody MemberRequestDTO requestDto) {
         return ResponseEntity.ok(memberService.login(requestDto));
     }
 }

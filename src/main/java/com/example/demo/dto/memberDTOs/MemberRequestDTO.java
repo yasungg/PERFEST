@@ -7,6 +7,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -15,7 +18,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class MemberRequestDTO {
+
+    @NotBlank(message = "e-mail을 입력하세요.")
+    @Email(message = "올바른 이메일 형식을 입력해 주세요.")
     private String username;
+
+    @NotBlank(message = "비밀번호를 입력하세요.")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*])[A-Za-z\\d!@#$%^&*]{10,}$", message = "비밀번호는 영문 대, 소문자와 숫자, 특수기호를 포함한 10자리 이상의 문자입니다.")
     private String password;
     private String nickname;
     private String memberName;

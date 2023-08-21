@@ -13,14 +13,14 @@ import java.util.List;
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application.properties")
 class ProductRepositoryTest {
-//    @Autowired
-//    ProductRepository productRepository;
-//    @Test
-//    @DisplayName("product find by festivalId")
-//    void findByFestvialId() {
-//        List<ProductDTO> result = productRepository.findByFestivalId(1L);
-//        for(ProductDTO rst : result) {
-//            System.out.println(rst.getId());
-//        }
-//    }
+    @Autowired
+    ProductRepository productRepository;
+    @Test
+    @DisplayName("product find by festivalId")
+    void findByFestvialId() {
+        List<ProductDTO> result = productRepository.findByFestivalId(1L);
+        for(ProductDTO rst : result) {
+            System.out.println(rst.getId());
+        }
+    }
 }

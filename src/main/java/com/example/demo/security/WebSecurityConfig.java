@@ -35,9 +35,8 @@ public class WebSecurityConfig implements WebMvcConfigurer{
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .httpBasic().disable() // HTTP 기본 인증을 하지 않도록 설정
-                .csrf().disable() // 위변조 관련 보호 정책을 비활성화
-                //세션을 사용하지 않고, 상태를 유지하지 않는 세션 관리 정책을 설정
+                .httpBasic().disable()
+                .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
                 .and()
@@ -47,7 +46,6 @@ public class WebSecurityConfig implements WebMvcConfigurer{
 
                 .and()
                 .authorizeRequests()
-                //해당 경로에 대해 인증 없이 접근을 허용
                 .antMatchers("/auth/**", "/koauth/**", "/pages/**", "/js/**", "/css/**", "/media/**", "/public/**", "/build/**").permitAll()
                 .antMatchers("/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger/**", "/sign-api/exception").permitAll()
                 .antMatchers("/", "/static/**").permitAll()
@@ -61,11 +59,8 @@ public class WebSecurityConfig implements WebMvcConfigurer{
                 .clearAuthentication(true)
                 .logoutSuccessHandler(new PerfestLogoutSuccessHandler())
 
-
                 .and()
                 .apply(new JwtSecurityConfig(tokenProvider, session));
-
         return http.build();
     }
-
 }

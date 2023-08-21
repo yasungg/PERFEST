@@ -1,9 +1,7 @@
 package com.example.demo.security;
 
-import com.example.demo.jwt.JwtExceptionFilter;
 import com.example.demo.jwt.JwtFilter;
 import com.example.demo.jwt.TokenProvider;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,7 +16,7 @@ public class JwtSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurity
     private final HttpSession session;
     @Override
     public void configure(HttpSecurity http) {
-        JwtFilter jwtFilter= new JwtFilter(tokenProvider, session);
+        JwtFilter jwtFilter = new JwtFilter(tokenProvider, session);
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }

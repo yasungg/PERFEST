@@ -25,7 +25,7 @@ public class PerfestKakaoAuthenticationProvider implements AuthenticationProvide
         throw new LockedException(memberId);
         } else if(!userDetails.isEnabled()) {					//계정이 비활성화된 경우
             log.info("3");
-        throw new DisabledException(memberId);
+        throw new DisabledException(memberId + "는 비활성화된 계정입니다!");
         } else if(!userDetails.isAccountNonExpired()) {			//계정이 만료된 경우
             log.info("4");
         throw new AccountExpiredException(memberId);

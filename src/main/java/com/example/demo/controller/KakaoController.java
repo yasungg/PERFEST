@@ -15,7 +15,6 @@ import java.nio.charset.StandardCharsets;
 @Slf4j
 @RequiredArgsConstructor
 @Controller
-//@CrossOrigin(originPatterns = "*", allowedHeaders= "*")
 @RequestMapping("/koauth/login")
 public class KakaoController {
     private final KakaoLoginService kakaoLoginService;

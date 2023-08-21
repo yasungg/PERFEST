@@ -14,7 +14,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 @RequestMapping("/auth/product")
-@CrossOrigin(value = "http://localhost:3000")
 public class ProductController {
     private final ProductService productService;
 
