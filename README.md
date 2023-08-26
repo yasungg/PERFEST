@@ -1,12 +1,15 @@
-<img src="./IMG/PERFEST LOGO BLACK.png"  width="700">
+<div align="center">
+  <img src="./IMG/PERFEST LOGO BLACK.png"  width="700">
+</div>
 
 ## 👀 프로젝트 소개
 
 <br>
 
 ### ARCHITECTURE
-
-<img src="./IMG/PERFEST ARCHITECTURE.png"  width="700" height="400">
+<div align="center">
+  <img src="./IMG/PERFEST ARCHITECTURE.png"  width="700" height="400">
+</div>
 공공 데이터 API를 활용해 전국의 축제 데이터를 받아와 유저가 한 눈에 간편하게 확인할 수 있도록 정보를 제공, 관련 상품 결제와 커뮤니티 기능도 이용할 수 있는 축제 커뮤니티 사이트입니다.
 
 [PERFEST 바로가기](http://13.125.132.119:8111)
