@@ -8,7 +8,7 @@
 
 ### ARCHITECTURE
 <div align="center">
-  <img src="./IMG/PERFEST ARCHITECTURE.png"  width="700" height="400">
+  <img src="./IMG/PERFEST ARCHITECTURE.png"  width="700" height="480">
 </div>
 공공 데이터 API를 활용해 전국의 축제 데이터를 받아와 유저가 한 눈에 간편하게 확인할 수 있도록 정보를 제공, 관련 상품 결제와 커뮤니티 기능도 이용할 수 있는 축제 커뮤니티 사이트입니다.
 
