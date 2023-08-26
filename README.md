@@ -6,10 +6,10 @@
 
 ### ARCHITECTURE
 
-<img src="./IMG/PERFEST ARCHITECTURE.png"  width="700" height="370">
+<img src="./IMG/PERFEST ARCHITECTURE.png"  width="700" height="400">
 공공 데이터 API를 활용해 전국의 축제 데이터를 받아와 유저가 한 눈에 간편하게 확인할 수 있도록 정보를 제공, 관련 상품 결제와 커뮤니티 기능도 이용할 수 있는 축제 커뮤니티 사이트입니다.
 
-[페이지 바로가기](http://13.125.132.119:8111)
+[PERFEST 바로가기](http://13.125.132.119:8111)
 
 ## 🏃‍♀️ 개발 기간
 
@@ -37,23 +37,15 @@
 
 ### Frontend
 
-<img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=HTML5&logoColor=white"/>
-<img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=CSS3&logoColor=white"/>
-<img src="https://img.shields.io/badge/Javascript-F7DF1E?style=flat&logo=Javascript&logoColor=white"/>
-<img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=white"/>
-<img src="https://img.shields.io/badge/StyledComponents-DB7093?style=flat&logo=styledcomponents&logoColor=white"/>
+<img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=HTML5&logoColor=white"/> <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=CSS3&logoColor=white"/> <img src="https://img.shields.io/badge/Javascript-F7DF1E?style=flat&logo=Javascript&logoColor=white"/> <img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=white"/> <img src="https://img.shields.io/badge/StyledComponents-DB7093?style=flat&logo=styledcomponents&logoColor=white"/>
 
 ### Backend
 
-<img src="https://img.shields.io/badge/Java-4479A1?style=flat&logo=coffeescript&logoColor=white"/>
-<img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=flat&logo=springboot&logoColor=white"/>
-<img src="https://img.shields.io/badge/SpringSecurity-6DB33F?style=flat&logo=springsecurity&logoColor=white"/>
-<img src="https://img.shields.io/badge/Junit5-25A162?style=flat&logo=junit5&logoColor=white"/>
+<img src="https://img.shields.io/badge/Java-4479A1?style=flat&logo=coffeescript&logoColor=white"/> <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=flat&logo=springboot&logoColor=white"/> <img src="https://img.shields.io/badge/SpringSecurity-6DB33F?style=flat&logo=springsecurity&logoColor=white"/> <img src="https://img.shields.io/badge/Junit5-25A162?style=flat&logo=junit5&logoColor=white"/>
 
 ### DB
 
-<img src="https://img.shields.io/badge/mySQL-4479A1?style=flat&logo=a&logoColor=white"/>
-<img src="https://img.shields.io/badge/Firebase-FFA000?style=flat&logo=a&logoColor=white"/>
+<img src="https://img.shields.io/badge/mySQL-4479A1?style=flat&logo=a&logoColor=white"/> <img src="https://img.shields.io/badge/Firebase-FFA000?style=flat&logo=a&logoColor=white"/>
 
 ### WebServer
 
@@ -69,13 +61,11 @@
 
 ### Tools
 
-<img src="https://img.shields.io/badge/Intellij-000000?style=flat&logo=intellijidea&logoColor=white"/>
-<img src="https://img.shields.io/badge/VS Code-007ACC?style=flat&logo=visualstudiocode&logoColor=white"/>
+<img src="https://img.shields.io/badge/Intellij-000000?style=flat&logo=intellijidea&logoColor=white"/> <img src="https://img.shields.io/badge/VS Code-007ACC?style=flat&logo=visualstudiocode&logoColor=white"/>
 
 ### Cooperation
 
-<img src="https://img.shields.io/badge/Github-181717?style=flat&logo=github&logoColor=white"/>
-<img src="https://img.shields.io/badge/Notion-000000?style=flat&logo=notion&logoColor=white"/>
+<img src="https://img.shields.io/badge/Github-181717?style=flat&logo=github&logoColor=white"/> <img src="https://img.shields.io/badge/Notion-000000?style=flat&logo=notion&logoColor=white"/>
 
 ## 📁 프로젝트 기능
 
