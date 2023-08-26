@@ -1,12 +1,6 @@
 
-c
-java:S11927"MDefine a constant instead of duplicating this literal "access_token" 3 times.(º¶ÏÓ
-{
-java:S1488§"dImmediately return this expression instead of assigning it to the temporary variable "kakaoAccount".(€öµ
-e
-java:S2259;"JA "NullPointerException" could be thrown; "kakaoAccount" is nullable here.(„¡×ıÿÿÿÿ
-l
-java:S2259"PA "NullPointerException" could be thrown; "memberInfoResponse" is nullable here.(İä€Òşÿÿÿÿ
-N
-java:S2589¦"7Remove this expression which always evaluates to "true"(¦ïÎé
-W	java:S125©"<This block of commented-out lines of code should be removed.(ùŠĞúşÿÿÿÿ
+j
+java:S11927"MDefine a constant instead of duplicating this literal "access_token" 3 times.(º¶ÏÓ8š®‰‘¢1
+‚
+java:S1488§"dImmediately return this expression instead of assigning it to the temporary variable "kakaoAccount".(€öµ8›®‰‘¢1
+^	java:S125©"<This block of commented-out lines of code should be removed.(ùŠĞúşÿÿÿÿ8ã®‰‘¢1

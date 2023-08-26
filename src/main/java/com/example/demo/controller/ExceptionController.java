@@ -4,6 +4,7 @@ import groovy.util.logging.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -30,9 +31,13 @@ public class ExceptionController {
     @ExceptionHandler(DisabledException.class)
     public ResponseEntity<Map<String, String>> handleDisabledException(DisabledException dex) {
         Map<String, String> err = new HashMap<>();
-        err.put("status", String.valueOf(HttpStatus.FORBIDDEN.value()));
         err.put("message", dex.getMessage());
-
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
+    }
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<Map<String, String>> handleBadCredentialException(BadCredentialsException bcex) {
+        Map<String, String> err = new HashMap<>();
+        err.put("message", bcex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
     }
 }

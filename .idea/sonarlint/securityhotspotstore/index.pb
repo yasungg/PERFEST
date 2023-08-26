@@ -83,8 +83,6 @@ O
 src/main/frontend/src/README.md,6\e\6e2c25627d6f5c5e0d2660bcef699194dcfb3ea7
 e
 5src/main/java/com/example/demo/constant/Category.java,6\7\6769fc1b26de964c2200202d415016f6e015c9c5
-v
-Fsrc/main/java/com/example/demo/user/PerfestAuthenticationProvider.java,2\9\29429a1fa9010873ea4de6dbaa7c8cc96f0966c8
 U
 %src/main/frontend/src/api/BoardAPI.js,f\b\fb9578f94cf9a34ec61d44cd3498ef12e1add64a
 9
@@ -259,14 +257,10 @@ p
 @src/main/java/com/example/demo/controller/CommentController.java,e\8\e8b37830134d5d21fe04e730d3f51ce40fcd624d
 k
 ;src/main/java/com/example/demo/user/PerfestUserDetails.java,9\2\920bb61e4393e216c7775b5afd2b6836601b3fa2
-w
-Gsrc/main/java/com/example/demo/handler/PerfestLogoutSuccessHandler.java,a\a\aaf5ddbeff47e1d069e0fa273ae8af726f1e0b01
 h
 8src/main/frontend/src/components/MembershipManagement.js,5\8\5846f92c3a02cd2f633765490adeaec17653bd15
 p
 @src/main/java/com/example/demo/dto/memberDTOs/MemberListDTO.java,1\3\13f3f8fb38a7cfbdb465b33423b2e131ad52df38
-i
-9src/main/java/com/example/demo/service/MemberService.java,1\2\12d9a5619eb12e0c8aee3df2e1fed44a21a94255
 :
 
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
@@ -280,8 +274,6 @@ a
 1src/main/java/com/example/demo/dto/MemberDTO.java,c\1\c184077897b3bea07d2cee47203c2474a24b8e1c
 p
 @src/main/java/com/example/demo/repository/PaymentRepository.java,d\4\d48120ea676a378ac550166956e75bb0a2e3a313
-o
-?src/main/java/com/example/demo/repository/MemberRepository.java,a\5\a57fc3e158042d35b8b07bce4e443c05d794f535
 k
 ;src/main/java/com/example/demo/service/CalenderService.java,e\8\e8130e75da324df7b6dbcc8848819f09a2fe4105
 U
@@ -434,8 +426,6 @@ c
 3src/main/java/com/example/demo/entity/Activity.java,4\4\44e403bc08e7ba21c9cc8fd7204379c7a73187ab
 q
 Asrc/main/java/com/example/demo/repository/ActivityRepository.java,e\3\e322a1cf1440e67b93c3b3128ebe5ca8fc0d8667
-a
-1src/main/java/com/example/demo/entity/Member.java,0\0\001ba7267774885b219a63c88f569519c15221ba
 T
 $src/main/frontend/src/pages/Login.js,d\c\dc3846aa64416d03926d9c6e1e2b3230d296423f
 f
@@ -472,5 +462,3 @@ o
 ?src/main/java/com/example/demo/controller/ReviewController.java,7\a\7ab311d2d92d46e98ccb0e437cc2b4ce783929f1
 t
 Dsrc/main/java/com/example/demo/controller/RichRankingController.java,2\7\2757153564474efc9e100cfb48f795d846443089
-l
-<src/main/java/com/example/demo/controller/WebController.java,b\9\b9bb329768c88e9c8b10c1191c6bd48ddaa49222

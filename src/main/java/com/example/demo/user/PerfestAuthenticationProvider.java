@@ -28,13 +28,13 @@ public class PerfestAuthenticationProvider implements AuthenticationProvider {
         log.info("is passwords equals? = {}", passwordEncoder.matches(password, dbPassword));
         if(userDetails == null || (!passwordEncoder.matches(password, dbPassword))) { //ID,PW 틀린 경우 OR 계정이 없는 경우
             log.info("location: PerfestAuthenticationProvider, BadCredentialsException");
-            throw new BadCredentialsException(memberId);
+            throw new BadCredentialsException("비밀번호가 틀렸습니다!");
         } else if(!userDetails.isAccountNonLocked()) {			//계정이 잠긴 경우(true로 고정, 추후 옵션처리 가능)
             log.info("location: PerfestAuthenticationProvider, LockedException");
             throw new LockedException(memberId);
         } else if(!userDetails.isEnabled()) {					//계정이 비활성화된 경우
             log.info("location: PerfestAuthenticationProvider, DisabledException");
-            throw new DisabledException(memberId);
+            throw new DisabledException("탈퇴한 회원입니다.");
         } else if(!userDetails.isAccountNonExpired()) {			//계정이 만료된 경우
             log.info("location: PerfestAuthenticationProvider, AccountExpiredException");
             throw new AccountExpiredException(memberId);
