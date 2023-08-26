@@ -3,6 +3,8 @@ package com.example.demo.entity;
 import com.example.demo.constant.Authority;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicUpdate;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
@@ -14,6 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(force = true)
 @Table(name = "t_member")
 @AllArgsConstructor
+@DynamicUpdate
 public class Member {
     @Id
     @Column(name = "member_id")
@@ -52,6 +55,7 @@ public class Member {
     private boolean isEnabled;
 
     @Column(name = "join_time")
+    @CreationTimestamp
     private LocalDateTime joinTime;
 
     @Enumerated(EnumType.STRING)
@@ -66,9 +70,9 @@ public class Member {
         this.isEnabled = isEnabled;
         this.badges = badges;
         this.totalPrice = totalPrice;
-        this.joinTime = joinTime;
         this.authority = authority;
     }
+
 
     public Member(Long id, String username, String password, String nickname, Authority authority) {
         this.id = id;

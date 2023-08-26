@@ -29,6 +29,7 @@ public class MemberRequestDTO {
     private String nickname;
     private String memberName;
 
+
     //일반 회원가입
     public Member toMember(PasswordEncoder passwordEncoder) {
         return Member.builder()
@@ -39,7 +40,6 @@ public class MemberRequestDTO {
                 .badges(0)
                 .isEnabled(true)
                 .totalPrice(BigDecimal.ZERO)
-                .joinTime(LocalDateTime.now())
                 .authority(Authority.ROLE_USER)
                 .build();
     }
@@ -53,7 +53,6 @@ public class MemberRequestDTO {
                 .nickname(nickname)
                 .badges(0)
                 .totalPrice(BigDecimal.ZERO)
-                .joinTime(LocalDateTime.now())
                 .authority(Authority.ROLE_KAKAO)
                 .build();
     }
@@ -67,10 +66,11 @@ public class MemberRequestDTO {
                 .nickname(nickname)
                 .badges(0)
                 .totalPrice(BigDecimal.ZERO)
-                .joinTime(LocalDateTime.now())
                 .authority(Authority.ROLE_ADMIN)
                 .build();
+
     }
+
 
     //회원정보가 DB에 존재하는지, 비밀번호는 DB 속 정보와 일치하는지 검사하는 메소드
     public UsernamePasswordAuthenticationToken toAuthentication() {

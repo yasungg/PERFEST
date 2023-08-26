@@ -37,12 +37,17 @@ public class WebSecurityConfig implements WebMvcConfigurer{
         http
                 .httpBasic().disable()
                 .csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .accessDeniedHandler(jwtAccessDeniedHandler)
+
+                .and()
+                .apply(new JwtSecurityConfig(tokenProvider, session))
+
 
                 .and()
                 .authorizeRequests()
@@ -52,15 +57,13 @@ public class WebSecurityConfig implements WebMvcConfigurer{
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .anyRequest().authenticated()
 
+
                 .and()
                 .logout()
                 .logoutUrl("/logout/bye")
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
-                .logoutSuccessHandler(new PerfestLogoutSuccessHandler())
-
-                .and()
-                .apply(new JwtSecurityConfig(tokenProvider, session));
+                .logoutSuccessHandler(new PerfestLogoutSuccessHandler());
         return http.build();
     }
 }
